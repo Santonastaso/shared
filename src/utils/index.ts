@@ -104,3 +104,43 @@ export const safeAsync = async <T>(asyncFn: () => Promise<T>, context: any = {})
     return error instanceof Error ? error : new Error(String(error));
   }
 };
+
+/**
+ * Handle API errors with consistent error handling
+ */
+export const handleApiError = (error: any, context: any = {}): Error => {
+  // Determine error type based on response status
+  let errorMessage = 'An unexpected error occurred';
+  
+  if (error.response) {
+    const status = error.response.status;
+    switch (status) {
+      case 400:
+        errorMessage = 'Invalid request data';
+        break;
+      case 401:
+        errorMessage = 'Authentication required';
+        break;
+      case 403:
+        errorMessage = 'Access denied';
+        break;
+      case 404:
+        errorMessage = 'Resource not found';
+        break;
+      case 500:
+      case 502:
+      case 503:
+        errorMessage = 'Server error occurred';
+        break;
+      default:
+        errorMessage = 'Network error occurred';
+    }
+  } else if (error.request) {
+    errorMessage = 'Network connection failed';
+  } else if (error.message) {
+    errorMessage = error.message;
+  }
+
+  // Return a new Error with the processed message
+  return new Error(errorMessage);
+};
