@@ -6,6 +6,8 @@ import * as class_variance_authority_types from 'class-variance-authority/types'
 import { ColumnDef } from '@tanstack/react-table';
 import { ClassValue } from 'clsx';
 import { SupabaseClient, User, Session } from '@supabase/supabase-js';
+import { ErrorType } from './constants.js';
+export { ALERT_TYPES, AlertType, COMMON_STATUSES, CONFIRMATION_TYPES, CommonStatus, ConfirmationType, DATA_TABLE_DEFAULTS, DEPARTMENT_TYPES, DepartmentType, ERROR_TYPES, FIELD_CONFIGS, MACHINE_STATUSES, MachineStatus, PRODUCT_TYPES, ProductType, SEAL_SIDES, SHIFT_TYPES, ShiftType, TASK_STATUSES, TIME_CONSTANTS, TaskStatus, VALIDATION_MESSAGES, WORK_CENTERS, WorkCenter } from './constants.js';
 import * as zustand from 'zustand';
 import * as _tanstack_query_core from '@tanstack/query-core';
 import * as _tanstack_react_query from '@tanstack/react-query';
@@ -310,6 +312,25 @@ declare const handleSupabaseError: (error: any, context?: string) => string;
 declare const checkSupabaseConnection: (client: SupabaseClient, testTable?: string) => Promise<boolean>;
 
 /**
+ * Authentication context type
+ */
+interface AuthContextType {
+    user: User | null;
+    session: Session | null;
+    loading: boolean;
+    error: string | null;
+    signIn: (email: string, password: string) => Promise<{
+        error?: string;
+    }>;
+    signUp: (email: string, password: string, metadata?: any) => Promise<{
+        error?: string;
+    }>;
+    signOut: () => Promise<void>;
+    resetPassword: (email: string) => Promise<{
+        error?: string;
+    }>;
+}
+/**
  * Props for AuthProvider
  */
 interface AuthProviderProps {
@@ -322,125 +343,10 @@ interface AuthProviderProps {
  * Works with any Supabase client and provides consistent auth interface
  */
 declare const AuthProvider: React__default.FC<AuthProviderProps>;
-
 /**
- * Shared Application Constants
- * Common constants used across multiple applications
+ * Hook to use authentication context
  */
-declare const ALERT_TYPES: {
-    readonly SUCCESS: "success";
-    readonly ERROR: "error";
-    readonly WARNING: "warning";
-    readonly INFO: "info";
-};
-declare const CONFIRMATION_TYPES: {
-    readonly DANGER: "danger";
-    readonly WARNING: "warning";
-    readonly INFO: "info";
-};
-declare const TIME_CONSTANTS: {
-    readonly MILLISECONDS_PER_SECOND: 1000;
-    readonly SECONDS_PER_MINUTE: 60;
-    readonly MINUTES_PER_HOUR: 60;
-    readonly HOURS_PER_DAY: 24;
-    readonly DAYS_PER_WEEK: 7;
-    readonly DAYS_PER_YEAR: 365;
-    readonly MILLISECONDS_PER_MINUTE: number;
-    readonly MILLISECONDS_PER_HOUR: number;
-    readonly MILLISECONDS_PER_DAY: number;
-};
-declare const VALIDATION_MESSAGES: {
-    readonly REQUIRED: "This field is required";
-    readonly INVALID_EMAIL: "Please enter a valid email address";
-    readonly INVALID_DATE: "Please enter a valid date";
-    readonly END_DATE_BEFORE_START: "End date cannot be before start date";
-    readonly END_TIME_BEFORE_START: "End time must be after start time when dates are the same";
-    readonly QUANTITY_COMPLETED_EXCEEDS_TOTAL: "Quantity completed cannot exceed total quantity";
-};
-declare const FIELD_CONFIGS: {
-    readonly DECIMAL_PRECISION: {
-        readonly ONE_DECIMAL: readonly ["setup_time", "changeover_time"];
-        readonly TWO_DECIMAL: readonly ["cost", "price"];
-        readonly PLAIN_NUMBER: readonly ["speed", "quantity"];
-    };
-    readonly FIELD_STEPS: {
-        readonly TIME: 0.1;
-        readonly COST: 0.01;
-        readonly QUANTITY: 1;
-        readonly DIMENSION: 1;
-    };
-};
-declare const ERROR_TYPES: {
-    readonly VALIDATION_ERROR: "VALIDATION_ERROR";
-    readonly NETWORK_ERROR: "NETWORK_ERROR";
-    readonly SERVER_ERROR: "SERVER_ERROR";
-    readonly AUTHENTICATION_ERROR: "AUTHENTICATION_ERROR";
-    readonly AUTHORIZATION_ERROR: "AUTHORIZATION_ERROR";
-    readonly NOT_FOUND_ERROR: "NOT_FOUND_ERROR";
-    readonly BUSINESS_LOGIC_ERROR: "BUSINESS_LOGIC_ERROR";
-    readonly UI_ERROR: "UI_ERROR";
-    readonly API_ERROR: "API_ERROR";
-    readonly TIMEOUT_ERROR: "TIMEOUT_ERROR";
-    readonly PERMISSION_ERROR: "PERMISSION_ERROR";
-    readonly DUPLICATE_ERROR: "DUPLICATE_ERROR";
-};
-declare const COMMON_STATUSES: {
-    readonly ACTIVE: "ACTIVE";
-    readonly INACTIVE: "INACTIVE";
-    readonly PENDING: "PENDING";
-    readonly COMPLETED: "COMPLETED";
-    readonly CANCELLED: "CANCELLED";
-    readonly IN_PROGRESS: "IN_PROGRESS";
-};
-declare const DATA_TABLE_DEFAULTS: {
-    readonly PAGE_SIZE: 10;
-    readonly PAGE_SIZE_OPTIONS: readonly [10, 25, 50, 100];
-    readonly MAX_VISIBLE_PAGES: 5;
-};
-declare const DEPARTMENT_TYPES: {
-    readonly PRINTING: "STAMPA";
-    readonly PACKAGING: "CONFEZIONAMENTO";
-};
-declare const WORK_CENTERS: {
-    readonly ZANICA: "ZANICA";
-    readonly BUSTO_GAROLFO: "BUSTO_GAROLFO";
-    readonly BOTH: "BOTH";
-};
-declare const MACHINE_STATUSES: {
-    readonly ACTIVE: "ACTIVE";
-    readonly INACTIVE: "INACTIVE";
-};
-declare const PRODUCT_TYPES: {
-    readonly CREMA: "CREMA";
-    readonly LIQUIDO: "LIQUIDO";
-    readonly POLVERI: "POLVERI";
-};
-declare const SHIFT_TYPES: {
-    readonly T1: "T1";
-    readonly T2: "T2";
-    readonly T3: "T3";
-};
-declare const SEAL_SIDES: {
-    readonly THREE: 3;
-    readonly FOUR: 4;
-};
-declare const TASK_STATUSES: {
-    readonly NOT_SCHEDULED: "NOT SCHEDULED";
-    readonly SCHEDULED: "SCHEDULED";
-    readonly IN_PROGRESS: "IN PROGRESS";
-    readonly COMPLETED: "COMPLETED";
-    readonly CANCELLED: "CANCELLED";
-};
-type AlertType = typeof ALERT_TYPES[keyof typeof ALERT_TYPES];
-type ConfirmationType = typeof CONFIRMATION_TYPES[keyof typeof CONFIRMATION_TYPES];
-type ErrorType = typeof ERROR_TYPES[keyof typeof ERROR_TYPES];
-type CommonStatus = typeof COMMON_STATUSES[keyof typeof COMMON_STATUSES];
-type DepartmentType = typeof DEPARTMENT_TYPES[keyof typeof DEPARTMENT_TYPES];
-type WorkCenter = typeof WORK_CENTERS[keyof typeof WORK_CENTERS];
-type MachineStatus = typeof MACHINE_STATUSES[keyof typeof MACHINE_STATUSES];
-type ProductType = typeof PRODUCT_TYPES[keyof typeof PRODUCT_TYPES];
-type ShiftType = typeof SHIFT_TYPES[keyof typeof SHIFT_TYPES];
-type TaskStatus = typeof TASK_STATUSES[keyof typeof TASK_STATUSES];
+declare const useAuth: () => AuthContextType;
 
 interface ErrorHandlerOptions {
     logErrors?: boolean;
@@ -561,4 +467,4 @@ declare function useDataService<T = any>(service: BaseService, resourceName: str
     invalidateDetail: (id: string | number) => Promise<void>;
 };
 
-export { ALERT_TYPES, type AlertType, AuthProvider, Badge, BaseService, Button, COMMON_STATUSES, CONFIRMATION_TYPES, Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle, type CommonStatus, type ConfirmationType, DATA_TABLE_DEFAULTS, DEPARTMENT_TYPES, DataTable, type DepartmentType, ERROR_TYPES, ErrorBoundary, type ErrorType, FIELD_CONFIGS, Header, Input, Label, MACHINE_STATUSES, type MachineStatus, PRODUCT_TYPES, type ProductType, SEAL_SIDES, SHIFT_TYPES, type ShiftType, type SupabaseConfig, TASK_STATUSES, TIME_CONSTANTS, Table, TableBody, TableCaption, TableCell, TableFooter, TableHead, TableHeader, TableRow, type TaskStatus, ThemeProvider, ThemeSwitch, VALIDATION_MESSAGES, WORK_CENTERS, type WorkCenter, badgeVariants, buttonVariants, checkSupabaseConnection, cn, confirmAction, createSupabaseClient, createSupabaseFromEnv, debounce, dismiss, dismissAll, formatDate, formatDateTime, generateId, getNested, handleSupabaseError, showError, showInfo, showSuccess, showToast, showValidationError, showWarning, throttle, useDataService, useErrorBoundary, useErrorHandler, useSidebar, useTheme, useValidationErrorHandler, withErrorBoundary };
+export { type AuthContextType, AuthProvider, type AuthProviderProps, Badge, BaseService, Button, Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle, DataTable, ErrorBoundary, ErrorType, Header, Input, Label, type SupabaseConfig, Table, TableBody, TableCaption, TableCell, TableFooter, TableHead, TableHeader, TableRow, ThemeProvider, ThemeSwitch, badgeVariants, buttonVariants, checkSupabaseConnection, cn, confirmAction, createSupabaseClient, createSupabaseFromEnv, debounce, dismiss, dismissAll, formatDate, formatDateTime, generateId, getNested, handleSupabaseError, showError, showInfo, showSuccess, showToast, showValidationError, showWarning, throttle, useAuth, useDataService, useErrorBoundary, useErrorHandler, useSidebar, useTheme, useValidationErrorHandler, withErrorBoundary };

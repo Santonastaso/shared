@@ -92,6 +92,7 @@ __export(src_exports, {
   showValidationError: () => showValidationError,
   showWarning: () => showWarning,
   throttle: () => throttle,
+  useAuth: () => useAuth,
   useDataService: () => useDataService,
   useErrorBoundary: () => useErrorBoundary,
   useErrorHandler: () => useErrorHandler,
@@ -1577,6 +1578,13 @@ var AuthProvider = ({
   };
   return /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(AuthContext.Provider, { value, children });
 };
+var useAuth = () => {
+  const context = (0, import_react4.useContext)(AuthContext);
+  if (!context) {
+    throw new Error("useAuth must be used within an AuthProvider");
+  }
+  return context;
+};
 
 // src/hooks/useErrorHandler.ts
 var import_react5 = require("react");
@@ -1930,6 +1938,7 @@ function useDataService(service, resourceName) {
   showValidationError,
   showWarning,
   throttle,
+  useAuth,
   useDataService,
   useErrorBoundary,
   useErrorHandler,
