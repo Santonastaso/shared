@@ -144,3 +144,6 @@ export const handleApiError = (error: any, context: any = {}): Error => {
   // Return a new Error with the processed message
   return new Error(errorMessage);
 };
+
+// Re-export validation utilities
+export * from './validation';
