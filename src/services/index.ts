@@ -11,4 +11,5 @@ export {
 export type { SupabaseConfig } from './supabase';
 
 // Auth provider
-export { AuthProvider } from './AuthProvider';
+export { AuthProvider, useAuth } from './AuthProvider';
+export type { AuthContextType, AuthProviderProps } from './AuthProvider';
