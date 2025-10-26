@@ -92,3 +92,15 @@ export const throttle = <T extends (...args: any[]) => any>(
 
 // Re-export toast utilities
 export * from './toast';
+
+/**
+ * Safe async wrapper that handles errors gracefully
+ */
+export const safeAsync = async <T>(asyncFn: () => Promise<T>, context: any = {}): Promise<T | Error> => {
+  try {
+    return await asyncFn();
+  } catch (error) {
+    // Return the error instead of throwing it
+    return error instanceof Error ? error : new Error(String(error));
+  }
+};
