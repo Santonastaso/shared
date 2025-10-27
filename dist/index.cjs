@@ -31,7 +31,11 @@ var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: tru
 var src_exports = {};
 __export(src_exports, {
   ALERT_TYPES: () => ALERT_TYPES,
+  AppHeader: () => AppHeader,
   AuthProvider: () => AuthProvider,
+  Avatar: () => Avatar,
+  AvatarFallback: () => AvatarFallback,
+  AvatarImage: () => AvatarImage,
   Badge: () => Badge,
   BaseService: () => BaseService,
   Button: () => Button,
@@ -46,6 +50,21 @@ __export(src_exports, {
   DATA_TABLE_DEFAULTS: () => DATA_TABLE_DEFAULTS,
   DEPARTMENT_TYPES: () => DEPARTMENT_TYPES,
   DataTable: () => DataTable,
+  DropdownMenu: () => DropdownMenu,
+  DropdownMenuCheckboxItem: () => DropdownMenuCheckboxItem,
+  DropdownMenuContent: () => DropdownMenuContent,
+  DropdownMenuGroup: () => DropdownMenuGroup,
+  DropdownMenuItem: () => DropdownMenuItem,
+  DropdownMenuLabel: () => DropdownMenuLabel,
+  DropdownMenuPortal: () => DropdownMenuPortal,
+  DropdownMenuRadioGroup: () => DropdownMenuRadioGroup,
+  DropdownMenuRadioItem: () => DropdownMenuRadioItem,
+  DropdownMenuSeparator: () => DropdownMenuSeparator,
+  DropdownMenuShortcut: () => DropdownMenuShortcut,
+  DropdownMenuSub: () => DropdownMenuSub,
+  DropdownMenuSubContent: () => DropdownMenuSubContent,
+  DropdownMenuSubTrigger: () => DropdownMenuSubTrigger,
+  DropdownMenuTrigger: () => DropdownMenuTrigger,
   ERROR_TYPES: () => ERROR_TYPES,
   ErrorBoundary: () => ErrorBoundary,
   FIELD_CONFIGS: () => FIELD_CONFIGS,
@@ -1986,6 +2005,384 @@ function GenericForm({
 }
 var GenericForm_default = GenericForm;
 
+// src/components/AppHeader.tsx
+var import_react7 = require("react");
+var import_react_router_dom = require("react-router-dom");
+var import_lucide_react2 = require("lucide-react");
+
+// src/components/Avatar.tsx
+var AvatarPrimitive = __toESM(require("@radix-ui/react-avatar"), 1);
+var import_jsx_runtime14 = require("react/jsx-runtime");
+function Avatar({
+  className,
+  ...props
+}) {
+  return /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(
+    AvatarPrimitive.Root,
+    {
+      "data-slot": "avatar",
+      className: cn(
+        "relative flex size-8 shrink-0 overflow-hidden rounded-full",
+        className
+      ),
+      ...props
+    }
+  );
+}
+function AvatarImage({
+  className,
+  ...props
+}) {
+  return /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(
+    AvatarPrimitive.Image,
+    {
+      "data-slot": "avatar-image",
+      className: cn("aspect-square size-full", className),
+      ...props
+    }
+  );
+}
+function AvatarFallback({
+  className,
+  ...props
+}) {
+  return /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(
+    AvatarPrimitive.Fallback,
+    {
+      "data-slot": "avatar-fallback",
+      className: cn(
+        "bg-muted flex size-full items-center justify-center rounded-full",
+        className
+      ),
+      ...props
+    }
+  );
+}
+
+// src/components/DropdownMenu.tsx
+var DropdownMenuPrimitive = __toESM(require("@radix-ui/react-dropdown-menu"), 1);
+var import_lucide_react = require("lucide-react");
+var import_jsx_runtime15 = require("react/jsx-runtime");
+function DropdownMenu({
+  ...props
+}) {
+  return /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(DropdownMenuPrimitive.Root, { "data-slot": "dropdown-menu", ...props });
+}
+function DropdownMenuPortal({
+  ...props
+}) {
+  return /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(DropdownMenuPrimitive.Portal, { "data-slot": "dropdown-menu-portal", ...props });
+}
+function DropdownMenuTrigger({
+  ...props
+}) {
+  return /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(
+    DropdownMenuPrimitive.Trigger,
+    {
+      "data-slot": "dropdown-menu-trigger",
+      ...props
+    }
+  );
+}
+function DropdownMenuContent({
+  className,
+  sideOffset = 4,
+  ...props
+}) {
+  return /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(DropdownMenuPrimitive.Portal, { children: /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(
+    DropdownMenuPrimitive.Content,
+    {
+      "data-slot": "dropdown-menu-content",
+      sideOffset,
+      className: cn(
+        "bg-popover text-popover-foreground data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 z-50 max-h-(--radix-dropdown-menu-content-available-height) min-w-[8rem] origin-(--radix-dropdown-menu-content-transform-origin) overflow-x-hidden overflow-y-auto rounded-md border p-1 shadow-md",
+        className
+      ),
+      ...props
+    }
+  ) });
+}
+function DropdownMenuGroup({
+  ...props
+}) {
+  return /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(DropdownMenuPrimitive.Group, { "data-slot": "dropdown-menu-group", ...props });
+}
+function DropdownMenuItem({
+  className,
+  inset,
+  variant = "default",
+  ...props
+}) {
+  return /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(
+    DropdownMenuPrimitive.Item,
+    {
+      "data-slot": "dropdown-menu-item",
+      "data-inset": inset,
+      "data-variant": variant,
+      className: cn(
+        "focus:bg-accent focus:text-accent-foreground data-[variant=destructive]:text-destructive data-[variant=destructive]:focus:bg-destructive/10 dark:data-[variant=destructive]:focus:bg-destructive/20 data-[variant=destructive]:focus:text-destructive data-[variant=destructive]:*:[svg]:!text-destructive [&_svg:not([class*='text-'])]:text-muted-foreground relative flex cursor-default items-center gap-2 rounded-sm px-2 py-1.5 text-sm outline-hidden select-none data-[disabled]:pointer-events-none data-[disabled]:opacity-50 data-[inset]:pl-8 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
+        className
+      ),
+      ...props
+    }
+  );
+}
+function DropdownMenuCheckboxItem({
+  className,
+  children,
+  checked,
+  ...props
+}) {
+  return /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)(
+    DropdownMenuPrimitive.CheckboxItem,
+    {
+      "data-slot": "dropdown-menu-checkbox-item",
+      className: cn(
+        "focus:bg-accent focus:text-accent-foreground relative flex cursor-default items-center gap-2 rounded-sm py-1.5 pr-2 pl-8 text-sm outline-hidden select-none data-[disabled]:pointer-events-none data-[disabled]:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
+        className
+      ),
+      checked,
+      ...props,
+      children: [
+        /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("span", { className: "pointer-events-none absolute left-2 flex size-3.5 items-center justify-center", children: /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(DropdownMenuPrimitive.ItemIndicator, { children: /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(import_lucide_react.CheckIcon, { className: "size-4" }) }) }),
+        children
+      ]
+    }
+  );
+}
+function DropdownMenuRadioGroup({
+  ...props
+}) {
+  return /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(
+    DropdownMenuPrimitive.RadioGroup,
+    {
+      "data-slot": "dropdown-menu-radio-group",
+      ...props
+    }
+  );
+}
+function DropdownMenuRadioItem({
+  className,
+  children,
+  ...props
+}) {
+  return /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)(
+    DropdownMenuPrimitive.RadioItem,
+    {
+      "data-slot": "dropdown-menu-radio-item",
+      className: cn(
+        "focus:bg-accent focus:text-accent-foreground relative flex cursor-default items-center gap-2 rounded-sm py-1.5 pr-2 pl-8 text-sm outline-hidden select-none data-[disabled]:pointer-events-none data-[disabled]:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
+        className
+      ),
+      ...props,
+      children: [
+        /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("span", { className: "pointer-events-none absolute left-2 flex size-3.5 items-center justify-center", children: /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(DropdownMenuPrimitive.ItemIndicator, { children: /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(import_lucide_react.CircleIcon, { className: "size-2 fill-current" }) }) }),
+        children
+      ]
+    }
+  );
+}
+function DropdownMenuLabel({
+  className,
+  inset,
+  ...props
+}) {
+  return /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(
+    DropdownMenuPrimitive.Label,
+    {
+      "data-slot": "dropdown-menu-label",
+      "data-inset": inset,
+      className: cn(
+        "px-2 py-1.5 text-sm font-medium data-[inset]:pl-8",
+        className
+      ),
+      ...props
+    }
+  );
+}
+function DropdownMenuSeparator({
+  className,
+  ...props
+}) {
+  return /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(
+    DropdownMenuPrimitive.Separator,
+    {
+      "data-slot": "dropdown-menu-separator",
+      className: cn("bg-border -mx-1 my-1 h-px", className),
+      ...props
+    }
+  );
+}
+function DropdownMenuShortcut({
+  className,
+  ...props
+}) {
+  return /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(
+    "span",
+    {
+      "data-slot": "dropdown-menu-shortcut",
+      className: cn(
+        "text-muted-foreground ml-auto text-xs tracking-widest",
+        className
+      ),
+      ...props
+    }
+  );
+}
+function DropdownMenuSub({
+  ...props
+}) {
+  return /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(DropdownMenuPrimitive.Sub, { "data-slot": "dropdown-menu-sub", ...props });
+}
+function DropdownMenuSubTrigger({
+  className,
+  inset,
+  children,
+  ...props
+}) {
+  return /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)(
+    DropdownMenuPrimitive.SubTrigger,
+    {
+      "data-slot": "dropdown-menu-sub-trigger",
+      "data-inset": inset,
+      className: cn(
+        "focus:bg-accent focus:text-accent-foreground data-[state=open]:bg-accent data-[state=open]:text-accent-foreground flex cursor-default items-center rounded-sm px-2 py-1.5 text-sm outline-hidden select-none data-[inset]:pl-8",
+        className
+      ),
+      ...props,
+      children: [
+        children,
+        /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(import_lucide_react.ChevronRightIcon, { className: "ml-auto size-4" })
+      ]
+    }
+  );
+}
+function DropdownMenuSubContent({
+  className,
+  ...props
+}) {
+  return /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(
+    DropdownMenuPrimitive.SubContent,
+    {
+      "data-slot": "dropdown-menu-sub-content",
+      className: cn(
+        "bg-popover text-popover-foreground data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 z-50 min-w-[8rem] origin-(--radix-dropdown-menu-content-transform-origin) overflow-hidden rounded-md border p-1 shadow-lg",
+        className
+      ),
+      ...props
+    }
+  );
+}
+
+// src/components/AppHeader.tsx
+var import_jsx_runtime16 = require("react/jsx-runtime");
+var AppHeader = ({
+  title,
+  logo,
+  navigationItems = [],
+  user,
+  onLogout,
+  onRefresh,
+  onSettings,
+  onUsers,
+  isLoading = false,
+  customMenuItems
+}) => {
+  const [isUserMenuOpen, setIsUserMenuOpen] = (0, import_react7.useState)(false);
+  const handleUserMenuToggle = (0, import_react7.useCallback)(() => {
+    setIsUserMenuOpen((prev) => !prev);
+  }, []);
+  const handleUserMenuClose = (0, import_react7.useCallback)(() => {
+    setIsUserMenuOpen(false);
+  }, []);
+  return /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("header", { className: "bg-secondary border-b", children: /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("div", { className: "px-4", children: /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("div", { className: "flex justify-between items-center h-16", children: [
+    /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)(
+      import_react_router_dom.Link,
+      {
+        to: "/",
+        className: "flex items-center gap-2 text-secondary-foreground no-underline hover:opacity-80 transition-opacity",
+        children: [
+          logo && /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)(import_jsx_runtime16.Fragment, { children: [
+            /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(
+              "img",
+              {
+                className: "[.light_&]:hidden h-6",
+                src: logo.dark,
+                alt: title
+              }
+            ),
+            /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(
+              "img",
+              {
+                className: "[.dark_&]:hidden h-6",
+                src: logo.light,
+                alt: title
+              }
+            )
+          ] }),
+          /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("h1", { className: "text-xl font-semibold", children: title })
+        ]
+      }
+    ),
+    navigationItems.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("nav", { className: "hidden md:flex", children: navigationItems.map((item) => /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(
+      import_react_router_dom.Link,
+      {
+        to: item.to,
+        className: `px-6 py-3 text-sm font-medium transition-colors border-b-2 ${item.isActive ? "text-secondary-foreground border-secondary-foreground" : "text-secondary-foreground/70 border-transparent hover:text-secondary-foreground/80"}`,
+        children: item.label
+      },
+      item.to
+    )) }),
+    /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("div", { className: "flex items-center gap-2", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(ThemeSwitch, {}),
+      onRefresh && /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(
+        Button,
+        {
+          onClick: onRefresh,
+          variant: "ghost",
+          size: "icon",
+          className: "hidden sm:inline-flex",
+          children: isLoading ? /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(import_lucide_react2.LoaderCircle, { className: "h-4 w-4 animate-spin" }) : /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(import_lucide_react2.RotateCw, { className: "h-4 w-4" })
+        }
+      ),
+      user && /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)(DropdownMenu, { open: isUserMenuOpen, onOpenChange: setIsUserMenuOpen, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(DropdownMenuTrigger, { asChild: true, children: /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(
+          Button,
+          {
+            variant: "ghost",
+            className: "relative h-8 w-8 rounded-full",
+            children: /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)(Avatar, { className: "h-8 w-8", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(AvatarImage, { src: user.avatar, role: "presentation" }),
+              /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(AvatarFallback, { children: user.name?.charAt(0)?.toUpperCase() || "U" })
+            ] })
+          }
+        ) }),
+        /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)(DropdownMenuContent, { className: "w-56", align: "end", forceMount: true, children: [
+          /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(DropdownMenuLabel, { className: "font-normal", children: /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("div", { className: "flex flex-col space-y-1", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("p", { className: "text-sm font-medium leading-none", children: user.name }),
+            user.email && /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("p", { className: "text-xs text-muted-foreground", children: user.email })
+          ] }) }),
+          /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(DropdownMenuSeparator, {}),
+          onSettings && /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)(DropdownMenuItem, { onClick: onSettings, className: "cursor-pointer", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(import_lucide_react2.Settings, { className: "mr-2 h-4 w-4" }),
+            "My info"
+          ] }),
+          onUsers && /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)(DropdownMenuItem, { onClick: onUsers, className: "cursor-pointer", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(import_lucide_react2.User, { className: "mr-2 h-4 w-4" }),
+            "Users"
+          ] }),
+          customMenuItems,
+          (onSettings || onUsers || customMenuItems) && /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(DropdownMenuSeparator, {}),
+          onLogout && /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)(DropdownMenuItem, { onClick: onLogout, className: "cursor-pointer", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(import_lucide_react2.LogOut, { className: "mr-2 h-4 w-4" }),
+            "Log out"
+          ] })
+        ] })
+      ] })
+    ] })
+  ] }) }) });
+};
+
 // src/services/BaseService.ts
 var BaseService = class {
   constructor(client, tableName) {
@@ -2201,6 +2598,7 @@ var BaseService = class {
 
 // src/services/supabase.ts
 var import_supabase_js = require("@supabase/supabase-js");
+var import_meta = {};
 var createSupabaseClient = (config) => {
   const defaultOptions = {
     auth: {
@@ -2219,9 +2617,8 @@ var createSupabaseClient = (config) => {
   });
 };
 var createSupabaseFromEnv = () => {
-  const env = globalThis.importMeta?.env || (typeof window !== "undefined" ? window.env : {});
-  const url = env.VITE_SUPABASE_URL || process.env.VITE_SUPABASE_URL;
-  const anonKey = env.VITE_SUPABASE_ANON_KEY || process.env.VITE_SUPABASE_ANON_KEY;
+  const url = import_meta.env?.VITE_SUPABASE_URL || process.env.VITE_SUPABASE_URL;
+  const anonKey = import_meta.env?.VITE_SUPABASE_ANON_KEY || process.env.VITE_SUPABASE_ANON_KEY;
   if (!url) {
     throw new Error("Missing VITE_SUPABASE_URL environment variable");
   }
@@ -2262,19 +2659,19 @@ var getSupabaseClient = () => {
 };
 
 // src/services/AuthProvider.tsx
-var import_react7 = require("react");
-var import_jsx_runtime14 = require("react/jsx-runtime");
-var AuthContext = (0, import_react7.createContext)(null);
+var import_react8 = require("react");
+var import_jsx_runtime17 = require("react/jsx-runtime");
+var AuthContext = (0, import_react8.createContext)(null);
 var AuthProvider = ({
   children,
   supabaseClient,
   onAuthStateChange
 }) => {
-  const [user, setUser] = (0, import_react7.useState)(null);
-  const [session, setSession] = (0, import_react7.useState)(null);
-  const [loading, setLoading] = (0, import_react7.useState)(true);
-  const [error, setError] = (0, import_react7.useState)(null);
-  (0, import_react7.useEffect)(() => {
+  const [user, setUser] = (0, import_react8.useState)(null);
+  const [session, setSession] = (0, import_react8.useState)(null);
+  const [loading, setLoading] = (0, import_react8.useState)(true);
+  const [error, setError] = (0, import_react8.useState)(null);
+  (0, import_react8.useEffect)(() => {
     const getInitialSession = async () => {
       try {
         const { data: { session: initialSession }, error: error2 } = await supabaseClient.auth.getSession();
@@ -2377,10 +2774,10 @@ var AuthProvider = ({
     signOut,
     resetPassword
   };
-  return /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(AuthContext.Provider, { value, children });
+  return /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(AuthContext.Provider, { value, children });
 };
 var useAuth = () => {
-  const context = (0, import_react7.useContext)(AuthContext);
+  const context = (0, import_react8.useContext)(AuthContext);
   if (!context) {
     throw new Error("useAuth must be used within an AuthProvider");
   }
@@ -2389,7 +2786,11 @@ var useAuth = () => {
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
   ALERT_TYPES,
+  AppHeader,
   AuthProvider,
+  Avatar,
+  AvatarFallback,
+  AvatarImage,
   Badge,
   BaseService,
   Button,
@@ -2404,6 +2805,21 @@ var useAuth = () => {
   DATA_TABLE_DEFAULTS,
   DEPARTMENT_TYPES,
   DataTable,
+  DropdownMenu,
+  DropdownMenuCheckboxItem,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuPortal,
+  DropdownMenuRadioGroup,
+  DropdownMenuRadioItem,
+  DropdownMenuSeparator,
+  DropdownMenuShortcut,
+  DropdownMenuSub,
+  DropdownMenuSubContent,
+  DropdownMenuSubTrigger,
+  DropdownMenuTrigger,
   ERROR_TYPES,
   ErrorBoundary,
   FIELD_CONFIGS,

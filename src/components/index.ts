@@ -21,3 +21,8 @@ export { badgeVariants } from './badge-variants';
 // Generic UI Components
 export { default as FilterDropdown } from './FilterDropdown';
 export { default as GenericForm } from './GenericForm';
+
+// Header Components
+export { AppHeader } from './AppHeader';
+export { Avatar, AvatarImage, AvatarFallback } from './Avatar';
+export * from './DropdownMenu';
