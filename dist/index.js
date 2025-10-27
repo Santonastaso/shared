@@ -2318,6 +2318,145 @@ var ExactHeader = ({
   ] }) }) }) });
 };
 
+// src/components/SimpleHeader.tsx
+import React10, { Children as Children2, useCallback as useCallback4, useState as useState7 } from "react";
+import { Link as Link3 } from "react-router-dom";
+import { LogOut as LogOut3, Settings as Settings3, User as User3, LoaderCircle as LoaderCircle3, RotateCw as RotateCw3, Menu as Menu2 } from "lucide-react";
+import { jsx as jsx18, jsxs as jsxs10 } from "react/jsx-runtime";
+var UserMenuContext2 = React10.createContext(void 0);
+var useUserMenu2 = () => React10.useContext(UserMenuContext2);
+var RefreshButton2 = ({ onRefresh, loading = false }) => {
+  const handleRefresh = () => {
+    if (onRefresh) {
+      onRefresh();
+    } else {
+      window.location.reload();
+    }
+  };
+  return /* @__PURE__ */ jsx18(
+    Button,
+    {
+      onClick: handleRefresh,
+      variant: "ghost",
+      size: "icon",
+      className: "hidden sm:inline-flex",
+      children: loading ? /* @__PURE__ */ jsx18(LoaderCircle3, { className: "animate-spin" }) : /* @__PURE__ */ jsx18(RotateCw3, {})
+    }
+  );
+};
+function UserMenu2({ children, user, onLogout }) {
+  const [open, setOpen] = useState7(false);
+  const handleToggleOpen = useCallback4(() => {
+    setOpen((prevOpen) => !prevOpen);
+  }, []);
+  const handleClose = useCallback4(() => {
+    setOpen(false);
+  }, []);
+  const handleLogout = () => {
+    if (onLogout) {
+      onLogout();
+    }
+    setOpen(false);
+  };
+  return /* @__PURE__ */ jsx18(UserMenuContext2.Provider, { value: { onClose: handleClose }, children: /* @__PURE__ */ jsxs10(DropdownMenu, { open, onOpenChange: handleToggleOpen, children: [
+    /* @__PURE__ */ jsx18(DropdownMenuTrigger, { asChild: true, children: /* @__PURE__ */ jsx18(
+      Button,
+      {
+        variant: "ghost",
+        className: "relative h-8 w-8 ml-2 rounded-full",
+        children: /* @__PURE__ */ jsxs10(Avatar, { className: "h-8 w-8", children: [
+          /* @__PURE__ */ jsx18(AvatarImage, { src: user?.avatar, role: "presentation" }),
+          /* @__PURE__ */ jsx18(AvatarFallback, { children: user?.name?.charAt(0) || "U" })
+        ] })
+      }
+    ) }),
+    /* @__PURE__ */ jsxs10(DropdownMenuContent, { className: "w-56", align: "end", forceMount: true, children: [
+      /* @__PURE__ */ jsx18(DropdownMenuLabel, { className: "font-normal", children: /* @__PURE__ */ jsxs10("div", { className: "flex flex-col space-y-1", children: [
+        /* @__PURE__ */ jsx18("p", { className: "text-sm font-medium leading-none", children: user?.name || "User" }),
+        user?.email && /* @__PURE__ */ jsx18("p", { className: "text-xs text-muted-foreground", children: user.email })
+      ] }) }),
+      /* @__PURE__ */ jsx18(DropdownMenuSeparator, {}),
+      children,
+      Children2.count(children) > 0 && /* @__PURE__ */ jsx18(DropdownMenuSeparator, {}),
+      /* @__PURE__ */ jsxs10(DropdownMenuItem, { onClick: handleLogout, className: "cursor-pointer", children: [
+        /* @__PURE__ */ jsx18(LogOut3, {}),
+        "Log out"
+      ] })
+    ] })
+  ] }) });
+}
+var UsersMenu2 = () => {
+  const { onClose } = useUserMenu2() ?? {};
+  return /* @__PURE__ */ jsx18(DropdownMenuItem, { asChild: true, onClick: onClose, children: /* @__PURE__ */ jsxs10(Link3, { to: "/sales", className: "flex items-center gap-2", children: [
+    /* @__PURE__ */ jsx18(User3, {}),
+    " Users"
+  ] }) });
+};
+var ConfigurationMenu2 = () => {
+  const { onClose } = useUserMenu2() ?? {};
+  return /* @__PURE__ */ jsx18(DropdownMenuItem, { asChild: true, onClick: onClose, children: /* @__PURE__ */ jsxs10(Link3, { to: "/settings", className: "flex items-center gap-2", children: [
+    /* @__PURE__ */ jsx18(Settings3, {}),
+    "My info"
+  ] }) });
+};
+var SimpleHeader = ({
+  title,
+  darkModeLogo,
+  lightModeLogo,
+  user,
+  onLogout,
+  onRefresh,
+  onToggleSidebar,
+  loading = false
+}) => {
+  return /* @__PURE__ */ jsx18("nav", { className: "flex-grow", children: /* @__PURE__ */ jsx18("header", { className: "bg-secondary", children: /* @__PURE__ */ jsx18("div", { className: "px-4", children: /* @__PURE__ */ jsxs10("div", { className: "flex justify-between items-center flex-1", children: [
+    /* @__PURE__ */ jsxs10("div", { className: "flex items-center gap-2", children: [
+      onToggleSidebar && /* @__PURE__ */ jsx18(
+        "button",
+        {
+          onClick: onToggleSidebar,
+          className: "p-2 rounded-md text-muted-foreground hover:text-foreground hover:bg-accent focus:outline-none focus:ring-2 focus:ring-inset focus:ring-ring",
+          children: /* @__PURE__ */ jsx18(Menu2, { className: "h-5 w-5" })
+        }
+      ),
+      /* @__PURE__ */ jsxs10(
+        Link3,
+        {
+          to: "/",
+          className: "flex items-center gap-2 text-secondary-foreground no-underline",
+          children: [
+            darkModeLogo && /* @__PURE__ */ jsx18(
+              "img",
+              {
+                className: "[.light_&]:hidden h-6",
+                src: darkModeLogo,
+                alt: title
+              }
+            ),
+            lightModeLogo && /* @__PURE__ */ jsx18(
+              "img",
+              {
+                className: "[.dark_&]:hidden h-6",
+                src: lightModeLogo,
+                alt: title
+              }
+            ),
+            /* @__PURE__ */ jsx18("h1", { className: "text-xl font-semibold", children: title })
+          ]
+        }
+      )
+    ] }),
+    /* @__PURE__ */ jsxs10("div", { className: "flex items-center", children: [
+      /* @__PURE__ */ jsx18(ThemeSwitch, {}),
+      /* @__PURE__ */ jsx18(RefreshButton2, { onRefresh, loading }),
+      /* @__PURE__ */ jsxs10(UserMenu2, { user, onLogout, children: [
+        /* @__PURE__ */ jsx18(ConfigurationMenu2, {}),
+        /* @__PURE__ */ jsx18(UsersMenu2, {})
+      ] })
+    ] })
+  ] }) }) }) });
+};
+
 // src/services/BaseService.ts
 var BaseService = class {
   constructor(client, tableName) {
@@ -2593,18 +2732,18 @@ var getSupabaseClient = () => {
 };
 
 // src/services/AuthProvider.tsx
-import { createContext as createContext2, useContext as useContext2, useState as useState7, useEffect as useEffect4 } from "react";
-import { jsx as jsx18 } from "react/jsx-runtime";
+import { createContext as createContext2, useContext as useContext2, useState as useState8, useEffect as useEffect4 } from "react";
+import { jsx as jsx19 } from "react/jsx-runtime";
 var AuthContext = createContext2(null);
 var AuthProvider = ({
   children,
   supabaseClient,
   onAuthStateChange
 }) => {
-  const [user, setUser] = useState7(null);
-  const [session, setSession] = useState7(null);
-  const [loading, setLoading] = useState7(true);
-  const [error, setError] = useState7(null);
+  const [user, setUser] = useState8(null);
+  const [session, setSession] = useState8(null);
+  const [loading, setLoading] = useState8(true);
+  const [error, setError] = useState8(null);
   useEffect4(() => {
     const getInitialSession = async () => {
       try {
@@ -2708,7 +2847,7 @@ var AuthProvider = ({
     signOut,
     resetPassword
   };
-  return /* @__PURE__ */ jsx18(AuthContext.Provider, { value, children });
+  return /* @__PURE__ */ jsx19(AuthContext.Provider, { value, children });
 };
 var useAuth = () => {
   const context = useContext2(AuthContext);
@@ -2767,6 +2906,7 @@ export {
   SCHEMAS,
   SEAL_SIDES,
   SHIFT_TYPES,
+  SimpleHeader,
   TASK_STATUSES,
   TIME_CONSTANTS,
   Table,

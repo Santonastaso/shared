@@ -25,5 +25,6 @@ export { default as GenericForm } from './GenericForm';
 // Header Components
 export { AppHeader } from './AppHeader';
 export { ExactHeader } from './ExactHeader';
+export { SimpleHeader } from './SimpleHeader';
 export { Avatar, AvatarImage, AvatarFallback } from './Avatar';
 export * from './DropdownMenu';
