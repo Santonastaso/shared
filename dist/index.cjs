@@ -87,6 +87,8 @@ __export(src_exports, {
   formatDateTime: () => formatDateTime,
   generateId: () => generateId,
   getNested: () => getNested,
+  getStandardSupabaseClient: () => getStandardSupabaseClient,
+  getSupabaseClient: () => getSupabaseClient,
   handleApiError: () => handleApiError,
   handleSupabaseError: () => handleSupabaseError,
   safeAsync: () => safeAsync,
@@ -2248,6 +2250,16 @@ var checkSupabaseConnection = async (client, testTable = "users") => {
     return false;
   }
 };
+var getStandardSupabaseClient = () => {
+  return createSupabaseFromEnv();
+};
+var _supabaseClient = null;
+var getSupabaseClient = () => {
+  if (!_supabaseClient) {
+    _supabaseClient = createSupabaseFromEnv();
+  }
+  return _supabaseClient;
+};
 
 // src/services/AuthProvider.tsx
 var import_react7 = require("react");
@@ -2433,6 +2445,8 @@ var useAuth = () => {
   formatDateTime,
   generateId,
   getNested,
+  getStandardSupabaseClient,
+  getSupabaseClient,
   handleApiError,
   handleSupabaseError,
   safeAsync,

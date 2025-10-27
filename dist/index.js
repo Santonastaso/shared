@@ -2043,6 +2043,16 @@ var checkSupabaseConnection = async (client, testTable = "users") => {
     return false;
   }
 };
+var getStandardSupabaseClient = () => {
+  return createSupabaseFromEnv();
+};
+var _supabaseClient = null;
+var getSupabaseClient = () => {
+  if (!_supabaseClient) {
+    _supabaseClient = createSupabaseFromEnv();
+  }
+  return _supabaseClient;
+};
 
 // src/services/AuthProvider.tsx
 import { createContext as createContext2, useContext as useContext2, useState as useState5, useEffect as useEffect4 } from "react";
@@ -2227,6 +2237,8 @@ export {
   formatDateTime,
   generateId,
   getNested,
+  getStandardSupabaseClient,
+  getSupabaseClient,
   handleApiError,
   handleSupabaseError,
   safeAsync,

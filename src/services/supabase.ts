@@ -98,3 +98,24 @@ export const checkSupabaseConnection = async (
     return false;
   }
 };
+
+/**
+ * Standardized Supabase client for all applications
+ * Uses environment variables and can be imported directly
+ * 
+ * Usage in applications:
+ * import { supabase } from '@santonastaso/shared';
+ */
+export const getStandardSupabaseClient = (): SupabaseClient => {
+  return createSupabaseFromEnv();
+};
+
+// Export a default client instance (lazy-loaded)
+let _supabaseClient: SupabaseClient | null = null;
+
+export const getSupabaseClient = (): SupabaseClient => {
+  if (!_supabaseClient) {
+    _supabaseClient = createSupabaseFromEnv();
+  }
+  return _supabaseClient;
+};

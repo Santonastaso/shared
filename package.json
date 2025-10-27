@@ -46,7 +46,7 @@
     "tsup": "^8.0.0"
   },
   "scripts": {
-    "build": "tsup --dts --format cjs,esm --sourcemap --clean"
+    "build": "tsup --format cjs,esm --sourcemap --clean"
   },
   "description": "",
   "keywords": [],
