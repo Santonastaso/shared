@@ -67,6 +67,7 @@ __export(src_exports, {
   DropdownMenuTrigger: () => DropdownMenuTrigger,
   ERROR_TYPES: () => ERROR_TYPES,
   ErrorBoundary: () => ErrorBoundary,
+  ExactHeader: () => ExactHeader,
   FIELD_CONFIGS: () => FIELD_CONFIGS,
   FilterDropdown: () => FilterDropdown_default,
   GenericForm: () => GenericForm_default,
@@ -2394,6 +2395,156 @@ var AppHeader = ({
   ] }) }) });
 };
 
+// src/components/ExactHeader.tsx
+var import_react8 = __toESM(require("react"), 1);
+var import_react_router_dom2 = require("react-router-dom");
+var import_lucide_react3 = require("lucide-react");
+var import_jsx_runtime17 = require("react/jsx-runtime");
+var UserMenuContext = import_react8.default.createContext(void 0);
+var useUserMenu = () => import_react8.default.useContext(UserMenuContext);
+var RefreshButton = ({ onRefresh, loading = false }) => {
+  const handleRefresh = () => {
+    if (onRefresh) {
+      onRefresh();
+    } else {
+      window.location.reload();
+    }
+  };
+  return /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(
+    Button,
+    {
+      onClick: handleRefresh,
+      variant: "ghost",
+      size: "icon",
+      className: "hidden sm:inline-flex",
+      children: loading ? /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(import_lucide_react3.LoaderCircle, { className: "animate-spin" }) : /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(import_lucide_react3.RotateCw, {})
+    }
+  );
+};
+function UserMenu({ children, user, onLogout }) {
+  const [open, setOpen] = (0, import_react8.useState)(false);
+  const handleToggleOpen = (0, import_react8.useCallback)(() => {
+    setOpen((prevOpen) => !prevOpen);
+  }, []);
+  const handleClose = (0, import_react8.useCallback)(() => {
+    setOpen(false);
+  }, []);
+  const handleLogout = () => {
+    if (onLogout) {
+      onLogout();
+    }
+    setOpen(false);
+  };
+  return /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(UserMenuContext.Provider, { value: { onClose: handleClose }, children: /* @__PURE__ */ (0, import_jsx_runtime17.jsxs)(DropdownMenu, { open, onOpenChange: handleToggleOpen, children: [
+    /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(DropdownMenuTrigger, { asChild: true, children: /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(
+      Button,
+      {
+        variant: "ghost",
+        className: "relative h-8 w-8 ml-2 rounded-full",
+        children: /* @__PURE__ */ (0, import_jsx_runtime17.jsxs)(Avatar, { className: "h-8 w-8", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(AvatarImage, { src: user?.avatar, role: "presentation" }),
+          /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(AvatarFallback, { children: user?.name?.charAt(0) || "U" })
+        ] })
+      }
+    ) }),
+    /* @__PURE__ */ (0, import_jsx_runtime17.jsxs)(DropdownMenuContent, { className: "w-56", align: "end", forceMount: true, children: [
+      /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(DropdownMenuLabel, { className: "font-normal", children: /* @__PURE__ */ (0, import_jsx_runtime17.jsxs)("div", { className: "flex flex-col space-y-1", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime17.jsx)("p", { className: "text-sm font-medium leading-none", children: user?.name || "User" }),
+        user?.email && /* @__PURE__ */ (0, import_jsx_runtime17.jsx)("p", { className: "text-xs text-muted-foreground", children: user.email })
+      ] }) }),
+      /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(DropdownMenuSeparator, {}),
+      children,
+      import_react8.Children.count(children) > 0 && /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(DropdownMenuSeparator, {}),
+      /* @__PURE__ */ (0, import_jsx_runtime17.jsxs)(DropdownMenuItem, { onClick: handleLogout, className: "cursor-pointer", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(import_lucide_react3.LogOut, {}),
+        "Log out"
+      ] })
+    ] })
+  ] }) });
+}
+var NavigationTab = ({
+  label,
+  to,
+  isActive
+}) => /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(
+  import_react_router_dom2.Link,
+  {
+    to,
+    className: `px-6 py-3 text-sm font-medium transition-colors border-b-2 ${isActive ? "text-secondary-foreground border-secondary-foreground" : "text-secondary-foreground/70 border-transparent hover:text-secondary-foreground/80"}`,
+    children: label
+  }
+);
+var UsersMenu = () => {
+  const { onClose } = useUserMenu() ?? {};
+  return /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(DropdownMenuItem, { asChild: true, onClick: onClose, children: /* @__PURE__ */ (0, import_jsx_runtime17.jsxs)(import_react_router_dom2.Link, { to: "/sales", className: "flex items-center gap-2", children: [
+    /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(import_lucide_react3.User, {}),
+    " Users"
+  ] }) });
+};
+var ConfigurationMenu = () => {
+  const { onClose } = useUserMenu() ?? {};
+  return /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(DropdownMenuItem, { asChild: true, onClick: onClose, children: /* @__PURE__ */ (0, import_jsx_runtime17.jsxs)(import_react_router_dom2.Link, { to: "/settings", className: "flex items-center gap-2", children: [
+    /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(import_lucide_react3.Settings, {}),
+    "My info"
+  ] }) });
+};
+var ExactHeader = ({
+  title,
+  darkModeLogo,
+  lightModeLogo,
+  navigationItems = [],
+  user,
+  onLogout,
+  onRefresh,
+  loading = false
+}) => {
+  return /* @__PURE__ */ (0, import_jsx_runtime17.jsx)("nav", { className: "flex-grow", children: /* @__PURE__ */ (0, import_jsx_runtime17.jsx)("header", { className: "bg-secondary", children: /* @__PURE__ */ (0, import_jsx_runtime17.jsx)("div", { className: "px-4", children: /* @__PURE__ */ (0, import_jsx_runtime17.jsxs)("div", { className: "flex justify-between items-center flex-1", children: [
+    /* @__PURE__ */ (0, import_jsx_runtime17.jsxs)(
+      import_react_router_dom2.Link,
+      {
+        to: "/",
+        className: "flex items-center gap-2 text-secondary-foreground no-underline",
+        children: [
+          darkModeLogo && /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(
+            "img",
+            {
+              className: "[.light_&]:hidden h-6",
+              src: darkModeLogo,
+              alt: title
+            }
+          ),
+          lightModeLogo && /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(
+            "img",
+            {
+              className: "[.dark_&]:hidden h-6",
+              src: lightModeLogo,
+              alt: title
+            }
+          ),
+          /* @__PURE__ */ (0, import_jsx_runtime17.jsx)("h1", { className: "text-xl font-semibold", children: title })
+        ]
+      }
+    ),
+    /* @__PURE__ */ (0, import_jsx_runtime17.jsx)("div", { children: /* @__PURE__ */ (0, import_jsx_runtime17.jsx)("nav", { className: "flex", children: navigationItems.map((item) => /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(
+      NavigationTab,
+      {
+        label: item.label,
+        to: item.to,
+        isActive: item.isActive || false
+      },
+      item.to
+    )) }) }),
+    /* @__PURE__ */ (0, import_jsx_runtime17.jsxs)("div", { className: "flex items-center", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(ThemeSwitch, {}),
+      /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(RefreshButton, { onRefresh, loading }),
+      /* @__PURE__ */ (0, import_jsx_runtime17.jsxs)(UserMenu, { user, onLogout, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(ConfigurationMenu, {}),
+        /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(UsersMenu, {})
+      ] })
+    ] })
+  ] }) }) }) });
+};
+
 // src/services/BaseService.ts
 var BaseService = class {
   constructor(client, tableName) {
@@ -2670,19 +2821,19 @@ var getSupabaseClient = () => {
 };
 
 // src/services/AuthProvider.tsx
-var import_react8 = require("react");
-var import_jsx_runtime17 = require("react/jsx-runtime");
-var AuthContext = (0, import_react8.createContext)(null);
+var import_react9 = require("react");
+var import_jsx_runtime18 = require("react/jsx-runtime");
+var AuthContext = (0, import_react9.createContext)(null);
 var AuthProvider = ({
   children,
   supabaseClient,
   onAuthStateChange
 }) => {
-  const [user, setUser] = (0, import_react8.useState)(null);
-  const [session, setSession] = (0, import_react8.useState)(null);
-  const [loading, setLoading] = (0, import_react8.useState)(true);
-  const [error, setError] = (0, import_react8.useState)(null);
-  (0, import_react8.useEffect)(() => {
+  const [user, setUser] = (0, import_react9.useState)(null);
+  const [session, setSession] = (0, import_react9.useState)(null);
+  const [loading, setLoading] = (0, import_react9.useState)(true);
+  const [error, setError] = (0, import_react9.useState)(null);
+  (0, import_react9.useEffect)(() => {
     const getInitialSession = async () => {
       try {
         const { data: { session: initialSession }, error: error2 } = await supabaseClient.auth.getSession();
@@ -2785,10 +2936,10 @@ var AuthProvider = ({
     signOut,
     resetPassword
   };
-  return /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(AuthContext.Provider, { value, children });
+  return /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(AuthContext.Provider, { value, children });
 };
 var useAuth = () => {
-  const context = (0, import_react8.useContext)(AuthContext);
+  const context = (0, import_react9.useContext)(AuthContext);
   if (!context) {
     throw new Error("useAuth must be used within an AuthProvider");
   }
@@ -2833,6 +2984,7 @@ var useAuth = () => {
   DropdownMenuTrigger,
   ERROR_TYPES,
   ErrorBoundary,
+  ExactHeader,
   FIELD_CONFIGS,
   FilterDropdown,
   GenericForm,

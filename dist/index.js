@@ -2168,6 +2168,156 @@ var AppHeader = ({
   ] }) }) });
 };
 
+// src/components/ExactHeader.tsx
+import React9, { Children, useCallback as useCallback3, useState as useState6 } from "react";
+import { Link as Link2 } from "react-router-dom";
+import { LogOut as LogOut2, Settings as Settings2, User as User2, LoaderCircle as LoaderCircle2, RotateCw as RotateCw2 } from "lucide-react";
+import { jsx as jsx17, jsxs as jsxs9 } from "react/jsx-runtime";
+var UserMenuContext = React9.createContext(void 0);
+var useUserMenu = () => React9.useContext(UserMenuContext);
+var RefreshButton = ({ onRefresh, loading = false }) => {
+  const handleRefresh = () => {
+    if (onRefresh) {
+      onRefresh();
+    } else {
+      window.location.reload();
+    }
+  };
+  return /* @__PURE__ */ jsx17(
+    Button,
+    {
+      onClick: handleRefresh,
+      variant: "ghost",
+      size: "icon",
+      className: "hidden sm:inline-flex",
+      children: loading ? /* @__PURE__ */ jsx17(LoaderCircle2, { className: "animate-spin" }) : /* @__PURE__ */ jsx17(RotateCw2, {})
+    }
+  );
+};
+function UserMenu({ children, user, onLogout }) {
+  const [open, setOpen] = useState6(false);
+  const handleToggleOpen = useCallback3(() => {
+    setOpen((prevOpen) => !prevOpen);
+  }, []);
+  const handleClose = useCallback3(() => {
+    setOpen(false);
+  }, []);
+  const handleLogout = () => {
+    if (onLogout) {
+      onLogout();
+    }
+    setOpen(false);
+  };
+  return /* @__PURE__ */ jsx17(UserMenuContext.Provider, { value: { onClose: handleClose }, children: /* @__PURE__ */ jsxs9(DropdownMenu, { open, onOpenChange: handleToggleOpen, children: [
+    /* @__PURE__ */ jsx17(DropdownMenuTrigger, { asChild: true, children: /* @__PURE__ */ jsx17(
+      Button,
+      {
+        variant: "ghost",
+        className: "relative h-8 w-8 ml-2 rounded-full",
+        children: /* @__PURE__ */ jsxs9(Avatar, { className: "h-8 w-8", children: [
+          /* @__PURE__ */ jsx17(AvatarImage, { src: user?.avatar, role: "presentation" }),
+          /* @__PURE__ */ jsx17(AvatarFallback, { children: user?.name?.charAt(0) || "U" })
+        ] })
+      }
+    ) }),
+    /* @__PURE__ */ jsxs9(DropdownMenuContent, { className: "w-56", align: "end", forceMount: true, children: [
+      /* @__PURE__ */ jsx17(DropdownMenuLabel, { className: "font-normal", children: /* @__PURE__ */ jsxs9("div", { className: "flex flex-col space-y-1", children: [
+        /* @__PURE__ */ jsx17("p", { className: "text-sm font-medium leading-none", children: user?.name || "User" }),
+        user?.email && /* @__PURE__ */ jsx17("p", { className: "text-xs text-muted-foreground", children: user.email })
+      ] }) }),
+      /* @__PURE__ */ jsx17(DropdownMenuSeparator, {}),
+      children,
+      Children.count(children) > 0 && /* @__PURE__ */ jsx17(DropdownMenuSeparator, {}),
+      /* @__PURE__ */ jsxs9(DropdownMenuItem, { onClick: handleLogout, className: "cursor-pointer", children: [
+        /* @__PURE__ */ jsx17(LogOut2, {}),
+        "Log out"
+      ] })
+    ] })
+  ] }) });
+}
+var NavigationTab = ({
+  label,
+  to,
+  isActive
+}) => /* @__PURE__ */ jsx17(
+  Link2,
+  {
+    to,
+    className: `px-6 py-3 text-sm font-medium transition-colors border-b-2 ${isActive ? "text-secondary-foreground border-secondary-foreground" : "text-secondary-foreground/70 border-transparent hover:text-secondary-foreground/80"}`,
+    children: label
+  }
+);
+var UsersMenu = () => {
+  const { onClose } = useUserMenu() ?? {};
+  return /* @__PURE__ */ jsx17(DropdownMenuItem, { asChild: true, onClick: onClose, children: /* @__PURE__ */ jsxs9(Link2, { to: "/sales", className: "flex items-center gap-2", children: [
+    /* @__PURE__ */ jsx17(User2, {}),
+    " Users"
+  ] }) });
+};
+var ConfigurationMenu = () => {
+  const { onClose } = useUserMenu() ?? {};
+  return /* @__PURE__ */ jsx17(DropdownMenuItem, { asChild: true, onClick: onClose, children: /* @__PURE__ */ jsxs9(Link2, { to: "/settings", className: "flex items-center gap-2", children: [
+    /* @__PURE__ */ jsx17(Settings2, {}),
+    "My info"
+  ] }) });
+};
+var ExactHeader = ({
+  title,
+  darkModeLogo,
+  lightModeLogo,
+  navigationItems = [],
+  user,
+  onLogout,
+  onRefresh,
+  loading = false
+}) => {
+  return /* @__PURE__ */ jsx17("nav", { className: "flex-grow", children: /* @__PURE__ */ jsx17("header", { className: "bg-secondary", children: /* @__PURE__ */ jsx17("div", { className: "px-4", children: /* @__PURE__ */ jsxs9("div", { className: "flex justify-between items-center flex-1", children: [
+    /* @__PURE__ */ jsxs9(
+      Link2,
+      {
+        to: "/",
+        className: "flex items-center gap-2 text-secondary-foreground no-underline",
+        children: [
+          darkModeLogo && /* @__PURE__ */ jsx17(
+            "img",
+            {
+              className: "[.light_&]:hidden h-6",
+              src: darkModeLogo,
+              alt: title
+            }
+          ),
+          lightModeLogo && /* @__PURE__ */ jsx17(
+            "img",
+            {
+              className: "[.dark_&]:hidden h-6",
+              src: lightModeLogo,
+              alt: title
+            }
+          ),
+          /* @__PURE__ */ jsx17("h1", { className: "text-xl font-semibold", children: title })
+        ]
+      }
+    ),
+    /* @__PURE__ */ jsx17("div", { children: /* @__PURE__ */ jsx17("nav", { className: "flex", children: navigationItems.map((item) => /* @__PURE__ */ jsx17(
+      NavigationTab,
+      {
+        label: item.label,
+        to: item.to,
+        isActive: item.isActive || false
+      },
+      item.to
+    )) }) }),
+    /* @__PURE__ */ jsxs9("div", { className: "flex items-center", children: [
+      /* @__PURE__ */ jsx17(ThemeSwitch, {}),
+      /* @__PURE__ */ jsx17(RefreshButton, { onRefresh, loading }),
+      /* @__PURE__ */ jsxs9(UserMenu, { user, onLogout, children: [
+        /* @__PURE__ */ jsx17(ConfigurationMenu, {}),
+        /* @__PURE__ */ jsx17(UsersMenu, {})
+      ] })
+    ] })
+  ] }) }) }) });
+};
+
 // src/services/BaseService.ts
 var BaseService = class {
   constructor(client, tableName) {
@@ -2443,18 +2593,18 @@ var getSupabaseClient = () => {
 };
 
 // src/services/AuthProvider.tsx
-import { createContext as createContext2, useContext as useContext2, useState as useState6, useEffect as useEffect4 } from "react";
-import { jsx as jsx17 } from "react/jsx-runtime";
+import { createContext as createContext2, useContext as useContext2, useState as useState7, useEffect as useEffect4 } from "react";
+import { jsx as jsx18 } from "react/jsx-runtime";
 var AuthContext = createContext2(null);
 var AuthProvider = ({
   children,
   supabaseClient,
   onAuthStateChange
 }) => {
-  const [user, setUser] = useState6(null);
-  const [session, setSession] = useState6(null);
-  const [loading, setLoading] = useState6(true);
-  const [error, setError] = useState6(null);
+  const [user, setUser] = useState7(null);
+  const [session, setSession] = useState7(null);
+  const [loading, setLoading] = useState7(true);
+  const [error, setError] = useState7(null);
   useEffect4(() => {
     const getInitialSession = async () => {
       try {
@@ -2558,7 +2708,7 @@ var AuthProvider = ({
     signOut,
     resetPassword
   };
-  return /* @__PURE__ */ jsx17(AuthContext.Provider, { value, children });
+  return /* @__PURE__ */ jsx18(AuthContext.Provider, { value, children });
 };
 var useAuth = () => {
   const context = useContext2(AuthContext);
@@ -2605,6 +2755,7 @@ export {
   DropdownMenuTrigger,
   ERROR_TYPES,
   ErrorBoundary,
+  ExactHeader,
   FIELD_CONFIGS,
   FilterDropdown_default as FilterDropdown,
   GenericForm_default as GenericForm,
