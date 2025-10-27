@@ -47,10 +47,9 @@ export const createSupabaseClient = (config: SupabaseConfig): SupabaseClient => 
  * Note: This function should be used in the consuming application, not in the package
  */
 export const createSupabaseFromEnv = (): SupabaseClient => {
-  // Use globalThis to access import.meta in a way that works across environments
-  const env = (globalThis as any).importMeta?.env || (typeof window !== 'undefined' ? (window as any).env : {});
-  const url = env.VITE_SUPABASE_URL || process.env.VITE_SUPABASE_URL;
-  const anonKey = env.VITE_SUPABASE_ANON_KEY || process.env.VITE_SUPABASE_ANON_KEY;
+  // Access environment variables in a way that works in both dev and production
+  const url = import.meta.env?.VITE_SUPABASE_URL || process.env.VITE_SUPABASE_URL;
+  const anonKey = import.meta.env?.VITE_SUPABASE_ANON_KEY || process.env.VITE_SUPABASE_ANON_KEY;
 
   if (!url) {
     throw new Error('Missing VITE_SUPABASE_URL environment variable');
