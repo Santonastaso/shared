@@ -7,12 +7,13 @@ export default defineConfig({
     styles: "src/styles/index.css"
   },
   format: ["esm", "cjs"],
-  dts: true,
+  dts: false,
   clean: true,
   sourcemap: true,
   external: [
     "react", 
     "react-dom", 
+    "react-hook-form",
     "@radix-ui/react-slot",
     "@supabase/supabase-js",
     "@tanstack/react-query",
@@ -22,6 +23,7 @@ export default defineConfig({
     "tailwind-merge",
     "zustand",
     "lucide-react",
-    "sonner"
+    "sonner",
+    "yup"
   ],
 });

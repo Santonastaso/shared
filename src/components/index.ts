@@ -18,3 +18,6 @@ export { Header } from './Header';
 // Component Variants
 export { buttonVariants } from './button-variants';
 export { badgeVariants } from './badge-variants';
+// Generic UI Components
+export { default as FilterDropdown } from './FilterDropdown';
+export { default as GenericForm } from './GenericForm';

@@ -71,6 +71,50 @@ var showToast = (message, options) => toast(message, options);
 var dismissAll = () => toast.dismiss();
 var dismiss = (id) => toast.dismiss(id);
 
+// src/utils/validation.ts
+var validateData = (data, schema) => {
+  try {
+    if (schema && typeof schema.validateSync === "function") {
+      schema.validateSync(data, { abortEarly: false });
+      return { isValid: true, errors: {} };
+    }
+    if (typeof schema === "function") {
+      const result = schema(data);
+      return result;
+    }
+    return { isValid: true, errors: {} };
+  } catch (validationError) {
+    const errors = {};
+    if (validationError.inner && Array.isArray(validationError.inner)) {
+      validationError.inner.forEach((error) => {
+        errors[error.path] = error.message;
+      });
+    } else if (validationError.message) {
+      errors.general = validationError.message;
+    }
+    return { isValid: false, errors };
+  }
+};
+var SCHEMAS = {
+  // Applications should extend this with their specific schemas
+};
+var validateRequired = (data, requiredFields) => {
+  const errors = {};
+  requiredFields.forEach((field) => {
+    if (!data[field] || typeof data[field] === "string" && data[field].trim() === "") {
+      errors[field] = "This field is required";
+    }
+  });
+  return {
+    isValid: Object.keys(errors).length === 0,
+    errors
+  };
+};
+var validateEmail = (email) => {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return emailRegex.test(email);
+};
+
 // src/utils/index.ts
 function cn(...inputs) {
   return twMerge(clsx(inputs));
@@ -117,6 +161,45 @@ var throttle = (func, limit) => {
       setTimeout(() => inThrottle = false, limit);
     }
   };
+};
+var safeAsync = async (asyncFn, context = {}) => {
+  try {
+    return await asyncFn();
+  } catch (error) {
+    return error instanceof Error ? error : new Error(String(error));
+  }
+};
+var handleApiError = (error, context = {}) => {
+  let errorMessage = "An unexpected error occurred";
+  if (error.response) {
+    const status = error.response.status;
+    switch (status) {
+      case 400:
+        errorMessage = "Invalid request data";
+        break;
+      case 401:
+        errorMessage = "Authentication required";
+        break;
+      case 403:
+        errorMessage = "Access denied";
+        break;
+      case 404:
+        errorMessage = "Resource not found";
+        break;
+      case 500:
+      case 502:
+      case 503:
+        errorMessage = "Server error occurred";
+        break;
+      default:
+        errorMessage = "Network error occurred";
+    }
+  } else if (error.request) {
+    errorMessage = "Network connection failed";
+  } else if (error.message) {
+    errorMessage = error.message;
+  }
+  return new Error(errorMessage);
 };
 
 // src/components/button-variants.ts
@@ -998,399 +1081,218 @@ function Header({ user, onSignOut, onToggleSidebar, ThemeSwitch: ThemeSwitch2, B
   ] }) });
 }
 
-// src/services/BaseService.ts
-var BaseService = class {
-  constructor(client, tableName) {
-    this.client = client;
-    this.tableName = tableName;
-  }
-  /**
-   * Get all records with advanced filtering and pagination
-   */
-  async getAll(options = {}) {
-    try {
-      let query = this.client.from(this.tableName).select(options.select || "*").order(options.orderBy || "created_at", { ascending: options.ascending !== false });
-      if (options.filters) {
-        Object.entries(options.filters).forEach(([key, value]) => {
-          if (value !== null && value !== void 0 && value !== "") {
-            if (Array.isArray(value)) {
-              query = query.in(key, value);
-            } else if (typeof value === "string" && value.includes("%")) {
-              query = query.like(key, value);
-            } else {
-              query = query.eq(key, value);
-            }
-          }
-        });
-      }
-      if (options.dateRange) {
-        const { startDate, endDate, dateField = "created_at" } = options.dateRange;
-        if (startDate) {
-          query = query.gte(dateField, `${startDate}T00:00:00.000Z`);
-        }
-        if (endDate) {
-          query = query.lte(dateField, `${endDate}T23:59:59.999Z`);
-        }
-      }
-      if (options.limit) {
-        query = query.limit(options.limit);
-      }
-      if (options.offset) {
-        query = query.range(options.offset, options.offset + (options.limit || 10) - 1);
-      }
-      const { data, error } = await query;
-      if (error) {
-        throw new Error(this.handleSupabaseError(error, `${this.tableName}.getAll`));
-      }
-      return data || [];
-    } catch (error) {
-      throw new Error(`Failed to fetch ${this.tableName}: ${error.message}`);
-    }
-  }
-  /**
-   * Get paginated records with total count
-   */
-  async getPaginated(options = {}) {
-    const page = options.page || 1;
-    const perPage = options.perPage || 10;
-    const offset = (page - 1) * perPage;
-    const totalCount = await this.count(options.filters);
-    const data = await this.getAll({
-      ...options,
-      limit: perPage,
-      offset
-    });
-    return {
-      data,
-      total: totalCount,
-      page,
-      perPage,
-      totalPages: Math.ceil(totalCount / perPage)
-    };
-  }
-  /**
-   * Get a record by ID
-   */
-  async getById(id, select = "*") {
-    try {
-      const { data, error } = await this.client.from(this.tableName).select(select).eq("id", id).single();
-      if (error) {
-        throw new Error(this.handleSupabaseError(error, `${this.tableName}.getById`));
-      }
-      return data;
-    } catch (error) {
-      throw new Error(`Failed to fetch ${this.tableName} by ID: ${error.message}`);
-    }
-  }
-  /**
-   * Create a new record
-   */
-  async create(data) {
-    try {
-      const { data: result, error } = await this.client.from(this.tableName).insert(data).select().single();
-      if (error) {
-        throw new Error(this.handleSupabaseError(error, `${this.tableName}.create`));
-      }
-      return result;
-    } catch (error) {
-      throw new Error(`Failed to create ${this.tableName}: ${error.message}`);
-    }
-  }
-  /**
-   * Update a record
-   */
-  async update(id, data) {
-    try {
-      const { data: result, error } = await this.client.from(this.tableName).update(data).eq("id", id).select().single();
-      if (error) {
-        throw new Error(this.handleSupabaseError(error, `${this.tableName}.update`));
-      }
-      return result;
-    } catch (error) {
-      throw new Error(`Failed to update ${this.tableName}: ${error.message}`);
-    }
-  }
-  /**
-   * Delete a record
-   */
-  async delete(id) {
-    try {
-      const { error } = await this.client.from(this.tableName).delete().eq("id", id);
-      if (error) {
-        throw new Error(this.handleSupabaseError(error, `${this.tableName}.delete`));
-      }
-    } catch (error) {
-      throw new Error(`Failed to delete ${this.tableName}: ${error.message}`);
-    }
-  }
-  /**
-   * Bulk delete records
-   */
-  async bulkDelete(ids) {
-    try {
-      const { error } = await this.client.from(this.tableName).delete().in("id", ids);
-      if (error) {
-        throw new Error(this.handleSupabaseError(error, `${this.tableName}.bulkDelete`));
-      }
-    } catch (error) {
-      throw new Error(`Failed to bulk delete ${this.tableName}: ${error.message}`);
-    }
-  }
-  /**
-   * Count records with optional filters
-   */
-  async count(filters) {
-    try {
-      let query = this.client.from(this.tableName).select("*", { count: "exact", head: true });
-      if (filters) {
-        Object.entries(filters).forEach(([key, value]) => {
-          if (value !== null && value !== void 0 && value !== "") {
-            if (Array.isArray(value)) {
-              query = query.in(key, value);
-            } else {
-              query = query.eq(key, value);
-            }
-          }
-        });
-      }
-      const { count, error } = await query;
-      if (error) {
-        throw new Error(this.handleSupabaseError(error, `${this.tableName}.count`));
-      }
-      return count || 0;
-    } catch (error) {
-      throw new Error(`Failed to count ${this.tableName}: ${error.message}`);
-    }
-  }
-  /**
-   * Search records with text search
-   */
-  async search(searchTerm, searchFields = ["name"], options = {}) {
-    try {
-      let query = this.client.from(this.tableName).select(options.select || "*");
-      if (searchFields.length === 1) {
-        query = query.ilike(searchFields[0], `%${searchTerm}%`);
-      } else {
-        const orConditions = searchFields.map((field) => `${field}.ilike.%${searchTerm}%`).join(",");
-        query = query.or(orConditions);
-      }
-      if (options.filters) {
-        Object.entries(options.filters).forEach(([key, value]) => {
-          if (value !== null && value !== void 0 && value !== "") {
-            query = query.eq(key, value);
-          }
-        });
-      }
-      query = query.order(options.orderBy || "created_at", { ascending: options.ascending !== false });
-      if (options.limit) {
-        query = query.limit(options.limit);
-      }
-      const { data, error } = await query;
-      if (error) {
-        throw new Error(this.handleSupabaseError(error, `${this.tableName}.search`));
-      }
-      return data || [];
-    } catch (error) {
-      throw new Error(`Failed to search ${this.tableName}: ${error.message}`);
-    }
-  }
-  /**
-   * Handle Supabase errors with user-friendly messages
-   */
-  handleSupabaseError(error, context = "") {
-    if (error.code === "23505") {
-      return "This record already exists";
-    } else if (error.code === "23503") {
-      return "Cannot perform this operation due to related records";
-    } else if (error.code === "PGRST116") {
-      return "No records found";
-    } else if (error.message?.includes("JWT")) {
-      return "Authentication error. Please refresh the page";
-    }
-    return error.message || "An unexpected error occurred";
-  }
-};
-
-// src/services/supabase.ts
-import { createClient } from "@supabase/supabase-js";
-var createSupabaseClient = (config) => {
-  const defaultOptions = {
-    auth: {
-      persistSession: true,
-      autoRefreshToken: true
-    },
-    realtime: {
-      params: {
-        eventsPerSecond: 10
-      }
-    }
-  };
-  return createClient(config.url, config.anonKey, {
-    ...defaultOptions,
-    ...config.options
-  });
-};
-var createSupabaseFromEnv = () => {
-  const env = globalThis.importMeta?.env || (typeof window !== "undefined" ? window.env : {});
-  const url = env.VITE_SUPABASE_URL || process.env.VITE_SUPABASE_URL;
-  const anonKey = env.VITE_SUPABASE_ANON_KEY || process.env.VITE_SUPABASE_ANON_KEY;
-  if (!url) {
-    throw new Error("Missing VITE_SUPABASE_URL environment variable");
-  }
-  if (!anonKey) {
-    throw new Error("Missing VITE_SUPABASE_ANON_KEY environment variable");
-  }
-  return createSupabaseClient({ url, anonKey });
-};
-var handleSupabaseError = (error, context = "") => {
-  if (error.code === "23505") {
-    return "This record already exists";
-  } else if (error.code === "23503") {
-    return "Cannot perform this operation due to related records";
-  } else if (error.code === "PGRST116") {
-    return "No records found";
-  } else if (error.message?.includes("JWT")) {
-    return "Authentication error. Please refresh the page";
-  }
-  return error.message || "An unexpected error occurred";
-};
-var checkSupabaseConnection = async (client, testTable = "users") => {
-  try {
-    const { error } = await client.from(testTable).select("count").limit(1);
-    return !error;
-  } catch (error) {
-    return false;
-  }
-};
-
-// src/services/AuthProvider.tsx
-import { createContext as createContext2, useContext as useContext2, useState as useState3, useEffect as useEffect2 } from "react";
-import { jsx as jsx12 } from "react/jsx-runtime";
-var AuthContext = createContext2(null);
-var AuthProvider = ({
-  children,
-  supabaseClient,
-  onAuthStateChange
-}) => {
-  const [user, setUser] = useState3(null);
-  const [session, setSession] = useState3(null);
-  const [loading, setLoading] = useState3(true);
-  const [error, setError] = useState3(null);
-  useEffect2(() => {
-    const getInitialSession = async () => {
-      try {
-        const { data: { session: initialSession }, error: error2 } = await supabaseClient.auth.getSession();
-        if (error2) {
-          setError("Failed to initialize authentication");
-        } else {
-          setSession(initialSession);
-          setUser(initialSession?.user ?? null);
-          onAuthStateChange?.(initialSession?.user ?? null, initialSession);
-        }
-      } catch (err) {
-        setError("Authentication initialization failed");
-      } finally {
-        setLoading(false);
-      }
-    };
-    getInitialSession();
-    const { data: { subscription } } = supabaseClient.auth.onAuthStateChange(
-      async (event, session2) => {
-        setSession(session2);
-        setUser(session2?.user ?? null);
-        setError(null);
-        onAuthStateChange?.(session2?.user ?? null, session2);
-        if (event === "SIGNED_OUT") {
-          setLoading(false);
-        }
-      }
+// src/components/FilterDropdown.tsx
+import { useMemo as useMemo3, useState as useState3, useEffect as useEffect2, useRef } from "react";
+import { jsx as jsx12, jsxs as jsxs5 } from "react/jsx-runtime";
+var FilterDropdown = ({ column, options, onFilterChange, isOpen, onToggle, activeFilter }) => {
+  const [searchTerm, setSearchTerm] = useState3("");
+  const [position, setPosition] = useState3({ top: 0, left: 0 });
+  const [selectedValues, setSelectedValues] = useState3(/* @__PURE__ */ new Set());
+  const [isSelectAll, setIsSelectAll] = useState3(true);
+  const dropdownRef = useRef(null);
+  const filteredOptions = useMemo3(() => {
+    if (!searchTerm) return options;
+    const filtered = options.filter(
+      (option) => option && option.toLowerCase().includes(searchTerm.toLowerCase())
     );
-    return () => subscription.unsubscribe();
-  }, [supabaseClient, onAuthStateChange]);
-  const signIn = async (email, password) => {
-    try {
-      setError(null);
-      const { error: error2 } = await supabaseClient.auth.signInWithPassword({
-        email,
-        password
-      });
-      if (error2) {
-        setError(error2.message);
-        return { error: error2.message };
+    return filtered;
+  }, [options, searchTerm, column]);
+  useEffect2(() => {
+    if (isOpen) {
+      if (activeFilter && Array.isArray(activeFilter)) {
+        setSelectedValues(new Set(activeFilter));
+        setIsSelectAll(activeFilter.length === options.length);
+      } else if (activeFilter) {
+        setSelectedValues(/* @__PURE__ */ new Set([activeFilter]));
+        setIsSelectAll(false);
+      } else {
+        setSelectedValues(new Set(options));
+        setIsSelectAll(true);
       }
-      return {};
-    } catch (err) {
-      const errorMessage = "Sign in failed";
-      setError(errorMessage);
-      return { error: errorMessage };
+    }
+  }, [isOpen, activeFilter, options]);
+  const handleOptionToggle = (option) => {
+    const newSelectedValues = new Set(selectedValues);
+    if (newSelectedValues.has(option)) {
+      newSelectedValues.delete(option);
+    } else {
+      newSelectedValues.add(option);
+    }
+    setSelectedValues(newSelectedValues);
+    setIsSelectAll(newSelectedValues.size === filteredOptions.length);
+  };
+  const handleSelectAll = () => {
+    if (isSelectAll) {
+      setSelectedValues(/* @__PURE__ */ new Set());
+      setIsSelectAll(false);
+    } else {
+      setSelectedValues(new Set(filteredOptions));
+      setIsSelectAll(true);
     }
   };
-  const signUp = async (email, password, metadata) => {
-    try {
-      setError(null);
-      const { error: error2 } = await supabaseClient.auth.signUp({
-        email,
-        password,
-        options: {
-          data: metadata
+  const handleClearFilter = () => {
+    setSelectedValues(/* @__PURE__ */ new Set());
+    setIsSelectAll(false);
+  };
+  const handleApplyFilter = () => {
+    const selectedArray = Array.from(selectedValues);
+    onFilterChange(column, selectedArray.length === 0 ? "" : selectedArray);
+    setSearchTerm("");
+    onToggle();
+  };
+  const handleCancel = () => {
+    setSearchTerm("");
+    onToggle();
+  };
+  useEffect2(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        handleCancel();
+      }
+    };
+    if (isOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isOpen]);
+  useEffect2(() => {
+    if (!isOpen) {
+      setSearchTerm("");
+      setSelectedValues(/* @__PURE__ */ new Set());
+      setIsSelectAll(true);
+    }
+  }, [isOpen]);
+  useEffect2(() => {
+    if (isOpen && dropdownRef.current) {
+      const button = dropdownRef.current.querySelector("button");
+      if (button) {
+        const rect = button.getBoundingClientRect();
+        const viewportWidth = window.innerWidth;
+        const dropdownWidth = 192;
+        let leftPosition = 0;
+        if (rect.left + dropdownWidth > viewportWidth) {
+          leftPosition = -dropdownWidth + rect.width;
         }
-      });
-      if (error2) {
-        setError(error2.message);
-        return { error: error2.message };
+        setPosition({
+          top: rect.height + 5,
+          // Position below the button with small gap
+          left: leftPosition
+        });
       }
-      return {};
-    } catch (err) {
-      const errorMessage = "Sign up failed";
-      setError(errorMessage);
-      return { error: errorMessage };
     }
-  };
-  const signOut = async () => {
-    try {
-      setError(null);
-      await supabaseClient.auth.signOut();
-    } catch (err) {
-      setError("Sign out failed");
-    }
-  };
-  const resetPassword = async (email) => {
-    try {
-      setError(null);
-      const { error: error2 } = await supabaseClient.auth.resetPasswordForEmail(email);
-      if (error2) {
-        setError(error2.message);
-        return { error: error2.message };
+  }, [isOpen]);
+  return /* @__PURE__ */ jsxs5("div", { className: "relative", ref: dropdownRef, children: [
+    /* @__PURE__ */ jsx12(
+      "button",
+      {
+        onClick: onToggle,
+        className: `inline-flex items-center justify-center w-4 h-4 transition-colors ${activeFilter ? "text-blue-600 hover:text-blue-700" : "text-gray-500 hover:text-gray-700"}`,
+        title: activeFilter ? `Filtro attivo: ${activeFilter}` : "Filtra",
+        children: /* @__PURE__ */ jsx12("svg", { width: "12", height: "12", viewBox: "0 0 24 24", fill: "currentColor", children: /* @__PURE__ */ jsx12("path", { d: "M10 18h4v-2h-4v2zM3 6v2h18V6H3zm3 7h12v-2H6v2z" }) })
       }
-      return {};
-    } catch (err) {
-      const errorMessage = "Password reset failed";
-      setError(errorMessage);
-      return { error: errorMessage };
-    }
-  };
-  const value = {
-    user,
-    session,
-    loading,
-    error,
-    signIn,
-    signUp,
-    signOut,
-    resetPassword
-  };
-  return /* @__PURE__ */ jsx12(AuthContext.Provider, { value, children });
+    ),
+    isOpen && /* @__PURE__ */ jsxs5(
+      "div",
+      {
+        className: "absolute bg-white border border-gray-300 rounded-md shadow-lg z-[99999] w-48",
+        style: {
+          top: position.top,
+          left: position.left
+        },
+        onClick: (e) => e.stopPropagation(),
+        children: [
+          /* @__PURE__ */ jsxs5("div", { className: "p-2", children: [
+            /* @__PURE__ */ jsxs5("div", { className: "flex items-center justify-between mb-1", children: [
+              /* @__PURE__ */ jsx12(
+                "button",
+                {
+                  onClick: handleSelectAll,
+                  className: "text-blue-600 text-xs font-medium hover:underline",
+                  children: isSelectAll ? "Select all" : `Select all ${filteredOptions.length}`
+                }
+              ),
+              /* @__PURE__ */ jsx12(
+                "button",
+                {
+                  onClick: handleClearFilter,
+                  className: "text-blue-600 text-xs font-medium hover:underline",
+                  children: "Clear"
+                }
+              )
+            ] }),
+            /* @__PURE__ */ jsxs5("div", { className: "text-xs text-gray-600 mb-1", children: [
+              "Displaying ",
+              filteredOptions.length
+            ] }),
+            /* @__PURE__ */ jsxs5("div", { className: "relative mb-1", children: [
+              /* @__PURE__ */ jsx12(
+                "input",
+                {
+                  type: "text",
+                  placeholder: "Search values...",
+                  value: searchTerm,
+                  onChange: (e) => setSearchTerm(e.target.value),
+                  className: "w-full px-2 py-1 text-xs border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-500"
+                }
+              ),
+              /* @__PURE__ */ jsx12("div", { className: "absolute right-2 top-1/2 transform -translate-y-1/2", children: /* @__PURE__ */ jsx12("svg", { width: "10", height: "10", viewBox: "0 0 24 24", fill: "currentColor", className: "text-gray-400", children: /* @__PURE__ */ jsx12("path", { d: "M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z" }) }) })
+            ] }),
+            /* @__PURE__ */ jsxs5("div", { className: "h-16 overflow-y-auto border border-gray-200 rounded", children: [
+              filteredOptions.map((option, index) => /* @__PURE__ */ jsxs5(
+                "label",
+                {
+                  className: "flex items-center px-2 py-1 hover:bg-gray-50 cursor-pointer",
+                  children: [
+                    /* @__PURE__ */ jsx12(
+                      "input",
+                      {
+                        type: "checkbox",
+                        checked: selectedValues.has(option),
+                        onChange: () => handleOptionToggle(option),
+                        className: "mr-2 h-3 w-3 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                      }
+                    ),
+                    /* @__PURE__ */ jsx12("span", { className: "text-xs truncate flex-1", children: option || "(Blanks)" })
+                  ]
+                },
+                `${option}-${index}`
+              )),
+              filteredOptions.length === 0 && searchTerm && /* @__PURE__ */ jsx12("div", { className: "px-2 py-2 text-xs text-gray-500 text-center", children: "No results found" })
+            ] })
+          ] }),
+          /* @__PURE__ */ jsxs5("div", { className: "border-t border-gray-200 p-2 flex justify-end space-x-1", children: [
+            /* @__PURE__ */ jsx12(
+              "button",
+              {
+                onClick: handleCancel,
+                className: "px-2 py-1 text-xs text-gray-700 hover:bg-gray-100 rounded",
+                children: "Cancel"
+              }
+            ),
+            /* @__PURE__ */ jsx12(
+              "button",
+              {
+                onClick: handleApplyFilter,
+                className: "px-2 py-1 text-xs bg-blue-600 text-white hover:bg-blue-700 rounded",
+                children: "OK"
+              }
+            )
+          ] })
+        ]
+      }
+    )
+  ] });
 };
-var useAuth = () => {
-  const context = useContext2(AuthContext);
-  if (!context) {
-    throw new Error("useAuth must be used within an AuthProvider");
-  }
-  return context;
-};
+var FilterDropdown_default = FilterDropdown;
+
+// src/components/GenericForm.tsx
+import { useMemo as useMemo4 } from "react";
+import { useForm } from "react-hook-form";
 
 // src/hooks/useErrorHandler.ts
-import { useState as useState4, useCallback, useRef } from "react";
+import { useState as useState4, useCallback, useRef as useRef2 } from "react";
 var showError2 = (message) => console.error(message);
 var showWarning2 = (message) => console.warn(message);
 var showInfo2 = (message) => console.info(message);
@@ -1406,7 +1308,7 @@ var useErrorHandler = (options = {}) => {
   } = options;
   const [errors, setErrors] = useState4([]);
   const [isRetrying, setIsRetrying] = useState4(false);
-  const retryCountRef = useRef(0);
+  const retryCountRef = useRef2(0);
   const handleError = useCallback(async (error, context = "", customOptions = {}) => {
     const normalizedError = {
       id: `ERR_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
@@ -1677,6 +1579,596 @@ function useDataService(service, resourceName) {
     invalidateDetail: (id) => queryClient.invalidateQueries({ queryKey: [resourceName, "detail", id] })
   };
 }
+
+// src/components/GenericForm.tsx
+import { jsx as jsx13, jsxs as jsxs6 } from "react/jsx-runtime";
+function GenericForm({
+  config,
+  initialData = {},
+  onSubmit,
+  onSuccess,
+  isEditMode = false,
+  isLoading = false,
+  customActions = null,
+  customFieldRenderers = {},
+  className = "p-1 bg-card rounded-lg shadow-sm border"
+}) {
+  const { handleAsync } = useErrorHandler("GenericForm");
+  const initialFormData = useMemo4(() => {
+    const formData = {};
+    config.sections.forEach((section) => {
+      section.fields.forEach((field) => {
+        if (field.name in initialData) {
+          formData[field.name] = initialData[field.name];
+        } else if (field.defaultValue !== void 0) {
+          formData[field.name] = field.defaultValue;
+        } else {
+          formData[field.name] = "";
+        }
+      });
+    });
+    return formData;
+  }, [config, initialData]);
+  const {
+    register,
+    handleSubmit,
+    formState: { isSubmitting, errors },
+    watch,
+    setValue,
+    getValues,
+    reset,
+    clearErrors
+  } = useForm({
+    defaultValues: initialFormData,
+    mode: "onChange"
+    // Enable real-time validation
+  });
+  const handleFormSubmit = async (data) => {
+    await handleAsync(
+      async () => {
+        await onSubmit(data);
+        if (onSuccess) onSuccess();
+        reset(initialFormData);
+      },
+      {
+        context: isEditMode ? config.editContext : config.addContext,
+        fallbackMessage: isEditMode ? config.editErrorMessage : config.addErrorMessage
+      }
+    );
+  };
+  const renderField = (field) => {
+    const fieldValue = watch(field.name);
+    if (field.conditional && !field.conditional(fieldValue, watch, getValues)) {
+      return null;
+    }
+    if (customFieldRenderers[field.type]) {
+      return customFieldRenderers[field.type](field, {
+        watch,
+        setValue,
+        getValues,
+        register,
+        isSubmitting,
+        fieldValue
+      });
+    }
+    const baseInputProps = {
+      id: field.name,
+      placeholder: field.placeholder,
+      disabled: field.disabled || isSubmitting,
+      className: field.className || "",
+      ...register(field.name, field.validation || {})
+    };
+    switch (field.type) {
+      case "select":
+        return /* @__PURE__ */ jsxs6("div", { children: [
+          /* @__PURE__ */ jsxs6(
+            "select",
+            {
+              ...register(field.name, field.validation),
+              disabled: field.disabled || isSubmitting,
+              className: `flex h-9 w-full rounded-md border bg-transparent px-3 py-1 text-sm shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring ${errors[field.name] ? "border-red-500" : "border-input"}`,
+              children: [
+                /* @__PURE__ */ jsx13("option", { value: "", children: field.placeholder || `Seleziona ${field.label.toLowerCase()}` }),
+                field.options?.map((option) => /* @__PURE__ */ jsx13("option", { value: option.value, children: option.label }, option.value))
+              ]
+            }
+          ),
+          errors[field.name] && /* @__PURE__ */ jsx13("p", { className: "text-sm text-destructive mt-1", children: errors[field.name].message })
+        ] });
+      case "textarea":
+        return /* @__PURE__ */ jsxs6("div", { children: [
+          /* @__PURE__ */ jsx13(
+            "textarea",
+            {
+              ...baseInputProps,
+              rows: field.rows || 3,
+              className: `w-full px-3 py-2 border border-input rounded-md bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent ${field.className || ""} ${errors[field.name] ? "border-destructive" : ""}`
+            }
+          ),
+          errors[field.name] && /* @__PURE__ */ jsx13("p", { className: "text-sm text-destructive mt-1", children: errors[field.name].message })
+        ] });
+      case "checkbox":
+        return /* @__PURE__ */ jsx13("div", { className: "flex flex-wrap gap-2", children: field.options?.map((option) => /* @__PURE__ */ jsxs6("div", { className: "flex items-center space-x-2", children: [
+          /* @__PURE__ */ jsx13(
+            "input",
+            {
+              type: "checkbox",
+              id: `${field.name}_${option.value}`,
+              value: option.value,
+              checked: fieldValue?.includes(option.value) || false,
+              onChange: (e) => {
+                const currentValues = getValues(field.name) || [];
+                if (e.target.checked) {
+                  setValue(field.name, [...currentValues, option.value].sort(), { shouldValidate: true });
+                } else {
+                  setValue(field.name, currentValues.filter((v) => v !== option.value), { shouldValidate: true });
+                }
+              },
+              className: "h-4 w-4 text-primary border-gray-300 rounded focus:ring-primary"
+            }
+          ),
+          /* @__PURE__ */ jsx13(Label, { htmlFor: `${field.name}_${option.value}`, className: "text-[10px] font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70", children: option.label })
+        ] }, option.value)) });
+      case "datetime-local":
+        return /* @__PURE__ */ jsxs6("div", { children: [
+          /* @__PURE__ */ jsx13(Input, { type: "datetime-local", ...baseInputProps, className: `${baseInputProps.className} ${errors[field.name] ? "border-red-500" : ""}` }),
+          errors[field.name] && /* @__PURE__ */ jsx13("p", { className: "text-sm text-destructive mt-1", children: errors[field.name].message })
+        ] });
+      case "date":
+        return /* @__PURE__ */ jsxs6("div", { children: [
+          /* @__PURE__ */ jsx13(Input, { type: "date", ...baseInputProps, className: `${baseInputProps.className} ${errors[field.name] ? "border-red-500" : ""}` }),
+          errors[field.name] && /* @__PURE__ */ jsx13("p", { className: "text-sm text-destructive mt-1", children: errors[field.name].message })
+        ] });
+      case "time":
+        return /* @__PURE__ */ jsxs6("div", { children: [
+          /* @__PURE__ */ jsx13(Input, { type: "time", ...baseInputProps, className: `${baseInputProps.className} ${errors[field.name] ? "border-red-500" : ""}` }),
+          errors[field.name] && /* @__PURE__ */ jsx13("p", { className: "text-sm text-destructive mt-1", children: errors[field.name].message })
+        ] });
+      case "number":
+        return /* @__PURE__ */ jsxs6("div", { children: [
+          /* @__PURE__ */ jsx13(Input, { type: "number", ...baseInputProps, className: `${baseInputProps.className} ${errors[field.name] ? "border-red-500" : ""}` }),
+          errors[field.name] && /* @__PURE__ */ jsx13("p", { className: "text-sm text-destructive mt-1", children: errors[field.name].message })
+        ] });
+      case "text":
+      default:
+        return /* @__PURE__ */ jsxs6("div", { children: [
+          /* @__PURE__ */ jsx13(Input, { type: "text", ...baseInputProps, className: `${baseInputProps.className} ${errors[field.name] ? "border-red-500" : ""}` }),
+          errors[field.name] && /* @__PURE__ */ jsx13("p", { className: "text-sm text-destructive mt-1", children: errors[field.name].message })
+        ] });
+    }
+  };
+  const renderSection = (section) => {
+    const visibleFields = section.fields.filter(
+      (field) => !field.conditional || field.conditional(watch(field.name), watch, getValues)
+    );
+    if (visibleFields.length === 0) return null;
+    return /* @__PURE__ */ jsxs6("div", { className: "space-y-4", children: [
+      /* @__PURE__ */ jsx13("h2", { className: "text-lg font-semibold text-foreground", children: section.title }),
+      /* @__PURE__ */ jsx13("div", { className: "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4", children: visibleFields.map((field) => /* @__PURE__ */ jsxs6("div", { className: "space-y-2", children: [
+        /* @__PURE__ */ jsxs6(Label, { htmlFor: field.name, className: "text-sm font-medium text-foreground", children: [
+          field.label,
+          " ",
+          field.required && /* @__PURE__ */ jsx13("span", { className: "text-destructive", children: "*" })
+        ] }),
+        renderField(field),
+        field.helpText && /* @__PURE__ */ jsx13("p", { className: "text-xs text-muted-foreground", children: field.helpText })
+      ] }, field.name)) })
+    ] }, section.title);
+  };
+  const renderCustomSection = (sectionKey) => {
+    if (customFieldRenderers[sectionKey]) {
+      return customFieldRenderers[sectionKey]();
+    }
+    return null;
+  };
+  return /* @__PURE__ */ jsx13("div", { className: "bg-card rounded-lg border border-border shadow-sm p-6", children: /* @__PURE__ */ jsxs6("form", { onSubmit: handleSubmit(handleFormSubmit), noValidate: true, className: "space-y-6", children: [
+    config.sections.map(renderSection),
+    config.customFields && Object.keys(config.customFields).map(
+      (sectionKey) => /* @__PURE__ */ jsx13("div", { children: renderCustomSection(sectionKey) }, sectionKey)
+    ),
+    customActions && /* @__PURE__ */ jsx13("div", { className: "space-y-4", children: customActions }),
+    /* @__PURE__ */ jsx13("div", { className: "flex justify-end pt-6 border-t border-border", children: /* @__PURE__ */ jsx13(
+      Button,
+      {
+        type: "submit",
+        disabled: isLoading || isSubmitting,
+        children: isLoading || isSubmitting ? isEditMode ? config.editLoadingText : config.addLoadingText : isEditMode ? config.editButtonText : config.addButtonText
+      }
+    ) })
+  ] }) });
+}
+var GenericForm_default = GenericForm;
+
+// src/services/BaseService.ts
+var BaseService = class {
+  constructor(client, tableName) {
+    this.client = client;
+    this.tableName = tableName;
+  }
+  /**
+   * Get all records with advanced filtering and pagination
+   */
+  async getAll(options = {}) {
+    try {
+      let query = this.client.from(this.tableName).select(options.select || "*").order(options.orderBy || "created_at", { ascending: options.ascending !== false });
+      if (options.filters) {
+        Object.entries(options.filters).forEach(([key, value]) => {
+          if (value !== null && value !== void 0 && value !== "") {
+            if (Array.isArray(value)) {
+              query = query.in(key, value);
+            } else if (typeof value === "string" && value.includes("%")) {
+              query = query.like(key, value);
+            } else {
+              query = query.eq(key, value);
+            }
+          }
+        });
+      }
+      if (options.dateRange) {
+        const { startDate, endDate, dateField = "created_at" } = options.dateRange;
+        if (startDate) {
+          query = query.gte(dateField, `${startDate}T00:00:00.000Z`);
+        }
+        if (endDate) {
+          query = query.lte(dateField, `${endDate}T23:59:59.999Z`);
+        }
+      }
+      if (options.limit) {
+        query = query.limit(options.limit);
+      }
+      if (options.offset) {
+        query = query.range(options.offset, options.offset + (options.limit || 10) - 1);
+      }
+      const { data, error } = await query;
+      if (error) {
+        throw new Error(this.handleSupabaseError(error, `${this.tableName}.getAll`));
+      }
+      return data || [];
+    } catch (error) {
+      throw new Error(`Failed to fetch ${this.tableName}: ${error.message}`);
+    }
+  }
+  /**
+   * Get paginated records with total count
+   */
+  async getPaginated(options = {}) {
+    const page = options.page || 1;
+    const perPage = options.perPage || 10;
+    const offset = (page - 1) * perPage;
+    const totalCount = await this.count(options.filters);
+    const data = await this.getAll({
+      ...options,
+      limit: perPage,
+      offset
+    });
+    return {
+      data,
+      total: totalCount,
+      page,
+      perPage,
+      totalPages: Math.ceil(totalCount / perPage)
+    };
+  }
+  /**
+   * Get a record by ID
+   */
+  async getById(id, select = "*") {
+    try {
+      const { data, error } = await this.client.from(this.tableName).select(select).eq("id", id).single();
+      if (error) {
+        throw new Error(this.handleSupabaseError(error, `${this.tableName}.getById`));
+      }
+      return data;
+    } catch (error) {
+      throw new Error(`Failed to fetch ${this.tableName} by ID: ${error.message}`);
+    }
+  }
+  /**
+   * Create a new record
+   */
+  async create(data) {
+    try {
+      const { data: result, error } = await this.client.from(this.tableName).insert(data).select().single();
+      if (error) {
+        throw new Error(this.handleSupabaseError(error, `${this.tableName}.create`));
+      }
+      return result;
+    } catch (error) {
+      throw new Error(`Failed to create ${this.tableName}: ${error.message}`);
+    }
+  }
+  /**
+   * Update a record
+   */
+  async update(id, data) {
+    try {
+      const { data: result, error } = await this.client.from(this.tableName).update(data).eq("id", id).select().single();
+      if (error) {
+        throw new Error(this.handleSupabaseError(error, `${this.tableName}.update`));
+      }
+      return result;
+    } catch (error) {
+      throw new Error(`Failed to update ${this.tableName}: ${error.message}`);
+    }
+  }
+  /**
+   * Delete a record
+   */
+  async delete(id) {
+    try {
+      const { error } = await this.client.from(this.tableName).delete().eq("id", id);
+      if (error) {
+        throw new Error(this.handleSupabaseError(error, `${this.tableName}.delete`));
+      }
+    } catch (error) {
+      throw new Error(`Failed to delete ${this.tableName}: ${error.message}`);
+    }
+  }
+  /**
+   * Bulk delete records
+   */
+  async bulkDelete(ids) {
+    try {
+      const { error } = await this.client.from(this.tableName).delete().in("id", ids);
+      if (error) {
+        throw new Error(this.handleSupabaseError(error, `${this.tableName}.bulkDelete`));
+      }
+    } catch (error) {
+      throw new Error(`Failed to bulk delete ${this.tableName}: ${error.message}`);
+    }
+  }
+  /**
+   * Count records with optional filters
+   */
+  async count(filters) {
+    try {
+      let query = this.client.from(this.tableName).select("*", { count: "exact", head: true });
+      if (filters) {
+        Object.entries(filters).forEach(([key, value]) => {
+          if (value !== null && value !== void 0 && value !== "") {
+            if (Array.isArray(value)) {
+              query = query.in(key, value);
+            } else {
+              query = query.eq(key, value);
+            }
+          }
+        });
+      }
+      const { count, error } = await query;
+      if (error) {
+        throw new Error(this.handleSupabaseError(error, `${this.tableName}.count`));
+      }
+      return count || 0;
+    } catch (error) {
+      throw new Error(`Failed to count ${this.tableName}: ${error.message}`);
+    }
+  }
+  /**
+   * Search records with text search
+   */
+  async search(searchTerm, searchFields = ["name"], options = {}) {
+    try {
+      let query = this.client.from(this.tableName).select(options.select || "*");
+      if (searchFields.length === 1) {
+        query = query.ilike(searchFields[0], `%${searchTerm}%`);
+      } else {
+        const orConditions = searchFields.map((field) => `${field}.ilike.%${searchTerm}%`).join(",");
+        query = query.or(orConditions);
+      }
+      if (options.filters) {
+        Object.entries(options.filters).forEach(([key, value]) => {
+          if (value !== null && value !== void 0 && value !== "") {
+            query = query.eq(key, value);
+          }
+        });
+      }
+      query = query.order(options.orderBy || "created_at", { ascending: options.ascending !== false });
+      if (options.limit) {
+        query = query.limit(options.limit);
+      }
+      const { data, error } = await query;
+      if (error) {
+        throw new Error(this.handleSupabaseError(error, `${this.tableName}.search`));
+      }
+      return data || [];
+    } catch (error) {
+      throw new Error(`Failed to search ${this.tableName}: ${error.message}`);
+    }
+  }
+  /**
+   * Handle Supabase errors with user-friendly messages
+   */
+  handleSupabaseError(error, context = "") {
+    if (error.code === "23505") {
+      return "This record already exists";
+    } else if (error.code === "23503") {
+      return "Cannot perform this operation due to related records";
+    } else if (error.code === "PGRST116") {
+      return "No records found";
+    } else if (error.message?.includes("JWT")) {
+      return "Authentication error. Please refresh the page";
+    }
+    return error.message || "An unexpected error occurred";
+  }
+};
+
+// src/services/supabase.ts
+import { createClient } from "@supabase/supabase-js";
+var createSupabaseClient = (config) => {
+  const defaultOptions = {
+    auth: {
+      persistSession: true,
+      autoRefreshToken: true
+    },
+    realtime: {
+      params: {
+        eventsPerSecond: 10
+      }
+    }
+  };
+  return createClient(config.url, config.anonKey, {
+    ...defaultOptions,
+    ...config.options
+  });
+};
+var createSupabaseFromEnv = () => {
+  const env = globalThis.importMeta?.env || (typeof window !== "undefined" ? window.env : {});
+  const url = env.VITE_SUPABASE_URL || process.env.VITE_SUPABASE_URL;
+  const anonKey = env.VITE_SUPABASE_ANON_KEY || process.env.VITE_SUPABASE_ANON_KEY;
+  if (!url) {
+    throw new Error("Missing VITE_SUPABASE_URL environment variable");
+  }
+  if (!anonKey) {
+    throw new Error("Missing VITE_SUPABASE_ANON_KEY environment variable");
+  }
+  return createSupabaseClient({ url, anonKey });
+};
+var handleSupabaseError = (error, context = "") => {
+  if (error.code === "23505") {
+    return "This record already exists";
+  } else if (error.code === "23503") {
+    return "Cannot perform this operation due to related records";
+  } else if (error.code === "PGRST116") {
+    return "No records found";
+  } else if (error.message?.includes("JWT")) {
+    return "Authentication error. Please refresh the page";
+  }
+  return error.message || "An unexpected error occurred";
+};
+var checkSupabaseConnection = async (client, testTable = "users") => {
+  try {
+    const { error } = await client.from(testTable).select("count").limit(1);
+    return !error;
+  } catch (error) {
+    return false;
+  }
+};
+
+// src/services/AuthProvider.tsx
+import { createContext as createContext2, useContext as useContext2, useState as useState5, useEffect as useEffect4 } from "react";
+import { jsx as jsx14 } from "react/jsx-runtime";
+var AuthContext = createContext2(null);
+var AuthProvider = ({
+  children,
+  supabaseClient,
+  onAuthStateChange
+}) => {
+  const [user, setUser] = useState5(null);
+  const [session, setSession] = useState5(null);
+  const [loading, setLoading] = useState5(true);
+  const [error, setError] = useState5(null);
+  useEffect4(() => {
+    const getInitialSession = async () => {
+      try {
+        const { data: { session: initialSession }, error: error2 } = await supabaseClient.auth.getSession();
+        if (error2) {
+          setError("Failed to initialize authentication");
+        } else {
+          setSession(initialSession);
+          setUser(initialSession?.user ?? null);
+          onAuthStateChange?.(initialSession?.user ?? null, initialSession);
+        }
+      } catch (err) {
+        setError("Authentication initialization failed");
+      } finally {
+        setLoading(false);
+      }
+    };
+    getInitialSession();
+    const { data: { subscription } } = supabaseClient.auth.onAuthStateChange(
+      async (event, session2) => {
+        setSession(session2);
+        setUser(session2?.user ?? null);
+        setError(null);
+        onAuthStateChange?.(session2?.user ?? null, session2);
+        if (event === "SIGNED_OUT") {
+          setLoading(false);
+        }
+      }
+    );
+    return () => subscription.unsubscribe();
+  }, [supabaseClient, onAuthStateChange]);
+  const signIn = async (email, password) => {
+    try {
+      setError(null);
+      const { error: error2 } = await supabaseClient.auth.signInWithPassword({
+        email,
+        password
+      });
+      if (error2) {
+        setError(error2.message);
+        return { error: error2.message };
+      }
+      return {};
+    } catch (err) {
+      const errorMessage = "Sign in failed";
+      setError(errorMessage);
+      return { error: errorMessage };
+    }
+  };
+  const signUp = async (email, password, metadata) => {
+    try {
+      setError(null);
+      const { error: error2 } = await supabaseClient.auth.signUp({
+        email,
+        password,
+        options: {
+          data: metadata
+        }
+      });
+      if (error2) {
+        setError(error2.message);
+        return { error: error2.message };
+      }
+      return {};
+    } catch (err) {
+      const errorMessage = "Sign up failed";
+      setError(errorMessage);
+      return { error: errorMessage };
+    }
+  };
+  const signOut = async () => {
+    try {
+      setError(null);
+      await supabaseClient.auth.signOut();
+    } catch (err) {
+      setError("Sign out failed");
+    }
+  };
+  const resetPassword = async (email) => {
+    try {
+      setError(null);
+      const { error: error2 } = await supabaseClient.auth.resetPasswordForEmail(email);
+      if (error2) {
+        setError(error2.message);
+        return { error: error2.message };
+      }
+      return {};
+    } catch (err) {
+      const errorMessage = "Password reset failed";
+      setError(errorMessage);
+      return { error: errorMessage };
+    }
+  };
+  const value = {
+    user,
+    session,
+    loading,
+    error,
+    signIn,
+    signUp,
+    signOut,
+    resetPassword
+  };
+  return /* @__PURE__ */ jsx14(AuthContext.Provider, { value, children });
+};
+var useAuth = () => {
+  const context = useContext2(AuthContext);
+  if (!context) {
+    throw new Error("useAuth must be used within an AuthProvider");
+  }
+  return context;
+};
 export {
   ALERT_TYPES,
   AuthProvider,
@@ -1697,11 +2189,14 @@ export {
   ERROR_TYPES,
   ErrorBoundary,
   FIELD_CONFIGS,
+  FilterDropdown_default as FilterDropdown,
+  GenericForm_default as GenericForm,
   Header,
   Input,
   Label,
   MACHINE_STATUSES,
   PRODUCT_TYPES,
+  SCHEMAS,
   SEAL_SIDES,
   SHIFT_TYPES,
   TASK_STATUSES,
@@ -1732,7 +2227,9 @@ export {
   formatDateTime,
   generateId,
   getNested,
+  handleApiError,
   handleSupabaseError,
+  safeAsync,
   showError,
   showInfo,
   showSuccess,
@@ -1747,6 +2244,9 @@ export {
   useSidebar,
   useTheme,
   useValidationErrorHandler,
+  validateData,
+  validateEmail,
+  validateRequired,
   withErrorBoundary
 };
 //# sourceMappingURL=index.js.map
