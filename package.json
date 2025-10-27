@@ -1,6 +1,6 @@
 {
   "name": "@santonastaso/shared",
-  "version": "0.1.9",
+  "version": "0.1.10",
   "type": "module",
   "private": false,
   "module": "./dist/index.js",
@@ -36,7 +36,9 @@
     "tailwind-merge": "^2.0.0",
     "zustand": "^4.0.0",
     "lucide-react": "^0.400.0",
-    "sonner": "^2.0.0"
+    "sonner": "^2.0.0",
+    "react-hook-form": "^7.0.0",
+    "yup": "^1.0.0"
   },
   "devDependencies": {
     "@types/react": "^19.2.2",
