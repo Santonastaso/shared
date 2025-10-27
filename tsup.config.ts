@@ -11,8 +11,8 @@ export default defineConfig({
   clean: true,
   sourcemap: true,
   external: [
-    "react",
-    "react-dom",
+    "react", 
+    "react-dom", 
     "@radix-ui/react-slot",
     "@supabase/supabase-js",
     "@tanstack/react-query",
