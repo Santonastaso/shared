@@ -1782,7 +1782,7 @@ var GenericForm_default = GenericForm;
 // src/components/AppHeader.tsx
 import { useState as useState5, useCallback as useCallback2 } from "react";
 import { Link } from "react-router-dom";
-import { LogOut, Settings, User, RotateCw, LoaderCircle } from "lucide-react";
+import { LogOut, Settings, User, RotateCw, LoaderCircle, Menu } from "lucide-react";
 
 // src/components/Avatar.tsx
 import * as AvatarPrimitive from "@radix-ui/react-avatar";
@@ -1825,7 +1825,7 @@ function AvatarFallback({
     {
       "data-slot": "avatar-fallback",
       className: cn(
-        "bg-muted flex size-full items-center justify-center rounded-full",
+        "bg-primary text-primary-foreground flex size-full items-center justify-center rounded-full font-medium",
         className
       ),
       ...props
@@ -2059,6 +2059,7 @@ var AppHeader = ({
   onRefresh,
   onSettings,
   onUsers,
+  onToggleSidebar,
   isLoading = false,
   customMenuItems
 }) => {
@@ -2070,34 +2071,44 @@ var AppHeader = ({
     setIsUserMenuOpen(false);
   }, []);
   return /* @__PURE__ */ jsx16("header", { className: "bg-secondary border-b", children: /* @__PURE__ */ jsx16("div", { className: "px-4", children: /* @__PURE__ */ jsxs8("div", { className: "flex justify-between items-center h-16", children: [
-    /* @__PURE__ */ jsxs8(
-      Link,
-      {
-        to: "/",
-        className: "flex items-center gap-2 text-secondary-foreground no-underline hover:opacity-80 transition-opacity",
-        children: [
-          logo && /* @__PURE__ */ jsxs8(Fragment, { children: [
-            /* @__PURE__ */ jsx16(
-              "img",
-              {
-                className: "[.light_&]:hidden h-6",
-                src: logo.dark,
-                alt: title
-              }
-            ),
-            /* @__PURE__ */ jsx16(
-              "img",
-              {
-                className: "[.dark_&]:hidden h-6",
-                src: logo.light,
-                alt: title
-              }
-            )
-          ] }),
-          /* @__PURE__ */ jsx16("h1", { className: "text-xl font-semibold", children: title })
-        ]
-      }
-    ),
+    /* @__PURE__ */ jsxs8("div", { className: "flex items-center gap-2", children: [
+      onToggleSidebar && /* @__PURE__ */ jsx16(
+        "button",
+        {
+          onClick: onToggleSidebar,
+          className: "p-2 rounded-md text-muted-foreground hover:text-foreground hover:bg-accent focus:outline-none focus:ring-2 focus:ring-inset focus:ring-ring",
+          children: /* @__PURE__ */ jsx16(Menu, { className: "h-5 w-5" })
+        }
+      ),
+      /* @__PURE__ */ jsxs8(
+        Link,
+        {
+          to: "/",
+          className: "flex items-center gap-2 text-secondary-foreground no-underline hover:opacity-80 transition-opacity",
+          children: [
+            logo && /* @__PURE__ */ jsxs8(Fragment, { children: [
+              /* @__PURE__ */ jsx16(
+                "img",
+                {
+                  className: "[.light_&]:hidden h-6",
+                  src: logo.dark,
+                  alt: title
+                }
+              ),
+              /* @__PURE__ */ jsx16(
+                "img",
+                {
+                  className: "[.dark_&]:hidden h-6",
+                  src: logo.light,
+                  alt: title
+                }
+              )
+            ] }),
+            /* @__PURE__ */ jsx16("h1", { className: "text-xl font-semibold", children: title })
+          ]
+        }
+      )
+    ] }),
     navigationItems.length > 0 && /* @__PURE__ */ jsx16("nav", { className: "hidden md:flex", children: navigationItems.map((item) => /* @__PURE__ */ jsx16(
       Link,
       {

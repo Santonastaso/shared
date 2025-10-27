@@ -1,6 +1,6 @@
 import React, { useState, useCallback } from 'react';
 import { Link } from 'react-router-dom';
-import { LogOut, Settings, User, RotateCw, LoaderCircle } from 'lucide-react';
+import { LogOut, Settings, User, RotateCw, LoaderCircle, Menu } from 'lucide-react';
 import { ThemeSwitch } from './theme/ThemeSwitch';
 import { Button } from './Button';
 import { Avatar, AvatarFallback, AvatarImage } from './Avatar';
@@ -40,6 +40,7 @@ export interface AppHeaderProps {
   onRefresh?: () => void;
   onSettings?: () => void;
   onUsers?: () => void;
+  onToggleSidebar?: () => void;
   
   // Loading state
   isLoading?: boolean;
@@ -57,6 +58,7 @@ export const AppHeader: React.FC<AppHeaderProps> = ({
   onRefresh,
   onSettings,
   onUsers,
+  onToggleSidebar,
   isLoading = false,
   customMenuItems,
 }) => {
@@ -74,27 +76,37 @@ export const AppHeader: React.FC<AppHeaderProps> = ({
     <header className="bg-secondary border-b">
       <div className="px-4">
         <div className="flex justify-between items-center h-16">
-          {/* Logo and Title */}
-          <Link
-            to="/"
-            className="flex items-center gap-2 text-secondary-foreground no-underline hover:opacity-80 transition-opacity"
-          >
-            {logo && (
-              <>
-                <img
-                  className="[.light_&]:hidden h-6"
-                  src={logo.dark}
-                  alt={title}
-                />
-                <img
-                  className="[.dark_&]:hidden h-6"
-                  src={logo.light}
-                  alt={title}
-                />
-              </>
+          {/* Logo, Title, and Sidebar Toggle */}
+          <div className="flex items-center gap-2">
+            {onToggleSidebar && (
+              <button
+                onClick={onToggleSidebar}
+                className="p-2 rounded-md text-muted-foreground hover:text-foreground hover:bg-accent focus:outline-none focus:ring-2 focus:ring-inset focus:ring-ring"
+              >
+                <Menu className="h-5 w-5" />
+              </button>
             )}
-            <h1 className="text-xl font-semibold">{title}</h1>
-          </Link>
+            <Link
+              to="/"
+              className="flex items-center gap-2 text-secondary-foreground no-underline hover:opacity-80 transition-opacity"
+            >
+              {logo && (
+                <>
+                  <img
+                    className="[.light_&]:hidden h-6"
+                    src={logo.dark}
+                    alt={title}
+                  />
+                  <img
+                    className="[.dark_&]:hidden h-6"
+                    src={logo.light}
+                    alt={title}
+                  />
+                </>
+              )}
+              <h1 className="text-xl font-semibold">{title}</h1>
+            </Link>
+          </div>
 
           {/* Navigation */}
           {navigationItems.length > 0 && (
