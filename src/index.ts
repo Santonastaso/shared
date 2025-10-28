@@ -12,3 +12,6 @@ export * from './hooks';
 
 // Constants
 export * from './constants';
+
+// Store factories
+export * from './stores';

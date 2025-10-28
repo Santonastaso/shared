@@ -147,3 +147,9 @@ export const handleApiError = (error: any, context: any = {}): Error => {
 
 // Re-export validation utilities
 export * from './validation';
+
+// Consolidated utility functions
+export * from './dateUtils';
+export * from './numberUtils';
+export * from './stringUtils';
+export * from './arrayUtils';

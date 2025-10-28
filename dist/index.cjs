@@ -48,6 +48,7 @@ __export(src_exports, {
   CardHeader: () => CardHeader,
   CardTitle: () => CardTitle,
   DATA_TABLE_DEFAULTS: () => DATA_TABLE_DEFAULTS,
+  DATE_FORMATS: () => DATE_FORMATS,
   DEPARTMENT_TYPES: () => DEPARTMENT_TYPES,
   DataTable: () => DataTable,
   DropdownMenu: () => DropdownMenu,
@@ -65,7 +66,6 @@ __export(src_exports, {
   DropdownMenuSubContent: () => DropdownMenuSubContent,
   DropdownMenuSubTrigger: () => DropdownMenuSubTrigger,
   DropdownMenuTrigger: () => DropdownMenuTrigger,
-  ERROR_TYPES: () => ERROR_TYPES,
   ErrorBoundary: () => ErrorBoundary,
   ExactHeader: () => ExactHeader,
   FIELD_CONFIGS: () => FIELD_CONFIGS,
@@ -75,13 +75,16 @@ __export(src_exports, {
   Input: () => Input,
   Label: () => Label,
   MACHINE_STATUSES: () => MACHINE_STATUSES,
+  NUMBER_CONSTANTS: () => NUMBER_CONSTANTS,
   PRODUCT_TYPES: () => PRODUCT_TYPES,
   SCHEMAS: () => SCHEMAS,
   SEAL_SIDES: () => SEAL_SIDES,
   SHIFT_TYPES: () => SHIFT_TYPES,
+  STRING_CONSTANTS: () => STRING_CONSTANTS,
+  ServiceError: () => ServiceError,
   SimpleHeader: () => SimpleHeader,
+  SupabaseService: () => SupabaseService,
   TASK_STATUSES: () => TASK_STATUSES,
-  TIME_CONSTANTS: () => TIME_CONSTANTS,
   Table: () => Table,
   TableBody: () => TableBody,
   TableCaption: () => TableCaption,
@@ -94,32 +97,162 @@ __export(src_exports, {
   ThemeSwitch: () => ThemeSwitch,
   VALIDATION_MESSAGES: () => VALIDATION_MESSAGES,
   WORK_CENTERS: () => WORK_CENTERS,
+  addDaysToDate: () => addDaysToDate,
+  arrayComparison: () => arrayComparison,
+  average: () => average,
+  averageBy: () => averageBy,
+  averageNumbers: () => averageNumbers,
   badgeVariants: () => badgeVariants,
   buttonVariants: () => buttonVariants,
+  calculatePercentage: () => calculatePercentage,
+  calculatePercentageChange: () => calculatePercentageChange,
+  capitalize: () => capitalize,
+  capitalizeWords: () => capitalizeWords,
   checkSupabaseConnection: () => checkSupabaseConnection,
+  chunk: () => chunk,
+  clampNumber: () => clampNumber,
+  cleanWhitespace: () => cleanWhitespace,
   cn: () => cn,
+  compact: () => compact,
+  compareStringsIgnoreCase: () => compareStringsIgnoreCase,
   confirmAction: () => confirmAction,
+  containsBy: () => containsBy,
+  countBy: () => countBy,
+  countCharacters: () => countCharacters,
+  countOccurrences: () => countOccurrences,
+  countWords: () => countWords,
+  createArray: () => createArray,
+  createCRUDStore: () => createCRUDStore,
+  createDateRange: () => createDateRange,
+  createEntityStore: () => createEntityStore,
+  createPaginatedStore: () => createPaginatedStore,
+  createQueryKeys: () => createQueryKeys,
+  createServiceHooks: () => createServiceHooks,
   createSupabaseClient: () => createSupabaseClient,
   createSupabaseFromEnv: () => createSupabaseFromEnv,
+  createSupabaseHooks: () => createSupabaseHooks,
+  createUIStore: () => createUIStore,
   debounce: () => debounce,
+  defaultQueryConfig: () => defaultQueryConfig,
+  defaultQueryErrorHandler: () => defaultQueryErrorHandler,
+  difference: () => difference,
   dismiss: () => dismiss,
   dismissAll: () => dismissAll,
-  formatDate: () => formatDate,
+  extractEmailDomain: () => extractEmailDomain,
+  extractEmailUsername: () => extractEmailUsername,
+  filterBy: () => filterBy,
+  findBy: () => findBy,
+  findIndexBy: () => findIndexBy,
+  first: () => first,
+  flatten: () => flatten,
+  formatBytes: () => formatBytes,
+  formatCurrency: () => formatCurrency,
+  formatDate: () => formatDate2,
   formatDateTime: () => formatDateTime,
+  formatDisplayDate: () => formatDisplayDate,
+  formatDisplayDateTime: () => formatDisplayDateTime,
+  formatDistance: () => formatDistance,
+  formatDuration: () => formatDuration,
+  formatFileSize: () => formatFileSize,
+  formatISODate: () => formatISODate,
+  formatISODateTime: () => formatISODateTime,
+  formatNumber: () => formatNumber,
+  formatNumberWithUnit: () => formatNumberWithUnit,
+  formatPercentage: () => formatPercentage,
+  formatPhoneNumber: () => formatPhoneNumber,
+  formatTime: () => formatTime,
+  formatVolume: () => formatVolume,
+  formatWeight: () => formatWeight,
   generateId: () => generateId,
+  generateRandomString: () => generateRandomString,
+  generateSlug: () => generateSlug,
+  generateUUID: () => generateUUID,
+  getCurrentISODate: () => getCurrentISODate,
+  getCurrentISODateTime: () => getCurrentISODateTime,
+  getDateRangePresets: () => getDateRangePresets,
+  getDaysDifference: () => getDaysDifference,
+  getEndOfDay: () => getEndOfDay,
+  getHoursDifference: () => getHoursDifference,
+  getInitials: () => getInitials,
+  getMinutesDifference: () => getMinutesDifference,
   getNested: () => getNested,
+  getRandomItem: () => getRandomItem,
+  getRandomItems: () => getRandomItems,
+  getRelativeTime: () => getRelativeTime,
   getStandardSupabaseClient: () => getStandardSupabaseClient,
+  getStartOfDay: () => getStartOfDay,
   getSupabaseClient: () => getSupabaseClient,
+  getUniqueValues: () => getUniqueValues,
+  groupBy: () => groupBy,
   handleApiError: () => handleApiError,
-  handleSupabaseError: () => handleSupabaseError,
-  safeAsync: () => safeAsync,
+  handleSupabaseError: () => handleSupabaseError2,
+  handleSupabaseServiceError: () => handleSupabaseError,
+  highlightSearchTerms: () => highlightSearchTerms,
+  hoursToMinutes: () => hoursToMinutes,
+  insertAt: () => insertAt,
+  intersection: () => intersection,
+  isPalindrome: () => isPalindrome,
+  isValidDate: () => isValidDate,
+  isValidEmail: () => isValidEmail,
+  isValidNumber: () => isValidNumber,
+  isValidPhoneNumber: () => isValidPhoneNumber,
+  last: () => last,
+  maskString: () => maskString,
+  max: () => max,
+  maxBy: () => maxBy,
+  maxNumber: () => maxNumber,
+  min: () => min,
+  minBy: () => minBy,
+  minNumber: () => minNumber,
+  minutesToHours: () => minutesToHours,
+  moveItem: () => moveItem,
+  normalizeSpaces: () => normalizeSpaces,
+  numberValidation: () => numberValidation,
+  paginate: () => paginate,
+  parseDate: () => parseDate,
+  parseInteger: () => parseInteger,
+  parseNumber: () => parseNumber,
+  randomInteger: () => randomInteger,
+  randomNumber: () => randomNumber,
+  range: () => range,
+  removeAt: () => removeAt,
+  removeDuplicates: () => removeDuplicates,
+  removeDuplicatesByKey: () => removeDuplicatesByKey,
+  removeWhitespace: () => removeWhitespace,
+  reverse: () => reverse,
+  roundNumber: () => roundNumber,
+  safeMath: () => safeMath,
+  sanitizeHtml: () => sanitizeHtml,
+  searchIgnoreCase: () => searchIgnoreCase,
   showError: () => showError,
   showInfo: () => showInfo,
   showSuccess: () => showSuccess,
   showToast: () => showToast,
   showValidationError: () => showValidationError,
   showWarning: () => showWarning,
+  shuffle: () => shuffle,
+  skip: () => skip,
+  skipLast: () => skipLast,
+  sortBy: () => sortBy,
+  sortByMultiple: () => sortByMultiple,
+  stringTemplates: () => stringTemplates,
+  subtractDaysFromDate: () => subtractDaysFromDate,
+  sum: () => sum,
+  sumBy: () => sumBy,
+  sumNumbers: () => sumNumbers,
+  take: () => take,
+  takeLast: () => takeLast,
   throttle: () => throttle,
+  throwBusinessError: () => throwBusinessError,
+  throwNotFoundError: () => throwNotFoundError,
+  toCamelCase: () => toCamelCase,
+  toKebabCase: () => toKebabCase,
+  toPascalCase: () => toPascalCase,
+  toSnakeCase: () => toSnakeCase,
+  truncate: () => truncate,
+  truncateWords: () => truncateWords,
+  union: () => union,
+  updateAt: () => updateAt,
   useAuth: () => useAuth,
   useDataService: () => useDataService,
   useErrorBoundary: () => useErrorBoundary,
@@ -128,8 +261,11 @@ __export(src_exports, {
   useTheme: () => useTheme,
   useValidationErrorHandler: () => useValidationErrorHandler,
   validateData: () => validateData,
+  validateDateRange: () => validateDateRange,
   validateEmail: () => validateEmail,
+  validateNumericRanges: () => validateNumericRanges,
   validateRequired: () => validateRequired,
+  validateRequiredFields: () => validateRequiredFields,
   withErrorBoundary: () => withErrorBoundary
 });
 module.exports = __toCommonJS(src_exports);
@@ -233,6 +369,768 @@ var validateEmail = (email) => {
   return emailRegex.test(email);
 };
 
+// src/utils/dateUtils.ts
+var import_date_fns = require("date-fns");
+var DATE_FORMATS = {
+  ISO: "yyyy-MM-dd",
+  ISO_DATETIME: "yyyy-MM-dd'T'HH:mm:ss.SSSxxx",
+  DISPLAY: "dd/MM/yyyy",
+  DISPLAY_DATETIME: "dd/MM/yyyy HH:mm",
+  TIME: "HH:mm",
+  MONTH_YEAR: "MM/yyyy",
+  FULL: "EEEE, MMMM do, yyyy"
+};
+var formatDate = (date, formatPattern = DATE_FORMATS.DISPLAY) => {
+  if (!date) return "";
+  try {
+    const dateObj = typeof date === "string" ? (0, import_date_fns.parseISO)(date) : date;
+    if (!(0, import_date_fns.isValid)(dateObj)) return "";
+    return (0, import_date_fns.format)(dateObj, formatPattern);
+  } catch (error) {
+    console.warn("Date formatting error:", error);
+    return "";
+  }
+};
+var formatDisplayDate = (date) => {
+  return formatDate(date, DATE_FORMATS.DISPLAY);
+};
+var formatDisplayDateTime = (date) => {
+  return formatDate(date, DATE_FORMATS.DISPLAY_DATETIME);
+};
+var formatTime = (date) => {
+  return formatDate(date, DATE_FORMATS.TIME);
+};
+var formatISODate = (date) => {
+  return formatDate(date, DATE_FORMATS.ISO);
+};
+var formatISODateTime = (date) => {
+  if (!date) return "";
+  try {
+    const dateObj = typeof date === "string" ? (0, import_date_fns.parseISO)(date) : date;
+    if (!(0, import_date_fns.isValid)(dateObj)) return "";
+    return dateObj.toISOString();
+  } catch (error) {
+    console.warn("ISO datetime formatting error:", error);
+    return "";
+  }
+};
+var parseDate = (dateString) => {
+  if (!dateString) return null;
+  try {
+    const parsed = (0, import_date_fns.parseISO)(dateString);
+    return (0, import_date_fns.isValid)(parsed) ? parsed : null;
+  } catch (error) {
+    console.warn("Date parsing error:", error);
+    return null;
+  }
+};
+var getCurrentISODate = () => {
+  return formatISODate(/* @__PURE__ */ new Date());
+};
+var getCurrentISODateTime = () => {
+  return (/* @__PURE__ */ new Date()).toISOString();
+};
+var addDaysToDate = (date, days) => {
+  const dateObj = typeof date === "string" ? (0, import_date_fns.parseISO)(date) : date;
+  return (0, import_date_fns.addDays)(dateObj, days);
+};
+var subtractDaysFromDate = (date, days) => {
+  const dateObj = typeof date === "string" ? (0, import_date_fns.parseISO)(date) : date;
+  return (0, import_date_fns.subDays)(dateObj, days);
+};
+var getStartOfDay = (date) => {
+  const dateObj = typeof date === "string" ? (0, import_date_fns.parseISO)(date) : date;
+  return (0, import_date_fns.startOfDay)(dateObj);
+};
+var getEndOfDay = (date) => {
+  const dateObj = typeof date === "string" ? (0, import_date_fns.parseISO)(date) : date;
+  return (0, import_date_fns.endOfDay)(dateObj);
+};
+var getDaysDifference = (date1, date2) => {
+  const dateObj1 = typeof date1 === "string" ? (0, import_date_fns.parseISO)(date1) : date1;
+  const dateObj2 = typeof date2 === "string" ? (0, import_date_fns.parseISO)(date2) : date2;
+  return (0, import_date_fns.differenceInDays)(dateObj1, dateObj2);
+};
+var getHoursDifference = (date1, date2) => {
+  const dateObj1 = typeof date1 === "string" ? (0, import_date_fns.parseISO)(date1) : date1;
+  const dateObj2 = typeof date2 === "string" ? (0, import_date_fns.parseISO)(date2) : date2;
+  return (0, import_date_fns.differenceInHours)(dateObj1, dateObj2);
+};
+var getMinutesDifference = (date1, date2) => {
+  const dateObj1 = typeof date1 === "string" ? (0, import_date_fns.parseISO)(date1) : date1;
+  const dateObj2 = typeof date2 === "string" ? (0, import_date_fns.parseISO)(date2) : date2;
+  return (0, import_date_fns.differenceInMinutes)(dateObj1, dateObj2);
+};
+var isValidDate = (date) => {
+  if (!date) return false;
+  try {
+    const dateObj = typeof date === "string" ? (0, import_date_fns.parseISO)(date) : date;
+    return (0, import_date_fns.isValid)(dateObj);
+  } catch (error) {
+    return false;
+  }
+};
+var getRelativeTime = (date) => {
+  if (!date) return "";
+  try {
+    const dateObj = typeof date === "string" ? (0, import_date_fns.parseISO)(date) : date;
+    if (!(0, import_date_fns.isValid)(dateObj)) return "";
+    const now = /* @__PURE__ */ new Date();
+    const diffInMinutes = (0, import_date_fns.differenceInMinutes)(now, dateObj);
+    if (diffInMinutes < 1) return "just now";
+    if (diffInMinutes < 60) return `${diffInMinutes} minute${diffInMinutes === 1 ? "" : "s"} ago`;
+    const diffInHours = Math.floor(diffInMinutes / 60);
+    if (diffInHours < 24) return `${diffInHours} hour${diffInHours === 1 ? "" : "s"} ago`;
+    const diffInDays = Math.floor(diffInHours / 24);
+    if (diffInDays < 30) return `${diffInDays} day${diffInDays === 1 ? "" : "s"} ago`;
+    const diffInMonths = Math.floor(diffInDays / 30);
+    if (diffInMonths < 12) return `${diffInMonths} month${diffInMonths === 1 ? "" : "s"} ago`;
+    const diffInYears = Math.floor(diffInMonths / 12);
+    return `${diffInYears} year${diffInYears === 1 ? "" : "s"} ago`;
+  } catch (error) {
+    console.warn("Relative time calculation error:", error);
+    return "";
+  }
+};
+var createDateRange = (startDate, endDate) => ({
+  startDate: formatISODate(startDate),
+  endDate: formatISODate(endDate)
+});
+var getDateRangePresets = () => {
+  const today = /* @__PURE__ */ new Date();
+  const yesterday = (0, import_date_fns.subDays)(today, 1);
+  const lastWeek = (0, import_date_fns.subDays)(today, 7);
+  const lastMonth = (0, import_date_fns.subDays)(today, 30);
+  const lastYear = (0, import_date_fns.subDays)(today, 365);
+  return {
+    today: createDateRange(formatISODate(today), formatISODate(today)),
+    yesterday: createDateRange(formatISODate(yesterday), formatISODate(yesterday)),
+    lastWeek: createDateRange(formatISODate(lastWeek), formatISODate(today)),
+    lastMonth: createDateRange(formatISODate(lastMonth), formatISODate(today)),
+    lastYear: createDateRange(formatISODate(lastYear), formatISODate(today))
+  };
+};
+var validateDateRange = (startDate, endDate) => {
+  const start = parseDate(startDate);
+  const end = parseDate(endDate);
+  if (!start || !end) return false;
+  return start <= end;
+};
+var formatDuration = (minutes) => {
+  if (minutes < 60) {
+    return `${minutes} min`;
+  }
+  const hours = Math.floor(minutes / 60);
+  const remainingMinutes = minutes % 60;
+  if (remainingMinutes === 0) {
+    return `${hours}h`;
+  }
+  return `${hours}h ${remainingMinutes}m`;
+};
+var hoursToMinutes = (hours) => {
+  return Math.round(hours * 60);
+};
+var minutesToHours = (minutes) => {
+  return minutes / 60;
+};
+var TIME_CONSTANTS = {
+  MINUTES_PER_HOUR: 60,
+  HOURS_PER_DAY: 24,
+  DAYS_PER_WEEK: 7,
+  MILLISECONDS_PER_SECOND: 1e3,
+  MILLISECONDS_PER_MINUTE: 60 * 1e3,
+  MILLISECONDS_PER_HOUR: 60 * 60 * 1e3,
+  MILLISECONDS_PER_DAY: 24 * 60 * 60 * 1e3
+};
+
+// src/utils/numberUtils.ts
+var formatCurrency = (amount, currency = "EUR", locale = "it-IT") => {
+  if (amount === null || amount === void 0 || amount === "") return "";
+  const numAmount = typeof amount === "string" ? parseFloat(amount) : amount;
+  if (isNaN(numAmount)) return "";
+  try {
+    return new Intl.NumberFormat(locale, {
+      style: "currency",
+      currency,
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2
+    }).format(numAmount);
+  } catch (error) {
+    console.warn("Currency formatting error:", error);
+    return `${currency} ${numAmount.toFixed(2)}`;
+  }
+};
+var formatPercentage = (value, decimals = 1, locale = "it-IT") => {
+  if (value === null || value === void 0 || value === "") return "";
+  const numValue = typeof value === "string" ? parseFloat(value) : value;
+  if (isNaN(numValue)) return "";
+  try {
+    return new Intl.NumberFormat(locale, {
+      style: "percent",
+      minimumFractionDigits: decimals,
+      maximumFractionDigits: decimals
+    }).format(numValue / 100);
+  } catch (error) {
+    console.warn("Percentage formatting error:", error);
+    return `${numValue.toFixed(decimals)}%`;
+  }
+};
+var formatNumber = (value, decimals = 0, locale = "it-IT") => {
+  if (value === null || value === void 0 || value === "") return "";
+  const numValue = typeof value === "string" ? parseFloat(value) : value;
+  if (isNaN(numValue)) return "";
+  try {
+    return new Intl.NumberFormat(locale, {
+      minimumFractionDigits: decimals,
+      maximumFractionDigits: decimals
+    }).format(numValue);
+  } catch (error) {
+    console.warn("Number formatting error:", error);
+    return numValue.toFixed(decimals);
+  }
+};
+var formatNumberWithUnit = (value, unit, decimals = 2, locale = "it-IT") => {
+  if (value === null || value === void 0 || value === "") return "";
+  const formattedNumber = formatNumber(value, decimals, locale);
+  return formattedNumber ? `${formattedNumber} ${unit}` : "";
+};
+var formatWeight = (value, decimals = 2, locale = "it-IT") => {
+  return formatNumberWithUnit(value, "kg", decimals, locale);
+};
+var formatVolume = (value, decimals = 2, locale = "it-IT") => {
+  return formatNumberWithUnit(value, "L", decimals, locale);
+};
+var formatDistance = (value, decimals = 2, locale = "it-IT") => {
+  return formatNumberWithUnit(value, "m", decimals, locale);
+};
+var parseNumber = (value) => {
+  if (value === null || value === void 0 || value === "") return null;
+  const numValue = typeof value === "string" ? parseFloat(value.replace(/,/g, ".")) : value;
+  return isNaN(numValue) ? null : numValue;
+};
+var parseInteger = (value) => {
+  if (value === null || value === void 0 || value === "") return null;
+  const numValue = typeof value === "string" ? parseInt(value, 10) : Math.floor(value);
+  return isNaN(numValue) ? null : numValue;
+};
+var roundNumber = (value, decimals = 2) => {
+  const factor = Math.pow(10, decimals);
+  return Math.round(value * factor) / factor;
+};
+var clampNumber = (value, min2, max2) => {
+  return Math.min(Math.max(value, min2), max2);
+};
+var isValidNumber = (value) => {
+  return typeof value === "number" && !isNaN(value) && isFinite(value);
+};
+var calculatePercentage = (value, total) => {
+  if (total === 0) return 0;
+  return value / total * 100;
+};
+var calculatePercentageChange = (oldValue, newValue) => {
+  if (oldValue === 0) return newValue === 0 ? 0 : 100;
+  return (newValue - oldValue) / oldValue * 100;
+};
+var sumNumbers = (numbers) => {
+  return numbers.reduce((sum2, num) => {
+    const validNum = parseNumber(num);
+    return sum2 + (validNum || 0);
+  }, 0);
+};
+var averageNumbers = (numbers) => {
+  const validNumbers = numbers.filter((num) => parseNumber(num) !== null);
+  if (validNumbers.length === 0) return 0;
+  return sumNumbers(validNumbers) / validNumbers.length;
+};
+var minNumber = (numbers) => {
+  const validNumbers = numbers.map(parseNumber).filter((num) => num !== null);
+  return validNumbers.length > 0 ? Math.min(...validNumbers) : null;
+};
+var maxNumber = (numbers) => {
+  const validNumbers = numbers.map(parseNumber).filter((num) => num !== null);
+  return validNumbers.length > 0 ? Math.max(...validNumbers) : null;
+};
+var randomNumber = (min2, max2) => {
+  return Math.random() * (max2 - min2) + min2;
+};
+var randomInteger = (min2, max2) => {
+  return Math.floor(Math.random() * (max2 - min2 + 1)) + min2;
+};
+var formatBytes = (bytes, decimals = 2) => {
+  if (bytes === 0) return "0 Bytes";
+  const k = 1024;
+  const dm = decimals < 0 ? 0 : decimals;
+  const sizes = ["Bytes", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"];
+  const i = Math.floor(Math.log(bytes) / Math.log(k));
+  return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + " " + sizes[i];
+};
+var formatFileSize = (bytes) => {
+  return formatBytes(bytes, 1);
+};
+var numberValidation = {
+  isPositive: (value) => value > 0,
+  isNegative: (value) => value < 0,
+  isZero: (value) => value === 0,
+  isInteger: (value) => Number.isInteger(value),
+  isFloat: (value) => !Number.isInteger(value),
+  inRange: (value, min2, max2) => value >= min2 && value <= max2,
+  isEven: (value) => value % 2 === 0,
+  isOdd: (value) => value % 2 !== 0
+};
+var safeMath = {
+  add: (a, b) => (a || 0) + (b || 0),
+  subtract: (a, b) => (a || 0) - (b || 0),
+  multiply: (a, b) => (a || 0) * (b || 0),
+  divide: (a, b) => {
+    if (!b || b === 0) return 0;
+    return (a || 0) / b;
+  },
+  percentage: (value, total) => {
+    if (!total || total === 0) return 0;
+    return (value || 0) / total * 100;
+  }
+};
+var NUMBER_CONSTANTS = {
+  MAX_SAFE_INTEGER: Number.MAX_SAFE_INTEGER,
+  MIN_SAFE_INTEGER: Number.MIN_SAFE_INTEGER,
+  EPSILON: Number.EPSILON,
+  POSITIVE_INFINITY: Number.POSITIVE_INFINITY,
+  NEGATIVE_INFINITY: Number.NEGATIVE_INFINITY
+};
+
+// src/utils/stringUtils.ts
+var capitalize = (str) => {
+  if (!str) return "";
+  return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+};
+var capitalizeWords = (str) => {
+  if (!str) return "";
+  return str.replace(
+    /\w\S*/g,
+    (txt) => txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase()
+  );
+};
+var toCamelCase = (str) => {
+  if (!str) return "";
+  return str.replace(
+    /(?:^\w|[A-Z]|\b\w)/g,
+    (word, index) => index === 0 ? word.toLowerCase() : word.toUpperCase()
+  ).replace(/\s+/g, "");
+};
+var toKebabCase = (str) => {
+  if (!str) return "";
+  return str.replace(/([a-z])([A-Z])/g, "$1-$2").replace(/[\s_]+/g, "-").toLowerCase();
+};
+var toSnakeCase = (str) => {
+  if (!str) return "";
+  return str.replace(/([a-z])([A-Z])/g, "$1_$2").replace(/[\s-]+/g, "_").toLowerCase();
+};
+var toPascalCase = (str) => {
+  if (!str) return "";
+  return str.replace(/(?:^\w|[A-Z]|\b\w)/g, (word) => word.toUpperCase()).replace(/\s+/g, "");
+};
+var truncate = (str, length, suffix = "...") => {
+  if (!str) return "";
+  if (str.length <= length) return str;
+  return str.substring(0, length - suffix.length) + suffix;
+};
+var truncateWords = (str, wordCount, suffix = "...") => {
+  if (!str) return "";
+  const words = str.split(" ");
+  if (words.length <= wordCount) return str;
+  return words.slice(0, wordCount).join(" ") + suffix;
+};
+var cleanWhitespace = (str) => {
+  if (!str) return "";
+  return str.replace(/\s+/g, " ").trim();
+};
+var removeWhitespace = (str) => {
+  if (!str) return "";
+  return str.replace(/\s/g, "");
+};
+var sanitizeHtml = (str) => {
+  if (!str) return "";
+  const map = {
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': "&quot;",
+    "'": "&#x27;",
+    "/": "&#x2F;"
+  };
+  return str.replace(/[&<>"'/]/g, (s) => map[s]);
+};
+var generateSlug = (str) => {
+  if (!str) return "";
+  return str.toLowerCase().trim().replace(/[^\w\s-]/g, "").replace(/[\s_-]+/g, "-").replace(/^-+|-+$/g, "");
+};
+var getInitials = (name, maxLength = 2) => {
+  if (!name) return "";
+  const words = name.trim().split(/\s+/);
+  const initials = words.map((word) => word.charAt(0).toUpperCase()).slice(0, maxLength).join("");
+  return initials;
+};
+var countWords = (str) => {
+  if (!str) return 0;
+  return str.trim().split(/\s+/).filter((word) => word.length > 0).length;
+};
+var countCharacters = (str) => {
+  if (!str) return 0;
+  return str.replace(/\s/g, "").length;
+};
+var reverse = (str) => {
+  if (!str) return "";
+  return str.split("").reverse().join("");
+};
+var isPalindrome = (str) => {
+  if (!str) return false;
+  const cleaned = str.toLowerCase().replace(/[^a-z0-9]/g, "");
+  return cleaned === reverse(cleaned);
+};
+var normalizeSpaces = (str) => {
+  if (!str) return "";
+  return str.replace(/\s+/g, " ").trim();
+};
+var maskString = (str, maskChar = "*", visibleStart = 0, visibleEnd = 0) => {
+  if (!str) return "";
+  if (str.length <= visibleStart + visibleEnd) return str;
+  const start = str.substring(0, visibleStart);
+  const end = str.substring(str.length - visibleEnd);
+  const masked = maskChar.repeat(str.length - visibleStart - visibleEnd);
+  return start + masked + end;
+};
+var extractEmailDomain = (email) => {
+  if (!email) return "";
+  const parts = email.split("@");
+  return parts.length === 2 ? parts[1] : "";
+};
+var extractEmailUsername = (email) => {
+  if (!email) return "";
+  const parts = email.split("@");
+  return parts.length >= 1 ? parts[0] : "";
+};
+var formatPhoneNumber = (phone) => {
+  if (!phone) return "";
+  const digits = phone.replace(/\D/g, "");
+  if (digits.length === 10) {
+    return digits.replace(/(\d{3})(\d{3})(\d{4})/, "$1 $2 $3");
+  } else if (digits.length === 11 && digits.startsWith("39")) {
+    return digits.replace(/(\d{2})(\d{3})(\d{3})(\d{3})/, "+$1 $2 $3 $4");
+  }
+  return phone;
+};
+var isValidEmail = (email) => {
+  if (!email) return false;
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return emailRegex.test(email);
+};
+var isValidPhoneNumber = (phone) => {
+  if (!phone) return false;
+  const phoneRegex = /^[\+]?[1-9][\d]{0,15}$/;
+  return phoneRegex.test(phone.replace(/\s/g, ""));
+};
+var generateRandomString = (length, charset = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789") => {
+  let result = "";
+  for (let i = 0; i < length; i++) {
+    result += charset.charAt(Math.floor(Math.random() * charset.length));
+  }
+  return result;
+};
+var generateUUID = () => {
+  return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, (c) => {
+    const r = Math.random() * 16 | 0;
+    const v = c === "x" ? r : r & 3 | 8;
+    return v.toString(16);
+  });
+};
+var compareStringsIgnoreCase = (str1, str2) => {
+  if (!str1 && !str2) return true;
+  if (!str1 || !str2) return false;
+  return str1.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "") === str2.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+};
+var searchIgnoreCase = (text, search) => {
+  if (!text || !search) return false;
+  const normalizedText = text.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+  const normalizedSearch = search.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+  return normalizedText.includes(normalizedSearch);
+};
+var highlightSearchTerms = (text, searchTerm, highlightClass = "highlight") => {
+  if (!text || !searchTerm) return text;
+  const regex = new RegExp(`(${searchTerm})`, "gi");
+  return text.replace(regex, `<span class="${highlightClass}">$1</span>`);
+};
+var stringTemplates = {
+  interpolate: (template, variables) => {
+    return template.replace(/\{\{(\w+)\}\}/g, (match, key) => {
+      return variables[key] !== void 0 ? String(variables[key]) : match;
+    });
+  },
+  format: (template, ...args) => {
+    return template.replace(/{(\d+)}/g, (match, index) => {
+      return args[index] !== void 0 ? String(args[index]) : match;
+    });
+  }
+};
+var STRING_CONSTANTS = {
+  EMPTY: "",
+  SPACE: " ",
+  NEWLINE: "\n",
+  TAB: "	",
+  ELLIPSIS: "...",
+  DASH: "-",
+  UNDERSCORE: "_"
+};
+
+// src/utils/arrayUtils.ts
+var removeDuplicates = (array) => {
+  return [...new Set(array)];
+};
+var removeDuplicatesByKey = (array, key) => {
+  const seen = /* @__PURE__ */ new Set();
+  return array.filter((item) => {
+    const value = item[key];
+    if (seen.has(value)) {
+      return false;
+    }
+    seen.add(value);
+    return true;
+  });
+};
+var groupBy = (array, key) => {
+  return array.reduce((groups, item) => {
+    const value = String(item[key]);
+    if (!groups[value]) {
+      groups[value] = [];
+    }
+    groups[value].push(item);
+    return groups;
+  }, {});
+};
+var sortBy = (array, key, ascending = true) => {
+  return [...array].sort((a, b) => {
+    const valueA = a[key];
+    const valueB = b[key];
+    if (valueA < valueB) return ascending ? -1 : 1;
+    if (valueA > valueB) return ascending ? 1 : -1;
+    return 0;
+  });
+};
+var sortByMultiple = (array, keys) => {
+  return [...array].sort((a, b) => {
+    for (const { key, ascending = true } of keys) {
+      const valueA = a[key];
+      const valueB = b[key];
+      if (valueA < valueB) return ascending ? -1 : 1;
+      if (valueA > valueB) return ascending ? 1 : -1;
+    }
+    return 0;
+  });
+};
+var filterBy = (array, filters) => {
+  return array.filter((item) => {
+    return Object.entries(filters).every(([key, value]) => {
+      if (value === null || value === void 0) return true;
+      const itemValue = item[key];
+      if (Array.isArray(value)) {
+        return value.includes(itemValue);
+      }
+      if (typeof value === "string" && typeof itemValue === "string") {
+        return itemValue.toLowerCase().includes(value.toLowerCase());
+      }
+      return itemValue === value;
+    });
+  });
+};
+var findBy = (array, key, value) => {
+  return array.find((item) => item[key] === value);
+};
+var findIndexBy = (array, key, value) => {
+  return array.findIndex((item) => item[key] === value);
+};
+var containsBy = (array, key, value) => {
+  return array.some((item) => item[key] === value);
+};
+var getUniqueValues = (array, key) => {
+  return removeDuplicates(array.map((item) => item[key]));
+};
+var chunk = (array, size) => {
+  const chunks = [];
+  for (let i = 0; i < array.length; i += size) {
+    chunks.push(array.slice(i, i + size));
+  }
+  return chunks;
+};
+var flatten = (array) => {
+  return array.reduce((flat, item) => {
+    return flat.concat(Array.isArray(item) ? flatten(item) : item);
+  }, []);
+};
+var intersection = (array1, array2) => {
+  return array1.filter((item) => array2.includes(item));
+};
+var difference = (array1, array2) => {
+  return array1.filter((item) => !array2.includes(item));
+};
+var union = (array1, array2) => {
+  return removeDuplicates([...array1, ...array2]);
+};
+var shuffle = (array) => {
+  const shuffled = [...array];
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+  }
+  return shuffled;
+};
+var getRandomItem = (array) => {
+  if (array.length === 0) return void 0;
+  return array[Math.floor(Math.random() * array.length)];
+};
+var getRandomItems = (array, count) => {
+  const shuffled = shuffle(array);
+  return shuffled.slice(0, Math.min(count, array.length));
+};
+var moveItem = (array, fromIndex, toIndex) => {
+  const result = [...array];
+  const [removed] = result.splice(fromIndex, 1);
+  result.splice(toIndex, 0, removed);
+  return result;
+};
+var insertAt = (array, index, item) => {
+  const result = [...array];
+  result.splice(index, 0, item);
+  return result;
+};
+var removeAt = (array, index) => {
+  const result = [...array];
+  result.splice(index, 1);
+  return result;
+};
+var updateAt = (array, index, item) => {
+  const result = [...array];
+  result[index] = item;
+  return result;
+};
+var paginate = (array, page, perPage) => {
+  const totalItems = array.length;
+  const totalPages = Math.ceil(totalItems / perPage);
+  const startIndex = (page - 1) * perPage;
+  const endIndex = startIndex + perPage;
+  const data = array.slice(startIndex, endIndex);
+  return {
+    data,
+    totalPages,
+    currentPage: page,
+    totalItems,
+    hasNextPage: page < totalPages,
+    hasPreviousPage: page > 1
+  };
+};
+var sum = (array) => {
+  return array.reduce((total, num) => total + num, 0);
+};
+var sumBy = (array, key) => {
+  return array.reduce((total, item) => {
+    const value = item[key];
+    return total + (typeof value === "number" ? value : 0);
+  }, 0);
+};
+var average = (array) => {
+  if (array.length === 0) return 0;
+  return sum(array) / array.length;
+};
+var averageBy = (array, key) => {
+  if (array.length === 0) return 0;
+  return sumBy(array, key) / array.length;
+};
+var min = (array) => {
+  if (array.length === 0) return void 0;
+  return Math.min(...array);
+};
+var minBy = (array, key) => {
+  if (array.length === 0) return void 0;
+  return array.reduce((min2, item) => {
+    const value = item[key];
+    const minValue = min2[key];
+    return value < minValue ? item : min2;
+  });
+};
+var max = (array) => {
+  if (array.length === 0) return void 0;
+  return Math.max(...array);
+};
+var maxBy = (array, key) => {
+  if (array.length === 0) return void 0;
+  return array.reduce((max2, item) => {
+    const value = item[key];
+    const maxValue = max2[key];
+    return value > maxValue ? item : max2;
+  });
+};
+var countOccurrences = (array) => {
+  return array.reduce((counts, item) => {
+    const key = String(item);
+    counts[key] = (counts[key] || 0) + 1;
+    return counts;
+  }, {});
+};
+var countBy = (array, key) => {
+  return array.reduce((counts, item) => {
+    const value = String(item[key]);
+    counts[value] = (counts[value] || 0) + 1;
+    return counts;
+  }, {});
+};
+var first = (array) => {
+  return array[0];
+};
+var last = (array) => {
+  return array[array.length - 1];
+};
+var take = (array, count) => {
+  return array.slice(0, count);
+};
+var takeLast = (array, count) => {
+  return array.slice(-count);
+};
+var skip = (array, count) => {
+  return array.slice(count);
+};
+var skipLast = (array, count) => {
+  return array.slice(0, -count);
+};
+var compact = (array) => {
+  return array.filter(Boolean);
+};
+var createArray = (length, defaultValue) => {
+  return Array(length).fill(defaultValue);
+};
+var range = (start, end, step = 1) => {
+  const result = [];
+  for (let i = start; i < end; i += step) {
+    result.push(i);
+  }
+  return result;
+};
+var arrayComparison = {
+  isEqual: (array1, array2) => {
+    if (array1.length !== array2.length) return false;
+    return array1.every((item, index) => item === array2[index]);
+  },
+  isEqualUnordered: (array1, array2) => {
+    if (array1.length !== array2.length) return false;
+    const sorted1 = [...array1].sort();
+    const sorted2 = [...array2].sort();
+    return arrayComparison.isEqual(sorted1, sorted2);
+  },
+  isSubset: (subset, superset) => {
+    return subset.every((item) => superset.includes(item));
+  },
+  isSuperset: (superset, subset) => {
+    return arrayComparison.isSubset(subset, superset);
+  }
+};
+
 // src/utils/index.ts
 function cn(...inputs) {
   return (0, import_tailwind_merge.twMerge)((0, import_clsx.clsx)(inputs));
@@ -245,7 +1143,7 @@ var getNested = (obj, path) => {
   if (path.indexOf(".") === -1) return obj[path];
   return path.split(".").reduce((acc, key) => acc && acc[key] !== void 0 ? acc[key] : void 0, obj);
 };
-var formatDate = (date, format = "yyyy-MM-dd") => {
+var formatDate2 = (date, format2 = "yyyy-MM-dd") => {
   if (!date) return "Not set";
   const d = new Date(date);
   if (isNaN(d.getTime())) return "Invalid date";
@@ -279,13 +1177,6 @@ var throttle = (func, limit) => {
       setTimeout(() => inThrottle = false, limit);
     }
   };
-};
-var safeAsync = async (asyncFn, context = {}) => {
-  try {
-    return await asyncFn();
-  } catch (error) {
-    return error instanceof Error ? error : new Error(String(error));
-  }
 };
 var handleApiError = (error, context = {}) => {
   let errorMessage = "An unexpected error occurred";
@@ -704,7 +1595,7 @@ var CONFIRMATION_TYPES = {
   WARNING: "warning",
   INFO: "info"
 };
-var TIME_CONSTANTS = {
+var TIME_CONSTANTS2 = {
   MILLISECONDS_PER_SECOND: 1e3,
   SECONDS_PER_MINUTE: 60,
   MINUTES_PER_HOUR: 60,
@@ -1808,6 +2699,260 @@ function useDataService(service, resourceName) {
   };
 }
 
+// src/hooks/useSupabaseQuery.ts
+var import_react_query2 = require("@tanstack/react-query");
+var createQueryKeys = (tableName) => ({
+  all: [tableName],
+  lists: () => [tableName, "list"],
+  list: (filters) => [tableName, "list", filters],
+  details: () => [tableName, "detail"],
+  detail: (id) => [tableName, "detail", id],
+  search: (term, fields) => [tableName, "search", term, fields],
+  count: (filters) => [tableName, "count", filters],
+  paginated: (options) => [tableName, "paginated", options]
+});
+function createSupabaseHooks(service) {
+  const tableName = service.getTableName();
+  const queryKeys = createQueryKeys(tableName);
+  const useList = (options, queryOptions) => {
+    return (0, import_react_query2.useQuery)({
+      queryKey: queryKeys.list(options?.filters),
+      queryFn: () => service.getAll(options),
+      staleTime: 5 * 60 * 1e3,
+      // 5 minutes
+      ...queryOptions
+    });
+  };
+  const usePaginatedList = (options, queryOptions) => {
+    return (0, import_react_query2.useQuery)({
+      queryKey: queryKeys.paginated(options),
+      queryFn: () => service.getPaginated(options),
+      staleTime: 5 * 60 * 1e3,
+      // 5 minutes
+      keepPreviousData: true,
+      // Keep previous data while loading new page
+      ...queryOptions
+    });
+  };
+  const useDetail = (id, select, queryOptions) => {
+    return (0, import_react_query2.useQuery)({
+      queryKey: queryKeys.detail(id),
+      queryFn: () => service.getById(id, select),
+      enabled: !!id,
+      staleTime: 5 * 60 * 1e3,
+      // 5 minutes
+      ...queryOptions
+    });
+  };
+  const useSearch = (searchTerm, searchFields, options, queryOptions) => {
+    return (0, import_react_query2.useQuery)({
+      queryKey: queryKeys.search(searchTerm, searchFields),
+      queryFn: () => service.search(searchTerm, searchFields, options),
+      enabled: searchTerm.length > 0,
+      staleTime: 2 * 60 * 1e3,
+      // 2 minutes for search results
+      ...queryOptions
+    });
+  };
+  const useCount = (filters, queryOptions) => {
+    return (0, import_react_query2.useQuery)({
+      queryKey: queryKeys.count(filters),
+      queryFn: () => service.count(filters),
+      staleTime: 5 * 60 * 1e3,
+      // 5 minutes
+      ...queryOptions
+    });
+  };
+  const useCreate = (mutationOptions) => {
+    const queryClient = (0, import_react_query2.useQueryClient)();
+    return (0, import_react_query2.useMutation)({
+      mutationFn: (data) => service.create(data),
+      onSuccess: (data, variables) => {
+        queryClient.invalidateQueries({ queryKey: queryKeys.lists() });
+        queryClient.invalidateQueries({ queryKey: queryKeys.count() });
+        queryClient.setQueryData(queryKeys.detail(data.id), data);
+        mutationOptions?.onSuccess?.(data, variables, void 0);
+      },
+      ...mutationOptions
+    });
+  };
+  const useCreateMany = (mutationOptions) => {
+    const queryClient = (0, import_react_query2.useQueryClient)();
+    return (0, import_react_query2.useMutation)({
+      mutationFn: (data) => service.createMany(data),
+      onSuccess: (data, variables) => {
+        queryClient.invalidateQueries({ queryKey: queryKeys.lists() });
+        queryClient.invalidateQueries({ queryKey: queryKeys.count() });
+        data.forEach((item) => {
+          queryClient.setQueryData(queryKeys.detail(item.id), item);
+        });
+        mutationOptions?.onSuccess?.(data, variables, void 0);
+      },
+      ...mutationOptions
+    });
+  };
+  const useUpdate = (mutationOptions) => {
+    const queryClient = (0, import_react_query2.useQueryClient)();
+    return (0, import_react_query2.useMutation)({
+      mutationFn: ({ id, data }) => service.update(id, data),
+      onSuccess: (data, variables) => {
+        queryClient.setQueryData(queryKeys.detail(variables.id), data);
+        queryClient.invalidateQueries({ queryKey: queryKeys.lists() });
+        mutationOptions?.onSuccess?.(data, variables, void 0);
+      },
+      ...mutationOptions
+    });
+  };
+  const useUpdateMany = (mutationOptions) => {
+    const queryClient = (0, import_react_query2.useQueryClient)();
+    return (0, import_react_query2.useMutation)({
+      mutationFn: (updates) => service.updateMany(updates),
+      onSuccess: (data, variables) => {
+        data.forEach((item, index) => {
+          queryClient.setQueryData(queryKeys.detail(variables[index].id), item);
+        });
+        queryClient.invalidateQueries({ queryKey: queryKeys.lists() });
+        mutationOptions?.onSuccess?.(data, variables, void 0);
+      },
+      ...mutationOptions
+    });
+  };
+  const useUpsert = (mutationOptions) => {
+    const queryClient = (0, import_react_query2.useQueryClient)();
+    return (0, import_react_query2.useMutation)({
+      mutationFn: ({ data, onConflict }) => service.upsert(data, onConflict),
+      onSuccess: (data, variables) => {
+        queryClient.setQueryData(queryKeys.detail(data.id), data);
+        queryClient.invalidateQueries({ queryKey: queryKeys.lists() });
+        queryClient.invalidateQueries({ queryKey: queryKeys.count() });
+        mutationOptions?.onSuccess?.(data, variables, void 0);
+      },
+      ...mutationOptions
+    });
+  };
+  const useDelete = (mutationOptions) => {
+    const queryClient = (0, import_react_query2.useQueryClient)();
+    return (0, import_react_query2.useMutation)({
+      mutationFn: (id) => service.delete(id),
+      onSuccess: (data, id) => {
+        queryClient.removeQueries({ queryKey: queryKeys.detail(id) });
+        queryClient.invalidateQueries({ queryKey: queryKeys.lists() });
+        queryClient.invalidateQueries({ queryKey: queryKeys.count() });
+        mutationOptions?.onSuccess?.(data, id, void 0);
+      },
+      ...mutationOptions
+    });
+  };
+  const useBulkDelete = (mutationOptions) => {
+    const queryClient = (0, import_react_query2.useQueryClient)();
+    return (0, import_react_query2.useMutation)({
+      mutationFn: (ids) => service.bulkDelete(ids),
+      onSuccess: (data, ids) => {
+        ids.forEach((id) => {
+          queryClient.removeQueries({ queryKey: queryKeys.detail(id) });
+        });
+        queryClient.invalidateQueries({ queryKey: queryKeys.lists() });
+        queryClient.invalidateQueries({ queryKey: queryKeys.count() });
+        mutationOptions?.onSuccess?.(data, ids, void 0);
+      },
+      ...mutationOptions
+    });
+  };
+  const useOptimisticUpdate = () => {
+    const queryClient = (0, import_react_query2.useQueryClient)();
+    const optimisticUpdate = (id, updater) => {
+      queryClient.setQueryData(queryKeys.detail(id), updater);
+    };
+    const rollbackOptimisticUpdate = (id) => {
+      queryClient.invalidateQueries({ queryKey: queryKeys.detail(id) });
+    };
+    return { optimisticUpdate, rollbackOptimisticUpdate };
+  };
+  const useInvalidateAll = () => {
+    const queryClient = (0, import_react_query2.useQueryClient)();
+    const invalidateAll = () => {
+      queryClient.invalidateQueries({ queryKey: queryKeys.all });
+    };
+    const invalidateLists = () => {
+      queryClient.invalidateQueries({ queryKey: queryKeys.lists() });
+    };
+    const invalidateDetail = (id) => {
+      queryClient.invalidateQueries({ queryKey: queryKeys.detail(id) });
+    };
+    return { invalidateAll, invalidateLists, invalidateDetail };
+  };
+  const usePrefetch = () => {
+    const queryClient = (0, import_react_query2.useQueryClient)();
+    const prefetchList = (options) => {
+      return queryClient.prefetchQuery({
+        queryKey: queryKeys.list(options?.filters),
+        queryFn: () => service.getAll(options),
+        staleTime: 5 * 60 * 1e3
+      });
+    };
+    const prefetchDetail = (id, select) => {
+      return queryClient.prefetchQuery({
+        queryKey: queryKeys.detail(id),
+        queryFn: () => service.getById(id, select),
+        staleTime: 5 * 60 * 1e3
+      });
+    };
+    return { prefetchList, prefetchDetail };
+  };
+  return {
+    // Query hooks
+    useList,
+    usePaginatedList,
+    useDetail,
+    useSearch,
+    useCount,
+    // Mutation hooks
+    useCreate,
+    useCreateMany,
+    useUpdate,
+    useUpdateMany,
+    useUpsert,
+    useDelete,
+    useBulkDelete,
+    // Utility hooks
+    useOptimisticUpdate,
+    useInvalidateAll,
+    usePrefetch,
+    // Query keys for manual cache management
+    queryKeys
+  };
+}
+function createServiceHooks(service) {
+  return createSupabaseHooks(service);
+}
+var defaultQueryErrorHandler = (error) => {
+  console.error("Query error:", error);
+};
+var defaultQueryConfig = {
+  queries: {
+    staleTime: 5 * 60 * 1e3,
+    // 5 minutes
+    cacheTime: 10 * 60 * 1e3,
+    // 10 minutes
+    retry: (failureCount, error) => {
+      if (error?.status >= 400 && error?.status < 500) {
+        return false;
+      }
+      return failureCount < 3;
+    },
+    refetchOnWindowFocus: false,
+    refetchOnReconnect: true
+  },
+  mutations: {
+    retry: (failureCount, error) => {
+      if (error?.status >= 400 && error?.status < 500) {
+        return false;
+      }
+      return failureCount < 1;
+    }
+  }
+};
+
 // src/components/GenericForm.tsx
 var import_jsx_runtime13 = require("react/jsx-runtime");
 function GenericForm({
@@ -2898,6 +4043,719 @@ var BaseService = class {
   }
 };
 
+// src/services/SupabaseService.ts
+var ERROR_TYPES2 = {
+  // Validation Errors
+  VALIDATION_ERROR: "VALIDATION_ERROR",
+  REQUIRED_FIELD_ERROR: "REQUIRED_FIELD_ERROR",
+  INVALID_FORMAT_ERROR: "INVALID_FORMAT_ERROR",
+  INVALID_RANGE_ERROR: "INVALID_RANGE_ERROR",
+  INVALID_TYPE_ERROR: "INVALID_TYPE_ERROR",
+  // Data Errors
+  NOT_FOUND: "NOT_FOUND",
+  DUPLICATE_ERROR: "DUPLICATE_ERROR",
+  CONFLICT_ERROR: "CONFLICT_ERROR",
+  OUT_OF_SYNC_ERROR: "OUT_OF_SYNC_ERROR",
+  // Permission & Security Errors
+  PERMISSION_ERROR: "PERMISSION_ERROR",
+  AUTHENTICATION_ERROR: "AUTHENTICATION_ERROR",
+  AUTHORIZATION_ERROR: "AUTHORIZATION_ERROR",
+  RATE_LIMIT_ERROR: "RATE_LIMIT_ERROR",
+  // Business Logic Errors
+  BUSINESS_LOGIC_ERROR: "BUSINESS_LOGIC_ERROR",
+  INSUFFICIENT_STOCK_ERROR: "INSUFFICIENT_STOCK_ERROR",
+  CAPACITY_EXCEEDED_ERROR: "CAPACITY_EXCEEDED_ERROR",
+  INVALID_OPERATION_ERROR: "INVALID_OPERATION_ERROR",
+  WORKFLOW_ERROR: "WORKFLOW_ERROR",
+  // System Errors
+  SERVER_ERROR: "SERVER_ERROR",
+  DATABASE_ERROR: "DATABASE_ERROR",
+  NETWORK_ERROR: "NETWORK_ERROR",
+  TIMEOUT_ERROR: "TIMEOUT_ERROR",
+  CONNECTION_ERROR: "CONNECTION_ERROR",
+  // External Service Errors
+  EXTERNAL_SERVICE_ERROR: "EXTERNAL_SERVICE_ERROR",
+  API_ERROR: "API_ERROR",
+  INTEGRATION_ERROR: "INTEGRATION_ERROR",
+  // Configuration Errors
+  CONFIGURATION_ERROR: "CONFIGURATION_ERROR",
+  ENVIRONMENT_ERROR: "ENVIRONMENT_ERROR",
+  // Resource Errors
+  RESOURCE_EXHAUSTED_ERROR: "RESOURCE_EXHAUSTED_ERROR",
+  QUOTA_EXCEEDED_ERROR: "QUOTA_EXCEEDED_ERROR",
+  STORAGE_ERROR: "STORAGE_ERROR",
+  // User Experience Errors
+  USER_INPUT_ERROR: "USER_INPUT_ERROR",
+  UI_ERROR: "UI_ERROR",
+  NAVIGATION_ERROR: "NAVIGATION_ERROR",
+  // Recovery Errors
+  RECOVERY_ERROR: "RECOVERY_ERROR",
+  RETRY_ERROR: "RETRY_ERROR",
+  FALLBACK_ERROR: "FALLBACK_ERROR"
+};
+var ServiceError = class extends Error {
+  constructor(message, type = ERROR_TYPES2.SERVER_ERROR, statusCode = 500, originalError = null, context = "", options = {}) {
+    super(message);
+    this.name = "ServiceError";
+    this.type = type;
+    this.statusCode = statusCode;
+    this.originalError = originalError;
+    this.context = context;
+    this.timestamp = (/* @__PURE__ */ new Date()).toISOString();
+    this.id = options.id || this.generateErrorId();
+    this.severity = options.severity || this.getDefaultSeverity(type);
+    this.retryable = options.retryable !== void 0 ? options.retryable : this.isRetryable(type);
+    this.userMessage = options.userMessage || this.getDefaultUserMessage(type, message);
+    this.details = options.details || {};
+    this.metadata = options.metadata || {};
+    if (originalError?.stack) {
+      this.stack = originalError.stack;
+    }
+  }
+  generateErrorId() {
+    return `err_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+  }
+  getDefaultSeverity(type) {
+    const severityMap = {
+      [ERROR_TYPES2.VALIDATION_ERROR]: "low",
+      [ERROR_TYPES2.REQUIRED_FIELD_ERROR]: "low",
+      [ERROR_TYPES2.INVALID_FORMAT_ERROR]: "low",
+      [ERROR_TYPES2.INVALID_RANGE_ERROR]: "low",
+      [ERROR_TYPES2.INVALID_TYPE_ERROR]: "low",
+      [ERROR_TYPES2.USER_INPUT_ERROR]: "low",
+      [ERROR_TYPES2.UI_ERROR]: "low",
+      [ERROR_TYPES2.NAVIGATION_ERROR]: "low",
+      [ERROR_TYPES2.NOT_FOUND]: "medium",
+      [ERROR_TYPES2.DUPLICATE_ERROR]: "medium",
+      [ERROR_TYPES2.CONFLICT_ERROR]: "medium",
+      [ERROR_TYPES2.BUSINESS_LOGIC_ERROR]: "medium",
+      [ERROR_TYPES2.INSUFFICIENT_STOCK_ERROR]: "medium",
+      [ERROR_TYPES2.CAPACITY_EXCEEDED_ERROR]: "medium",
+      [ERROR_TYPES2.INVALID_OPERATION_ERROR]: "medium",
+      [ERROR_TYPES2.WORKFLOW_ERROR]: "medium",
+      [ERROR_TYPES2.PERMISSION_ERROR]: "high",
+      [ERROR_TYPES2.AUTHENTICATION_ERROR]: "high",
+      [ERROR_TYPES2.AUTHORIZATION_ERROR]: "high",
+      [ERROR_TYPES2.RATE_LIMIT_ERROR]: "high",
+      [ERROR_TYPES2.CONFIGURATION_ERROR]: "high",
+      [ERROR_TYPES2.ENVIRONMENT_ERROR]: "high",
+      [ERROR_TYPES2.SERVER_ERROR]: "critical",
+      [ERROR_TYPES2.DATABASE_ERROR]: "critical",
+      [ERROR_TYPES2.NETWORK_ERROR]: "critical",
+      [ERROR_TYPES2.CONNECTION_ERROR]: "critical",
+      [ERROR_TYPES2.EXTERNAL_SERVICE_ERROR]: "critical",
+      [ERROR_TYPES2.API_ERROR]: "critical",
+      [ERROR_TYPES2.INTEGRATION_ERROR]: "critical",
+      [ERROR_TYPES2.RESOURCE_EXHAUSTED_ERROR]: "critical",
+      [ERROR_TYPES2.QUOTA_EXCEEDED_ERROR]: "critical",
+      [ERROR_TYPES2.STORAGE_ERROR]: "critical"
+    };
+    return severityMap[type] || "medium";
+  }
+  isRetryable(type) {
+    const retryableTypes = [
+      ERROR_TYPES2.NETWORK_ERROR,
+      ERROR_TYPES2.CONNECTION_ERROR,
+      ERROR_TYPES2.TIMEOUT_ERROR,
+      ERROR_TYPES2.SERVER_ERROR,
+      ERROR_TYPES2.EXTERNAL_SERVICE_ERROR,
+      ERROR_TYPES2.API_ERROR,
+      ERROR_TYPES2.RATE_LIMIT_ERROR
+    ];
+    return retryableTypes.includes(type);
+  }
+  getDefaultUserMessage(type, message) {
+    const userMessageMap = {
+      [ERROR_TYPES2.VALIDATION_ERROR]: "Please check your input and try again.",
+      [ERROR_TYPES2.REQUIRED_FIELD_ERROR]: "Please fill in all required fields.",
+      [ERROR_TYPES2.INVALID_FORMAT_ERROR]: "Please check the format of your input.",
+      [ERROR_TYPES2.INVALID_RANGE_ERROR]: "Please enter a value within the allowed range.",
+      [ERROR_TYPES2.INVALID_TYPE_ERROR]: "Please enter the correct type of data.",
+      [ERROR_TYPES2.NOT_FOUND]: "The requested item was not found.",
+      [ERROR_TYPES2.DUPLICATE_ERROR]: "This item already exists.",
+      [ERROR_TYPES2.CONFLICT_ERROR]: "There was a conflict with your request.",
+      [ERROR_TYPES2.PERMISSION_ERROR]: "You do not have permission to perform this action.",
+      [ERROR_TYPES2.AUTHENTICATION_ERROR]: "Please log in to continue.",
+      [ERROR_TYPES2.AUTHORIZATION_ERROR]: "You are not authorized to perform this action.",
+      [ERROR_TYPES2.BUSINESS_LOGIC_ERROR]: "This operation cannot be completed due to business rules.",
+      [ERROR_TYPES2.INSUFFICIENT_STOCK_ERROR]: "Insufficient stock available.",
+      [ERROR_TYPES2.CAPACITY_EXCEEDED_ERROR]: "Capacity limit exceeded.",
+      [ERROR_TYPES2.INVALID_OPERATION_ERROR]: "This operation is not allowed.",
+      [ERROR_TYPES2.SERVER_ERROR]: "A server error occurred. Please try again later.",
+      [ERROR_TYPES2.DATABASE_ERROR]: "A database error occurred. Please try again later.",
+      [ERROR_TYPES2.NETWORK_ERROR]: "Network connection failed. Please check your connection.",
+      [ERROR_TYPES2.CONNECTION_ERROR]: "Connection failed. Please try again.",
+      [ERROR_TYPES2.TIMEOUT_ERROR]: "The operation timed out. Please try again.",
+      [ERROR_TYPES2.EXTERNAL_SERVICE_ERROR]: "External service is temporarily unavailable.",
+      [ERROR_TYPES2.API_ERROR]: "API request failed. Please try again later.",
+      [ERROR_TYPES2.CONFIGURATION_ERROR]: "System configuration error. Please contact support.",
+      [ERROR_TYPES2.ENVIRONMENT_ERROR]: "Environment configuration error. Please contact support.",
+      [ERROR_TYPES2.RESOURCE_EXHAUSTED_ERROR]: "System resources are exhausted. Please try again later.",
+      [ERROR_TYPES2.QUOTA_EXCEEDED_ERROR]: "Quota exceeded. Please try again later.",
+      [ERROR_TYPES2.STORAGE_ERROR]: "Storage error occurred. Please try again later.",
+      [ERROR_TYPES2.USER_INPUT_ERROR]: "Please check your input and try again.",
+      [ERROR_TYPES2.UI_ERROR]: "A user interface error occurred.",
+      [ERROR_TYPES2.NAVIGATION_ERROR]: "Navigation error occurred.",
+      [ERROR_TYPES2.RECOVERY_ERROR]: "Error recovery failed.",
+      [ERROR_TYPES2.RETRY_ERROR]: "Retry operation failed.",
+      [ERROR_TYPES2.FALLBACK_ERROR]: "Fallback operation failed."
+    };
+    return userMessageMap[type] || "An unexpected error occurred. Please try again.";
+  }
+  toUserFriendly() {
+    return {
+      message: this.userMessage,
+      type: this.type,
+      severity: this.severity,
+      retryable: this.retryable,
+      timestamp: this.timestamp
+    };
+  }
+};
+var handleSupabaseError = (error) => {
+  if (!error) return { type: ERROR_TYPES2.SERVER_ERROR, message: "Unknown error occurred" };
+  switch (error.code) {
+    // Constraint violations
+    case "23505":
+      return {
+        type: ERROR_TYPES2.DUPLICATE_ERROR,
+        message: "A record with this information already exists",
+        details: { constraint: error.constraint, table: error.table }
+      };
+    case "23503":
+      return {
+        type: ERROR_TYPES2.CONFLICT_ERROR,
+        message: "Cannot perform this action due to related records",
+        details: { constraint: error.constraint, table: error.table }
+      };
+    case "23502":
+      return {
+        type: ERROR_TYPES2.REQUIRED_FIELD_ERROR,
+        message: "Required fields are missing",
+        details: { column: error.column, table: error.table }
+      };
+    case "23514":
+      return {
+        type: ERROR_TYPES2.VALIDATION_ERROR,
+        message: "Data validation failed",
+        details: { constraint: error.constraint, table: error.table }
+      };
+    // Database structure errors
+    case "42P01":
+      return {
+        type: ERROR_TYPES2.DATABASE_ERROR,
+        message: "Database table not found",
+        details: { table: error.table }
+      };
+    case "42703":
+      return {
+        type: ERROR_TYPES2.DATABASE_ERROR,
+        message: "Database column not found",
+        details: { column: error.column, table: error.table }
+      };
+    // Authentication errors
+    case "PGRST301":
+    // JWT expired
+    case "PGRST302":
+      return {
+        type: ERROR_TYPES2.AUTHENTICATION_ERROR,
+        message: "Authentication expired. Please log in again."
+      };
+    // Authorization errors
+    case "PGRST001":
+      return {
+        type: ERROR_TYPES2.AUTHORIZATION_ERROR,
+        message: "You do not have permission to perform this action."
+      };
+    // Not found errors
+    case "PGRST116":
+      return {
+        type: ERROR_TYPES2.NOT_FOUND,
+        message: "Record not found"
+      };
+    default:
+      if (error.message?.includes("JWT")) {
+        return {
+          type: ERROR_TYPES2.AUTHENTICATION_ERROR,
+          message: "Authentication error. Please refresh the page"
+        };
+      }
+      if (error.message?.includes("network")) {
+        return {
+          type: ERROR_TYPES2.NETWORK_ERROR,
+          message: "Network connection failed"
+        };
+      }
+      if (error.message?.includes("timeout")) {
+        return {
+          type: ERROR_TYPES2.TIMEOUT_ERROR,
+          message: "Request timed out"
+        };
+      }
+      return {
+        type: ERROR_TYPES2.SERVER_ERROR,
+        message: error.message || "An unexpected error occurred"
+      };
+  }
+};
+var validateRequiredFields = (data, requiredFields) => {
+  const missingFields = requiredFields.filter(
+    (field) => data[field] === void 0 || data[field] === null || data[field] === ""
+  );
+  if (missingFields.length > 0) {
+    throw new ServiceError(
+      `Missing required fields: ${missingFields.join(", ")}`,
+      ERROR_TYPES2.REQUIRED_FIELD_ERROR,
+      400,
+      null,
+      "validateRequiredFields",
+      { details: { missingFields } }
+    );
+  }
+};
+var validateNumericRanges = (data, ranges) => {
+  for (const [field, range2] of Object.entries(ranges)) {
+    const value = data[field];
+    if (value !== void 0 && value !== null) {
+      const numValue = Number(value);
+      if (isNaN(numValue)) {
+        throw new ServiceError(
+          `${field} must be a valid number`,
+          ERROR_TYPES2.INVALID_TYPE_ERROR,
+          400,
+          null,
+          "validateNumericRanges",
+          { details: { field, value } }
+        );
+      }
+      if (range2.min !== void 0 && numValue < range2.min) {
+        throw new ServiceError(
+          `${field} must be at least ${range2.min}`,
+          ERROR_TYPES2.INVALID_RANGE_ERROR,
+          400,
+          null,
+          "validateNumericRanges",
+          { details: { field, value, min: range2.min } }
+        );
+      }
+      if (range2.max !== void 0 && numValue > range2.max) {
+        throw new ServiceError(
+          `${field} must be no more than ${range2.max}`,
+          ERROR_TYPES2.INVALID_RANGE_ERROR,
+          400,
+          null,
+          "validateNumericRanges",
+          { details: { field, value, max: range2.max } }
+        );
+      }
+    }
+  }
+};
+var throwNotFoundError = (entityType, id) => {
+  throw new ServiceError(
+    `${entityType} with ID ${id} not found`,
+    ERROR_TYPES2.NOT_FOUND,
+    404,
+    null,
+    "throwNotFoundError",
+    { details: { entityType, id } }
+  );
+};
+var throwBusinessError = (message, details) => {
+  throw new ServiceError(
+    message,
+    ERROR_TYPES2.BUSINESS_LOGIC_ERROR,
+    400,
+    null,
+    "throwBusinessError",
+    { details }
+  );
+};
+var safeAsync = async (operation, context = "unknown") => {
+  try {
+    return await operation();
+  } catch (error) {
+    if (error instanceof ServiceError) {
+      throw error;
+    }
+    const supabaseError = handleSupabaseError(error);
+    throw new ServiceError(
+      supabaseError.message,
+      supabaseError.type,
+      500,
+      error,
+      context,
+      { details: supabaseError.details }
+    );
+  }
+};
+var SupabaseService = class {
+  constructor(client, tableName) {
+    this.realtimeChannels = /* @__PURE__ */ new Map();
+    this.client = client;
+    this.tableName = tableName;
+  }
+  /**
+   * Initialize service and test connection
+   */
+  async init() {
+    return safeAsync(async () => {
+      const { error } = await this.client.from(this.tableName).select("count").limit(1);
+      if (error) {
+        throw error;
+      }
+      return true;
+    }, `${this.tableName}.init`);
+  }
+  /**
+   * Get all records with advanced filtering and pagination
+   */
+  async getAll(options = {}) {
+    return safeAsync(async () => {
+      let query = this.client.from(this.tableName).select(options.select || "*").order(options.orderBy || "created_at", { ascending: options.ascending !== false });
+      if (options.filters) {
+        Object.entries(options.filters).forEach(([key, value]) => {
+          if (value !== null && value !== void 0 && value !== "") {
+            if (Array.isArray(value)) {
+              query = query.in(key, value);
+            } else if (typeof value === "string" && value.includes("%")) {
+              query = query.like(key, value);
+            } else {
+              query = query.eq(key, value);
+            }
+          }
+        });
+      }
+      if (options.dateRange) {
+        const { startDate, endDate, dateField = "created_at" } = options.dateRange;
+        if (startDate) {
+          query = query.gte(dateField, `${startDate}T00:00:00.000Z`);
+        }
+        if (endDate) {
+          query = query.lte(dateField, `${endDate}T23:59:59.999Z`);
+        }
+      }
+      if (options.limit) {
+        query = query.limit(options.limit);
+      }
+      if (options.offset) {
+        query = query.range(options.offset, options.offset + (options.limit || 10) - 1);
+      }
+      const { data, error } = await query;
+      if (error) {
+        throw error;
+      }
+      return data || [];
+    }, `${this.tableName}.getAll`);
+  }
+  /**
+   * Get paginated records with total count
+   */
+  async getPaginated(options = {}) {
+    const page = options.page || 1;
+    const perPage = options.perPage || 10;
+    const offset = (page - 1) * perPage;
+    const [totalCount, data] = await Promise.all([
+      this.count(options.filters),
+      this.getAll({
+        ...options,
+        limit: perPage,
+        offset
+      })
+    ]);
+    return {
+      data,
+      total: totalCount,
+      page,
+      perPage,
+      totalPages: Math.ceil(totalCount / perPage)
+    };
+  }
+  /**
+   * Get a record by ID
+   */
+  async getById(id, select = "*") {
+    return safeAsync(async () => {
+      const { data, error } = await this.client.from(this.tableName).select(select).eq("id", id).single();
+      if (error) {
+        throw error;
+      }
+      return data;
+    }, `${this.tableName}.getById`);
+  }
+  /**
+   * Get records by field value
+   */
+  async getByField(field, value, options = {}) {
+    return safeAsync(async () => {
+      let query = this.client.from(this.tableName).select(options.select || "*").eq(field, value);
+      if (options.orderBy) {
+        query = query.order(options.orderBy, { ascending: options.ascending !== false });
+      }
+      if (options.limit) {
+        query = query.limit(options.limit);
+      }
+      const { data, error } = await query;
+      if (error) {
+        throw error;
+      }
+      return data || [];
+    }, `${this.tableName}.getByField`);
+  }
+  /**
+   * Create a new record
+   */
+  async create(data) {
+    return safeAsync(async () => {
+      const { data: result, error } = await this.client.from(this.tableName).insert(data).select().single();
+      if (error) {
+        throw error;
+      }
+      return result;
+    }, `${this.tableName}.create`);
+  }
+  /**
+   * Create multiple records
+   */
+  async createMany(data) {
+    return safeAsync(async () => {
+      const { data: result, error } = await this.client.from(this.tableName).insert(data).select();
+      if (error) {
+        throw error;
+      }
+      return result || [];
+    }, `${this.tableName}.createMany`);
+  }
+  /**
+   * Update a record
+   */
+  async update(id, data) {
+    return safeAsync(async () => {
+      const { data: result, error } = await this.client.from(this.tableName).update(data).eq("id", id).select().single();
+      if (error) {
+        throw error;
+      }
+      return result;
+    }, `${this.tableName}.update`);
+  }
+  /**
+   * Update multiple records
+   */
+  async updateMany(updates) {
+    return safeAsync(async () => {
+      const promises = updates.map(({ id, data }) => this.update(id, data));
+      return Promise.all(promises);
+    }, `${this.tableName}.updateMany`);
+  }
+  /**
+   * Upsert a record (insert or update)
+   */
+  async upsert(data, onConflict) {
+    return safeAsync(async () => {
+      let query = this.client.from(this.tableName).upsert(data).select().single();
+      if (onConflict) {
+        query = query.onConflict(onConflict);
+      }
+      const { data: result, error } = await query;
+      if (error) {
+        throw error;
+      }
+      return result;
+    }, `${this.tableName}.upsert`);
+  }
+  /**
+   * Delete a record
+   */
+  async delete(id) {
+    return safeAsync(async () => {
+      const { error } = await this.client.from(this.tableName).delete().eq("id", id);
+      if (error) {
+        throw error;
+      }
+    }, `${this.tableName}.delete`);
+  }
+  /**
+   * Bulk delete records
+   */
+  async bulkDelete(ids) {
+    return safeAsync(async () => {
+      const { error } = await this.client.from(this.tableName).delete().in("id", ids);
+      if (error) {
+        throw error;
+      }
+    }, `${this.tableName}.bulkDelete`);
+  }
+  /**
+   * Count records with optional filters
+   */
+  async count(filters) {
+    return safeAsync(async () => {
+      let query = this.client.from(this.tableName).select("*", { count: "exact", head: true });
+      if (filters) {
+        Object.entries(filters).forEach(([key, value]) => {
+          if (value !== null && value !== void 0 && value !== "") {
+            if (Array.isArray(value)) {
+              query = query.in(key, value);
+            } else {
+              query = query.eq(key, value);
+            }
+          }
+        });
+      }
+      const { count, error } = await query;
+      if (error) {
+        throw error;
+      }
+      return count || 0;
+    }, `${this.tableName}.count`);
+  }
+  /**
+   * Check if record exists
+   */
+  async exists(id) {
+    return safeAsync(async () => {
+      const { data, error } = await this.client.from(this.tableName).select("id").eq("id", id).single();
+      if (error && error.code !== "PGRST116") {
+        throw error;
+      }
+      return !!data;
+    }, `${this.tableName}.exists`);
+  }
+  /**
+   * Search records with text search
+   */
+  async search(searchTerm, searchFields = ["name"], options = {}) {
+    return safeAsync(async () => {
+      let query = this.client.from(this.tableName).select(options.select || "*");
+      if (searchFields.length === 1) {
+        query = query.ilike(searchFields[0], `%${searchTerm}%`);
+      } else {
+        const orConditions = searchFields.map((field) => `${field}.ilike.%${searchTerm}%`).join(",");
+        query = query.or(orConditions);
+      }
+      if (options.filters) {
+        Object.entries(options.filters).forEach(([key, value]) => {
+          if (value !== null && value !== void 0 && value !== "") {
+            query = query.eq(key, value);
+          }
+        });
+      }
+      query = query.order(options.orderBy || "created_at", { ascending: options.ascending !== false });
+      if (options.limit) {
+        query = query.limit(options.limit);
+      }
+      const { data, error } = await query;
+      if (error) {
+        throw error;
+      }
+      return data || [];
+    }, `${this.tableName}.search`);
+  }
+  /**
+   * Get records by date range
+   */
+  async getByDateRange(startDate, endDate, dateField = "created_at", options = {}) {
+    return this.getAll({
+      ...options,
+      dateRange: { startDate, endDate, dateField }
+    });
+  }
+  /**
+   * Execute raw SQL query
+   */
+  async executeRpc(functionName, params) {
+    return safeAsync(async () => {
+      const { data, error } = await this.client.rpc(functionName, params);
+      if (error) {
+        throw error;
+      }
+      return data;
+    }, `${this.tableName}.executeRpc`);
+  }
+  /**
+   * Setup real-time subscription
+   */
+  setupRealtimeSubscription(callback, options = {}, channelName) {
+    const channel = channelName || `${this.tableName}_realtime_${Date.now()}`;
+    let realtimeChannel = this.client.channel(channel).on(
+      "postgres_changes",
+      {
+        event: options.event || "*",
+        schema: options.schema || "public",
+        table: this.tableName,
+        filter: options.filter
+      },
+      callback
+    ).subscribe();
+    this.realtimeChannels.set(channel, realtimeChannel);
+    return realtimeChannel;
+  }
+  /**
+   * Remove real-time subscription
+   */
+  removeRealtimeSubscription(channelName) {
+    const channel = this.realtimeChannels.get(channelName);
+    if (channel) {
+      this.client.removeChannel(channel);
+      this.realtimeChannels.delete(channelName);
+    }
+  }
+  /**
+   * Remove all real-time subscriptions
+   */
+  removeAllRealtimeSubscriptions() {
+    this.realtimeChannels.forEach((channel, channelName) => {
+      this.client.removeChannel(channel);
+    });
+    this.realtimeChannels.clear();
+  }
+  /**
+   * Bulk operations with transaction support
+   */
+  async bulkOperation(operations) {
+    return safeAsync(async () => {
+      const results = [];
+      for (const operation of operations) {
+        let result;
+        switch (operation.type) {
+          case "insert":
+            result = await this.create(operation.data);
+            break;
+          case "update":
+            result = await this.update(operation.id, operation.data);
+            break;
+          case "delete":
+            await this.delete(operation.id);
+            result = { deleted: true, id: operation.id };
+            break;
+          case "upsert":
+            result = await this.upsert(operation.data);
+            break;
+          default:
+            throw new ServiceError(
+              `Unknown operation type: ${operation.type}`,
+              ERROR_TYPES2.INVALID_OPERATION_ERROR
+            );
+        }
+        results.push(result);
+      }
+      return results;
+    }, `${this.tableName}.bulkOperation`);
+  }
+  /**
+   * Get table name
+   */
+  getTableName() {
+    return this.tableName;
+  }
+  /**
+   * Get Supabase client
+   */
+  getClient() {
+    return this.client;
+  }
+};
+
 // src/services/supabase.ts
 var import_supabase_js = require("@supabase/supabase-js");
 var import_meta = {};
@@ -2929,7 +4787,7 @@ var createSupabaseFromEnv = () => {
   }
   return createSupabaseClient({ url, anonKey });
 };
-var handleSupabaseError = (error, context = "") => {
+var handleSupabaseError2 = (error, context = "") => {
   if (error.code === "23505") {
     return "This record already exists";
   } else if (error.code === "23503") {
@@ -3085,6 +4943,301 @@ var useAuth = () => {
   }
   return context;
 };
+
+// src/stores/storeFactory.ts
+var import_zustand2 = require("zustand");
+var import_middleware = require("zustand/middleware");
+var createSelectors = (entityKey) => (get) => ({
+  getEntities: () => get().entities,
+  getEntityById: (id) => get().entities.find((entity) => entity.id === id),
+  getEntitiesByField: (field, value) => get().entities.filter((entity) => entity[field] === value),
+  getEntitiesCount: () => get().entities.length,
+  getLoadingState: () => get().loading,
+  getErrorState: () => get().error,
+  isInitialized: () => get().initialized
+});
+var createActions = (entityKey) => (set, get) => ({
+  setEntities: (entities) => set({ entities }),
+  addEntity: (entity) => {
+    const state = get();
+    set({ entities: [entity, ...state.entities] });
+  },
+  updateEntity: (id, updates) => {
+    const state = get();
+    const updatedEntities = state.entities.map(
+      (entity) => entity.id === id ? { ...entity, ...updates } : entity
+    );
+    set({ entities: updatedEntities });
+  },
+  removeEntity: (id) => {
+    const state = get();
+    const filteredEntities = state.entities.filter((entity) => entity.id !== id);
+    set({ entities: filteredEntities });
+  },
+  setLoading: (loading) => set({ loading }),
+  setError: (error) => set({ error }),
+  setInitialized: (initialized) => set({ initialized }),
+  reset: () => set({
+    entities: [],
+    loading: false,
+    error: null,
+    initialized: false
+  }),
+  cleanupDuplicates: () => {
+    const state = get();
+    const uniqueEntities = [];
+    const seenIds = /* @__PURE__ */ new Set();
+    state.entities.forEach((entity) => {
+      if (!seenIds.has(entity.id)) {
+        seenIds.add(entity.id);
+        uniqueEntities.push(entity);
+      }
+    });
+    set({ entities: uniqueEntities });
+  },
+  sortEntitiesByDate: (ascending = false) => {
+    const state = get();
+    const sortedEntities = [...state.entities].sort((a, b) => {
+      const dateA = new Date(a.created_at || 0);
+      const dateB = new Date(b.created_at || 0);
+      return ascending ? dateA.getTime() - dateB.getTime() : dateB.getTime() - dateA.getTime();
+    });
+    set({ entities: sortedEntities });
+  },
+  sortEntitiesByField: (field, ascending = true) => {
+    const state = get();
+    const sortedEntities = [...state.entities].sort((a, b) => {
+      const valueA = a[field];
+      const valueB = b[field];
+      if (valueA < valueB) return ascending ? -1 : 1;
+      if (valueA > valueB) return ascending ? 1 : -1;
+      return 0;
+    });
+    set({ entities: sortedEntities });
+  },
+  filterEntitiesByDateRange: (startDate, endDate, dateField = "created_at") => {
+    const state = get();
+    const start = new Date(startDate);
+    const end = new Date(endDate);
+    return state.entities.filter((entity) => {
+      const entityDate = new Date(entity[dateField]);
+      return entityDate >= start && entityDate <= end;
+    });
+  }
+});
+function createEntityStore(entityName, customActions, customSelectors, persistOptions) {
+  const initialState = {
+    entities: [],
+    loading: false,
+    error: null,
+    initialized: false
+  };
+  const storeCreator = (set, get) => ({
+    ...initialState,
+    ...createSelectors("entities")(get),
+    ...createActions("entities")(set, get),
+    ...customActions ? customActions(set, get) : {},
+    ...customSelectors ? customSelectors(get) : {}
+  });
+  if (persistOptions) {
+    return (0, import_zustand2.create)()(
+      (0, import_middleware.persist)(storeCreator, {
+        name: `${entityName}-store`,
+        ...persistOptions
+      })
+    );
+  }
+  return (0, import_zustand2.create)()(storeCreator);
+}
+function createUIStore(customActions, persistOptions) {
+  const initialState = {
+    loading: false,
+    loadingStates: {},
+    error: null,
+    errors: {},
+    modals: {},
+    forms: {},
+    filters: {},
+    notifications: [],
+    sidebarOpen: false,
+    theme: "system",
+    initialized: false
+  };
+  const storeCreator = (set, get) => ({
+    ...initialState,
+    // Loading actions
+    setLoading: (loading) => set({ loading }),
+    setLoadingState: (key, loading) => {
+      const state = get();
+      set({ loadingStates: { ...state.loadingStates, [key]: loading } });
+    },
+    getLoadingState: (key) => {
+      const state = get();
+      return key ? state.loadingStates[key] || false : state.loading;
+    },
+    // Error actions
+    setError: (error) => set({ error }),
+    setErrorState: (key, error) => {
+      const state = get();
+      set({ errors: { ...state.errors, [key]: error } });
+    },
+    getErrorState: (key) => {
+      const state = get();
+      return key ? state.errors[key] || null : state.error;
+    },
+    clearErrors: () => set({ error: null, errors: {} }),
+    // Modal actions
+    openModal: (modalName) => {
+      const state = get();
+      set({ modals: { ...state.modals, [modalName]: true } });
+    },
+    closeModal: (modalName) => {
+      const state = get();
+      set({ modals: { ...state.modals, [modalName]: false } });
+    },
+    toggleModal: (modalName) => {
+      const state = get();
+      const isOpen = state.modals[modalName] || false;
+      set({ modals: { ...state.modals, [modalName]: !isOpen } });
+    },
+    isModalOpen: (modalName) => {
+      const state = get();
+      return state.modals[modalName] || false;
+    },
+    closeAllModals: () => set({ modals: {} }),
+    // Form actions
+    setFormData: (formName, data) => {
+      const state = get();
+      set({ forms: { ...state.forms, [formName]: data } });
+    },
+    getFormData: (formName) => {
+      const state = get();
+      return state.forms[formName];
+    },
+    clearFormData: (formName) => {
+      const state = get();
+      const { [formName]: _, ...rest } = state.forms;
+      set({ forms: rest });
+    },
+    clearAllForms: () => set({ forms: {} }),
+    // Filter actions
+    setFilter: (filterName, value) => {
+      const state = get();
+      set({ filters: { ...state.filters, [filterName]: value } });
+    },
+    getFilter: (filterName) => {
+      const state = get();
+      return state.filters[filterName];
+    },
+    clearFilter: (filterName) => {
+      const state = get();
+      const { [filterName]: _, ...rest } = state.filters;
+      set({ filters: rest });
+    },
+    clearAllFilters: () => set({ filters: {} }),
+    // Notification actions
+    addNotification: (notification) => {
+      const state = get();
+      const newNotification = {
+        ...notification,
+        id: `notification_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
+        timestamp: Date.now()
+      };
+      set({ notifications: [...state.notifications, newNotification] });
+    },
+    removeNotification: (id) => {
+      const state = get();
+      set({ notifications: state.notifications.filter((n) => n.id !== id) });
+    },
+    clearNotifications: () => set({ notifications: [] }),
+    // General UI actions
+    setSidebarOpen: (open) => set({ sidebarOpen: open }),
+    toggleSidebar: () => {
+      const state = get();
+      set({ sidebarOpen: !state.sidebarOpen });
+    },
+    setTheme: (theme) => set({ theme }),
+    setInitialized: (initialized) => set({ initialized }),
+    // Reset
+    reset: () => set(initialState),
+    // Custom actions
+    ...customActions ? customActions(set, get) : {}
+  });
+  if (persistOptions) {
+    return (0, import_zustand2.create)()(
+      (0, import_middleware.persist)(storeCreator, {
+        name: "ui-store",
+        ...persistOptions
+      })
+    );
+  }
+  return (0, import_zustand2.create)()(storeCreator);
+}
+function createCRUDStore(entityName, persistOptions) {
+  return createEntityStore(
+    entityName,
+    (set, get) => ({
+      // Add CRUD-specific actions here if needed
+      bulkUpdate: (updates) => {
+        const state = get();
+        const updatedEntities = state.entities.map((entity) => {
+          const update = updates.find((u) => u.id === entity.id);
+          return update ? { ...entity, ...update.data } : entity;
+        });
+        set({ entities: updatedEntities });
+      },
+      bulkDelete: (ids) => {
+        const state = get();
+        const filteredEntities = state.entities.filter((entity) => !ids.includes(entity.id));
+        set({ entities: filteredEntities });
+      }
+    }),
+    void 0,
+    persistOptions
+  );
+}
+function createPaginatedStore(entityName, defaultPerPage = 10, persistOptions) {
+  const initialState = {
+    entities: [],
+    loading: false,
+    error: null,
+    initialized: false,
+    currentPage: 1,
+    perPage: defaultPerPage,
+    totalPages: 0,
+    totalCount: 0
+  };
+  const storeCreator = (set, get) => ({
+    ...initialState,
+    ...createActions("entities")(set, get),
+    setPage: (page) => set({ currentPage: page }),
+    setPerPage: (perPage) => set({ perPage, currentPage: 1 }),
+    setPaginationData: (data) => set(data),
+    getPaginatedEntities: () => {
+      const state = get();
+      const startIndex = (state.currentPage - 1) * state.perPage;
+      const endIndex = startIndex + state.perPage;
+      return state.entities.slice(startIndex, endIndex);
+    },
+    hasNextPage: () => {
+      const state = get();
+      return state.currentPage < state.totalPages;
+    },
+    hasPreviousPage: () => {
+      const state = get();
+      return state.currentPage > 1;
+    }
+  });
+  if (persistOptions) {
+    return (0, import_zustand2.create)()(
+      (0, import_middleware.persist)(storeCreator, {
+        name: `${entityName}-paginated-store`,
+        ...persistOptions
+      })
+    );
+  }
+  return (0, import_zustand2.create)()(storeCreator);
+}
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
   ALERT_TYPES,
@@ -3105,6 +5258,7 @@ var useAuth = () => {
   CardHeader,
   CardTitle,
   DATA_TABLE_DEFAULTS,
+  DATE_FORMATS,
   DEPARTMENT_TYPES,
   DataTable,
   DropdownMenu,
@@ -3122,7 +5276,6 @@ var useAuth = () => {
   DropdownMenuSubContent,
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
-  ERROR_TYPES,
   ErrorBoundary,
   ExactHeader,
   FIELD_CONFIGS,
@@ -3132,13 +5285,16 @@ var useAuth = () => {
   Input,
   Label,
   MACHINE_STATUSES,
+  NUMBER_CONSTANTS,
   PRODUCT_TYPES,
   SCHEMAS,
   SEAL_SIDES,
   SHIFT_TYPES,
+  STRING_CONSTANTS,
+  ServiceError,
   SimpleHeader,
+  SupabaseService,
   TASK_STATUSES,
-  TIME_CONSTANTS,
   Table,
   TableBody,
   TableCaption,
@@ -3151,32 +5307,162 @@ var useAuth = () => {
   ThemeSwitch,
   VALIDATION_MESSAGES,
   WORK_CENTERS,
+  addDaysToDate,
+  arrayComparison,
+  average,
+  averageBy,
+  averageNumbers,
   badgeVariants,
   buttonVariants,
+  calculatePercentage,
+  calculatePercentageChange,
+  capitalize,
+  capitalizeWords,
   checkSupabaseConnection,
+  chunk,
+  clampNumber,
+  cleanWhitespace,
   cn,
+  compact,
+  compareStringsIgnoreCase,
   confirmAction,
+  containsBy,
+  countBy,
+  countCharacters,
+  countOccurrences,
+  countWords,
+  createArray,
+  createCRUDStore,
+  createDateRange,
+  createEntityStore,
+  createPaginatedStore,
+  createQueryKeys,
+  createServiceHooks,
   createSupabaseClient,
   createSupabaseFromEnv,
+  createSupabaseHooks,
+  createUIStore,
   debounce,
+  defaultQueryConfig,
+  defaultQueryErrorHandler,
+  difference,
   dismiss,
   dismissAll,
+  extractEmailDomain,
+  extractEmailUsername,
+  filterBy,
+  findBy,
+  findIndexBy,
+  first,
+  flatten,
+  formatBytes,
+  formatCurrency,
   formatDate,
   formatDateTime,
+  formatDisplayDate,
+  formatDisplayDateTime,
+  formatDistance,
+  formatDuration,
+  formatFileSize,
+  formatISODate,
+  formatISODateTime,
+  formatNumber,
+  formatNumberWithUnit,
+  formatPercentage,
+  formatPhoneNumber,
+  formatTime,
+  formatVolume,
+  formatWeight,
   generateId,
+  generateRandomString,
+  generateSlug,
+  generateUUID,
+  getCurrentISODate,
+  getCurrentISODateTime,
+  getDateRangePresets,
+  getDaysDifference,
+  getEndOfDay,
+  getHoursDifference,
+  getInitials,
+  getMinutesDifference,
   getNested,
+  getRandomItem,
+  getRandomItems,
+  getRelativeTime,
   getStandardSupabaseClient,
+  getStartOfDay,
   getSupabaseClient,
+  getUniqueValues,
+  groupBy,
   handleApiError,
   handleSupabaseError,
-  safeAsync,
+  handleSupabaseServiceError,
+  highlightSearchTerms,
+  hoursToMinutes,
+  insertAt,
+  intersection,
+  isPalindrome,
+  isValidDate,
+  isValidEmail,
+  isValidNumber,
+  isValidPhoneNumber,
+  last,
+  maskString,
+  max,
+  maxBy,
+  maxNumber,
+  min,
+  minBy,
+  minNumber,
+  minutesToHours,
+  moveItem,
+  normalizeSpaces,
+  numberValidation,
+  paginate,
+  parseDate,
+  parseInteger,
+  parseNumber,
+  randomInteger,
+  randomNumber,
+  range,
+  removeAt,
+  removeDuplicates,
+  removeDuplicatesByKey,
+  removeWhitespace,
+  reverse,
+  roundNumber,
+  safeMath,
+  sanitizeHtml,
+  searchIgnoreCase,
   showError,
   showInfo,
   showSuccess,
   showToast,
   showValidationError,
   showWarning,
+  shuffle,
+  skip,
+  skipLast,
+  sortBy,
+  sortByMultiple,
+  stringTemplates,
+  subtractDaysFromDate,
+  sum,
+  sumBy,
+  sumNumbers,
+  take,
+  takeLast,
   throttle,
+  throwBusinessError,
+  throwNotFoundError,
+  toCamelCase,
+  toKebabCase,
+  toPascalCase,
+  toSnakeCase,
+  truncate,
+  truncateWords,
+  union,
+  updateAt,
   useAuth,
   useDataService,
   useErrorBoundary,
@@ -3185,8 +5471,11 @@ var useAuth = () => {
   useTheme,
   useValidationErrorHandler,
   validateData,
+  validateDateRange,
   validateEmail,
+  validateNumericRanges,
   validateRequired,
+  validateRequiredFields,
   withErrorBoundary
 });
 //# sourceMappingURL=index.cjs.map
