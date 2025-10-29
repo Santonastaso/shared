@@ -124,7 +124,11 @@ var DATE_FORMATS = {
   DISPLAY_DATETIME: "dd/MM/yyyy HH:mm",
   TIME: "HH:mm",
   MONTH_YEAR: "MM/yyyy",
-  FULL: "EEEE, MMMM do, yyyy"
+  FULL: "EEEE, MMMM do, yyyy",
+  UTC_DATE_IT: "dd/MM/yyyy",
+  // Italian format for UTC dates
+  UTC_DATETIME_IT: "dd/MM/yyyy HH:mm"
+  // Italian format for UTC datetime
 };
 var formatDate = (date, formatPattern = DATE_FORMATS.DISPLAY) => {
   if (!date) return "";
@@ -278,6 +282,28 @@ var hoursToMinutes = (hours) => {
 };
 var minutesToHours = (minutes) => {
   return minutes / 60;
+};
+var formatUtcDate = (isoString) => {
+  if (!isoString) return "";
+  const date = new Date(isoString);
+  return date.toLocaleDateString("it-IT", {
+    timeZone: "UTC",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit"
+  });
+};
+var formatUtcDateTime = (isoString) => {
+  if (!isoString) return "";
+  const date = new Date(isoString);
+  return date.toLocaleString("it-IT", {
+    timeZone: "UTC",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit"
+  });
 };
 var TIME_CONSTANTS = {
   MINUTES_PER_HOUR: 60,
@@ -629,7 +655,7 @@ var STRING_CONSTANTS = {
 
 // src/utils/arrayUtils.ts
 var removeDuplicates = (array) => {
-  return [...new Set(array)];
+  return Array.from(new Set(array));
 };
 var removeDuplicatesByKey = (array, key) => {
   const seen = /* @__PURE__ */ new Set();
@@ -708,7 +734,7 @@ var chunk = (array, size) => {
 };
 var flatten = (array) => {
   return array.reduce((flat, item) => {
-    return flat.concat(Array.isArray(item) ? flatten(item) : item);
+    return flat.concat(Array.isArray(item) ? flatten(item) : [item]);
   }, []);
 };
 var intersection = (array1, array2) => {
@@ -5001,6 +5027,8 @@ export {
   formatPercentage,
   formatPhoneNumber,
   formatTime,
+  formatUtcDate,
+  formatUtcDateTime,
   formatVolume,
   formatWeight,
   generateId,
