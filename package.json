@@ -1,6 +1,6 @@
 {
   "name": "@santonastaso/shared",
-  "version": "0.2.8",
+  "version": "0.2.9",
   "type": "module",
   "private": false,
   "module": "./dist/index.js",
