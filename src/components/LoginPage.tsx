@@ -215,12 +215,12 @@ export const LoginPage: React.FC<LoginPageProps> = ({
               {additionalFields && (
                 <div className="space-y-4">
                   {React.cloneElement(additionalFields as React.ReactElement, {
-                    formData,
-                    handleChange,
-                    formErrors,
-                    getFieldError,
-                    isLoading,
-                  })}
+                    formData: formData,
+                    handleChange: handleChange,
+                    formErrors: formErrors,
+                    getFieldError: getFieldError,
+                    isLoading: isLoading,
+                  } as any)}
                 </div>
               )}
 
@@ -279,7 +279,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({
             )}
 
             {/* Demo Credentials (for development) */}
-            {demoCredentials && (typeof import.meta !== 'undefined' && import.meta.env?.MODE === 'development') && (
+            {demoCredentials && (typeof import.meta !== 'undefined' && (import.meta as any).env?.MODE === 'development') && (
               <div className="mt-4 p-3 bg-gray-50 rounded-lg">
                 <details className="group">
                   <summary className="cursor-pointer text-sm font-medium text-gray-700 hover:text-gray-900">
