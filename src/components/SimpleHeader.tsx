@@ -1,5 +1,4 @@
 import React, { Children, useCallback, useState } from 'react';
-import { Link } from 'react-router-dom';
 import { LogOut, Settings, User, LoaderCircle, RotateCw, Menu } from 'lucide-react';
 import { ThemeSwitch } from './theme/ThemeSwitch';
 import { Button } from './button';
@@ -117,10 +116,10 @@ export function UserMenu({ children, user, onLogout }: UserMenuProps) {
 const UsersMenu = () => {
   const { onClose } = useUserMenu() ?? {};
   return (
-    <DropdownMenuItem asChild onClick={onClose}>
-      <Link to="/sales" className="flex items-center gap-2">
+    <DropdownMenuItem onClick={onClose}>
+      <div className="flex items-center gap-2">
         <User /> Users
-      </Link>
+      </div>
     </DropdownMenuItem>
   );
 };
@@ -129,11 +128,11 @@ const UsersMenu = () => {
 const ConfigurationMenu = () => {
   const { onClose } = useUserMenu() ?? {};
   return (
-    <DropdownMenuItem asChild onClick={onClose}>
-      <Link to="/settings" className="flex items-center gap-2">
+    <DropdownMenuItem onClick={onClose}>
+      <div className="flex items-center gap-2">
         <Settings />
         My info
-      </Link>
+      </div>
     </DropdownMenuItem>
   );
 };
@@ -179,10 +178,7 @@ export const SimpleHeader: React.FC<SimpleHeaderProps> = ({
                   <Menu className="h-5 w-5" />
                 </button>
               )}
-              <Link
-                to="/"
-                className="flex items-center gap-2 text-secondary-foreground no-underline"
-              >
+              <div className="flex items-center gap-2 text-secondary-foreground">
                 {darkModeLogo && (
                   <img
                     className="[.light_&]:hidden h-6"
@@ -198,7 +194,7 @@ export const SimpleHeader: React.FC<SimpleHeaderProps> = ({
                   />
                 )}
                 <h1 className="text-xl font-semibold">{title}</h1>
-              </Link>
+              </div>
             </div>
 
             {/* Right side: Theme, Refresh, User Menu */}

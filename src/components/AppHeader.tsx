@@ -1,5 +1,4 @@
 import React, { useState, useCallback } from 'react';
-import { Link } from 'react-router-dom';
 import { LogOut, Settings, User, RotateCw, LoaderCircle, Menu } from 'lucide-react';
 import { ThemeSwitch } from './theme/ThemeSwitch';
 import { Button } from './button';
@@ -12,6 +11,15 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from './DropdownMenu';
+
+// Simple Link Component that uses anchor tags for maximum compatibility
+const SafeLink = ({ to, children, className }: { to: string; children: React.ReactNode; className?: string }) => {
+  return (
+    <a href={to} className={className}>
+      {children}
+    </a>
+  );
+};
 
 export interface AppHeaderProps {
   // Branding
@@ -86,7 +94,7 @@ export const AppHeader: React.FC<AppHeaderProps> = ({
                 <Menu className="h-5 w-5" />
               </button>
             )}
-            <Link
+            <SafeLink
               to="/"
               className="flex items-center gap-2 text-secondary-foreground no-underline hover:opacity-80 transition-opacity"
             >
@@ -105,14 +113,14 @@ export const AppHeader: React.FC<AppHeaderProps> = ({
                 </>
               )}
               <h1 className="text-xl font-semibold">{title}</h1>
-            </Link>
+            </SafeLink>
           </div>
 
           {/* Navigation */}
           {navigationItems.length > 0 && (
             <nav className="hidden md:flex">
               {navigationItems.map((item) => (
-                <Link
+                <SafeLink
                   key={item.to}
                   to={item.to}
                   className={`px-6 py-3 text-sm font-medium transition-colors border-b-2 ${
@@ -122,7 +130,7 @@ export const AppHeader: React.FC<AppHeaderProps> = ({
                   }`}
                 >
                   {item.label}
-                </Link>
+                </SafeLink>
               ))}
             </nav>
           )}

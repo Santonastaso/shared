@@ -1,5 +1,4 @@
 import React, { Children, useCallback, useState } from 'react';
-import { Link } from 'react-router-dom';
 import { LogOut, Settings, User, LoaderCircle, RotateCw } from 'lucide-react';
 import { ThemeSwitch } from './theme/ThemeSwitch';
 import { Button } from './button';
@@ -113,6 +112,15 @@ export function UserMenu({ children, user, onLogout }: UserMenuProps) {
   );
 }
 
+// Simple Link Component that uses anchor tags for maximum compatibility
+const SafeLink = ({ to, children, className }: { to: string; children: React.ReactNode; className?: string }) => {
+  return (
+    <a href={to} className={className}>
+      {children}
+    </a>
+  );
+};
+
 // NavigationTab Component
 const NavigationTab = ({
   label,
@@ -123,7 +131,7 @@ const NavigationTab = ({
   to: string;
   isActive: boolean;
 }) => (
-  <Link
+  <SafeLink
     to={to}
     className={`px-6 py-3 text-sm font-medium transition-colors border-b-2 ${
       isActive
@@ -132,7 +140,7 @@ const NavigationTab = ({
     }`}
   >
     {label}
-  </Link>
+  </SafeLink>
 );
 
 // UsersMenu Component
@@ -195,7 +203,7 @@ export const ExactHeader: React.FC<ExactHeaderProps> = ({
       <header className="bg-secondary">
         <div className="px-4">
           <div className="flex justify-between items-center flex-1">
-            <Link
+            <SafeLink
               to="/"
               className="flex items-center gap-2 text-secondary-foreground no-underline"
             >
@@ -214,7 +222,7 @@ export const ExactHeader: React.FC<ExactHeaderProps> = ({
                 />
               )}
               <h1 className="text-xl font-semibold">{title}</h1>
-            </Link>
+            </SafeLink>
             <div>
               <nav className="flex">
                 {navigationItems.map((item) => (

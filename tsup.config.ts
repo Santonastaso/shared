@@ -15,6 +15,7 @@ export default defineConfig({
     "react-dom", 
     "react-hook-form",
     "react-router-dom",
+    "react-router",
     "@radix-ui/react-slot",
     "@radix-ui/react-avatar",
     "@radix-ui/react-dropdown-menu",
@@ -27,6 +28,8 @@ export default defineConfig({
     "zustand",
     "lucide-react",
     "sonner",
-    "yup"
+    "yup",
+    "date-fns"
   ],
+  noExternal: [],
 });

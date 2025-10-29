@@ -950,6 +950,13 @@ var throttle = (func, limit) => {
     }
   };
 };
+var safeAsync = async (asyncFn, context = {}) => {
+  try {
+    return await asyncFn();
+  } catch (error) {
+    return error instanceof Error ? error : new Error(String(error));
+  }
+};
 var handleApiError = (error, context = {}) => {
   let errorMessage = "An unexpected error occurred";
   if (error.response) {
@@ -2812,7 +2819,6 @@ var GenericForm_default = GenericForm;
 
 // src/components/AppHeader.tsx
 import { useState as useState5, useCallback as useCallback2 } from "react";
-import { Link } from "react-router-dom";
 import { LogOut, Settings, User, RotateCw, LoaderCircle, Menu } from "lucide-react";
 
 // src/components/Avatar.tsx
@@ -3081,6 +3087,9 @@ function DropdownMenuSubContent({
 
 // src/components/AppHeader.tsx
 import { Fragment, jsx as jsx16, jsxs as jsxs8 } from "react/jsx-runtime";
+var SafeLink = ({ to, children, className }) => {
+  return /* @__PURE__ */ jsx16("a", { href: to, className, children });
+};
 var AppHeader = ({
   title,
   logo,
@@ -3112,7 +3121,7 @@ var AppHeader = ({
         }
       ),
       /* @__PURE__ */ jsxs8(
-        Link,
+        SafeLink,
         {
           to: "/",
           className: "flex items-center gap-2 text-secondary-foreground no-underline hover:opacity-80 transition-opacity",
@@ -3141,7 +3150,7 @@ var AppHeader = ({
       )
     ] }),
     navigationItems.length > 0 && /* @__PURE__ */ jsx16("nav", { className: "hidden md:flex", children: navigationItems.map((item) => /* @__PURE__ */ jsx16(
-      Link,
+      SafeLink,
       {
         to: item.to,
         className: `px-6 py-3 text-sm font-medium transition-colors border-b-2 ${item.isActive ? "text-secondary-foreground border-secondary-foreground" : "text-secondary-foreground/70 border-transparent hover:text-secondary-foreground/80"}`,
@@ -3201,7 +3210,6 @@ var AppHeader = ({
 
 // src/components/ExactHeader.tsx
 import React10, { Children, useCallback as useCallback3, useState as useState6 } from "react";
-import { Link as Link2 } from "react-router-dom";
 import { LogOut as LogOut2, Settings as Settings2, User as User2, LoaderCircle as LoaderCircle2, RotateCw as RotateCw2 } from "lucide-react";
 import { jsx as jsx17, jsxs as jsxs9 } from "react/jsx-runtime";
 var UserMenuContext = React10.createContext(void 0);
@@ -3266,12 +3274,15 @@ function UserMenu({ children, user, onLogout }) {
     ] })
   ] }) });
 }
+var SafeLink2 = ({ to, children, className }) => {
+  return /* @__PURE__ */ jsx17("a", { href: to, className, children });
+};
 var NavigationTab = ({
   label,
   to,
   isActive
 }) => /* @__PURE__ */ jsx17(
-  Link2,
+  SafeLink2,
   {
     to,
     className: `px-6 py-3 text-sm font-medium transition-colors border-b-2 ${isActive ? "text-secondary-foreground border-secondary-foreground" : "text-secondary-foreground/70 border-transparent hover:text-secondary-foreground/80"}`,
@@ -3280,14 +3291,14 @@ var NavigationTab = ({
 );
 var UsersMenu = () => {
   const { onClose } = useUserMenu() ?? {};
-  return /* @__PURE__ */ jsx17(DropdownMenuItem, { asChild: true, onClick: onClose, children: /* @__PURE__ */ jsxs9(Link2, { to: "/sales", className: "flex items-center gap-2", children: [
+  return /* @__PURE__ */ jsx17(DropdownMenuItem, { asChild: true, onClick: onClose, children: /* @__PURE__ */ jsxs9(Link, { to: "/sales", className: "flex items-center gap-2", children: [
     /* @__PURE__ */ jsx17(User2, {}),
     " Users"
   ] }) });
 };
 var ConfigurationMenu = () => {
   const { onClose } = useUserMenu() ?? {};
-  return /* @__PURE__ */ jsx17(DropdownMenuItem, { asChild: true, onClick: onClose, children: /* @__PURE__ */ jsxs9(Link2, { to: "/settings", className: "flex items-center gap-2", children: [
+  return /* @__PURE__ */ jsx17(DropdownMenuItem, { asChild: true, onClick: onClose, children: /* @__PURE__ */ jsxs9(Link, { to: "/settings", className: "flex items-center gap-2", children: [
     /* @__PURE__ */ jsx17(Settings2, {}),
     "My info"
   ] }) });
@@ -3304,7 +3315,7 @@ var ExactHeader = ({
 }) => {
   return /* @__PURE__ */ jsx17("nav", { className: "flex-grow", children: /* @__PURE__ */ jsx17("header", { className: "bg-secondary", children: /* @__PURE__ */ jsx17("div", { className: "px-4", children: /* @__PURE__ */ jsxs9("div", { className: "flex justify-between items-center flex-1", children: [
     /* @__PURE__ */ jsxs9(
-      Link2,
+      SafeLink2,
       {
         to: "/",
         className: "flex items-center gap-2 text-secondary-foreground no-underline",
@@ -3349,13 +3360,204 @@ var ExactHeader = ({
   ] }) }) }) });
 };
 
-// src/components/SimpleHeader.tsx
-import React11, { Children as Children2, useCallback as useCallback4, useState as useState7 } from "react";
-import { Link as Link3 } from "react-router-dom";
-import { LogOut as LogOut3, Settings as Settings3, User as User3, LoaderCircle as LoaderCircle3, RotateCw as RotateCw3, Menu as Menu2 } from "lucide-react";
+// src/components/LoginPage.tsx
+import React11, { useState as useState7 } from "react";
 import { jsx as jsx18, jsxs as jsxs10 } from "react/jsx-runtime";
-var UserMenuContext2 = React11.createContext(void 0);
-var useUserMenu2 = () => React11.useContext(UserMenuContext2);
+var LoginPage = ({
+  title,
+  logo,
+  backgroundImage,
+  backgroundColor = "#18181b",
+  // zinc-900
+  subtitle,
+  showForgotPassword = true,
+  showSignUp = true,
+  forgotPasswordUrl = "/forgot-password",
+  signUpUrl = "/signup",
+  isLoading = false,
+  error,
+  additionalFields,
+  onValidate,
+  onSubmit,
+  labels = {
+    signIn: "Sign in",
+    email: "Email",
+    password: "Password",
+    forgotPassword: "Forgot your password?",
+    signUp: "Create Account",
+    noAccount: "Don't have an account?",
+    signingIn: "Signing in..."
+  },
+  demoCredentials
+}) => {
+  const [formData, setFormData] = useState7({
+    email: "",
+    password: ""
+  });
+  const [formErrors, setFormErrors] = useState7({});
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+    if (formErrors[name]) {
+      setFormErrors((prev) => ({ ...prev, [name]: "" }));
+    }
+  };
+  const validateForm = () => {
+    let errors = {};
+    if (!formData.email.trim()) {
+      errors.email = "Email is required";
+    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
+      errors.email = "Please enter a valid email address";
+    }
+    if (!formData.password) {
+      errors.password = "Password is required";
+    }
+    if (onValidate) {
+      const customErrors = onValidate(formData);
+      errors = { ...errors, ...customErrors };
+    }
+    setFormErrors(errors);
+    return Object.keys(errors).length === 0;
+  };
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!validateForm()) {
+      return;
+    }
+    try {
+      await onSubmit(formData);
+    } catch (err) {
+    }
+  };
+  const handleDemoCredentials = () => {
+    if (demoCredentials) {
+      setFormData(demoCredentials);
+    }
+  };
+  const getFieldError = (fieldName) => {
+    return formErrors[fieldName] ? /* @__PURE__ */ jsx18("span", { className: "text-red-500 text-sm mt-1 block", children: formErrors[fieldName] }) : null;
+  };
+  return /* @__PURE__ */ jsx18("div", { className: "min-h-screen flex", children: /* @__PURE__ */ jsxs10("div", { className: "container relative grid flex-col items-center justify-center sm:max-w-none lg:grid-cols-2 lg:px-0", children: [
+    /* @__PURE__ */ jsxs10("div", { className: "relative hidden h-full flex-col bg-muted p-10 text-white dark:border-r lg:flex", children: [
+      /* @__PURE__ */ jsx18("div", { className: "absolute inset-0 bg-zinc-900" }),
+      /* @__PURE__ */ jsxs10("div", { className: "relative z-20 flex items-center text-lg font-medium", children: [
+        logo && /* @__PURE__ */ jsx18("img", { className: "h-6 mr-2", src: logo, alt: title }),
+        title
+      ] }),
+      subtitle && /* @__PURE__ */ jsx18("div", { className: "relative z-20 mt-auto", children: /* @__PURE__ */ jsx18("p", { className: "text-lg", children: subtitle }) })
+    ] }),
+    /* @__PURE__ */ jsx18("div", { className: "lg:p-8", children: /* @__PURE__ */ jsxs10("div", { className: "mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]", children: [
+      /* @__PURE__ */ jsxs10("div", { className: "flex flex-col space-y-2 text-center lg:hidden", children: [
+        logo && /* @__PURE__ */ jsx18("img", { className: "h-8 mx-auto", src: logo, alt: title }),
+        /* @__PURE__ */ jsx18("h1", { className: "text-xl font-semibold", children: title })
+      ] }),
+      /* @__PURE__ */ jsx18("div", { className: "flex flex-col space-y-2 text-center", children: /* @__PURE__ */ jsx18("h1", { className: "text-2xl font-semibold tracking-tight", children: labels.signIn }) }),
+      /* @__PURE__ */ jsxs10("form", { onSubmit: handleSubmit, className: "space-y-8", children: [
+        /* @__PURE__ */ jsxs10("div", { className: "space-y-2", children: [
+          /* @__PURE__ */ jsx18("label", { htmlFor: "email", className: "block text-sm font-medium", children: labels.email }),
+          /* @__PURE__ */ jsx18(
+            Input,
+            {
+              id: "email",
+              name: "email",
+              type: "email",
+              value: formData.email,
+              onChange: handleChange,
+              className: formErrors.email ? "border-red-500" : "",
+              disabled: isLoading,
+              autoComplete: "email"
+            }
+          ),
+          getFieldError("email")
+        ] }),
+        /* @__PURE__ */ jsxs10("div", { className: "space-y-2", children: [
+          /* @__PURE__ */ jsx18("label", { htmlFor: "password", className: "block text-sm font-medium", children: labels.password }),
+          /* @__PURE__ */ jsx18(
+            Input,
+            {
+              id: "password",
+              name: "password",
+              type: "password",
+              value: formData.password,
+              onChange: handleChange,
+              className: formErrors.password ? "border-red-500" : "",
+              disabled: isLoading,
+              autoComplete: "current-password"
+            }
+          ),
+          getFieldError("password")
+        ] }),
+        additionalFields && /* @__PURE__ */ jsx18("div", { className: "space-y-4", children: React11.cloneElement(additionalFields, {
+          formData,
+          handleChange,
+          formErrors,
+          getFieldError,
+          isLoading
+        }) }),
+        error && /* @__PURE__ */ jsx18("div", { className: "bg-red-50 border border-red-200 rounded-md p-3", children: /* @__PURE__ */ jsxs10("div", { className: "flex", children: [
+          /* @__PURE__ */ jsx18("div", { className: "flex-shrink-0", children: /* @__PURE__ */ jsx18("span", { className: "text-red-400", children: "\u25CF" }) }),
+          /* @__PURE__ */ jsx18("div", { className: "ml-3", children: /* @__PURE__ */ jsx18("p", { className: "text-sm text-red-800", children: error }) })
+        ] }) }),
+        /* @__PURE__ */ jsx18(
+          Button,
+          {
+            type: "submit",
+            className: "w-full cursor-pointer",
+            disabled: isLoading,
+            children: isLoading ? labels.signingIn : labels.signIn
+          }
+        )
+      ] }),
+      showForgotPassword && /* @__PURE__ */ jsx18(
+        "a",
+        {
+          href: forgotPasswordUrl,
+          className: "text-sm text-center hover:underline block",
+          children: labels.forgotPassword
+        }
+      ),
+      showSignUp && /* @__PURE__ */ jsxs10("div", { className: "text-center space-y-4", children: [
+        /* @__PURE__ */ jsxs10("div", { className: "relative", children: [
+          /* @__PURE__ */ jsx18("div", { className: "absolute inset-0 flex items-center", children: /* @__PURE__ */ jsx18("div", { className: "w-full border-t border-gray-300" }) }),
+          /* @__PURE__ */ jsx18("div", { className: "relative flex justify-center text-sm", children: /* @__PURE__ */ jsx18("span", { className: "px-2 bg-background text-muted-foreground", children: labels.noAccount }) })
+        ] }),
+        /* @__PURE__ */ jsx18("a", { href: signUpUrl, children: /* @__PURE__ */ jsx18(Button, { variant: "outline", className: "w-full", children: labels.signUp }) })
+      ] }),
+      demoCredentials && (typeof import.meta !== "undefined" && import.meta.env?.MODE === "development") && /* @__PURE__ */ jsx18("div", { className: "mt-4 p-3 bg-gray-50 rounded-lg", children: /* @__PURE__ */ jsxs10("details", { className: "group", children: [
+        /* @__PURE__ */ jsx18("summary", { className: "cursor-pointer text-sm font-medium text-gray-700 hover:text-gray-900", children: "Demo Credentials (Development Only)" }),
+        /* @__PURE__ */ jsxs10("div", { className: "mt-2 space-y-2", children: [
+          /* @__PURE__ */ jsxs10("p", { className: "text-sm text-gray-600", children: [
+            /* @__PURE__ */ jsx18("strong", { children: "Email:" }),
+            " ",
+            demoCredentials.email
+          ] }),
+          /* @__PURE__ */ jsxs10("p", { className: "text-sm text-gray-600", children: [
+            /* @__PURE__ */ jsx18("strong", { children: "Password:" }),
+            " ",
+            demoCredentials.password
+          ] }),
+          /* @__PURE__ */ jsx18(
+            Button,
+            {
+              type: "button",
+              variant: "outline",
+              size: "sm",
+              onClick: handleDemoCredentials,
+              children: "Use Demo Credentials"
+            }
+          )
+        ] })
+      ] }) })
+    ] }) })
+  ] }) });
+};
+
+// src/components/SimpleHeader.tsx
+import React12, { Children as Children2, useCallback as useCallback4, useState as useState8 } from "react";
+import { LogOut as LogOut3, Settings as Settings3, User as User3, LoaderCircle as LoaderCircle3, RotateCw as RotateCw3, Menu as Menu2 } from "lucide-react";
+import { jsx as jsx19, jsxs as jsxs11 } from "react/jsx-runtime";
+var UserMenuContext2 = React12.createContext(void 0);
+var useUserMenu2 = () => React12.useContext(UserMenuContext2);
 var RefreshButton2 = ({ onRefresh, loading = false }) => {
   const handleRefresh = () => {
     if (onRefresh) {
@@ -3364,19 +3566,19 @@ var RefreshButton2 = ({ onRefresh, loading = false }) => {
       window.location.reload();
     }
   };
-  return /* @__PURE__ */ jsx18(
+  return /* @__PURE__ */ jsx19(
     Button,
     {
       onClick: handleRefresh,
       variant: "ghost",
       size: "icon",
       className: "hidden sm:inline-flex",
-      children: loading ? /* @__PURE__ */ jsx18(LoaderCircle3, { className: "animate-spin" }) : /* @__PURE__ */ jsx18(RotateCw3, {})
+      children: loading ? /* @__PURE__ */ jsx19(LoaderCircle3, { className: "animate-spin" }) : /* @__PURE__ */ jsx19(RotateCw3, {})
     }
   );
 };
 function UserMenu2({ children, user, onLogout }) {
-  const [open, setOpen] = useState7(false);
+  const [open, setOpen] = useState8(false);
   const handleToggleOpen = useCallback4(() => {
     setOpen((prevOpen) => !prevOpen);
   }, []);
@@ -3389,28 +3591,28 @@ function UserMenu2({ children, user, onLogout }) {
     }
     setOpen(false);
   };
-  return /* @__PURE__ */ jsx18(UserMenuContext2.Provider, { value: { onClose: handleClose }, children: /* @__PURE__ */ jsxs10(DropdownMenu, { open, onOpenChange: handleToggleOpen, children: [
-    /* @__PURE__ */ jsx18(DropdownMenuTrigger, { asChild: true, children: /* @__PURE__ */ jsx18(
+  return /* @__PURE__ */ jsx19(UserMenuContext2.Provider, { value: { onClose: handleClose }, children: /* @__PURE__ */ jsxs11(DropdownMenu, { open, onOpenChange: handleToggleOpen, children: [
+    /* @__PURE__ */ jsx19(DropdownMenuTrigger, { asChild: true, children: /* @__PURE__ */ jsx19(
       Button,
       {
         variant: "ghost",
         className: "relative h-8 w-8 ml-2 rounded-full",
-        children: /* @__PURE__ */ jsxs10(Avatar, { className: "h-8 w-8", children: [
-          /* @__PURE__ */ jsx18(AvatarImage, { src: user?.avatar, role: "presentation" }),
-          /* @__PURE__ */ jsx18(AvatarFallback, { children: user?.name?.charAt(0) || "U" })
+        children: /* @__PURE__ */ jsxs11(Avatar, { className: "h-8 w-8", children: [
+          /* @__PURE__ */ jsx19(AvatarImage, { src: user?.avatar, role: "presentation" }),
+          /* @__PURE__ */ jsx19(AvatarFallback, { children: user?.name?.charAt(0) || "U" })
         ] })
       }
     ) }),
-    /* @__PURE__ */ jsxs10(DropdownMenuContent, { className: "w-56", align: "end", forceMount: true, children: [
-      /* @__PURE__ */ jsx18(DropdownMenuLabel, { className: "font-normal", children: /* @__PURE__ */ jsxs10("div", { className: "flex flex-col space-y-1", children: [
-        /* @__PURE__ */ jsx18("p", { className: "text-sm font-medium leading-none", children: user?.name || "User" }),
-        user?.email && /* @__PURE__ */ jsx18("p", { className: "text-xs text-muted-foreground", children: user.email })
+    /* @__PURE__ */ jsxs11(DropdownMenuContent, { className: "w-56", align: "end", forceMount: true, children: [
+      /* @__PURE__ */ jsx19(DropdownMenuLabel, { className: "font-normal", children: /* @__PURE__ */ jsxs11("div", { className: "flex flex-col space-y-1", children: [
+        /* @__PURE__ */ jsx19("p", { className: "text-sm font-medium leading-none", children: user?.name || "User" }),
+        user?.email && /* @__PURE__ */ jsx19("p", { className: "text-xs text-muted-foreground", children: user.email })
       ] }) }),
-      /* @__PURE__ */ jsx18(DropdownMenuSeparator, {}),
+      /* @__PURE__ */ jsx19(DropdownMenuSeparator, {}),
       children,
-      Children2.count(children) > 0 && /* @__PURE__ */ jsx18(DropdownMenuSeparator, {}),
-      /* @__PURE__ */ jsxs10(DropdownMenuItem, { onClick: handleLogout, className: "cursor-pointer", children: [
-        /* @__PURE__ */ jsx18(LogOut3, {}),
+      Children2.count(children) > 0 && /* @__PURE__ */ jsx19(DropdownMenuSeparator, {}),
+      /* @__PURE__ */ jsxs11(DropdownMenuItem, { onClick: handleLogout, className: "cursor-pointer", children: [
+        /* @__PURE__ */ jsx19(LogOut3, {}),
         "Log out"
       ] })
     ] })
@@ -3418,15 +3620,15 @@ function UserMenu2({ children, user, onLogout }) {
 }
 var UsersMenu2 = () => {
   const { onClose } = useUserMenu2() ?? {};
-  return /* @__PURE__ */ jsx18(DropdownMenuItem, { asChild: true, onClick: onClose, children: /* @__PURE__ */ jsxs10(Link3, { to: "/sales", className: "flex items-center gap-2", children: [
-    /* @__PURE__ */ jsx18(User3, {}),
+  return /* @__PURE__ */ jsx19(DropdownMenuItem, { onClick: onClose, children: /* @__PURE__ */ jsxs11("div", { className: "flex items-center gap-2", children: [
+    /* @__PURE__ */ jsx19(User3, {}),
     " Users"
   ] }) });
 };
 var ConfigurationMenu2 = () => {
   const { onClose } = useUserMenu2() ?? {};
-  return /* @__PURE__ */ jsx18(DropdownMenuItem, { asChild: true, onClick: onClose, children: /* @__PURE__ */ jsxs10(Link3, { to: "/settings", className: "flex items-center gap-2", children: [
-    /* @__PURE__ */ jsx18(Settings3, {}),
+  return /* @__PURE__ */ jsx19(DropdownMenuItem, { onClick: onClose, children: /* @__PURE__ */ jsxs11("div", { className: "flex items-center gap-2", children: [
+    /* @__PURE__ */ jsx19(Settings3, {}),
     "My info"
   ] }) });
 };
@@ -3440,49 +3642,42 @@ var SimpleHeader = ({
   onToggleSidebar,
   loading = false
 }) => {
-  return /* @__PURE__ */ jsx18("nav", { className: "flex-grow", children: /* @__PURE__ */ jsx18("header", { className: "bg-secondary", children: /* @__PURE__ */ jsx18("div", { className: "px-4", children: /* @__PURE__ */ jsxs10("div", { className: "flex justify-between items-center flex-1", children: [
-    /* @__PURE__ */ jsxs10("div", { className: "flex items-center gap-2", children: [
-      onToggleSidebar && /* @__PURE__ */ jsx18(
+  return /* @__PURE__ */ jsx19("nav", { className: "flex-grow", children: /* @__PURE__ */ jsx19("header", { className: "bg-secondary", children: /* @__PURE__ */ jsx19("div", { className: "px-4", children: /* @__PURE__ */ jsxs11("div", { className: "flex justify-between items-center flex-1", children: [
+    /* @__PURE__ */ jsxs11("div", { className: "flex items-center gap-2", children: [
+      onToggleSidebar && /* @__PURE__ */ jsx19(
         "button",
         {
           onClick: onToggleSidebar,
           className: "p-2 rounded-md text-muted-foreground hover:text-foreground hover:bg-accent focus:outline-none focus:ring-2 focus:ring-inset focus:ring-ring",
-          children: /* @__PURE__ */ jsx18(Menu2, { className: "h-5 w-5" })
+          children: /* @__PURE__ */ jsx19(Menu2, { className: "h-5 w-5" })
         }
       ),
-      /* @__PURE__ */ jsxs10(
-        Link3,
-        {
-          to: "/",
-          className: "flex items-center gap-2 text-secondary-foreground no-underline",
-          children: [
-            darkModeLogo && /* @__PURE__ */ jsx18(
-              "img",
-              {
-                className: "[.light_&]:hidden h-6",
-                src: darkModeLogo,
-                alt: title
-              }
-            ),
-            lightModeLogo && /* @__PURE__ */ jsx18(
-              "img",
-              {
-                className: "[.dark_&]:hidden h-6",
-                src: lightModeLogo,
-                alt: title
-              }
-            ),
-            /* @__PURE__ */ jsx18("h1", { className: "text-xl font-semibold", children: title })
-          ]
-        }
-      )
+      /* @__PURE__ */ jsxs11("div", { className: "flex items-center gap-2 text-secondary-foreground", children: [
+        darkModeLogo && /* @__PURE__ */ jsx19(
+          "img",
+          {
+            className: "[.light_&]:hidden h-6",
+            src: darkModeLogo,
+            alt: title
+          }
+        ),
+        lightModeLogo && /* @__PURE__ */ jsx19(
+          "img",
+          {
+            className: "[.dark_&]:hidden h-6",
+            src: lightModeLogo,
+            alt: title
+          }
+        ),
+        /* @__PURE__ */ jsx19("h1", { className: "text-xl font-semibold", children: title })
+      ] })
     ] }),
-    /* @__PURE__ */ jsxs10("div", { className: "flex items-center", children: [
-      /* @__PURE__ */ jsx18(ThemeSwitch, {}),
-      /* @__PURE__ */ jsx18(RefreshButton2, { onRefresh, loading }),
-      /* @__PURE__ */ jsxs10(UserMenu2, { user, onLogout, children: [
-        /* @__PURE__ */ jsx18(ConfigurationMenu2, {}),
-        /* @__PURE__ */ jsx18(UsersMenu2, {})
+    /* @__PURE__ */ jsxs11("div", { className: "flex items-center", children: [
+      /* @__PURE__ */ jsx19(ThemeSwitch, {}),
+      /* @__PURE__ */ jsx19(RefreshButton2, { onRefresh, loading }),
+      /* @__PURE__ */ jsxs11(UserMenu2, { user, onLogout, children: [
+        /* @__PURE__ */ jsx19(ConfigurationMenu2, {}),
+        /* @__PURE__ */ jsx19(UsersMenu2, {})
       ] })
     ] })
   ] }) }) }) });
@@ -4029,7 +4224,7 @@ var throwBusinessError = (message, details) => {
     { details }
   );
 };
-var safeAsync = async (operation, context = "unknown") => {
+var safeAsync2 = async (operation, context = "unknown") => {
   try {
     return await operation();
   } catch (error) {
@@ -4057,7 +4252,7 @@ var SupabaseService = class {
    * Initialize service and test connection
    */
   async init() {
-    return safeAsync(async () => {
+    return safeAsync2(async () => {
       const { error } = await this.client.from(this.tableName).select("count").limit(1);
       if (error) {
         throw error;
@@ -4069,7 +4264,7 @@ var SupabaseService = class {
    * Get all records with advanced filtering and pagination
    */
   async getAll(options = {}) {
-    return safeAsync(async () => {
+    return safeAsync2(async () => {
       let query = this.client.from(this.tableName).select(options.select || "*").order(options.orderBy || "created_at", { ascending: options.ascending !== false });
       if (options.filters) {
         Object.entries(options.filters).forEach(([key, value]) => {
@@ -4133,7 +4328,7 @@ var SupabaseService = class {
    * Get a record by ID
    */
   async getById(id, select = "*") {
-    return safeAsync(async () => {
+    return safeAsync2(async () => {
       const { data, error } = await this.client.from(this.tableName).select(select).eq("id", id).single();
       if (error) {
         throw error;
@@ -4145,7 +4340,7 @@ var SupabaseService = class {
    * Get records by field value
    */
   async getByField(field, value, options = {}) {
-    return safeAsync(async () => {
+    return safeAsync2(async () => {
       let query = this.client.from(this.tableName).select(options.select || "*").eq(field, value);
       if (options.orderBy) {
         query = query.order(options.orderBy, { ascending: options.ascending !== false });
@@ -4164,7 +4359,7 @@ var SupabaseService = class {
    * Create a new record
    */
   async create(data) {
-    return safeAsync(async () => {
+    return safeAsync2(async () => {
       const { data: result, error } = await this.client.from(this.tableName).insert(data).select().single();
       if (error) {
         throw error;
@@ -4176,7 +4371,7 @@ var SupabaseService = class {
    * Create multiple records
    */
   async createMany(data) {
-    return safeAsync(async () => {
+    return safeAsync2(async () => {
       const { data: result, error } = await this.client.from(this.tableName).insert(data).select();
       if (error) {
         throw error;
@@ -4188,7 +4383,7 @@ var SupabaseService = class {
    * Update a record
    */
   async update(id, data) {
-    return safeAsync(async () => {
+    return safeAsync2(async () => {
       const { data: result, error } = await this.client.from(this.tableName).update(data).eq("id", id).select().single();
       if (error) {
         throw error;
@@ -4200,7 +4395,7 @@ var SupabaseService = class {
    * Update multiple records
    */
   async updateMany(updates) {
-    return safeAsync(async () => {
+    return safeAsync2(async () => {
       const promises = updates.map(({ id, data }) => this.update(id, data));
       return Promise.all(promises);
     }, `${this.tableName}.updateMany`);
@@ -4209,7 +4404,7 @@ var SupabaseService = class {
    * Upsert a record (insert or update)
    */
   async upsert(data, onConflict) {
-    return safeAsync(async () => {
+    return safeAsync2(async () => {
       let query = this.client.from(this.tableName).upsert(data).select().single();
       if (onConflict) {
         query = query.onConflict(onConflict);
@@ -4225,7 +4420,7 @@ var SupabaseService = class {
    * Delete a record
    */
   async delete(id) {
-    return safeAsync(async () => {
+    return safeAsync2(async () => {
       const { error } = await this.client.from(this.tableName).delete().eq("id", id);
       if (error) {
         throw error;
@@ -4236,7 +4431,7 @@ var SupabaseService = class {
    * Bulk delete records
    */
   async bulkDelete(ids) {
-    return safeAsync(async () => {
+    return safeAsync2(async () => {
       const { error } = await this.client.from(this.tableName).delete().in("id", ids);
       if (error) {
         throw error;
@@ -4247,7 +4442,7 @@ var SupabaseService = class {
    * Count records with optional filters
    */
   async count(filters) {
-    return safeAsync(async () => {
+    return safeAsync2(async () => {
       let query = this.client.from(this.tableName).select("*", { count: "exact", head: true });
       if (filters) {
         Object.entries(filters).forEach(([key, value]) => {
@@ -4271,7 +4466,7 @@ var SupabaseService = class {
    * Check if record exists
    */
   async exists(id) {
-    return safeAsync(async () => {
+    return safeAsync2(async () => {
       const { data, error } = await this.client.from(this.tableName).select("id").eq("id", id).single();
       if (error && error.code !== "PGRST116") {
         throw error;
@@ -4283,7 +4478,7 @@ var SupabaseService = class {
    * Search records with text search
    */
   async search(searchTerm, searchFields = ["name"], options = {}) {
-    return safeAsync(async () => {
+    return safeAsync2(async () => {
       let query = this.client.from(this.tableName).select(options.select || "*");
       if (searchFields.length === 1) {
         query = query.ilike(searchFields[0], `%${searchTerm}%`);
@@ -4322,7 +4517,7 @@ var SupabaseService = class {
    * Execute raw SQL query
    */
   async executeRpc(functionName, params) {
-    return safeAsync(async () => {
+    return safeAsync2(async () => {
       const { data, error } = await this.client.rpc(functionName, params);
       if (error) {
         throw error;
@@ -4371,7 +4566,7 @@ var SupabaseService = class {
    * Bulk operations with transaction support
    */
   async bulkOperation(operations) {
-    return safeAsync(async () => {
+    return safeAsync2(async () => {
       const results = [];
       for (const operation of operations) {
         let result;
@@ -4476,18 +4671,18 @@ var getSupabaseClient = () => {
 };
 
 // src/services/AuthProvider.tsx
-import { createContext as createContext2, useContext as useContext2, useState as useState8, useEffect as useEffect4 } from "react";
-import { jsx as jsx19 } from "react/jsx-runtime";
+import { createContext as createContext2, useContext as useContext2, useState as useState9, useEffect as useEffect4 } from "react";
+import { jsx as jsx20 } from "react/jsx-runtime";
 var AuthContext = createContext2(null);
 var AuthProvider = ({
   children,
   supabaseClient,
   onAuthStateChange
 }) => {
-  const [user, setUser] = useState8(null);
-  const [session, setSession] = useState8(null);
-  const [loading, setLoading] = useState8(true);
-  const [error, setError] = useState8(null);
+  const [user, setUser] = useState9(null);
+  const [session, setSession] = useState9(null);
+  const [loading, setLoading] = useState9(true);
+  const [error, setError] = useState9(null);
   useEffect4(() => {
     const getInitialSession = async () => {
       try {
@@ -4591,7 +4786,7 @@ var AuthProvider = ({
     signOut,
     resetPassword
   };
-  return /* @__PURE__ */ jsx19(AuthContext.Provider, { value, children });
+  return /* @__PURE__ */ jsx20(AuthContext.Provider, { value, children });
 };
 var useAuth = () => {
   const context = useContext2(AuthContext);
@@ -4932,6 +5127,7 @@ export {
   DropdownMenuSubContent,
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
+  ERROR_TYPES,
   ErrorBoundary,
   ExactHeader,
   FIELD_CONFIGS,
@@ -4940,11 +5136,13 @@ export {
   Header,
   Input,
   Label,
+  LoginPage,
   MACHINE_STATUSES,
   NUMBER_CONSTANTS,
   PRODUCT_TYPES,
   SCHEMAS,
   SEAL_SIDES,
+  ERROR_TYPES2 as SERVICES_ERROR_TYPES,
   SHIFT_TYPES,
   STRING_CONSTANTS,
   ServiceError,
@@ -5089,9 +5287,11 @@ export {
   removeWhitespace,
   reverse,
   roundNumber,
+  safeAsync,
   safeMath,
   sanitizeHtml,
   searchIgnoreCase,
+  safeAsync2 as servicesSafeAsync,
   showError,
   showInfo,
   showSuccess,
