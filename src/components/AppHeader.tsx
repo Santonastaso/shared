@@ -2,7 +2,7 @@ import React, { useState, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import { LogOut, Settings, User, RotateCw, LoaderCircle, Menu } from 'lucide-react';
 import { ThemeSwitch } from './theme/ThemeSwitch';
-import { Button } from './Button';
+import { Button } from './button';
 import { Avatar, AvatarFallback, AvatarImage } from './Avatar';
 import {
   DropdownMenu,

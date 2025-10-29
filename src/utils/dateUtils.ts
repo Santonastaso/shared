@@ -11,6 +11,8 @@ export const DATE_FORMATS = {
   TIME: 'HH:mm',
   MONTH_YEAR: 'MM/yyyy',
   FULL: 'EEEE, MMMM do, yyyy',
+  UTC_DATE_IT: 'dd/MM/yyyy', // Italian format for UTC dates
+  UTC_DATETIME_IT: 'dd/MM/yyyy HH:mm', // Italian format for UTC datetime
 } as const;
 
 /**
@@ -282,6 +284,34 @@ export const hoursToMinutes = (hours: number): number => {
  */
 export const minutesToHours = (minutes: number): number => {
   return minutes / 60;
+};
+
+/**
+ * UTC date formatting functions (always UTC+0, no timezone manipulation)
+ * Used primarily by tracc application
+ */
+export const formatUtcDate = (isoString: string | null | undefined): string => {
+  if (!isoString) return '';
+  const date = new Date(isoString);
+  return date.toLocaleDateString('it-IT', {
+    timeZone: 'UTC',
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit'
+  });
+};
+
+export const formatUtcDateTime = (isoString: string | null | undefined): string => {
+  if (!isoString) return '';
+  const date = new Date(isoString);
+  return date.toLocaleString('it-IT', {
+    timeZone: 'UTC',
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+    hour: '2-digit',
+    minute: '2-digit'
+  });
 };
 
 /**

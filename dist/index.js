@@ -16,6 +16,7 @@ import {
 } from "./chunk-ICS7PABN.js";
 
 // src/components/button.tsx
+import * as React from "react";
 import { Slot } from "@radix-ui/react-slot";
 
 // src/utils/index.ts
@@ -986,28 +987,24 @@ var buttonVariants = cva(
 
 // src/components/button.tsx
 import { jsx } from "react/jsx-runtime";
-function Button({
-  className,
-  variant,
-  size,
-  asChild = false,
-  ...props
-}) {
+var Button = React.forwardRef(({ className, variant, size, asChild = false, ...props }, ref) => {
   const Comp = asChild ? Slot : "button";
   return /* @__PURE__ */ jsx(
     Comp,
     {
       "data-slot": "button",
       className: cn(buttonVariants({ variant, size, className })),
+      ref,
       ...props
     }
   );
-}
+});
+Button.displayName = "Button";
 
 // src/components/input.tsx
-import * as React from "react";
+import * as React2 from "react";
 import { jsx as jsx2 } from "react/jsx-runtime";
-var Input = React.forwardRef(
+var Input = React2.forwardRef(
   ({ className, type, ...props }, ref) => {
     return /* @__PURE__ */ jsx2(
       "input",
@@ -1029,9 +1026,9 @@ var Input = React.forwardRef(
 Input.displayName = "Input";
 
 // src/components/label.tsx
-import * as React2 from "react";
+import * as React3 from "react";
 import { jsx as jsx3 } from "react/jsx-runtime";
-var Label = React2.forwardRef(({ className, ...props }, ref) => /* @__PURE__ */ jsx3(
+var Label = React3.forwardRef(({ className, ...props }, ref) => /* @__PURE__ */ jsx3(
   "label",
   {
     ref,
@@ -1638,9 +1635,9 @@ function DataTable({
 }
 
 // src/components/ErrorBoundary.tsx
-import React5 from "react";
+import React6 from "react";
 import { jsx as jsx10, jsxs as jsxs3 } from "react/jsx-runtime";
-var ErrorBoundary = class extends React5.Component {
+var ErrorBoundary = class extends React6.Component {
   constructor(props) {
     super(props);
     this.handleRetry = () => {
@@ -1788,14 +1785,14 @@ var withErrorBoundary = (WrappedComponent, options = {}) => {
   };
 };
 var useErrorBoundary = () => {
-  const [error, setError] = React5.useState(null);
-  const resetError = React5.useCallback(() => {
+  const [error, setError] = React6.useState(null);
+  const resetError = React6.useCallback(() => {
     setError(null);
   }, []);
-  const captureError = React5.useCallback((error2) => {
+  const captureError = React6.useCallback((error2) => {
     setError(error2);
   }, []);
-  React5.useEffect(() => {
+  React6.useEffect(() => {
     if (error) {
       throw error;
     }
@@ -3177,12 +3174,12 @@ var AppHeader = ({
 };
 
 // src/components/ExactHeader.tsx
-import React9, { Children, useCallback as useCallback3, useState as useState6 } from "react";
+import React10, { Children, useCallback as useCallback3, useState as useState6 } from "react";
 import { Link as Link2 } from "react-router-dom";
 import { LogOut as LogOut2, Settings as Settings2, User as User2, LoaderCircle as LoaderCircle2, RotateCw as RotateCw2 } from "lucide-react";
 import { jsx as jsx17, jsxs as jsxs9 } from "react/jsx-runtime";
-var UserMenuContext = React9.createContext(void 0);
-var useUserMenu = () => React9.useContext(UserMenuContext);
+var UserMenuContext = React10.createContext(void 0);
+var useUserMenu = () => React10.useContext(UserMenuContext);
 var RefreshButton = ({ onRefresh, loading = false }) => {
   const handleRefresh = () => {
     if (onRefresh) {
@@ -3327,12 +3324,12 @@ var ExactHeader = ({
 };
 
 // src/components/SimpleHeader.tsx
-import React10, { Children as Children2, useCallback as useCallback4, useState as useState7 } from "react";
+import React11, { Children as Children2, useCallback as useCallback4, useState as useState7 } from "react";
 import { Link as Link3 } from "react-router-dom";
 import { LogOut as LogOut3, Settings as Settings3, User as User3, LoaderCircle as LoaderCircle3, RotateCw as RotateCw3, Menu as Menu2 } from "lucide-react";
 import { jsx as jsx18, jsxs as jsxs10 } from "react/jsx-runtime";
-var UserMenuContext2 = React10.createContext(void 0);
-var useUserMenu2 = () => React10.useContext(UserMenuContext2);
+var UserMenuContext2 = React11.createContext(void 0);
+var useUserMenu2 = () => React11.useContext(UserMenuContext2);
 var RefreshButton2 = ({ onRefresh, loading = false }) => {
   const handleRefresh = () => {
     if (onRefresh) {

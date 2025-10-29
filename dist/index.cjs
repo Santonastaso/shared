@@ -271,6 +271,7 @@ __export(src_exports, {
 module.exports = __toCommonJS(src_exports);
 
 // src/components/button.tsx
+var React = __toESM(require("react"), 1);
 var import_react_slot = require("@radix-ui/react-slot");
 
 // src/utils/index.ts
@@ -1241,28 +1242,24 @@ var buttonVariants = (0, import_class_variance_authority.cva)(
 
 // src/components/button.tsx
 var import_jsx_runtime = require("react/jsx-runtime");
-function Button({
-  className,
-  variant,
-  size,
-  asChild = false,
-  ...props
-}) {
+var Button = React.forwardRef(({ className, variant, size, asChild = false, ...props }, ref) => {
   const Comp = asChild ? import_react_slot.Slot : "button";
   return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(
     Comp,
     {
       "data-slot": "button",
       className: cn(buttonVariants({ variant, size, className })),
+      ref,
       ...props
     }
   );
-}
+});
+Button.displayName = "Button";
 
 // src/components/input.tsx
-var React = __toESM(require("react"), 1);
+var React2 = __toESM(require("react"), 1);
 var import_jsx_runtime2 = require("react/jsx-runtime");
-var Input = React.forwardRef(
+var Input = React2.forwardRef(
   ({ className, type, ...props }, ref) => {
     return /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(
       "input",
@@ -1284,9 +1281,9 @@ var Input = React.forwardRef(
 Input.displayName = "Input";
 
 // src/components/label.tsx
-var React2 = __toESM(require("react"), 1);
+var React3 = __toESM(require("react"), 1);
 var import_jsx_runtime3 = require("react/jsx-runtime");
-var Label = React2.forwardRef(({ className, ...props }, ref) => /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(
+var Label = React3.forwardRef(({ className, ...props }, ref) => /* @__PURE__ */ (0, import_jsx_runtime3.jsx)(
   "label",
   {
     ref,
