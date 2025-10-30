@@ -13,6 +13,13 @@ export { Skeleton } from './skeleton';
 // export { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from './accordion';
 // export { Progress } from './progress';
 
+// Form Input Components - textarea is safe (no external deps), others temporarily disabled due to externalization
+export { Textarea } from './textarea';
+// TODO: Fix externalization of @radix-ui/react-checkbox, @radix-ui/react-switch, @radix-ui/react-separator in tsup config
+// export { Checkbox } from './checkbox';
+// export { Switch } from './switch';
+// export { Separator } from './separator';
+
 // Navigation Components - temporarily disabled due to tsup externalization issues
 // TODO: Fix externalization of @radix-ui/react-tabs, @radix-ui/react-popover, and cmdk in tsup config
 // export { Tabs, TabsList, TabsTrigger, TabsContent } from './tabs';
