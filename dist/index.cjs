@@ -6104,9 +6104,6 @@ var createSupabaseClient = (config) => {
   });
 };
 var getEnvVar = (key) => {
-  if (typeof globalThis !== "undefined" && globalThis.import?.meta?.env) {
-    return globalThis.import.meta.env[key];
-  }
   if (typeof process !== "undefined" && process.env) {
     return process.env[key];
   }

@@ -44,19 +44,20 @@ export const createSupabaseClient = (config: SupabaseConfig): SupabaseClient => 
 
 /**
  * Safely access environment variables in both CJS and ESM environments
+ * Note: This function has limitations and should be avoided in favor of 
+ * passing environment variables explicitly from the consuming application
  */
 const getEnvVar = (key: string): string | undefined => {
-  // Try import.meta.env first (ESM/Vite), then process.env (CJS/Node)
-  if (typeof globalThis !== 'undefined' && (globalThis as any).import?.meta?.env) {
-    return (globalThis as any).import.meta.env[key];
-  }
+  // Try process.env (Node.js/CJS)
   if (typeof process !== 'undefined' && process.env) {
     return process.env[key];
   }
-  // Fallback for browser environments without Vite
+  
+  // Fallback for browser environments
   if (typeof window !== 'undefined' && (window as any).__ENV__) {
     return (window as any).__ENV__[key];
   }
+  
   return undefined;
 };
 
