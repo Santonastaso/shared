@@ -3,6 +3,22 @@ import { Button } from './button';
 import { Input } from './input';
 import { Card } from './card';
 
+/**
+ * Safely check if we're in development mode across CJS and ESM environments
+ */
+const isDevelopmentMode = (): boolean => {
+  // Try import.meta.env first (ESM/Vite)
+  if (typeof globalThis !== 'undefined' && (globalThis as any).import?.meta?.env) {
+    return (globalThis as any).import.meta.env.MODE === 'development';
+  }
+  // Try process.env (CJS/Node)
+  if (typeof process !== 'undefined' && process.env) {
+    return process.env.NODE_ENV === 'development';
+  }
+  // Fallback for browser environments
+  return false;
+};
+
 export interface LoginPageProps {
   /** Application title */
   title: string;
@@ -279,7 +295,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({
             )}
 
             {/* Demo Credentials (for development) */}
-            {demoCredentials && (typeof import.meta !== 'undefined' && (import.meta as any).env?.MODE === 'development') && (
+            {demoCredentials && isDevelopmentMode() && (
               <div className="mt-4 p-3 bg-gray-50 rounded-lg">
                 <details className="group">
                   <summary className="cursor-pointer text-sm font-medium text-gray-700 hover:text-gray-900">

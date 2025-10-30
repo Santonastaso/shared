@@ -283,11 +283,21 @@ __export(src_exports, {
   updateAt: () => updateAt,
   uploadMultipleFiles: () => uploadMultipleFiles,
   uploadToSupabaseStorage: () => uploadToSupabaseStorage,
+  useAdvancedInfiniteQuery: () => useAdvancedInfiniteQuery,
+  useAdvancedMutation: () => useAdvancedMutation,
+  useAdvancedQuery: () => useAdvancedQuery,
   useAuth: () => useAuth,
   useAuthGuard: () => useAuthGuard,
+  useBulkOperations: () => useBulkOperations,
+  useColumnManager: () => useColumnManager,
   useDataService: () => useDataService,
+  useDataTable: () => useDataTable,
+  useDependentQueries: () => useDependentQueries,
   useErrorBoundary: () => useErrorBoundary,
   useErrorHandler: () => useErrorHandler,
+  useOfflineSync: () => useOfflineSync,
+  useQuerySync: () => useQuerySync,
+  useSavedQueries: () => useSavedQueries,
   useSidebar: () => useSidebar,
   useTheme: () => useTheme,
   useValidationErrorHandler: () => useValidationErrorHandler,
@@ -2726,7 +2736,7 @@ var FilterDropdown = ({ column, options, onFilterChange, isOpen, onToggle, activ
 var FilterDropdown_default = FilterDropdown;
 
 // src/components/GenericForm.tsx
-var import_react8 = require("react");
+var import_react11 = require("react");
 var import_react_hook_form = require("react-hook-form");
 
 // src/hooks/useErrorHandler.ts
@@ -3323,6 +3333,707 @@ var defaultQueryConfig = {
   }
 };
 
+// src/hooks/useBulkOperations.ts
+var import_react8 = require("react");
+var import_react_query3 = require("@tanstack/react-query");
+function useBulkOperations(resource) {
+  const queryClient = (0, import_react_query3.useQueryClient)();
+  const bulkUpdate = (0, import_react8.useCallback)(
+    async (items, mutationFn, options = {}) => {
+      const { onSuccess, onError, onSettled, optimisticUpdate = true, invalidateQueries = [] } = options;
+      try {
+        if (optimisticUpdate) {
+          queryClient.setQueryData([resource], (oldData) => {
+            if (!oldData) return oldData;
+            return oldData.map((item) => {
+              const update = items.find((u) => u.id === item.id);
+              return update ? { ...item, ...update.data } : item;
+            });
+          });
+        }
+        const results = await Promise.all(items.map(mutationFn));
+        invalidateQueries.forEach((queryKey) => {
+          queryClient.invalidateQueries({ queryKey });
+        });
+        onSuccess?.(results);
+        return results;
+      } catch (error) {
+        if (optimisticUpdate) {
+          queryClient.invalidateQueries({ queryKey: [resource] });
+        }
+        onError?.(error);
+        throw error;
+      } finally {
+        onSettled?.();
+      }
+    },
+    [queryClient, resource]
+  );
+  const bulkDelete = (0, import_react8.useCallback)(
+    async (ids, mutationFn, options = {}) => {
+      const { onSuccess, onError, onSettled, optimisticUpdate = true, invalidateQueries = [] } = options;
+      try {
+        if (optimisticUpdate) {
+          queryClient.setQueryData([resource], (oldData) => {
+            if (!oldData) return oldData;
+            return oldData.filter((item) => !ids.includes(item.id));
+          });
+        }
+        await Promise.all(ids.map(mutationFn));
+        invalidateQueries.forEach((queryKey) => {
+          queryClient.invalidateQueries({ queryKey });
+        });
+        onSuccess?.(ids);
+        return ids;
+      } catch (error) {
+        if (optimisticUpdate) {
+          queryClient.invalidateQueries({ queryKey: [resource] });
+        }
+        onError?.(error);
+        throw error;
+      } finally {
+        onSettled?.();
+      }
+    },
+    [queryClient, resource]
+  );
+  const bulkExport = (0, import_react8.useCallback)(
+    (data, options = {}) => {
+      const {
+        format: format2 = "csv",
+        filename = `${resource}-export`,
+        columns,
+        includeHeaders = true
+      } = options;
+      if (!data || data.length === 0) {
+        throw new Error("No data to export");
+      }
+      switch (format2) {
+        case "csv":
+          return exportToCSV(data, { filename, columns, includeHeaders });
+        case "json":
+          return exportToJSON(data, { filename });
+        default:
+          throw new Error(`Unsupported export format: ${format2}`);
+      }
+    },
+    [resource]
+  );
+  return (0, import_react8.useMemo)(
+    () => ({
+      bulkUpdate,
+      bulkDelete,
+      bulkExport
+    }),
+    [bulkUpdate, bulkDelete, bulkExport]
+  );
+}
+function exportToCSV(data, options) {
+  const { filename, columns, includeHeaders } = options;
+  if (data.length === 0) return;
+  const firstItem = data[0];
+  const headers = columns || Object.keys(firstItem);
+  let csvContent = "";
+  if (includeHeaders) {
+    csvContent += headers.join(",") + "\n";
+  }
+  data.forEach((item) => {
+    const row = headers.map((header) => {
+      const value = item[header];
+      if (typeof value === "string" && (value.includes(",") || value.includes('"'))) {
+        return `"${value.replace(/"/g, '""')}"`;
+      }
+      return value ?? "";
+    });
+    csvContent += row.join(",") + "\n";
+  });
+  const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+  const link = document.createElement("a");
+  const url = URL.createObjectURL(blob);
+  link.setAttribute("href", url);
+  link.setAttribute("download", `${filename}.csv`);
+  link.style.visibility = "hidden";
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+}
+function exportToJSON(data, options) {
+  const { filename } = options;
+  const jsonContent = JSON.stringify(data, null, 2);
+  const blob = new Blob([jsonContent], { type: "application/json;charset=utf-8;" });
+  const link = document.createElement("a");
+  const url = URL.createObjectURL(blob);
+  link.setAttribute("href", url);
+  link.setAttribute("download", `${filename}.json`);
+  link.style.visibility = "hidden";
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+}
+function useSavedQueries(resource) {
+  const storageKey = `${resource}.savedQueries`;
+  const getSavedQueries = (0, import_react8.useCallback)(() => {
+    try {
+      const saved = localStorage.getItem(storageKey);
+      return saved ? JSON.parse(saved) : [];
+    } catch {
+      return [];
+    }
+  }, [storageKey]);
+  const saveQuery = (0, import_react8.useCallback)((query) => {
+    const queries = getSavedQueries();
+    const newQuery = {
+      ...query,
+      id: `${Date.now()}-${Math.random().toString(36).substr(2, 9)}`
+    };
+    const updated = [...queries, newQuery];
+    localStorage.setItem(storageKey, JSON.stringify(updated));
+    return newQuery;
+  }, [getSavedQueries, storageKey]);
+  const deleteQuery = (0, import_react8.useCallback)((id) => {
+    const queries = getSavedQueries();
+    const updated = queries.filter((q) => q.id !== id);
+    localStorage.setItem(storageKey, JSON.stringify(updated));
+  }, [getSavedQueries, storageKey]);
+  const updateQuery = (0, import_react8.useCallback)((id, updates) => {
+    const queries = getSavedQueries();
+    const updated = queries.map((q) => q.id === id ? { ...q, ...updates } : q);
+    localStorage.setItem(storageKey, JSON.stringify(updated));
+  }, [getSavedQueries, storageKey]);
+  return (0, import_react8.useMemo)(
+    () => ({
+      queries: getSavedQueries(),
+      saveQuery,
+      deleteQuery,
+      updateQuery
+    }),
+    [getSavedQueries, saveQuery, deleteQuery, updateQuery]
+  );
+}
+
+// src/hooks/useDataTable.ts
+var import_react9 = require("react");
+function useDataTable(options) {
+  const {
+    defaultColumns,
+    defaultSort,
+    defaultPerPage = 25,
+    storageKey,
+    persistState = true
+  } = options;
+  const getInitialState = (0, import_react9.useCallback)(() => {
+    if (persistState && storageKey) {
+      try {
+        const saved = localStorage.getItem(`dataTable.${storageKey}`);
+        if (saved) {
+          const parsed = JSON.parse(saved);
+          return {
+            columns: defaultColumns,
+            sort: parsed.sort || defaultSort,
+            filters: parsed.filters || [],
+            pagination: {
+              page: 1,
+              perPage: parsed.pagination?.perPage || defaultPerPage,
+              total: 0
+            },
+            selectedIds: [],
+            hiddenColumns: parsed.hiddenColumns || [],
+            columnOrder: parsed.columnOrder || defaultColumns.map((c) => c.id)
+          };
+        }
+      } catch {
+      }
+    }
+    return {
+      columns: defaultColumns,
+      sort: defaultSort,
+      filters: [],
+      pagination: { page: 1, perPage: defaultPerPage, total: 0 },
+      selectedIds: [],
+      hiddenColumns: [],
+      columnOrder: defaultColumns.map((c) => c.id)
+    };
+  }, [defaultColumns, defaultSort, defaultPerPage, persistState, storageKey]);
+  const [state, setState] = (0, import_react9.useState)(getInitialState);
+  const persistStateToStorage = (0, import_react9.useCallback)((newState) => {
+    if (persistState && storageKey) {
+      try {
+        const toSave = {
+          sort: newState.sort,
+          filters: newState.filters,
+          pagination: { perPage: newState.pagination.perPage },
+          hiddenColumns: newState.hiddenColumns,
+          columnOrder: newState.columnOrder
+        };
+        localStorage.setItem(`dataTable.${storageKey}`, JSON.stringify(toSave));
+      } catch {
+      }
+    }
+  }, [persistState, storageKey]);
+  const showColumn = (0, import_react9.useCallback)((columnId) => {
+    setState((prev) => {
+      const newState = {
+        ...prev,
+        hiddenColumns: prev.hiddenColumns.filter((id) => id !== columnId)
+      };
+      persistStateToStorage(newState);
+      return newState;
+    });
+  }, [persistStateToStorage]);
+  const hideColumn = (0, import_react9.useCallback)((columnId) => {
+    setState((prev) => {
+      const newState = {
+        ...prev,
+        hiddenColumns: [...prev.hiddenColumns, columnId]
+      };
+      persistStateToStorage(newState);
+      return newState;
+    });
+  }, [persistStateToStorage]);
+  const reorderColumns = (0, import_react9.useCallback)((newOrder) => {
+    setState((prev) => {
+      const newState = {
+        ...prev,
+        columnOrder: newOrder
+      };
+      persistStateToStorage(newState);
+      return newState;
+    });
+  }, [persistStateToStorage]);
+  const resetColumns = (0, import_react9.useCallback)(() => {
+    setState((prev) => {
+      const newState = {
+        ...prev,
+        hiddenColumns: [],
+        columnOrder: defaultColumns.map((c) => c.id)
+      };
+      persistStateToStorage(newState);
+      return newState;
+    });
+  }, [defaultColumns, persistStateToStorage]);
+  const setSort = (0, import_react9.useCallback)((field, order) => {
+    setState((prev) => {
+      const currentSort = prev.sort;
+      let newOrder = "ASC";
+      if (order) {
+        newOrder = order;
+      } else if (currentSort?.field === field) {
+        newOrder = currentSort.order === "ASC" ? "DESC" : "ASC";
+      }
+      const newState = {
+        ...prev,
+        sort: { field, order: newOrder },
+        pagination: { ...prev.pagination, page: 1 }
+        // Reset to first page
+      };
+      persistStateToStorage(newState);
+      return newState;
+    });
+  }, [persistStateToStorage]);
+  const clearSort = (0, import_react9.useCallback)(() => {
+    setState((prev) => {
+      const newState = {
+        ...prev,
+        sort: void 0
+      };
+      persistStateToStorage(newState);
+      return newState;
+    });
+  }, [persistStateToStorage]);
+  const addFilter = (0, import_react9.useCallback)((filter) => {
+    setState((prev) => {
+      const newState = {
+        ...prev,
+        filters: [...prev.filters.filter((f) => f.field !== filter.field), filter],
+        pagination: { ...prev.pagination, page: 1 }
+        // Reset to first page
+      };
+      persistStateToStorage(newState);
+      return newState;
+    });
+  }, [persistStateToStorage]);
+  const removeFilter = (0, import_react9.useCallback)((field) => {
+    setState((prev) => {
+      const newState = {
+        ...prev,
+        filters: prev.filters.filter((f) => f.field !== field),
+        pagination: { ...prev.pagination, page: 1 }
+        // Reset to first page
+      };
+      persistStateToStorage(newState);
+      return newState;
+    });
+  }, [persistStateToStorage]);
+  const clearFilters = (0, import_react9.useCallback)(() => {
+    setState((prev) => {
+      const newState = {
+        ...prev,
+        filters: [],
+        pagination: { ...prev.pagination, page: 1 }
+        // Reset to first page
+      };
+      persistStateToStorage(newState);
+      return newState;
+    });
+  }, [persistStateToStorage]);
+  const setPage = (0, import_react9.useCallback)((page) => {
+    setState((prev) => ({
+      ...prev,
+      pagination: { ...prev.pagination, page }
+    }));
+  }, []);
+  const setPerPage = (0, import_react9.useCallback)((perPage) => {
+    setState((prev) => {
+      const newState = {
+        ...prev,
+        pagination: { ...prev.pagination, perPage, page: 1 }
+      };
+      persistStateToStorage(newState);
+      return newState;
+    });
+  }, [persistStateToStorage]);
+  const setTotal = (0, import_react9.useCallback)((total) => {
+    setState((prev) => ({
+      ...prev,
+      pagination: { ...prev.pagination, total }
+    }));
+  }, []);
+  const selectItem = (0, import_react9.useCallback)((id) => {
+    setState((prev) => ({
+      ...prev,
+      selectedIds: [...prev.selectedIds, id]
+    }));
+  }, []);
+  const deselectItem = (0, import_react9.useCallback)((id) => {
+    setState((prev) => ({
+      ...prev,
+      selectedIds: prev.selectedIds.filter((selectedId) => selectedId !== id)
+    }));
+  }, []);
+  const toggleItem = (0, import_react9.useCallback)((id) => {
+    setState((prev) => ({
+      ...prev,
+      selectedIds: prev.selectedIds.includes(id) ? prev.selectedIds.filter((selectedId) => selectedId !== id) : [...prev.selectedIds, id]
+    }));
+  }, []);
+  const selectAll = (0, import_react9.useCallback)((ids) => {
+    setState((prev) => ({
+      ...prev,
+      selectedIds: ids
+    }));
+  }, []);
+  const clearSelection = (0, import_react9.useCallback)(() => {
+    setState((prev) => ({
+      ...prev,
+      selectedIds: []
+    }));
+  }, []);
+  const visibleColumns = (0, import_react9.useMemo)(() => {
+    return state.columnOrder.map((id) => state.columns.find((col) => col.id === id)).filter(
+      (col) => col !== void 0 && !state.hiddenColumns.includes(col.id)
+    );
+  }, [state.columns, state.columnOrder, state.hiddenColumns]);
+  const hasFilters = (0, import_react9.useMemo)(() => state.filters.length > 0, [state.filters]);
+  const hasSelection = (0, import_react9.useMemo)(() => state.selectedIds.length > 0, [state.selectedIds]);
+  const reset = (0, import_react9.useCallback)(() => {
+    const newState = getInitialState();
+    setState(newState);
+    persistStateToStorage(newState);
+  }, [getInitialState, persistStateToStorage]);
+  return {
+    // State
+    state,
+    visibleColumns,
+    hasFilters,
+    hasSelection,
+    // Column management
+    showColumn,
+    hideColumn,
+    reorderColumns,
+    resetColumns,
+    // Sorting
+    setSort,
+    clearSort,
+    // Filtering
+    addFilter,
+    removeFilter,
+    clearFilters,
+    // Pagination
+    setPage,
+    setPerPage,
+    setTotal,
+    // Selection
+    selectItem,
+    deselectItem,
+    toggleItem,
+    selectAll,
+    clearSelection,
+    // Utilities
+    reset
+  };
+}
+function useColumnManager(columns, storageKey) {
+  const [hiddenColumns, setHiddenColumns] = (0, import_react9.useState)(() => {
+    if (storageKey) {
+      try {
+        const saved = localStorage.getItem(`columnManager.${storageKey}`);
+        return saved ? JSON.parse(saved) : [];
+      } catch {
+        return [];
+      }
+    }
+    return [];
+  });
+  const [columnOrder, setColumnOrder] = (0, import_react9.useState)(() => {
+    if (storageKey) {
+      try {
+        const saved = localStorage.getItem(`columnOrder.${storageKey}`);
+        return saved ? JSON.parse(saved) : columns.map((c) => c.id);
+      } catch {
+        return columns.map((c) => c.id);
+      }
+    }
+    return columns.map((c) => c.id);
+  });
+  const persistState = (0, import_react9.useCallback)(() => {
+    if (storageKey) {
+      try {
+        localStorage.setItem(`columnManager.${storageKey}`, JSON.stringify(hiddenColumns));
+        localStorage.setItem(`columnOrder.${storageKey}`, JSON.stringify(columnOrder));
+      } catch {
+      }
+    }
+  }, [storageKey, hiddenColumns, columnOrder]);
+  const toggleColumn = (0, import_react9.useCallback)((columnId) => {
+    setHiddenColumns((prev) => {
+      const newHidden = prev.includes(columnId) ? prev.filter((id) => id !== columnId) : [...prev, columnId];
+      setTimeout(() => persistState(), 0);
+      return newHidden;
+    });
+  }, [persistState]);
+  const reorderColumns = (0, import_react9.useCallback)((newOrder) => {
+    setColumnOrder(newOrder);
+    setTimeout(() => persistState(), 0);
+  }, [persistState]);
+  const resetColumns = (0, import_react9.useCallback)(() => {
+    setHiddenColumns([]);
+    setColumnOrder(columns.map((c) => c.id));
+    setTimeout(() => persistState(), 0);
+  }, [columns, persistState]);
+  const visibleColumns = (0, import_react9.useMemo)(() => {
+    return columnOrder.map((id) => columns.find((col) => col.id === id)).filter(
+      (col) => col !== void 0 && !hiddenColumns.includes(col.id)
+    );
+  }, [columns, columnOrder, hiddenColumns]);
+  return {
+    hiddenColumns,
+    columnOrder,
+    visibleColumns,
+    toggleColumn,
+    reorderColumns,
+    resetColumns
+  };
+}
+
+// src/hooks/useAdvancedQuery.ts
+var import_react_query4 = require("@tanstack/react-query");
+var import_react10 = require("react");
+function useAdvancedQuery(queryKey, queryFn, options = {}) {
+  const {
+    invalidateOnWindowFocus = false,
+    backgroundRefetch = true,
+    retryOnNetworkError = true,
+    ...queryOptions
+  } = options;
+  return (0, import_react_query4.useQuery)({
+    queryKey,
+    queryFn,
+    staleTime: 5 * 60 * 1e3,
+    // 5 minutes default
+    gcTime: 10 * 60 * 1e3,
+    // 10 minutes default (was cacheTime)
+    refetchOnWindowFocus: invalidateOnWindowFocus,
+    refetchInBackground: backgroundRefetch,
+    retry: (failureCount, error) => {
+      if (error?.status >= 400 && error?.status < 500) {
+        return false;
+      }
+      if (retryOnNetworkError && (error?.code === "NETWORK_ERROR" || !navigator.onLine)) {
+        return failureCount < 3;
+      }
+      return failureCount < 3;
+    },
+    retryDelay: (attemptIndex) => Math.min(1e3 * 2 ** attemptIndex, 3e4),
+    ...queryOptions
+  });
+}
+function useAdvancedMutation(mutationFn, options = {}) {
+  const queryClient = (0, import_react_query4.useQueryClient)();
+  const {
+    optimisticUpdate,
+    invalidateQueries = [],
+    updateQueries = [],
+    onSuccess,
+    onError,
+    onSettled,
+    ...mutationOptions
+  } = options;
+  return (0, import_react_query4.useMutation)({
+    mutationFn,
+    onMutate: async (variables) => {
+      if (optimisticUpdate) {
+        const { updateFn } = optimisticUpdate;
+        await queryClient.cancelQueries();
+        const previousData = queryClient.getQueryData(invalidateQueries[0] || []);
+        if (invalidateQueries[0]) {
+          queryClient.setQueryData(
+            invalidateQueries[0],
+            (oldData) => updateFn(oldData, variables)
+          );
+        }
+        return { previousData };
+      }
+    },
+    onSuccess: (data, variables, context) => {
+      updateQueries.forEach(({ queryKey, updateFn }) => {
+        queryClient.setQueryData(
+          queryKey,
+          (oldData) => updateFn(oldData, data, variables)
+        );
+      });
+      invalidateQueries.forEach((queryKey) => {
+        queryClient.invalidateQueries({ queryKey });
+      });
+      onSuccess?.(data, variables, context);
+    },
+    onError: (error, variables, context) => {
+      if (optimisticUpdate?.rollbackOnError !== false && context?.previousData && invalidateQueries[0]) {
+        queryClient.setQueryData(invalidateQueries[0], context.previousData);
+      }
+      onError?.(error, variables, context);
+    },
+    onSettled: (data, error, variables, context) => {
+      invalidateQueries.forEach((queryKey) => {
+        queryClient.invalidateQueries({ queryKey });
+      });
+      onSettled?.(data, error, variables, context);
+    },
+    ...mutationOptions
+  });
+}
+function useAdvancedInfiniteQuery(queryKey, queryFn, options = {}) {
+  const {
+    getNextPageParam = () => void 0,
+    getPreviousPageParam = () => void 0,
+    initialPageParam = 1,
+    maxPages = 10,
+    staleTime = 5 * 60 * 1e3,
+    gcTime = 10 * 60 * 1e3
+  } = options;
+  return (0, import_react_query4.useQuery)({
+    queryKey,
+    queryFn: () => queryFn({ pageParam: initialPageParam }),
+    staleTime,
+    gcTime
+    // Note: useInfiniteQuery would be used here in a real implementation
+    // This is a simplified version for demonstration
+  });
+}
+function useDependentQueries(firstQuery, secondQuery) {
+  const first2 = (0, import_react_query4.useQuery)({
+    queryKey: firstQuery.queryKey,
+    queryFn: firstQuery.queryFn,
+    ...firstQuery.options
+  });
+  const second = (0, import_react_query4.useQuery)({
+    queryKey: first2.data ? secondQuery.queryKey(first2.data) : ["dependent-disabled"],
+    queryFn: () => first2.data ? secondQuery.queryFn(first2.data) : Promise.reject("No data"),
+    enabled: !!first2.data && !first2.isError,
+    ...secondQuery.options
+  });
+  return {
+    first: first2,
+    second,
+    isLoading: first2.isLoading || first2.data && second.isLoading,
+    isError: first2.isError || second.isError,
+    error: first2.error || second.error,
+    data: second.data
+  };
+}
+function useQuerySync(queryKey, onDataChange) {
+  const queryClient = (0, import_react_query4.useQueryClient)();
+  const data = queryClient.getQueryData(queryKey);
+  const setData = (0, import_react10.useCallback)((updater) => {
+    queryClient.setQueryData(queryKey, updater);
+  }, [queryClient, queryKey]);
+  const invalidate = (0, import_react10.useCallback)(() => {
+    queryClient.invalidateQueries({ queryKey });
+  }, [queryClient, queryKey]);
+  const refetch = (0, import_react10.useCallback)(() => {
+    return queryClient.refetchQueries({ queryKey });
+  }, [queryClient, queryKey]);
+  (0, import_react10.useMemo)(() => {
+    onDataChange?.(data);
+  }, [data, onDataChange]);
+  return {
+    data,
+    setData,
+    invalidate,
+    refetch
+  };
+}
+function useOfflineSync(queryKey, queryFn, options = {}) {
+  const {
+    syncInterval = 3e4,
+    // 30 seconds
+    retryOnReconnect = true,
+    persistToStorage = false,
+    storageKey
+  } = options;
+  const queryClient = (0, import_react_query4.useQueryClient)();
+  (0, import_react10.useMemo)(() => {
+    if (persistToStorage && storageKey) {
+      try {
+        const stored = localStorage.getItem(storageKey);
+        if (stored) {
+          const data = JSON.parse(stored);
+          queryClient.setQueryData(queryKey, data);
+        }
+      } catch {
+      }
+    }
+  }, [queryClient, queryKey, persistToStorage, storageKey]);
+  const query = (0, import_react_query4.useQuery)({
+    queryKey,
+    queryFn,
+    staleTime: syncInterval,
+    refetchInterval: navigator.onLine ? syncInterval : false,
+    refetchIntervalInBackground: true,
+    retry: (failureCount, error) => {
+      if (!navigator.onLine) return false;
+      return failureCount < 3;
+    }
+  });
+  (0, import_react10.useMemo)(() => {
+    if (persistToStorage && storageKey && query.data) {
+      try {
+        localStorage.setItem(storageKey, JSON.stringify(query.data));
+      } catch {
+      }
+    }
+  }, [query.data, persistToStorage, storageKey]);
+  (0, import_react10.useMemo)(() => {
+    if (retryOnReconnect) {
+      const handleOnline = () => {
+        queryClient.refetchQueries({ queryKey });
+      };
+      window.addEventListener("online", handleOnline);
+      return () => window.removeEventListener("online", handleOnline);
+    }
+  }, [queryClient, queryKey, retryOnReconnect]);
+  return query;
+}
+
 // src/components/GenericForm.tsx
 var import_jsx_runtime18 = require("react/jsx-runtime");
 function GenericForm({
@@ -3337,7 +4048,7 @@ function GenericForm({
   className = "p-1 bg-card rounded-lg shadow-sm border"
 }) {
   const { handleAsync } = useErrorHandler("GenericForm");
-  const initialFormData = (0, import_react8.useMemo)(() => {
+  const initialFormData = (0, import_react11.useMemo)(() => {
     const formData = {};
     config.sections.forEach((section) => {
       section.fields.forEach((field) => {
@@ -3523,7 +4234,7 @@ function GenericForm({
 var GenericForm_default = GenericForm;
 
 // src/components/AppHeader.tsx
-var import_react9 = require("react");
+var import_react12 = require("react");
 var import_lucide_react2 = require("lucide-react");
 
 // src/components/Avatar.tsx
@@ -3808,11 +4519,11 @@ var AppHeader = ({
   isLoading = false,
   customMenuItems
 }) => {
-  const [isUserMenuOpen, setIsUserMenuOpen] = (0, import_react9.useState)(false);
-  const handleUserMenuToggle = (0, import_react9.useCallback)(() => {
+  const [isUserMenuOpen, setIsUserMenuOpen] = (0, import_react12.useState)(false);
+  const handleUserMenuToggle = (0, import_react12.useCallback)(() => {
     setIsUserMenuOpen((prev) => !prev);
   }, []);
-  const handleUserMenuClose = (0, import_react9.useCallback)(() => {
+  const handleUserMenuClose = (0, import_react12.useCallback)(() => {
     setIsUserMenuOpen(false);
   }, []);
   return /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("header", { className: "bg-secondary border-b", children: /* @__PURE__ */ (0, import_jsx_runtime21.jsx)("div", { className: "px-4", children: /* @__PURE__ */ (0, import_jsx_runtime21.jsxs)("div", { className: "flex justify-between items-center h-16", children: [
@@ -3914,11 +4625,11 @@ var AppHeader = ({
 };
 
 // src/components/ExactHeader.tsx
-var import_react10 = __toESM(require("react"), 1);
+var import_react13 = __toESM(require("react"), 1);
 var import_lucide_react3 = require("lucide-react");
 var import_jsx_runtime22 = require("react/jsx-runtime");
-var UserMenuContext = import_react10.default.createContext(void 0);
-var useUserMenu = () => import_react10.default.useContext(UserMenuContext);
+var UserMenuContext = import_react13.default.createContext(void 0);
+var useUserMenu = () => import_react13.default.useContext(UserMenuContext);
 var RefreshButton = ({ onRefresh, loading = false }) => {
   const handleRefresh = () => {
     if (onRefresh) {
@@ -3939,11 +4650,11 @@ var RefreshButton = ({ onRefresh, loading = false }) => {
   );
 };
 function UserMenu({ children, user, onLogout }) {
-  const [open, setOpen] = (0, import_react10.useState)(false);
-  const handleToggleOpen = (0, import_react10.useCallback)(() => {
+  const [open, setOpen] = (0, import_react13.useState)(false);
+  const handleToggleOpen = (0, import_react13.useCallback)(() => {
     setOpen((prevOpen) => !prevOpen);
   }, []);
-  const handleClose = (0, import_react10.useCallback)(() => {
+  const handleClose = (0, import_react13.useCallback)(() => {
     setOpen(false);
   }, []);
   const handleLogout = () => {
@@ -3971,7 +4682,7 @@ function UserMenu({ children, user, onLogout }) {
       ] }) }),
       /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(DropdownMenuSeparator, {}),
       children,
-      import_react10.Children.count(children) > 0 && /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(DropdownMenuSeparator, {}),
+      import_react13.Children.count(children) > 0 && /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(DropdownMenuSeparator, {}),
       /* @__PURE__ */ (0, import_jsx_runtime22.jsxs)(DropdownMenuItem, { onClick: handleLogout, className: "cursor-pointer", children: [
         /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(import_lucide_react3.LogOut, {}),
         "Log out"
@@ -4066,9 +4777,17 @@ var ExactHeader = ({
 };
 
 // src/components/LoginPage.tsx
-var import_react11 = __toESM(require("react"), 1);
+var import_react14 = __toESM(require("react"), 1);
 var import_jsx_runtime23 = require("react/jsx-runtime");
-var import_meta = {};
+var isDevelopmentMode = () => {
+  if (typeof globalThis !== "undefined" && globalThis.import?.meta?.env) {
+    return globalThis.import.meta.env.MODE === "development";
+  }
+  if (typeof process !== "undefined" && process.env) {
+    return process.env.NODE_ENV === "development";
+  }
+  return false;
+};
 var LoginPage = ({
   title,
   logo,
@@ -4096,11 +4815,11 @@ var LoginPage = ({
   },
   demoCredentials
 }) => {
-  const [formData, setFormData] = (0, import_react11.useState)({
+  const [formData, setFormData] = (0, import_react14.useState)({
     email: "",
     password: ""
   });
-  const [formErrors, setFormErrors] = (0, import_react11.useState)({});
+  const [formErrors, setFormErrors] = (0, import_react14.useState)({});
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
@@ -4193,7 +4912,7 @@ var LoginPage = ({
           ),
           getFieldError("password")
         ] }),
-        additionalFields && /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("div", { className: "space-y-4", children: import_react11.default.cloneElement(additionalFields, {
+        additionalFields && /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("div", { className: "space-y-4", children: import_react14.default.cloneElement(additionalFields, {
           formData,
           handleChange,
           formErrors,
@@ -4229,7 +4948,7 @@ var LoginPage = ({
         ] }),
         /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("a", { href: signUpUrl, children: /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(Button, { variant: "outline", className: "w-full", children: labels.signUp }) })
       ] }),
-      demoCredentials && (typeof import_meta !== "undefined" && import_meta.env?.MODE === "development") && /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("div", { className: "mt-4 p-3 bg-gray-50 rounded-lg", children: /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)("details", { className: "group", children: [
+      demoCredentials && isDevelopmentMode() && /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("div", { className: "mt-4 p-3 bg-gray-50 rounded-lg", children: /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)("details", { className: "group", children: [
         /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("summary", { className: "cursor-pointer text-sm font-medium text-gray-700 hover:text-gray-900", children: "Demo Credentials (Development Only)" }),
         /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)("div", { className: "mt-2 space-y-2", children: [
           /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)("p", { className: "text-sm text-gray-600", children: [
@@ -4259,11 +4978,11 @@ var LoginPage = ({
 };
 
 // src/components/SimpleHeader.tsx
-var import_react12 = __toESM(require("react"), 1);
+var import_react15 = __toESM(require("react"), 1);
 var import_lucide_react4 = require("lucide-react");
 var import_jsx_runtime24 = require("react/jsx-runtime");
-var UserMenuContext2 = import_react12.default.createContext(void 0);
-var useUserMenu2 = () => import_react12.default.useContext(UserMenuContext2);
+var UserMenuContext2 = import_react15.default.createContext(void 0);
+var useUserMenu2 = () => import_react15.default.useContext(UserMenuContext2);
 var RefreshButton2 = ({ onRefresh, loading = false }) => {
   const handleRefresh = () => {
     if (onRefresh) {
@@ -4284,11 +5003,11 @@ var RefreshButton2 = ({ onRefresh, loading = false }) => {
   );
 };
 function UserMenu2({ children, user, onLogout }) {
-  const [open, setOpen] = (0, import_react12.useState)(false);
-  const handleToggleOpen = (0, import_react12.useCallback)(() => {
+  const [open, setOpen] = (0, import_react15.useState)(false);
+  const handleToggleOpen = (0, import_react15.useCallback)(() => {
     setOpen((prevOpen) => !prevOpen);
   }, []);
-  const handleClose = (0, import_react12.useCallback)(() => {
+  const handleClose = (0, import_react15.useCallback)(() => {
     setOpen(false);
   }, []);
   const handleLogout = () => {
@@ -4316,7 +5035,7 @@ function UserMenu2({ children, user, onLogout }) {
       ] }) }),
       /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(DropdownMenuSeparator, {}),
       children,
-      import_react12.Children.count(children) > 0 && /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(DropdownMenuSeparator, {}),
+      import_react15.Children.count(children) > 0 && /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(DropdownMenuSeparator, {}),
       /* @__PURE__ */ (0, import_jsx_runtime24.jsxs)(DropdownMenuItem, { onClick: handleLogout, className: "cursor-pointer", children: [
         /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(import_lucide_react4.LogOut, {}),
         "Log out"
@@ -5367,7 +6086,6 @@ var SupabaseService = class {
 
 // src/services/supabase.ts
 var import_supabase_js = require("@supabase/supabase-js");
-var import_meta2 = {};
 var createSupabaseClient = (config) => {
   const defaultOptions = {
     auth: {
@@ -5385,9 +6103,21 @@ var createSupabaseClient = (config) => {
     ...config.options
   });
 };
+var getEnvVar = (key) => {
+  if (typeof globalThis !== "undefined" && globalThis.import?.meta?.env) {
+    return globalThis.import.meta.env[key];
+  }
+  if (typeof process !== "undefined" && process.env) {
+    return process.env[key];
+  }
+  if (typeof window !== "undefined" && window.__ENV__) {
+    return window.__ENV__[key];
+  }
+  return void 0;
+};
 var createSupabaseFromEnv = () => {
-  const url = import_meta2.env?.VITE_SUPABASE_URL || process.env.VITE_SUPABASE_URL;
-  const anonKey = import_meta2.env?.VITE_SUPABASE_ANON_KEY || process.env.VITE_SUPABASE_ANON_KEY;
+  const url = getEnvVar("VITE_SUPABASE_URL");
+  const anonKey = getEnvVar("VITE_SUPABASE_ANON_KEY");
   if (!url) {
     throw new Error("Missing VITE_SUPABASE_URL environment variable");
   }
@@ -6238,11 +6968,21 @@ function createPaginatedStore(entityName, defaultPerPage = 10, persistOptions) {
   updateAt,
   uploadMultipleFiles,
   uploadToSupabaseStorage,
+  useAdvancedInfiniteQuery,
+  useAdvancedMutation,
+  useAdvancedQuery,
   useAuth,
   useAuthGuard,
+  useBulkOperations,
+  useColumnManager,
   useDataService,
+  useDataTable,
+  useDependentQueries,
   useErrorBoundary,
   useErrorHandler,
+  useOfflineSync,
+  useQuerySync,
+  useSavedQueries,
   useSidebar,
   useTheme,
   useValidationErrorHandler,

@@ -43,13 +43,31 @@ export const createSupabaseClient = (config: SupabaseConfig): SupabaseClient => 
 };
 
 /**
+ * Safely access environment variables in both CJS and ESM environments
+ */
+const getEnvVar = (key: string): string | undefined => {
+  // Try import.meta.env first (ESM/Vite), then process.env (CJS/Node)
+  if (typeof globalThis !== 'undefined' && (globalThis as any).import?.meta?.env) {
+    return (globalThis as any).import.meta.env[key];
+  }
+  if (typeof process !== 'undefined' && process.env) {
+    return process.env[key];
+  }
+  // Fallback for browser environments without Vite
+  if (typeof window !== 'undefined' && (window as any).__ENV__) {
+    return (window as any).__ENV__[key];
+  }
+  return undefined;
+};
+
+/**
  * Create Supabase client from environment variables
  * Note: This function should be used in the consuming application, not in the package
  */
 export const createSupabaseFromEnv = (): SupabaseClient => {
-  // Access environment variables in a way that works in both dev and production
-  const url = import.meta.env?.VITE_SUPABASE_URL || process.env.VITE_SUPABASE_URL;
-  const anonKey = import.meta.env?.VITE_SUPABASE_ANON_KEY || process.env.VITE_SUPABASE_ANON_KEY;
+  // Access environment variables in a way that works in both CJS and ESM
+  const url = getEnvVar('VITE_SUPABASE_URL');
+  const anonKey = getEnvVar('VITE_SUPABASE_ANON_KEY');
 
   if (!url) {
     throw new Error('Missing VITE_SUPABASE_URL environment variable');
