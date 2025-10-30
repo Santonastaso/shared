@@ -15,6 +15,9 @@ export {
 } from './utils';
 export * from './utils/toast';
 export * from './utils/validation';
+
+// Form validation utilities (from crm_demo patterns)
+export * from './validation';
 export * from './utils/dateUtils';
 export * from './utils/numberUtils';
 export * from './utils/stringUtils';

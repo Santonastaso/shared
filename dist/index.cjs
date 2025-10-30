@@ -198,7 +198,9 @@ __export(src_exports, {
   hoursToMinutes: () => hoursToMinutes,
   insertAt: () => insertAt,
   intersection: () => intersection,
+  isLinkedinUrl: () => isLinkedinUrl,
   isPalindrome: () => isPalindrome,
+  isUrl: () => isUrl,
   isValidDate: () => isValidDate,
   isValidEmail: () => isValidEmail,
   isValidNumber: () => isValidNumber,
@@ -271,9 +273,11 @@ __export(src_exports, {
   useValidationErrorHandler: () => useValidationErrorHandler,
   validateData: () => validateData,
   validateDateRange: () => validateDateRange,
-  validateEmail: () => validateEmail,
+  validateMaxLength: () => validateMaxLength,
+  validateMinLength: () => validateMinLength,
+  validateNumber: () => validateNumber,
   validateNumericRanges: () => validateNumericRanges,
-  validateRequired: () => validateRequired,
+  validatePositiveNumber: () => validatePositiveNumber,
   validateRequiredFields: () => validateRequiredFields,
   withErrorBoundary: () => withErrorBoundary
 });
@@ -361,22 +365,6 @@ var validateData = (data, schema) => {
 };
 var SCHEMAS = {
   // Applications should extend this with their specific schemas
-};
-var validateRequired = (data, requiredFields) => {
-  const errors = {};
-  requiredFields.forEach((field) => {
-    if (!data[field] || typeof data[field] === "string" && data[field].trim() === "") {
-      errors[field] = "This field is required";
-    }
-  });
-  return {
-    isValid: Object.keys(errors).length === 0,
-    errors
-  };
-};
-var validateEmail = (email) => {
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  return emailRegex.test(email);
 };
 
 // src/utils/dateUtils.ts
@@ -4094,6 +4082,56 @@ var SimpleHeader = ({
   ] }) }) }) });
 };
 
+// src/validation/url-validators.ts
+var LINKEDIN_URL_REGEX = /^http(?:s)?:\/\/(?:www\.)?linkedin.com\//;
+var isLinkedinUrl = (url) => {
+  if (!url) return;
+  try {
+    const parsedUrl = new URL(url);
+    if (!parsedUrl.href.match(LINKEDIN_URL_REGEX)) {
+      return "URL must be from linkedin.com";
+    }
+  } catch {
+    return "Must be a valid URL";
+  }
+};
+var isUrl = (url) => {
+  if (!url) return;
+  const UrlRegex = new RegExp(
+    /^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([-.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/i
+  );
+  if (!UrlRegex.test(url)) {
+    return "Must be a valid URL";
+  }
+};
+
+// src/validation/form-validators.ts
+var validateMinLength = (minLength) => (value) => {
+  if (!value) return;
+  if (value.length < minLength) {
+    return `Must be at least ${minLength} characters long`;
+  }
+};
+var validateMaxLength = (maxLength) => (value) => {
+  if (!value) return;
+  if (value.length > maxLength) {
+    return `Must be no more than ${maxLength} characters long`;
+  }
+};
+var validateNumber = (value) => {
+  if (value === null || value === void 0 || value === "") return;
+  if (isNaN(Number(value))) {
+    return "Must be a valid number";
+  }
+};
+var validatePositiveNumber = (value) => {
+  const numberError = validateNumber(value);
+  if (numberError) return numberError;
+  if (value !== null && value !== void 0 && value !== "" && Number(value) <= 0) {
+    return "Must be a positive number";
+  }
+};
+
 // src/services/BaseService.ts
 var BaseService = class {
   constructor(client, tableName) {
@@ -5672,7 +5710,9 @@ function createPaginatedStore(entityName, defaultPerPage = 10, persistOptions) {
   hoursToMinutes,
   insertAt,
   intersection,
+  isLinkedinUrl,
   isPalindrome,
+  isUrl,
   isValidDate,
   isValidEmail,
   isValidNumber,
@@ -5745,9 +5785,11 @@ function createPaginatedStore(entityName, defaultPerPage = 10, persistOptions) {
   useValidationErrorHandler,
   validateData,
   validateDateRange,
-  validateEmail,
+  validateMaxLength,
+  validateMinLength,
+  validateNumber,
   validateNumericRanges,
-  validateRequired,
+  validatePositiveNumber,
   validateRequiredFields,
   withErrorBoundary
 });
