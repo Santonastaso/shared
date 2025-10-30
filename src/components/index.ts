@@ -6,6 +6,12 @@ export { Badge } from './badge';
 export { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from './card';
 export { Table, TableHeader, TableBody, TableFooter, TableHead, TableRow, TableCell, TableCaption } from './table';
 
+// Navigation Components - temporarily disabled due to tsup externalization issues
+// TODO: Fix externalization of @radix-ui/react-tabs, @radix-ui/react-popover, and cmdk in tsup config
+// export { Tabs, TabsList, TabsTrigger, TabsContent } from './tabs';
+// export { Command, CommandDialog, CommandInput, CommandList, CommandEmpty, CommandGroup, CommandItem, CommandShortcut, CommandSeparator } from './command';
+// export { Popover, PopoverTrigger, PopoverContent, PopoverAnchor } from './popover';
+
 // Dialog Components - temporarily disabled due to tsup externalization issues
 // TODO: Fix externalization of @radix-ui/react-dialog and vaul in tsup config
 // export { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogOverlay, DialogPortal, DialogTitle, DialogTrigger } from './dialog';
