@@ -6,6 +6,13 @@ export { Badge } from './badge';
 export { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from './card';
 export { Table, TableHeader, TableBody, TableFooter, TableHead, TableRow, TableCell, TableCaption } from './table';
 
+// Feedback Components - skeleton is safe (no external deps), others temporarily disabled due to externalization
+export { Skeleton } from './skeleton';
+// TODO: Fix externalization of @radix-ui/react-tooltip, @radix-ui/react-accordion, @radix-ui/react-progress in tsup config
+// export { Tooltip, TooltipTrigger, TooltipContent, TooltipProvider } from './tooltip';
+// export { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from './accordion';
+// export { Progress } from './progress';
+
 // Navigation Components - temporarily disabled due to tsup externalization issues
 // TODO: Fix externalization of @radix-ui/react-tabs, @radix-ui/react-popover, and cmdk in tsup config
 // export { Tabs, TabsList, TabsTrigger, TabsContent } from './tabs';
