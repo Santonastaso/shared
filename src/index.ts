@@ -45,7 +45,28 @@ export {
   AuthProvider,
   useAuth,
   getStandardSupabaseClient,
-  getSupabaseClient
+  getSupabaseClient,
+  // Supabase storage utilities
+  uploadToSupabaseStorage,
+  checkFileExists,
+  deleteFromSupabaseStorage,
+  getSignedUrl,
+  uploadMultipleFiles,
+  // Supabase database utilities
+  applyFullTextSearch,
+  applyPagination,
+  recordExists,
+  getRecordCount,
+  batchInsert,
+  batchUpdate,
+  softDelete,
+  restoreRecord,
+  // Supabase data provider utilities
+  processFileUploads,
+  createAvatarProcessor,
+  createFullTextSearchProcessor,
+  validateSupabaseEnv,
+  createDataOperationErrorHandler
 } from './services';
 
 // Hooks

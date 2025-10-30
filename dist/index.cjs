@@ -105,16 +105,21 @@ __export(src_exports, {
   VALIDATION_MESSAGES: () => VALIDATION_MESSAGES,
   WORK_CENTERS: () => WORK_CENTERS,
   addDaysToDate: () => addDaysToDate,
+  applyFullTextSearch: () => applyFullTextSearch,
+  applyPagination: () => applyPagination,
   arrayComparison: () => arrayComparison,
   average: () => average,
   averageBy: () => averageBy,
   averageNumbers: () => averageNumbers,
   badgeVariants: () => badgeVariants,
+  batchInsert: () => batchInsert,
+  batchUpdate: () => batchUpdate,
   buttonVariants: () => buttonVariants,
   calculatePercentage: () => calculatePercentage,
   calculatePercentageChange: () => calculatePercentageChange,
   capitalize: () => capitalize,
   capitalizeWords: () => capitalizeWords,
+  checkFileExists: () => checkFileExists,
   checkSupabaseConnection: () => checkSupabaseConnection,
   chunk: () => chunk,
   clampNumber: () => clampNumber,
@@ -129,9 +134,12 @@ __export(src_exports, {
   countOccurrences: () => countOccurrences,
   countWords: () => countWords,
   createArray: () => createArray,
+  createAvatarProcessor: () => createAvatarProcessor,
   createCRUDStore: () => createCRUDStore,
+  createDataOperationErrorHandler: () => createDataOperationErrorHandler,
   createDateRange: () => createDateRange,
   createEntityStore: () => createEntityStore,
+  createFullTextSearchProcessor: () => createFullTextSearchProcessor,
   createPaginatedStore: () => createPaginatedStore,
   createQueryKeys: () => createQueryKeys,
   createServiceHooks: () => createServiceHooks,
@@ -142,6 +150,7 @@ __export(src_exports, {
   debounce: () => debounce,
   defaultQueryConfig: () => defaultQueryConfig,
   defaultQueryErrorHandler: () => defaultQueryErrorHandler,
+  deleteFromSupabaseStorage: () => deleteFromSupabaseStorage,
   difference: () => difference,
   dismiss: () => dismiss,
   dismissAll: () => dismissAll,
@@ -187,7 +196,9 @@ __export(src_exports, {
   getNested: () => getNested,
   getRandomItem: () => getRandomItem,
   getRandomItems: () => getRandomItems,
+  getRecordCount: () => getRecordCount,
   getRelativeTime: () => getRelativeTime,
+  getSignedUrl: () => getSignedUrl,
   getStandardSupabaseClient: () => getStandardSupabaseClient,
   getStartOfDay: () => getStartOfDay,
   getSupabaseClient: () => getSupabaseClient,
@@ -223,13 +234,16 @@ __export(src_exports, {
   parseDate: () => parseDate,
   parseInteger: () => parseInteger,
   parseNumber: () => parseNumber,
+  processFileUploads: () => processFileUploads,
   randomInteger: () => randomInteger,
   randomNumber: () => randomNumber,
   range: () => range,
+  recordExists: () => recordExists,
   removeAt: () => removeAt,
   removeDuplicates: () => removeDuplicates,
   removeDuplicatesByKey: () => removeDuplicatesByKey,
   removeWhitespace: () => removeWhitespace,
+  restoreRecord: () => restoreRecord,
   reverse: () => reverse,
   roundNumber: () => roundNumber,
   safeAsync: () => safeAsync,
@@ -246,6 +260,7 @@ __export(src_exports, {
   shuffle: () => shuffle,
   skip: () => skip,
   skipLast: () => skipLast,
+  softDelete: () => softDelete,
   sortBy: () => sortBy,
   sortByMultiple: () => sortByMultiple,
   stringTemplates: () => stringTemplates,
@@ -266,6 +281,8 @@ __export(src_exports, {
   truncateWords: () => truncateWords,
   union: () => union,
   updateAt: () => updateAt,
+  uploadMultipleFiles: () => uploadMultipleFiles,
+  uploadToSupabaseStorage: () => uploadToSupabaseStorage,
   useAuth: () => useAuth,
   useAuthGuard: () => useAuthGuard,
   useDataService: () => useDataService,
@@ -282,6 +299,7 @@ __export(src_exports, {
   validateNumericRanges: () => validateNumericRanges,
   validatePositiveNumber: () => validatePositiveNumber,
   validateRequiredFields: () => validateRequiredFields,
+  validateSupabaseEnv: () => validateSupabaseEnv,
   withErrorBoundary: () => withErrorBoundary
 });
 module.exports = __toCommonJS(src_exports);
@@ -5409,6 +5427,268 @@ var getSupabaseClient = () => {
   return _supabaseClient;
 };
 
+// src/services/supabase-storage.ts
+var uploadToSupabaseStorage = async (supabase, file, options = {}) => {
+  const {
+    bucket = "attachments",
+    folder = "",
+    generateFileName = true,
+    overwrite = false
+  } = options;
+  let fileName;
+  if (generateFileName) {
+    const fileExt = file instanceof File ? file.name.split(".").pop() : "bin";
+    fileName = `${Math.random().toString(36).substring(2)}.${fileExt}`;
+  } else if (file instanceof File) {
+    fileName = file.name;
+  } else {
+    fileName = `${Math.random().toString(36).substring(2)}.bin`;
+  }
+  const filePath = folder ? `${folder}/${fileName}` : fileName;
+  const { error: uploadError } = await supabase.storage.from(bucket).upload(filePath, file, {
+    upsert: overwrite
+  });
+  if (uploadError) {
+    console.error("Upload error:", uploadError);
+    throw new Error(`Failed to upload file: ${uploadError.message}`);
+  }
+  const { data } = supabase.storage.from(bucket).getPublicUrl(filePath);
+  return {
+    path: filePath,
+    src: data.publicUrl,
+    type: file instanceof File ? file.type : void 0,
+    size: file.size,
+    name: file instanceof File ? file.name : fileName
+  };
+};
+var checkFileExists = async (supabase, path, bucket = "attachments") => {
+  try {
+    const { error } = await supabase.storage.from(bucket).createSignedUrl(path, 60);
+    return !error;
+  } catch {
+    return false;
+  }
+};
+var deleteFromSupabaseStorage = async (supabase, path, bucket = "attachments") => {
+  const { error } = await supabase.storage.from(bucket).remove([path]);
+  if (error) {
+    console.error("Delete error:", error);
+    throw new Error(`Failed to delete file: ${error.message}`);
+  }
+};
+var getSignedUrl = async (supabase, path, expiresIn = 3600, bucket = "attachments") => {
+  const { data, error } = await supabase.storage.from(bucket).createSignedUrl(path, expiresIn);
+  if (error) {
+    throw new Error(`Failed to create signed URL: ${error.message}`);
+  }
+  return data.signedUrl;
+};
+var uploadMultipleFiles = async (supabase, files, options = {}) => {
+  const uploadPromises = files.map(
+    (file) => uploadToSupabaseStorage(supabase, file, options)
+  );
+  return Promise.all(uploadPromises);
+};
+
+// src/services/supabase-database.ts
+var applyFullTextSearch = (supabase, table, options) => {
+  const { columns, query, language = "english" } = options;
+  if (!query.trim()) {
+    return supabase.from(table).select("*");
+  }
+  const searchQuery = query.split(" ").filter((term) => term.length > 0).map((term) => `${term}:*`).join(" & ");
+  let queryBuilder = supabase.from(table).select("*");
+  const searchConditions = columns.map(
+    (column) => `${column}.fts(${language}).${searchQuery}`
+  ).join(",");
+  return queryBuilder.or(searchConditions);
+};
+var applyPagination = (queryBuilder, params) => {
+  const { page = 1, perPage = 10, sortBy: sortBy2, sortOrder = "asc" } = params;
+  const from = (page - 1) * perPage;
+  const to = from + perPage - 1;
+  let query = queryBuilder.range(from, to);
+  if (sortBy2) {
+    query = query.order(sortBy2, { ascending: sortOrder === "asc" });
+  }
+  return query;
+};
+var recordExists = async (supabase, table, conditions) => {
+  let query = supabase.from(table).select("id", { count: "exact" });
+  Object.entries(conditions).forEach(([key, value]) => {
+    query = query.eq(key, value);
+  });
+  const { count, error } = await query;
+  if (error) {
+    throw new Error(`Failed to check record existence: ${error.message}`);
+  }
+  return (count || 0) > 0;
+};
+var getRecordCount = async (supabase, table, filters = {}) => {
+  let query = supabase.from(table).select("*", { count: "exact", head: true });
+  Object.entries(filters).forEach(([key, value]) => {
+    if (Array.isArray(value)) {
+      query = query.in(key, value);
+    } else {
+      query = query.eq(key, value);
+    }
+  });
+  const { count, error } = await query;
+  if (error) {
+    throw new Error(`Failed to get record count: ${error.message}`);
+  }
+  return count || 0;
+};
+var batchInsert = async (supabase, table, records, batchSize = 100) => {
+  const results = [];
+  for (let i = 0; i < records.length; i += batchSize) {
+    const batch = records.slice(i, i + batchSize);
+    const { data, error } = await supabase.from(table).insert(batch).select();
+    if (error) {
+      throw new Error(`Batch insert failed: ${error.message}`);
+    }
+    if (data) {
+      results.push(...data);
+    }
+  }
+  return results;
+};
+var batchUpdate = async (supabase, table, updates) => {
+  const updatePromises = updates.map(
+    ({ id, data }) => supabase.from(table).update(data).eq("id", id).select().single()
+  );
+  const results = await Promise.all(updatePromises);
+  results.forEach((result, index) => {
+    if (result.error) {
+      throw new Error(`Update failed for record ${updates[index].id}: ${result.error.message}`);
+    }
+  });
+  return results.map((result) => result.data).filter(Boolean);
+};
+var softDelete = async (supabase, table, id) => {
+  const { data, error } = await supabase.from(table).update({ deleted_at: (/* @__PURE__ */ new Date()).toISOString() }).eq("id", id).select().single();
+  if (error) {
+    throw new Error(`Soft delete failed: ${error.message}`);
+  }
+  return data;
+};
+var restoreRecord = async (supabase, table, id) => {
+  const { data, error } = await supabase.from(table).update({ deleted_at: null }).eq("id", id).select().single();
+  if (error) {
+    throw new Error(`Restore failed: ${error.message}`);
+  }
+  return data;
+};
+
+// src/services/supabase-data-provider.ts
+var processFileUploads = async (data, fileFields, supabase, options = {}) => {
+  const processedData = { ...data };
+  for (const fieldName of fileFields) {
+    const fileData = data[fieldName];
+    if (!fileData) continue;
+    if (fileData.rawFile instanceof File) {
+      const uploadedFile = await uploadFileToStorage(fileData, supabase, options);
+      processedData[fieldName] = uploadedFile;
+    } else if (Array.isArray(fileData)) {
+      const uploadedFiles = await Promise.all(
+        fileData.map(
+          (file) => file.rawFile instanceof File ? uploadFileToStorage(file, supabase, options) : file
+        )
+      );
+      processedData[fieldName] = uploadedFiles;
+    }
+  }
+  return processedData;
+};
+var uploadFileToStorage = async (fileData, supabase, options) => {
+  const { bucket = "attachments", folder = "", generateFileName = true } = options;
+  if (!fileData.src.startsWith("blob:") && !fileData.src.startsWith("data:")) {
+    if (fileData.path) {
+      const { error } = await supabase.storage.from(bucket).createSignedUrl(fileData.path, 60);
+      if (!error) {
+        return fileData;
+      }
+    }
+  }
+  const dataContent = fileData.src ? await fetch(fileData.src).then((res) => res.blob()) : fileData.rawFile;
+  const file = fileData.rawFile;
+  const fileExt = file.name.split(".").pop();
+  const fileName = generateFileName ? `${Math.random()}.${fileExt}` : file.name;
+  const filePath = folder ? `${folder}/${fileName}` : fileName;
+  const { error: uploadError } = await supabase.storage.from(bucket).upload(filePath, dataContent);
+  if (uploadError) {
+    console.error("Upload error:", uploadError);
+    throw new Error("Failed to upload attachment");
+  }
+  const { data } = supabase.storage.from(bucket).getPublicUrl(filePath);
+  return {
+    ...fileData,
+    path: filePath,
+    src: data.publicUrl,
+    type: file.type
+  };
+};
+var createAvatarProcessor = (getAvatarFn) => {
+  return async (params, supabase, options = {}) => {
+    let avatar = params.data.avatar;
+    if (typeof avatar !== "object" || avatar === null || !avatar.src) {
+      avatar = await getAvatarFn(params.data);
+    } else if (avatar.rawFile instanceof File) {
+      avatar = await uploadFileToStorage(avatar, supabase, options);
+    }
+    return {
+      ...params,
+      data: {
+        ...params.data,
+        avatar
+      }
+    };
+  };
+};
+var createFullTextSearchProcessor = (columns) => {
+  return (params) => {
+    const { filter } = params;
+    if (!filter || !filter.q) {
+      return params;
+    }
+    const searchQuery = filter.q;
+    delete filter.q;
+    const searchConditions = columns.reduce((acc, column) => {
+      acc[`${column}@ilike`] = `%${searchQuery}%`;
+      return acc;
+    }, {});
+    return {
+      ...params,
+      filter: {
+        ...filter,
+        $or: searchConditions
+      }
+    };
+  };
+};
+var validateSupabaseEnv = (envVars) => {
+  const missing = Object.entries(envVars).filter(([, value]) => !value).map(([key]) => key);
+  if (missing.length > 0) {
+    throw new Error(`Missing required environment variables: ${missing.join(", ")}`);
+  }
+};
+var createDataOperationErrorHandler = (operation) => {
+  return (error, context) => {
+    const contextStr = context ? ` (${context})` : "";
+    console.error(`${operation} error${contextStr}:`, error);
+    if (error.code === "23505") {
+      throw new Error("This record already exists");
+    } else if (error.code === "23503") {
+      throw new Error("Cannot perform this operation due to related records");
+    } else if (error.code === "PGRST116") {
+      throw new Error("Record not found");
+    } else if (error.message?.includes("JWT")) {
+      throw new Error("Authentication error. Please refresh the page");
+    }
+    throw new Error(error.message || `${operation} failed`);
+  };
+};
+
 // src/stores/storeFactory.ts
 var import_zustand2 = require("zustand");
 var import_middleware = require("zustand/middleware");
@@ -5780,16 +6060,21 @@ function createPaginatedStore(entityName, defaultPerPage = 10, persistOptions) {
   VALIDATION_MESSAGES,
   WORK_CENTERS,
   addDaysToDate,
+  applyFullTextSearch,
+  applyPagination,
   arrayComparison,
   average,
   averageBy,
   averageNumbers,
   badgeVariants,
+  batchInsert,
+  batchUpdate,
   buttonVariants,
   calculatePercentage,
   calculatePercentageChange,
   capitalize,
   capitalizeWords,
+  checkFileExists,
   checkSupabaseConnection,
   chunk,
   clampNumber,
@@ -5804,9 +6089,12 @@ function createPaginatedStore(entityName, defaultPerPage = 10, persistOptions) {
   countOccurrences,
   countWords,
   createArray,
+  createAvatarProcessor,
   createCRUDStore,
+  createDataOperationErrorHandler,
   createDateRange,
   createEntityStore,
+  createFullTextSearchProcessor,
   createPaginatedStore,
   createQueryKeys,
   createServiceHooks,
@@ -5817,6 +6105,7 @@ function createPaginatedStore(entityName, defaultPerPage = 10, persistOptions) {
   debounce,
   defaultQueryConfig,
   defaultQueryErrorHandler,
+  deleteFromSupabaseStorage,
   difference,
   dismiss,
   dismissAll,
@@ -5862,7 +6151,9 @@ function createPaginatedStore(entityName, defaultPerPage = 10, persistOptions) {
   getNested,
   getRandomItem,
   getRandomItems,
+  getRecordCount,
   getRelativeTime,
+  getSignedUrl,
   getStandardSupabaseClient,
   getStartOfDay,
   getSupabaseClient,
@@ -5898,13 +6189,16 @@ function createPaginatedStore(entityName, defaultPerPage = 10, persistOptions) {
   parseDate,
   parseInteger,
   parseNumber,
+  processFileUploads,
   randomInteger,
   randomNumber,
   range,
+  recordExists,
   removeAt,
   removeDuplicates,
   removeDuplicatesByKey,
   removeWhitespace,
+  restoreRecord,
   reverse,
   roundNumber,
   safeAsync,
@@ -5921,6 +6215,7 @@ function createPaginatedStore(entityName, defaultPerPage = 10, persistOptions) {
   shuffle,
   skip,
   skipLast,
+  softDelete,
   sortBy,
   sortByMultiple,
   stringTemplates,
@@ -5941,6 +6236,8 @@ function createPaginatedStore(entityName, defaultPerPage = 10, persistOptions) {
   truncateWords,
   union,
   updateAt,
+  uploadMultipleFiles,
+  uploadToSupabaseStorage,
   useAuth,
   useAuthGuard,
   useDataService,
@@ -5957,6 +6254,7 @@ function createPaginatedStore(entityName, defaultPerPage = 10, persistOptions) {
   validateNumericRanges,
   validatePositiveNumber,
   validateRequiredFields,
+  validateSupabaseEnv,
   withErrorBoundary
 });
 //# sourceMappingURL=index.cjs.map
