@@ -41,6 +41,11 @@ export { DataTable } from './DataTable';
 export { ErrorBoundary, withErrorBoundary, useErrorBoundary } from './ErrorBoundary';
 export { Header } from './Header';
 
+// Authentication Components
+export { ProtectedRoute } from './ProtectedRoute';
+export type { ProtectedRouteProps } from './ProtectedRoute';
+export * from './auth';
+
 // Component Variants
 export { buttonVariants } from './button-variants';
 export { badgeVariants } from './badge-variants';
