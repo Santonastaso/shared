@@ -18,6 +18,7 @@ export default defineConfig({
     "react-router",
     "@radix-ui/react-slot",
     "@radix-ui/react-avatar",
+    "@radix-ui/react-dialog",
     "@radix-ui/react-dropdown-menu",
     "@supabase/supabase-js",
     "@tanstack/react-query",
@@ -28,6 +29,7 @@ export default defineConfig({
     "zustand",
     "lucide-react",
     "sonner",
+    "vaul",
     "yup",
     "date-fns"
   ],
