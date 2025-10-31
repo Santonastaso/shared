@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from 'react';
-import { useReactTable, getCoreRowModel, flexRender, getSortedRowModel, type ColumnDef } from '@tanstack/react-table';
+import { useReactTable, getCoreRowModel, flexRender, getSortedRowModel, getFilteredRowModel, type ColumnDef, type VisibilityState } from '@tanstack/react-table';
 // Note: These would normally be imported from @santonastaso/crm-ui
 // For now using placeholder interfaces
 interface TableProps { children: React.ReactNode; className?: string; }
@@ -96,6 +96,9 @@ interface DataTableProps<T> {
   enableGlobalSearch?: boolean;
   enableColumnVisibility?: boolean;
   enableRowSelection?: boolean;
+  loading?: boolean;
+  emptyMessage?: string;
+  className?: string;
 }
 
 /**
@@ -117,7 +120,10 @@ export function DataTable<T extends Record<string, any>>({
   pageSizeOptions = [...DATA_TABLE_DEFAULTS.PAGE_SIZE_OPTIONS],
   enableGlobalSearch = true,
   enableColumnVisibility = false,
-  enableRowSelection = false
+  enableRowSelection = false,
+  loading = false,
+  emptyMessage = "No results found.",
+  className
 }: DataTableProps<T>) {
   // State management
   const [filters, setFilters] = useState<Record<string, string>>({});
@@ -126,6 +132,7 @@ export function DataTable<T extends Record<string, any>>({
   const [selectedIds, setSelectedIds] = useState<Set<string | number>>(new Set());
   const [globalQuery, setGlobalQuery] = useState('');
   const [sorting, setSorting] = useState<any[]>([]);
+  const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
 
   // Build columns with selection and actions
   const columns = useMemo(() => {
@@ -249,10 +256,15 @@ export function DataTable<T extends Record<string, any>>({
   const table = useReactTable({
     data: paginatedData,
     columns,
-    state: { sorting },
+    state: { 
+      sorting,
+      columnVisibility,
+    },
     onSortingChange: setSorting,
+    onColumnVisibilityChange: setColumnVisibility,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
+    getFilteredRowModel: getFilteredRowModel(),
   });
 
   const handleFilterChange = (column: string, value: string) => {
@@ -267,11 +279,11 @@ export function DataTable<T extends Record<string, any>>({
   };
 
   return (
-    <div className="w-full space-y-4">
-      {/* Search Only - Remove individual column filters */}
-      {enableGlobalSearch && (
-        <div className="flex items-center gap-4">
-          <div className="flex-1">
+    <div className={`w-full space-y-4 ${className || ''}`}>
+      {/* Toolbar with Search and Column Visibility */}
+      <div className="flex items-center justify-between gap-4">
+        {enableGlobalSearch && (
+          <div className="flex-1 max-w-sm">
             <input
               type="text"
               placeholder="Search all columns..."
@@ -283,13 +295,56 @@ export function DataTable<T extends Record<string, any>>({
               className="w-full px-3 py-2 border border-input rounded-md bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring"
             />
           </div>
+        )}
+        
+        <div className="flex items-center gap-2">
           {globalQuery && (
-            <Button variant="outline" onClick={clearFilters}>
+            <Button variant="outline" size="sm" onClick={clearFilters}>
               Clear Search
             </Button>
           )}
+          
+          {/* Column Visibility Toggle */}
+          {enableColumnVisibility && (
+            <div className="relative">
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => {
+                  // Toggle dropdown - simplified for now
+                  const dropdown = document.getElementById('column-visibility-dropdown');
+                  if (dropdown) {
+                    dropdown.style.display = dropdown.style.display === 'none' ? 'block' : 'none';
+                  }
+                }}
+              >
+                Columns ⚙️
+              </Button>
+              <div
+                id="column-visibility-dropdown"
+                className="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg z-10 p-2"
+                style={{ display: 'none' }}
+              >
+                {table.getAllColumns()
+                  .filter(column => column.getCanHide())
+                  .map(column => (
+                    <label key={column.id} className="flex items-center gap-2 p-1 hover:bg-gray-50 rounded">
+                      <input
+                        type="checkbox"
+                        checked={column.getIsVisible()}
+                        onChange={column.getToggleVisibilityHandler()}
+                        className="h-4 w-4 rounded border-gray-300"
+                      />
+                      <span className="text-sm capitalize">
+                        {column.id.replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase())}
+                      </span>
+                    </label>
+                  ))}
+              </div>
+            </div>
+          )}
         </div>
-      )}
+      </div>
 
       {/* Table with horizontal scrolling */}
       <div className="rounded-md border border-gray-200 overflow-hidden shadow-sm">
@@ -306,10 +361,14 @@ export function DataTable<T extends Record<string, any>>({
                         onClick={header.column.getToggleSortingHandler()}
                       >
                         {flexRender(header.column.columnDef.header, header.getContext())}
-                        {{
-                          asc: ' 🔼',
-                          desc: ' 🔽',
-                        }[header.column.getIsSorted() as string] ?? null}
+                        {header.column.getCanSort() && (
+                          <span className="ml-1">
+                            {{
+                              asc: '↑',
+                              desc: '↓',
+                            }[header.column.getIsSorted() as string] ?? '↕️'}
+                          </span>
+                        )}
                       </div>
                     )}
                   </TableHead>
@@ -318,7 +377,16 @@ export function DataTable<T extends Record<string, any>>({
             ))}
           </TableHeader>
           <TableBody>
-            {table.getRowModel().rows.length ? (
+            {loading ? (
+              <TableRow>
+                <TableCell colSpan={columns.length} className="h-24 text-center">
+                  <div className="flex items-center justify-center gap-2">
+                    <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-gray-900"></div>
+                    Loading...
+                  </div>
+                </TableCell>
+              </TableRow>
+            ) : table.getRowModel().rows.length ? (
               table.getRowModel().rows.map((row) => (
                 <TableRow
                   key={row.id}
@@ -334,8 +402,11 @@ export function DataTable<T extends Record<string, any>>({
               ))
             ) : (
               <TableRow>
-                <TableCell colSpan={columns.length} className="h-24 text-center">
-                  No results found.
+                <TableCell colSpan={columns.length} className="h-24 text-center text-muted-foreground">
+                  <div className="flex flex-col items-center gap-2">
+                    <div className="text-4xl">📋</div>
+                    <div>{emptyMessage}</div>
+                  </div>
                 </TableCell>
               </TableRow>
             )}
@@ -375,43 +446,48 @@ export function DataTable<T extends Record<string, any>>({
         </div>
       </div>
 
-      {/* Bulk Actions */}
+      {/* Enhanced Bulk Actions Toolbar - Floating like CRM_demo */}
       {selectedIds.size > 0 && (onBulkDelete || onBulkExport) && (
-        <div className="flex items-center justify-between p-4 bg-muted rounded-md">
-          <span className="text-sm text-muted-foreground">
-            {selectedIds.size} items selected
-          </span>
-          <div className="flex gap-2">
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => setSelectedIds(new Set())}
-            >
-              Clear Selection
-            </Button>
-            {onBulkExport && (
+        <div className="fixed bottom-4 left-1/2 transform -translate-x-1/2 z-50 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-lg p-4 min-w-96">
+          <div className="flex items-center justify-between gap-4">
+            <div className="flex items-center gap-3">
               <Button
-                variant="outline"
+                variant="ghost"
                 size="sm"
-                onClick={() => onBulkExport(Array.from(selectedIds))}
+                onClick={() => setSelectedIds(new Set())}
+                className="h-8 w-8 p-0"
               >
-                Export Selected
+                ✕
               </Button>
-            )}
-            {onBulkDelete && (
-              <Button
-                variant="destructive"
-                size="sm"
-                onClick={() => {
-                  if (confirmAction(`Delete ${selectedIds.size} selected items?`)) {
-                    onBulkDelete(Array.from(selectedIds));
-                    setSelectedIds(new Set());
-                  }
-                }}
-              >
-                Delete Selected
-              </Button>
-            )}
+              <span className="text-sm font-medium">
+                {selectedIds.size} item{selectedIds.size > 1 ? 's' : ''} selected
+              </span>
+            </div>
+            <div className="flex gap-2">
+              {onBulkExport && (
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => onBulkExport(Array.from(selectedIds))}
+                >
+                  📤 Export
+                </Button>
+              )}
+              {onBulkDelete && (
+                <Button
+                  variant="destructive"
+                  size="sm"
+                  onClick={() => {
+                    if (confirmAction(`Delete ${selectedIds.size} selected items? This action cannot be undone.`)) {
+                      onBulkDelete(Array.from(selectedIds));
+                      setSelectedIds(new Set());
+                    }
+                  }}
+                >
+                  🗑️ Delete
+                </Button>
+              )}
+            </div>
           </div>
         </div>
       )}

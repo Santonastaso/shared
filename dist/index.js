@@ -1376,7 +1376,7 @@ var ThemeSwitch = ({ className }) => {
 
 // src/components/DataTable.tsx
 import { useState as useState2, useMemo as useMemo2 } from "react";
-import { useReactTable, getCoreRowModel, flexRender, getSortedRowModel } from "@tanstack/react-table";
+import { useReactTable, getCoreRowModel, flexRender, getSortedRowModel, getFilteredRowModel } from "@tanstack/react-table";
 import { jsx as jsx11, jsxs as jsxs2 } from "react/jsx-runtime";
 var Table2 = ({ children, className, ...props }) => /* @__PURE__ */ jsx11("table", { className: `w-full border-collapse border border-gray-200 table-auto ${className || ""}`, ...props, children });
 var TableHeader2 = ({ children }) => /* @__PURE__ */ jsx11("thead", { className: "bg-gray-50", children });
@@ -1438,7 +1438,10 @@ function DataTable({
   pageSizeOptions = [...DATA_TABLE_DEFAULTS.PAGE_SIZE_OPTIONS],
   enableGlobalSearch = true,
   enableColumnVisibility = false,
-  enableRowSelection = false
+  enableRowSelection = false,
+  loading = false,
+  emptyMessage = "No results found.",
+  className
 }) {
   const [filters, setFilters] = useState2({});
   const [page, setPage] = useState2(0);
@@ -1446,6 +1449,7 @@ function DataTable({
   const [selectedIds, setSelectedIds] = useState2(/* @__PURE__ */ new Set());
   const [globalQuery, setGlobalQuery] = useState2("");
   const [sorting, setSorting] = useState2([]);
+  const [columnVisibility, setColumnVisibility] = useState2({});
   const columns = useMemo2(() => {
     const selectionColumn = enableRowSelection ? {
       id: "select",
@@ -1549,10 +1553,15 @@ function DataTable({
   const table = useReactTable({
     data: paginatedData,
     columns,
-    state: { sorting },
+    state: {
+      sorting,
+      columnVisibility
+    },
     onSortingChange: setSorting,
+    onColumnVisibilityChange: setColumnVisibility,
     getCoreRowModel: getCoreRowModel(),
-    getSortedRowModel: getSortedRowModel()
+    getSortedRowModel: getSortedRowModel(),
+    getFilteredRowModel: getFilteredRowModel()
   });
   const handleFilterChange = (column, value) => {
     setFilters((prev) => ({ ...prev, [column]: value }));
@@ -1563,9 +1572,9 @@ function DataTable({
     setGlobalQuery("");
     setPage(0);
   };
-  return /* @__PURE__ */ jsxs2("div", { className: "w-full space-y-4", children: [
-    enableGlobalSearch && /* @__PURE__ */ jsxs2("div", { className: "flex items-center gap-4", children: [
-      /* @__PURE__ */ jsx11("div", { className: "flex-1", children: /* @__PURE__ */ jsx11(
+  return /* @__PURE__ */ jsxs2("div", { className: `w-full space-y-4 ${className || ""}`, children: [
+    /* @__PURE__ */ jsxs2("div", { className: "flex items-center justify-between gap-4", children: [
+      enableGlobalSearch && /* @__PURE__ */ jsx11("div", { className: "flex-1 max-w-sm", children: /* @__PURE__ */ jsx11(
         "input",
         {
           type: "text",
@@ -1578,7 +1587,45 @@ function DataTable({
           className: "w-full px-3 py-2 border border-input rounded-md bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring"
         }
       ) }),
-      globalQuery && /* @__PURE__ */ jsx11(Button2, { variant: "outline", onClick: clearFilters, children: "Clear Search" })
+      /* @__PURE__ */ jsxs2("div", { className: "flex items-center gap-2", children: [
+        globalQuery && /* @__PURE__ */ jsx11(Button2, { variant: "outline", size: "sm", onClick: clearFilters, children: "Clear Search" }),
+        enableColumnVisibility && /* @__PURE__ */ jsxs2("div", { className: "relative", children: [
+          /* @__PURE__ */ jsx11(
+            Button2,
+            {
+              variant: "outline",
+              size: "sm",
+              onClick: () => {
+                const dropdown = document.getElementById("column-visibility-dropdown");
+                if (dropdown) {
+                  dropdown.style.display = dropdown.style.display === "none" ? "block" : "none";
+                }
+              },
+              children: "Columns \u2699\uFE0F"
+            }
+          ),
+          /* @__PURE__ */ jsx11(
+            "div",
+            {
+              id: "column-visibility-dropdown",
+              className: "absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg z-10 p-2",
+              style: { display: "none" },
+              children: table.getAllColumns().filter((column) => column.getCanHide()).map((column) => /* @__PURE__ */ jsxs2("label", { className: "flex items-center gap-2 p-1 hover:bg-gray-50 rounded", children: [
+                /* @__PURE__ */ jsx11(
+                  "input",
+                  {
+                    type: "checkbox",
+                    checked: column.getIsVisible(),
+                    onChange: column.getToggleVisibilityHandler(),
+                    className: "h-4 w-4 rounded border-gray-300"
+                  }
+                ),
+                /* @__PURE__ */ jsx11("span", { className: "text-sm capitalize", children: column.id.replace(/([A-Z])/g, " $1").replace(/^./, (str) => str.toUpperCase()) })
+              ] }, column.id))
+            }
+          )
+        ] })
+      ] })
     ] }),
     /* @__PURE__ */ jsx11("div", { className: "rounded-md border border-gray-200 overflow-hidden shadow-sm", children: /* @__PURE__ */ jsx11("div", { className: "overflow-x-auto", children: /* @__PURE__ */ jsxs2(Table2, { className: "min-w-full", children: [
       /* @__PURE__ */ jsx11(TableHeader2, { children: table.getHeaderGroups().map((headerGroup) => /* @__PURE__ */ jsx11(TableRow2, { children: headerGroup.headers.map((header) => /* @__PURE__ */ jsx11(TableHead2, { children: header.isPlaceholder ? null : /* @__PURE__ */ jsxs2(
@@ -1588,14 +1635,17 @@ function DataTable({
           onClick: header.column.getToggleSortingHandler(),
           children: [
             flexRender(header.column.columnDef.header, header.getContext()),
-            {
-              asc: " \u{1F53C}",
-              desc: " \u{1F53D}"
-            }[header.column.getIsSorted()] ?? null
+            header.column.getCanSort() && /* @__PURE__ */ jsx11("span", { className: "ml-1", children: {
+              asc: "\u2191",
+              desc: "\u2193"
+            }[header.column.getIsSorted()] ?? "\u2195\uFE0F" })
           ]
         }
       ) }, header.id)) }, headerGroup.id)) }),
-      /* @__PURE__ */ jsx11(TableBody2, { children: table.getRowModel().rows.length ? table.getRowModel().rows.map((row) => /* @__PURE__ */ jsx11(
+      /* @__PURE__ */ jsx11(TableBody2, { children: loading ? /* @__PURE__ */ jsx11(TableRow2, { children: /* @__PURE__ */ jsx11(TableCell2, { colSpan: columns.length, className: "h-24 text-center", children: /* @__PURE__ */ jsxs2("div", { className: "flex items-center justify-center gap-2", children: [
+        /* @__PURE__ */ jsx11("div", { className: "animate-spin rounded-full h-4 w-4 border-b-2 border-gray-900" }),
+        "Loading..."
+      ] }) }) }) : table.getRowModel().rows.length ? table.getRowModel().rows.map((row) => /* @__PURE__ */ jsx11(
         TableRow2,
         {
           onClick: () => onRowClick && onRowClick(row.original),
@@ -1603,7 +1653,10 @@ function DataTable({
           children: row.getVisibleCells().map((cell) => /* @__PURE__ */ jsx11(TableCell2, { children: flexRender(cell.column.columnDef.cell, cell.getContext()) }, cell.id))
         },
         row.id
-      )) : /* @__PURE__ */ jsx11(TableRow2, { children: /* @__PURE__ */ jsx11(TableCell2, { colSpan: columns.length, className: "h-24 text-center", children: "No results found." }) }) })
+      )) : /* @__PURE__ */ jsx11(TableRow2, { children: /* @__PURE__ */ jsx11(TableCell2, { colSpan: columns.length, className: "h-24 text-center text-muted-foreground", children: /* @__PURE__ */ jsxs2("div", { className: "flex flex-col items-center gap-2", children: [
+        /* @__PURE__ */ jsx11("div", { className: "text-4xl", children: "\u{1F4CB}" }),
+        /* @__PURE__ */ jsx11("div", { children: emptyMessage })
+      ] }) }) }) })
     ] }) }) }),
     /* @__PURE__ */ jsxs2("div", { className: "flex items-center justify-between", children: [
       /* @__PURE__ */ jsxs2("div", { className: "text-sm text-muted-foreground", children: [
@@ -1644,28 +1697,33 @@ function DataTable({
         )
       ] })
     ] }),
-    selectedIds.size > 0 && (onBulkDelete || onBulkExport) && /* @__PURE__ */ jsxs2("div", { className: "flex items-center justify-between p-4 bg-muted rounded-md", children: [
-      /* @__PURE__ */ jsxs2("span", { className: "text-sm text-muted-foreground", children: [
-        selectedIds.size,
-        " items selected"
-      ] }),
-      /* @__PURE__ */ jsxs2("div", { className: "flex gap-2", children: [
+    selectedIds.size > 0 && (onBulkDelete || onBulkExport) && /* @__PURE__ */ jsx11("div", { className: "fixed bottom-4 left-1/2 transform -translate-x-1/2 z-50 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-lg p-4 min-w-96", children: /* @__PURE__ */ jsxs2("div", { className: "flex items-center justify-between gap-4", children: [
+      /* @__PURE__ */ jsxs2("div", { className: "flex items-center gap-3", children: [
         /* @__PURE__ */ jsx11(
           Button2,
           {
-            variant: "outline",
+            variant: "ghost",
             size: "sm",
             onClick: () => setSelectedIds(/* @__PURE__ */ new Set()),
-            children: "Clear Selection"
+            className: "h-8 w-8 p-0",
+            children: "\u2715"
           }
         ),
+        /* @__PURE__ */ jsxs2("span", { className: "text-sm font-medium", children: [
+          selectedIds.size,
+          " item",
+          selectedIds.size > 1 ? "s" : "",
+          " selected"
+        ] })
+      ] }),
+      /* @__PURE__ */ jsxs2("div", { className: "flex gap-2", children: [
         onBulkExport && /* @__PURE__ */ jsx11(
           Button2,
           {
             variant: "outline",
             size: "sm",
             onClick: () => onBulkExport(Array.from(selectedIds)),
-            children: "Export Selected"
+            children: "\u{1F4E4} Export"
           }
         ),
         onBulkDelete && /* @__PURE__ */ jsx11(
@@ -1674,16 +1732,16 @@ function DataTable({
             variant: "destructive",
             size: "sm",
             onClick: () => {
-              if (confirmAction(`Delete ${selectedIds.size} selected items?`)) {
+              if (confirmAction(`Delete ${selectedIds.size} selected items? This action cannot be undone.`)) {
                 onBulkDelete(Array.from(selectedIds));
                 setSelectedIds(/* @__PURE__ */ new Set());
               }
             },
-            children: "Delete Selected"
+            children: "\u{1F5D1}\uFE0F Delete"
           }
         )
       ] })
-    ] })
+    ] }) })
   ] });
 }
 
