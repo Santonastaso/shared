@@ -1859,6 +1859,7 @@ function DataTable({
   const [globalQuery, setGlobalQuery] = (0, import_react2.useState)("");
   const [sorting, setSorting] = (0, import_react2.useState)([]);
   const [columnVisibility, setColumnVisibility] = (0, import_react2.useState)({});
+  const [showColumnDropdown, setShowColumnDropdown] = (0, import_react2.useState)(false);
   const columns = (0, import_react2.useMemo)(() => {
     const selectionColumn = enableRowSelection ? {
       id: "select",
@@ -2004,35 +2005,31 @@ function DataTable({
             {
               variant: "outline",
               size: "sm",
-              onClick: () => {
-                const dropdown = document.getElementById("column-visibility-dropdown");
-                if (dropdown) {
-                  dropdown.style.display = dropdown.style.display === "none" ? "block" : "none";
-                }
-              },
+              onClick: () => setShowColumnDropdown(!showColumnDropdown),
               children: "Columns \u2699\uFE0F"
             }
           ),
-          /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(
-            "div",
-            {
-              id: "column-visibility-dropdown",
-              className: "absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg z-10 p-2",
-              style: { display: "none" },
-              children: table.getAllColumns().filter((column) => column.getCanHide()).map((column) => /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("label", { className: "flex items-center gap-2 p-1 hover:bg-gray-50 rounded", children: [
-                /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(
-                  "input",
-                  {
-                    type: "checkbox",
-                    checked: column.getIsVisible(),
-                    onChange: column.getToggleVisibilityHandler(),
-                    className: "h-4 w-4 rounded border-gray-300"
-                  }
-                ),
-                /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("span", { className: "text-sm capitalize", children: column.id.replace(/([A-Z])/g, " $1").replace(/^./, (str) => str.toUpperCase()) })
-              ] }, column.id))
-            }
-          )
+          showColumnDropdown && /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)(import_jsx_runtime11.Fragment, { children: [
+            /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(
+              "div",
+              {
+                className: "fixed inset-0 z-10",
+                onClick: () => setShowColumnDropdown(false)
+              }
+            ),
+            /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("div", { className: "absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-md shadow-lg z-20 p-2", children: table.getAllColumns().filter((column) => column.getCanHide()).map((column) => /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("label", { className: "flex items-center gap-2 p-1 hover:bg-gray-50 dark:hover:bg-gray-700 rounded cursor-pointer", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(
+                "input",
+                {
+                  type: "checkbox",
+                  checked: column.getIsVisible(),
+                  onChange: column.getToggleVisibilityHandler(),
+                  className: "h-4 w-4 rounded border-gray-300"
+                }
+              ),
+              /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("span", { className: "text-sm capitalize", children: column.id.replace(/([A-Z])/g, " $1").replace(/^./, (str) => str.toUpperCase()) })
+            ] }, column.id)) })
+          ] })
         ] })
       ] })
     ] }),
@@ -2106,7 +2103,7 @@ function DataTable({
         )
       ] })
     ] }),
-    selectedIds.size > 0 && (onBulkDelete || onBulkExport) && /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("div", { className: "fixed bottom-4 left-1/2 transform -translate-x-1/2 z-50 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-lg p-4 min-w-96", children: /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("div", { className: "flex items-center justify-between gap-4", children: [
+    selectedIds.size > 0 && (onBulkDelete || onBulkExport) && /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("div", { className: "sticky bottom-0 bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 p-4 -mx-4 -mb-4 rounded-b-md", children: /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("div", { className: "flex items-center justify-between gap-4", children: [
       /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("div", { className: "flex items-center gap-3", children: [
         /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(
           Button2,

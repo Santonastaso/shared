@@ -1377,7 +1377,7 @@ var ThemeSwitch = ({ className }) => {
 // src/components/DataTable.tsx
 import { useState as useState2, useMemo as useMemo2 } from "react";
 import { useReactTable, getCoreRowModel, flexRender, getSortedRowModel, getFilteredRowModel } from "@tanstack/react-table";
-import { jsx as jsx11, jsxs as jsxs2 } from "react/jsx-runtime";
+import { Fragment, jsx as jsx11, jsxs as jsxs2 } from "react/jsx-runtime";
 var Table2 = ({ children, className, ...props }) => /* @__PURE__ */ jsx11("table", { className: `w-full border-collapse border border-gray-200 table-auto ${className || ""}`, ...props, children });
 var TableHeader2 = ({ children }) => /* @__PURE__ */ jsx11("thead", { className: "bg-gray-50", children });
 var TableBody2 = ({ children }) => /* @__PURE__ */ jsx11("tbody", { className: "divide-y divide-gray-200", children });
@@ -1450,6 +1450,7 @@ function DataTable({
   const [globalQuery, setGlobalQuery] = useState2("");
   const [sorting, setSorting] = useState2([]);
   const [columnVisibility, setColumnVisibility] = useState2({});
+  const [showColumnDropdown, setShowColumnDropdown] = useState2(false);
   const columns = useMemo2(() => {
     const selectionColumn = enableRowSelection ? {
       id: "select",
@@ -1595,35 +1596,31 @@ function DataTable({
             {
               variant: "outline",
               size: "sm",
-              onClick: () => {
-                const dropdown = document.getElementById("column-visibility-dropdown");
-                if (dropdown) {
-                  dropdown.style.display = dropdown.style.display === "none" ? "block" : "none";
-                }
-              },
+              onClick: () => setShowColumnDropdown(!showColumnDropdown),
               children: "Columns \u2699\uFE0F"
             }
           ),
-          /* @__PURE__ */ jsx11(
-            "div",
-            {
-              id: "column-visibility-dropdown",
-              className: "absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg z-10 p-2",
-              style: { display: "none" },
-              children: table.getAllColumns().filter((column) => column.getCanHide()).map((column) => /* @__PURE__ */ jsxs2("label", { className: "flex items-center gap-2 p-1 hover:bg-gray-50 rounded", children: [
-                /* @__PURE__ */ jsx11(
-                  "input",
-                  {
-                    type: "checkbox",
-                    checked: column.getIsVisible(),
-                    onChange: column.getToggleVisibilityHandler(),
-                    className: "h-4 w-4 rounded border-gray-300"
-                  }
-                ),
-                /* @__PURE__ */ jsx11("span", { className: "text-sm capitalize", children: column.id.replace(/([A-Z])/g, " $1").replace(/^./, (str) => str.toUpperCase()) })
-              ] }, column.id))
-            }
-          )
+          showColumnDropdown && /* @__PURE__ */ jsxs2(Fragment, { children: [
+            /* @__PURE__ */ jsx11(
+              "div",
+              {
+                className: "fixed inset-0 z-10",
+                onClick: () => setShowColumnDropdown(false)
+              }
+            ),
+            /* @__PURE__ */ jsx11("div", { className: "absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-md shadow-lg z-20 p-2", children: table.getAllColumns().filter((column) => column.getCanHide()).map((column) => /* @__PURE__ */ jsxs2("label", { className: "flex items-center gap-2 p-1 hover:bg-gray-50 dark:hover:bg-gray-700 rounded cursor-pointer", children: [
+              /* @__PURE__ */ jsx11(
+                "input",
+                {
+                  type: "checkbox",
+                  checked: column.getIsVisible(),
+                  onChange: column.getToggleVisibilityHandler(),
+                  className: "h-4 w-4 rounded border-gray-300"
+                }
+              ),
+              /* @__PURE__ */ jsx11("span", { className: "text-sm capitalize", children: column.id.replace(/([A-Z])/g, " $1").replace(/^./, (str) => str.toUpperCase()) })
+            ] }, column.id)) })
+          ] })
         ] })
       ] })
     ] }),
@@ -1697,7 +1694,7 @@ function DataTable({
         )
       ] })
     ] }),
-    selectedIds.size > 0 && (onBulkDelete || onBulkExport) && /* @__PURE__ */ jsx11("div", { className: "fixed bottom-4 left-1/2 transform -translate-x-1/2 z-50 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-lg p-4 min-w-96", children: /* @__PURE__ */ jsxs2("div", { className: "flex items-center justify-between gap-4", children: [
+    selectedIds.size > 0 && (onBulkDelete || onBulkExport) && /* @__PURE__ */ jsx11("div", { className: "sticky bottom-0 bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 p-4 -mx-4 -mb-4 rounded-b-md", children: /* @__PURE__ */ jsxs2("div", { className: "flex items-center justify-between gap-4", children: [
       /* @__PURE__ */ jsxs2("div", { className: "flex items-center gap-3", children: [
         /* @__PURE__ */ jsx11(
           Button2,
@@ -2070,7 +2067,7 @@ var useAuth = () => {
 };
 
 // src/components/ProtectedRoute.tsx
-import { Fragment, jsx as jsx15, jsxs as jsxs5 } from "react/jsx-runtime";
+import { Fragment as Fragment2, jsx as jsx15, jsxs as jsxs5 } from "react/jsx-runtime";
 var ProtectedRoute = ({
   children,
   loadingComponent,
@@ -2082,20 +2079,20 @@ var ProtectedRoute = ({
 }) => {
   const { user, session, loading } = useAuth();
   if (loading) {
-    return loadingComponent ? /* @__PURE__ */ jsx15(Fragment, { children: loadingComponent }) : /* @__PURE__ */ jsx15("div", { className: "flex items-center justify-center min-h-screen", children: /* @__PURE__ */ jsx15("div", { className: "animate-spin rounded-full h-8 w-8 border-b-2 border-primary" }) });
+    return loadingComponent ? /* @__PURE__ */ jsx15(Fragment2, { children: loadingComponent }) : /* @__PURE__ */ jsx15("div", { className: "flex items-center justify-center min-h-screen", children: /* @__PURE__ */ jsx15("div", { className: "animate-spin rounded-full h-8 w-8 border-b-2 border-primary" }) });
   }
   if (!user || !session) {
     if (redirectTo) {
       window.location.href = redirectTo;
       return null;
     }
-    return unauthorizedComponent ? /* @__PURE__ */ jsx15(Fragment, { children: unauthorizedComponent }) : /* @__PURE__ */ jsx15("div", { className: "flex items-center justify-center min-h-screen", children: /* @__PURE__ */ jsxs5("div", { className: "text-center space-y-4", children: [
+    return unauthorizedComponent ? /* @__PURE__ */ jsx15(Fragment2, { children: unauthorizedComponent }) : /* @__PURE__ */ jsx15("div", { className: "flex items-center justify-center min-h-screen", children: /* @__PURE__ */ jsxs5("div", { className: "text-center space-y-4", children: [
       /* @__PURE__ */ jsx15("h2", { className: "text-2xl font-semibold", children: "Authentication Required" }),
       /* @__PURE__ */ jsx15("p", { className: "text-muted-foreground", children: "Please sign in to access this content." })
     ] }) });
   }
   if (authorize && !authorize(user, session)) {
-    return unauthorizedComponent ? /* @__PURE__ */ jsx15(Fragment, { children: unauthorizedComponent }) : /* @__PURE__ */ jsx15("div", { className: "flex items-center justify-center min-h-screen", children: /* @__PURE__ */ jsxs5("div", { className: "text-center space-y-4", children: [
+    return unauthorizedComponent ? /* @__PURE__ */ jsx15(Fragment2, { children: unauthorizedComponent }) : /* @__PURE__ */ jsx15("div", { className: "flex items-center justify-center min-h-screen", children: /* @__PURE__ */ jsxs5("div", { className: "text-center space-y-4", children: [
       /* @__PURE__ */ jsx15("h2", { className: "text-2xl font-semibold", children: "Access Denied" }),
       /* @__PURE__ */ jsx15("p", { className: "text-muted-foreground", children: "You don't have permission to access this content." })
     ] }) });
@@ -2106,7 +2103,7 @@ var ProtectedRoute = ({
       (role) => Array.isArray(userRoles) ? userRoles.includes(role) : userRoles === role
     );
     if (!hasRequiredRole) {
-      return unauthorizedComponent ? /* @__PURE__ */ jsx15(Fragment, { children: unauthorizedComponent }) : /* @__PURE__ */ jsx15("div", { className: "flex items-center justify-center min-h-screen", children: /* @__PURE__ */ jsxs5("div", { className: "text-center space-y-4", children: [
+      return unauthorizedComponent ? /* @__PURE__ */ jsx15(Fragment2, { children: unauthorizedComponent }) : /* @__PURE__ */ jsx15("div", { className: "flex items-center justify-center min-h-screen", children: /* @__PURE__ */ jsxs5("div", { className: "text-center space-y-4", children: [
         /* @__PURE__ */ jsx15("h2", { className: "text-2xl font-semibold", children: "Insufficient Permissions" }),
         /* @__PURE__ */ jsxs5("p", { className: "text-muted-foreground", children: [
           "You need one of the following roles: ",
@@ -2121,7 +2118,7 @@ var ProtectedRoute = ({
       (permission) => Array.isArray(userPermissions) ? userPermissions.includes(permission) : userPermissions === permission
     );
     if (!hasRequiredPermission) {
-      return unauthorizedComponent ? /* @__PURE__ */ jsx15(Fragment, { children: unauthorizedComponent }) : /* @__PURE__ */ jsx15("div", { className: "flex items-center justify-center min-h-screen", children: /* @__PURE__ */ jsxs5("div", { className: "text-center space-y-4", children: [
+      return unauthorizedComponent ? /* @__PURE__ */ jsx15(Fragment2, { children: unauthorizedComponent }) : /* @__PURE__ */ jsx15("div", { className: "flex items-center justify-center min-h-screen", children: /* @__PURE__ */ jsxs5("div", { className: "text-center space-y-4", children: [
         /* @__PURE__ */ jsx15("h2", { className: "text-2xl font-semibold", children: "Insufficient Permissions" }),
         /* @__PURE__ */ jsxs5("p", { className: "text-muted-foreground", children: [
           "You need one of the following permissions: ",
@@ -2130,7 +2127,7 @@ var ProtectedRoute = ({
       ] }) });
     }
   }
-  return /* @__PURE__ */ jsx15(Fragment, { children });
+  return /* @__PURE__ */ jsx15(Fragment2, { children });
 };
 
 // src/components/auth/AuthLayout.tsx
@@ -4151,7 +4148,7 @@ function DropdownMenuSubContent({
 }
 
 // src/components/AppHeader.tsx
-import { Fragment as Fragment2, jsx as jsx21, jsxs as jsxs10 } from "react/jsx-runtime";
+import { Fragment as Fragment3, jsx as jsx21, jsxs as jsxs10 } from "react/jsx-runtime";
 var SafeLink = ({ to, children, className }) => {
   return /* @__PURE__ */ jsx21("a", { href: to, className, children });
 };
@@ -4191,7 +4188,7 @@ var AppHeader = ({
           to: "/",
           className: "flex items-center gap-2 text-secondary-foreground no-underline hover:opacity-80 transition-opacity",
           children: [
-            logo && /* @__PURE__ */ jsxs10(Fragment2, { children: [
+            logo && /* @__PURE__ */ jsxs10(Fragment3, { children: [
               /* @__PURE__ */ jsx21(
                 "img",
                 {

@@ -133,6 +133,7 @@ export function DataTable<T extends Record<string, any>>({
   const [globalQuery, setGlobalQuery] = useState('');
   const [sorting, setSorting] = useState<any[]>([]);
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
+  const [showColumnDropdown, setShowColumnDropdown] = useState(false);
 
   // Build columns with selection and actions
   const columns = useMemo(() => {
@@ -304,43 +305,42 @@ export function DataTable<T extends Record<string, any>>({
             </Button>
           )}
           
-          {/* Column Visibility Toggle */}
+          {/* Column Visibility Toggle - Fixed React Implementation */}
           {enableColumnVisibility && (
             <div className="relative">
               <Button
                 variant="outline"
                 size="sm"
-                onClick={() => {
-                  // Toggle dropdown - simplified for now
-                  const dropdown = document.getElementById('column-visibility-dropdown');
-                  if (dropdown) {
-                    dropdown.style.display = dropdown.style.display === 'none' ? 'block' : 'none';
-                  }
-                }}
+                onClick={() => setShowColumnDropdown(!showColumnDropdown)}
               >
                 Columns ⚙️
               </Button>
-              <div
-                id="column-visibility-dropdown"
-                className="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg z-10 p-2"
-                style={{ display: 'none' }}
-              >
-                {table.getAllColumns()
-                  .filter(column => column.getCanHide())
-                  .map(column => (
-                    <label key={column.id} className="flex items-center gap-2 p-1 hover:bg-gray-50 rounded">
-                      <input
-                        type="checkbox"
-                        checked={column.getIsVisible()}
-                        onChange={column.getToggleVisibilityHandler()}
-                        className="h-4 w-4 rounded border-gray-300"
-                      />
-                      <span className="text-sm capitalize">
-                        {column.id.replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase())}
-                      </span>
-                    </label>
-                  ))}
-              </div>
+              {showColumnDropdown && (
+                <>
+                  {/* Backdrop to close dropdown */}
+                  <div 
+                    className="fixed inset-0 z-10" 
+                    onClick={() => setShowColumnDropdown(false)}
+                  />
+                  <div className="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-md shadow-lg z-20 p-2">
+                    {table.getAllColumns()
+                      .filter(column => column.getCanHide())
+                      .map(column => (
+                        <label key={column.id} className="flex items-center gap-2 p-1 hover:bg-gray-50 dark:hover:bg-gray-700 rounded cursor-pointer">
+                          <input
+                            type="checkbox"
+                            checked={column.getIsVisible()}
+                            onChange={column.getToggleVisibilityHandler()}
+                            className="h-4 w-4 rounded border-gray-300"
+                          />
+                          <span className="text-sm capitalize">
+                            {column.id.replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase())}
+                          </span>
+                        </label>
+                      ))}
+                  </div>
+                </>
+              )}
             </div>
           )}
         </div>
@@ -446,9 +446,9 @@ export function DataTable<T extends Record<string, any>>({
         </div>
       </div>
 
-      {/* Enhanced Bulk Actions Toolbar - Floating like CRM_demo */}
+      {/* Enhanced Bulk Actions Toolbar - Improved positioning */}
       {selectedIds.size > 0 && (onBulkDelete || onBulkExport) && (
-        <div className="fixed bottom-4 left-1/2 transform -translate-x-1/2 z-50 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-lg p-4 min-w-96">
+        <div className="sticky bottom-0 bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 p-4 -mx-4 -mb-4 rounded-b-md">
           <div className="flex items-center justify-between gap-4">
             <div className="flex items-center gap-3">
               <Button
