@@ -4792,7 +4792,7 @@ var LoginPage = ({
   title,
   logo,
   backgroundImage,
-  backgroundColor = "#09090b",
+  backgroundColor = "#18181b",
   subtitle,
   showForgotPassword = true,
   showSignUp = true,
