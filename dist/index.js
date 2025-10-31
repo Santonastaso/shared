@@ -4425,34 +4425,106 @@ var LoginPage = ({
       });
     }
   };
-  return /* @__PURE__ */ jsx23("div", { className: "min-h-screen flex", children: /* @__PURE__ */ jsxs12("div", { className: "container relative grid flex-col items-center justify-center sm:max-w-none lg:grid-cols-2 lg:px-0", children: [
+  console.log("\u{1F3A8} SharedLoginPage: Rendering with props", { title, logo, subtitle });
+  return /* @__PURE__ */ jsx23("div", { style: { minHeight: "100vh", display: "flex" }, children: /* @__PURE__ */ jsxs12("div", { style: {
+    width: "100%",
+    position: "relative",
+    display: "grid",
+    gridTemplateColumns: "1fr 1fr",
+    alignItems: "center",
+    justifyContent: "center"
+  }, children: [
     /* @__PURE__ */ jsxs12(
       "div",
       {
-        className: "relative hidden h-full flex-col bg-muted p-10 text-white dark:border-r lg:flex",
         style: {
+          position: "relative",
+          height: "100vh",
+          display: "flex",
+          flexDirection: "column",
+          padding: "2.5rem",
+          color: "white",
           backgroundImage: backgroundImage ? `url(${backgroundImage})` : void 0,
           backgroundColor
         },
         children: [
-          /* @__PURE__ */ jsx23("div", { className: "absolute inset-0", style: { backgroundColor } }),
-          /* @__PURE__ */ jsxs12("div", { className: "relative z-20 flex items-center text-lg font-medium", children: [
-            logo && /* @__PURE__ */ jsx23("img", { className: "h-6 mr-2", src: logo, alt: title }),
+          /* @__PURE__ */ jsx23("div", { style: {
+            position: "absolute",
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            backgroundColor
+          } }),
+          /* @__PURE__ */ jsxs12("div", { style: {
+            position: "relative",
+            zIndex: 20,
+            display: "flex",
+            alignItems: "center",
+            fontSize: "1.125rem",
+            fontWeight: "500"
+          }, children: [
+            logo && /* @__PURE__ */ jsx23("img", { style: { height: "1.5rem", marginRight: "0.5rem" }, src: logo, alt: title }),
             title
           ] }),
-          subtitle && /* @__PURE__ */ jsx23("div", { className: "relative z-20 mt-auto", children: /* @__PURE__ */ jsx23("blockquote", { className: "space-y-2", children: /* @__PURE__ */ jsx23("p", { className: "text-lg", children: subtitle }) }) })
+          subtitle && /* @__PURE__ */ jsx23("div", { style: {
+            position: "relative",
+            zIndex: 20,
+            marginTop: "auto"
+          }, children: /* @__PURE__ */ jsx23("blockquote", { style: { margin: 0 }, children: /* @__PURE__ */ jsx23("p", { style: { fontSize: "1.125rem", margin: 0 }, children: subtitle }) }) })
         ]
       }
     ),
-    /* @__PURE__ */ jsx23("div", { className: "lg:p-8", children: /* @__PURE__ */ jsxs12("div", { className: "mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]", children: [
-      /* @__PURE__ */ jsxs12("div", { className: "flex flex-col space-y-2 text-center", children: [
-        /* @__PURE__ */ jsx23("h1", { className: "text-2xl font-semibold tracking-tight", children: defaultLabels.signIn }),
-        /* @__PURE__ */ jsx23("p", { className: "text-sm text-muted-foreground", children: "Enter your email below to sign in to your account" })
+    /* @__PURE__ */ jsx23("div", { style: { padding: "2rem" }, children: /* @__PURE__ */ jsxs12("div", { style: {
+      margin: "0 auto",
+      display: "flex",
+      width: "100%",
+      maxWidth: "350px",
+      flexDirection: "column",
+      justifyContent: "center",
+      gap: "1.5rem"
+    }, children: [
+      /* @__PURE__ */ jsxs12("div", { style: {
+        display: "flex",
+        flexDirection: "column",
+        gap: "0.5rem",
+        textAlign: "center"
+      }, children: [
+        /* @__PURE__ */ jsx23("h1", { style: {
+          fontSize: "1.5rem",
+          fontWeight: "600",
+          letterSpacing: "-0.025em",
+          margin: 0,
+          color: "#111827"
+        }, children: defaultLabels.signIn }),
+        /* @__PURE__ */ jsx23("p", { style: {
+          fontSize: "0.875rem",
+          color: "#6b7280",
+          margin: 0
+        }, children: "Enter your email below to sign in to your account" })
       ] }),
-      /* @__PURE__ */ jsxs12("form", { onSubmit: handleSubmit, className: "space-y-4", children: [
-        error && /* @__PURE__ */ jsx23("div", { className: "p-3 text-sm text-red-600 bg-red-50 border border-red-200 rounded-md", children: error }),
-        /* @__PURE__ */ jsxs12("div", { className: "space-y-2", children: [
-          /* @__PURE__ */ jsx23("label", { htmlFor: "email", className: "text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70", children: defaultLabels.email }),
+      /* @__PURE__ */ jsxs12("form", { onSubmit: handleSubmit, style: { display: "flex", flexDirection: "column", gap: "1rem" }, children: [
+        error && /* @__PURE__ */ jsx23("div", { style: {
+          padding: "0.75rem",
+          fontSize: "0.875rem",
+          color: "#dc2626",
+          backgroundColor: "#fef2f2",
+          border: "1px solid #fecaca",
+          borderRadius: "0.375rem"
+        }, children: error }),
+        /* @__PURE__ */ jsxs12("div", { style: { display: "flex", flexDirection: "column", gap: "0.5rem" }, children: [
+          /* @__PURE__ */ jsx23(
+            "label",
+            {
+              htmlFor: "email",
+              style: {
+                fontSize: "0.875rem",
+                fontWeight: "500",
+                color: "#374151"
+              },
+              children: defaultLabels.email
+            }
+          ),
           /* @__PURE__ */ jsx23(
             Input,
             {
@@ -4467,8 +4539,19 @@ var LoginPage = ({
             }
           )
         ] }),
-        /* @__PURE__ */ jsxs12("div", { className: "space-y-2", children: [
-          /* @__PURE__ */ jsx23("label", { htmlFor: "password", className: "text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70", children: defaultLabels.password }),
+        /* @__PURE__ */ jsxs12("div", { style: { display: "flex", flexDirection: "column", gap: "0.5rem" }, children: [
+          /* @__PURE__ */ jsx23(
+            "label",
+            {
+              htmlFor: "password",
+              style: {
+                fontSize: "0.875rem",
+                fontWeight: "500",
+                color: "#374151"
+              },
+              children: defaultLabels.password
+            }
+          ),
           /* @__PURE__ */ jsx23(
             Input,
             {
