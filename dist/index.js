@@ -4368,7 +4368,7 @@ var ExactHeader = ({
 };
 
 // src/components/LoginPage.tsx
-import React12, { useState as useState9 } from "react";
+import { useState as useState9 } from "react";
 import { jsx as jsx23, jsxs as jsxs12 } from "react/jsx-runtime";
 var isDevelopmentMode = () => {
   if (typeof globalThis !== "undefined" && globalThis.import?.meta?.env) {
@@ -4383,94 +4383,76 @@ var LoginPage = ({
   title,
   logo,
   backgroundImage,
-  backgroundColor = "#18181b",
-  // zinc-900
+  backgroundColor = "#09090b",
   subtitle,
   showForgotPassword = true,
   showSignUp = true,
-  forgotPasswordUrl = "/forgot-password",
-  signUpUrl = "/signup",
+  labels = {},
+  demoCredentials,
   isLoading = false,
   error,
-  additionalFields,
-  onValidate,
   onSubmit,
-  labels = {
-    signIn: "Sign in",
-    email: "Email",
-    password: "Password",
-    forgotPassword: "Forgot your password?",
-    signUp: "Create Account",
-    noAccount: "Don't have an account?",
-    signingIn: "Signing in..."
-  },
-  demoCredentials
+  forgotPasswordUrl = "/forgot-password",
+  signUpUrl = "/signup",
+  additionalFields
 }) => {
   const [formData, setFormData] = useState9({
     email: "",
     password: ""
   });
-  const [formErrors, setFormErrors] = useState9({});
+  const defaultLabels = {
+    signIn: "Sign in",
+    email: "Email",
+    password: "Password",
+    forgotPassword: "Forgot your password?",
+    signUp: "Sign up",
+    signUpText: "Don't have an account?",
+    ...labels
+  };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    onSubmit(formData);
+  };
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
-    if (formErrors[name]) {
-      setFormErrors((prev) => ({ ...prev, [name]: "" }));
-    }
   };
-  const validateForm = () => {
-    let errors = {};
-    if (!formData.email.trim()) {
-      errors.email = "Email is required";
-    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
-      errors.email = "Please enter a valid email address";
-    }
-    if (!formData.password) {
-      errors.password = "Password is required";
-    }
-    if (onValidate) {
-      const customErrors = onValidate(formData);
-      errors = { ...errors, ...customErrors };
-    }
-    setFormErrors(errors);
-    return Object.keys(errors).length === 0;
-  };
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    if (!validateForm()) {
-      return;
-    }
-    try {
-      await onSubmit(formData);
-    } catch (err) {
-    }
-  };
-  const handleDemoCredentials = () => {
+  const fillDemoCredentials = () => {
     if (demoCredentials) {
-      setFormData(demoCredentials);
+      setFormData({
+        email: demoCredentials.email,
+        password: demoCredentials.password
+      });
     }
-  };
-  const getFieldError = (fieldName) => {
-    return formErrors[fieldName] ? /* @__PURE__ */ jsx23("span", { className: "text-red-500 text-sm mt-1 block", children: formErrors[fieldName] }) : null;
   };
   return /* @__PURE__ */ jsx23("div", { className: "min-h-screen flex", children: /* @__PURE__ */ jsxs12("div", { className: "container relative grid flex-col items-center justify-center sm:max-w-none lg:grid-cols-2 lg:px-0", children: [
-    /* @__PURE__ */ jsxs12("div", { className: "relative hidden h-full flex-col bg-muted p-10 text-white dark:border-r lg:flex", children: [
-      /* @__PURE__ */ jsx23("div", { className: "absolute inset-0 bg-zinc-900" }),
-      /* @__PURE__ */ jsxs12("div", { className: "relative z-20 flex items-center text-lg font-medium", children: [
-        logo && /* @__PURE__ */ jsx23("img", { className: "h-6 mr-2", src: logo, alt: title }),
-        title
-      ] }),
-      subtitle && /* @__PURE__ */ jsx23("div", { className: "relative z-20 mt-auto", children: /* @__PURE__ */ jsx23("p", { className: "text-lg", children: subtitle }) })
-    ] }),
+    /* @__PURE__ */ jsxs12(
+      "div",
+      {
+        className: "relative hidden h-full flex-col bg-muted p-10 text-white dark:border-r lg:flex",
+        style: {
+          backgroundImage: backgroundImage ? `url(${backgroundImage})` : void 0,
+          backgroundColor
+        },
+        children: [
+          /* @__PURE__ */ jsx23("div", { className: "absolute inset-0", style: { backgroundColor } }),
+          /* @__PURE__ */ jsxs12("div", { className: "relative z-20 flex items-center text-lg font-medium", children: [
+            logo && /* @__PURE__ */ jsx23("img", { className: "h-6 mr-2", src: logo, alt: title }),
+            title
+          ] }),
+          subtitle && /* @__PURE__ */ jsx23("div", { className: "relative z-20 mt-auto", children: /* @__PURE__ */ jsx23("blockquote", { className: "space-y-2", children: /* @__PURE__ */ jsx23("p", { className: "text-lg", children: subtitle }) }) })
+        ]
+      }
+    ),
     /* @__PURE__ */ jsx23("div", { className: "lg:p-8", children: /* @__PURE__ */ jsxs12("div", { className: "mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]", children: [
-      /* @__PURE__ */ jsxs12("div", { className: "flex flex-col space-y-2 text-center lg:hidden", children: [
-        logo && /* @__PURE__ */ jsx23("img", { className: "h-8 mx-auto", src: logo, alt: title }),
-        /* @__PURE__ */ jsx23("h1", { className: "text-xl font-semibold", children: title })
+      /* @__PURE__ */ jsxs12("div", { className: "flex flex-col space-y-2 text-center", children: [
+        /* @__PURE__ */ jsx23("h1", { className: "text-2xl font-semibold tracking-tight", children: defaultLabels.signIn }),
+        /* @__PURE__ */ jsx23("p", { className: "text-sm text-muted-foreground", children: "Enter your email below to sign in to your account" })
       ] }),
-      /* @__PURE__ */ jsx23("div", { className: "flex flex-col space-y-2 text-center", children: /* @__PURE__ */ jsx23("h1", { className: "text-2xl font-semibold tracking-tight", children: labels.signIn }) }),
-      /* @__PURE__ */ jsxs12("form", { onSubmit: handleSubmit, className: "space-y-8", children: [
+      /* @__PURE__ */ jsxs12("form", { onSubmit: handleSubmit, className: "space-y-4", children: [
+        error && /* @__PURE__ */ jsx23("div", { className: "p-3 text-sm text-red-600 bg-red-50 border border-red-200 rounded-md", children: error }),
         /* @__PURE__ */ jsxs12("div", { className: "space-y-2", children: [
-          /* @__PURE__ */ jsx23("label", { htmlFor: "email", className: "block text-sm font-medium", children: labels.email }),
+          /* @__PURE__ */ jsx23("label", { htmlFor: "email", className: "text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70", children: defaultLabels.email }),
           /* @__PURE__ */ jsx23(
             Input,
             {
@@ -4479,15 +4461,14 @@ var LoginPage = ({
               type: "email",
               value: formData.email,
               onChange: handleChange,
-              className: formErrors.email ? "border-red-500" : "",
-              disabled: isLoading,
-              autoComplete: "email"
+              placeholder: "name@example.com",
+              required: true,
+              disabled: isLoading
             }
-          ),
-          getFieldError("email")
+          )
         ] }),
         /* @__PURE__ */ jsxs12("div", { className: "space-y-2", children: [
-          /* @__PURE__ */ jsx23("label", { htmlFor: "password", className: "block text-sm font-medium", children: labels.password }),
+          /* @__PURE__ */ jsx23("label", { htmlFor: "password", className: "text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70", children: defaultLabels.password }),
           /* @__PURE__ */ jsx23(
             Input,
             {
@@ -4496,60 +4477,31 @@ var LoginPage = ({
               type: "password",
               value: formData.password,
               onChange: handleChange,
-              className: formErrors.password ? "border-red-500" : "",
-              disabled: isLoading,
-              autoComplete: "current-password"
+              required: true,
+              disabled: isLoading
             }
-          ),
-          getFieldError("password")
+          )
         ] }),
-        additionalFields && /* @__PURE__ */ jsx23("div", { className: "space-y-4", children: React12.cloneElement(additionalFields, {
-          formData,
-          handleChange,
-          formErrors,
-          getFieldError,
-          isLoading
-        }) }),
-        error && /* @__PURE__ */ jsx23("div", { className: "bg-red-50 border border-red-200 rounded-md p-3", children: /* @__PURE__ */ jsxs12("div", { className: "flex", children: [
-          /* @__PURE__ */ jsx23("div", { className: "flex-shrink-0", children: /* @__PURE__ */ jsx23("span", { className: "text-red-400", children: "\u25CF" }) }),
-          /* @__PURE__ */ jsx23("div", { className: "ml-3", children: /* @__PURE__ */ jsx23("p", { className: "text-sm text-red-800", children: error }) })
-        ] }) }),
+        additionalFields,
         /* @__PURE__ */ jsx23(
           Button,
           {
             type: "submit",
-            className: "w-full cursor-pointer",
+            className: "w-full text-white",
             disabled: isLoading,
-            children: isLoading ? labels.signingIn : labels.signIn
+            children: isLoading ? "Signing in..." : defaultLabels.signIn
           }
         )
-      ] }),
-      showForgotPassword && /* @__PURE__ */ jsx23(
-        "a",
-        {
-          href: forgotPasswordUrl,
-          className: "text-sm text-center hover:underline block",
-          children: labels.forgotPassword
-        }
-      ),
-      showSignUp && /* @__PURE__ */ jsxs12("div", { className: "text-center space-y-4", children: [
-        /* @__PURE__ */ jsxs12("div", { className: "relative", children: [
-          /* @__PURE__ */ jsx23("div", { className: "absolute inset-0 flex items-center", children: /* @__PURE__ */ jsx23("div", { className: "w-full border-t border-gray-300" }) }),
-          /* @__PURE__ */ jsx23("div", { className: "relative flex justify-center text-sm", children: /* @__PURE__ */ jsx23("span", { className: "px-2 bg-background text-muted-foreground", children: labels.noAccount }) })
-        ] }),
-        /* @__PURE__ */ jsx23("a", { href: signUpUrl, children: /* @__PURE__ */ jsx23(Button, { variant: "outline", className: "w-full", children: labels.signUp }) })
       ] }),
       demoCredentials && isDevelopmentMode() && /* @__PURE__ */ jsx23("div", { className: "mt-4 p-3 bg-gray-50 rounded-lg", children: /* @__PURE__ */ jsxs12("details", { className: "group", children: [
         /* @__PURE__ */ jsx23("summary", { className: "cursor-pointer text-sm font-medium text-gray-700 hover:text-gray-900", children: "Demo Credentials (Development Only)" }),
         /* @__PURE__ */ jsxs12("div", { className: "mt-2 space-y-2", children: [
-          /* @__PURE__ */ jsxs12("p", { className: "text-sm text-gray-600", children: [
-            /* @__PURE__ */ jsx23("strong", { children: "Email:" }),
-            " ",
+          /* @__PURE__ */ jsxs12("p", { className: "text-xs text-gray-600", children: [
+            "Email: ",
             demoCredentials.email
           ] }),
-          /* @__PURE__ */ jsxs12("p", { className: "text-sm text-gray-600", children: [
-            /* @__PURE__ */ jsx23("strong", { children: "Password:" }),
-            " ",
+          /* @__PURE__ */ jsxs12("p", { className: "text-xs text-gray-600", children: [
+            "Password: ",
             demoCredentials.password
           ] }),
           /* @__PURE__ */ jsx23(
@@ -4558,12 +4510,35 @@ var LoginPage = ({
               type: "button",
               variant: "outline",
               size: "sm",
-              onClick: handleDemoCredentials,
-              children: "Use Demo Credentials"
+              onClick: fillDemoCredentials,
+              className: "w-full mt-2",
+              children: "Fill Demo Credentials"
             }
           )
         ] })
-      ] }) })
+      ] }) }),
+      /* @__PURE__ */ jsxs12("div", { className: "text-center space-y-4", children: [
+        showForgotPassword && /* @__PURE__ */ jsx23(
+          "a",
+          {
+            href: forgotPasswordUrl,
+            className: "text-sm text-muted-foreground hover:text-primary underline-offset-4 hover:underline",
+            children: defaultLabels.forgotPassword
+          }
+        ),
+        showSignUp && /* @__PURE__ */ jsxs12("div", { className: "text-sm text-muted-foreground", children: [
+          defaultLabels.signUpText,
+          " ",
+          /* @__PURE__ */ jsx23(
+            "a",
+            {
+              href: signUpUrl,
+              className: "text-primary underline-offset-4 hover:underline",
+              children: defaultLabels.signUp
+            }
+          )
+        ] })
+      ] })
     ] }) })
   ] }) });
 };
