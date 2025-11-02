@@ -267,6 +267,25 @@ var hoursToMinutes = (hours) => {
 var minutesToHours = (minutes) => {
   return minutes / 60;
 };
+function getRelativeTimeString(dateString) {
+  const date = new Date(dateString);
+  date.setHours(0, 0, 0, 0);
+  const today = /* @__PURE__ */ new Date();
+  today.setHours(0, 0, 0, 0);
+  const diff = date.getTime() - today.getTime();
+  const unitDiff = Math.round(diff / (1e3 * 60 * 60 * 24));
+  if (Math.abs(unitDiff) > 7) {
+    return new Intl.DateTimeFormat(void 0, {
+      day: "numeric",
+      month: "long"
+    }).format(date);
+  }
+  const rtf = new Intl.RelativeTimeFormat(void 0, { numeric: "auto" });
+  return ucFirst(rtf.format(unitDiff, "day"));
+}
+function ucFirst(str) {
+  return str.charAt(0).toUpperCase() + str.slice(1);
+}
 var formatUtcDate = (isoString) => {
   if (!isoString) return "";
   const date = new Date(isoString);
@@ -455,6 +474,10 @@ var NUMBER_CONSTANTS = {
 };
 
 // src/utils/stringUtils.ts
+var ucFirst2 = (str) => {
+  if (!str) return "";
+  return str.charAt(0).toUpperCase() + str.slice(1);
+};
 var capitalize = (str) => {
   if (!str) return "";
   return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
@@ -886,6 +909,19 @@ var arrayComparison = {
     return arrayComparison.isSubset(subset, superset);
   }
 };
+
+// src/utils/fetchUtils.ts
+async function fetchWithTimeout(resource, options = {}) {
+  const { timeout = 2e3 } = options;
+  const controller = new AbortController();
+  const id = setTimeout(() => controller.abort(), timeout);
+  const response = await fetch(resource, {
+    ...options,
+    signal: controller.signal
+  });
+  clearTimeout(id);
+  return response;
+}
 
 // src/utils/index.ts
 function cn(...inputs) {
@@ -2725,6 +2761,25 @@ var useAuthGuard = (options = {}) => {
   };
 };
 
+// src/hooks/useMobile.ts
+import * as React9 from "react";
+var MOBILE_BREAKPOINT = 768;
+function useIsMobile() {
+  const [isMobile, setIsMobile] = React9.useState(
+    void 0
+  );
+  React9.useEffect(() => {
+    const mql = window.matchMedia(`(max-width: ${MOBILE_BREAKPOINT - 1}px)`);
+    const onChange = () => {
+      setIsMobile(window.innerWidth < MOBILE_BREAKPOINT);
+    };
+    mql.addEventListener("change", onChange);
+    setIsMobile(window.innerWidth < MOBILE_BREAKPOINT);
+    return () => mql.removeEventListener("change", onChange);
+  }, []);
+  return !!isMobile;
+}
+
 // src/hooks/useSupabaseQuery.ts
 import { useQuery as useQuery2, useMutation as useMutation2, useQueryClient as useQueryClient2 } from "@tanstack/react-query";
 var createQueryKeys = (tableName) => ({
@@ -3158,7 +3213,7 @@ function useSavedQueries(resource) {
 }
 
 // src/hooks/useDataTable.ts
-import { useState as useState6, useCallback as useCallback3, useMemo as useMemo5 } from "react";
+import { useState as useState7, useCallback as useCallback3, useMemo as useMemo5 } from "react";
 function useDataTable(options) {
   const {
     defaultColumns,
@@ -3200,7 +3255,7 @@ function useDataTable(options) {
       columnOrder: defaultColumns.map((c) => c.id)
     };
   }, [defaultColumns, defaultSort, defaultPerPage, persistState, storageKey]);
-  const [state, setState] = useState6(getInitialState);
+  const [state, setState] = useState7(getInitialState);
   const persistStateToStorage = useCallback3((newState) => {
     if (persistState && storageKey) {
       try {
@@ -3419,7 +3474,7 @@ function useDataTable(options) {
   };
 }
 function useColumnManager(columns, storageKey) {
-  const [hiddenColumns, setHiddenColumns] = useState6(() => {
+  const [hiddenColumns, setHiddenColumns] = useState7(() => {
     if (storageKey) {
       try {
         const saved = localStorage.getItem(`columnManager.${storageKey}`);
@@ -3430,7 +3485,7 @@ function useColumnManager(columns, storageKey) {
     }
     return [];
   });
-  const [columnOrder, setColumnOrder] = useState6(() => {
+  const [columnOrder, setColumnOrder] = useState7(() => {
     if (storageKey) {
       try {
         const saved = localStorage.getItem(`columnOrder.${storageKey}`);
@@ -3880,7 +3935,7 @@ function GenericForm({
 var GenericForm_default = GenericForm;
 
 // src/components/AppHeader.tsx
-import { useState as useState7, useCallback as useCallback5 } from "react";
+import { useState as useState8, useCallback as useCallback5 } from "react";
 import { LogOut, Settings, User, RotateCw, LoaderCircle, Menu } from "lucide-react";
 
 // src/components/Avatar.tsx
@@ -4165,7 +4220,7 @@ var AppHeader = ({
   isLoading = false,
   customMenuItems
 }) => {
-  const [isUserMenuOpen, setIsUserMenuOpen] = useState7(false);
+  const [isUserMenuOpen, setIsUserMenuOpen] = useState8(false);
   const handleUserMenuToggle = useCallback5(() => {
     setIsUserMenuOpen((prev) => !prev);
   }, []);
@@ -4271,11 +4326,11 @@ var AppHeader = ({
 };
 
 // src/components/ExactHeader.tsx
-import React11, { Children, useCallback as useCallback6, useState as useState8 } from "react";
+import React12, { Children, useCallback as useCallback6, useState as useState9 } from "react";
 import { LogOut as LogOut2, Settings as Settings2, User as User2, LoaderCircle as LoaderCircle2, RotateCw as RotateCw2 } from "lucide-react";
 import { jsx as jsx22, jsxs as jsxs11 } from "react/jsx-runtime";
-var UserMenuContext = React11.createContext(void 0);
-var useUserMenu = () => React11.useContext(UserMenuContext);
+var UserMenuContext = React12.createContext(void 0);
+var useUserMenu = () => React12.useContext(UserMenuContext);
 var RefreshButton = ({ onRefresh, loading = false }) => {
   const handleRefresh = () => {
     if (onRefresh) {
@@ -4296,7 +4351,7 @@ var RefreshButton = ({ onRefresh, loading = false }) => {
   );
 };
 function UserMenu({ children, user, onLogout }) {
-  const [open, setOpen] = useState8(false);
+  const [open, setOpen] = useState9(false);
   const handleToggleOpen = useCallback6(() => {
     setOpen((prevOpen) => !prevOpen);
   }, []);
@@ -4423,7 +4478,7 @@ var ExactHeader = ({
 };
 
 // src/components/LoginPage.tsx
-import { useState as useState9 } from "react";
+import { useState as useState10 } from "react";
 import { jsx as jsx23, jsxs as jsxs12 } from "react/jsx-runtime";
 var isDevelopmentMode = () => {
   if (typeof globalThis !== "undefined" && globalThis.import?.meta?.env) {
@@ -4451,7 +4506,7 @@ var LoginPage = ({
   signUpUrl = "/signup",
   additionalFields
 }) => {
-  const [formData, setFormData] = useState9({
+  const [formData, setFormData] = useState10({
     email: "",
     password: ""
   });
@@ -4682,11 +4737,11 @@ var LoginPage = ({
 };
 
 // src/components/SimpleHeader.tsx
-import React13, { Children as Children2, useCallback as useCallback7, useState as useState10 } from "react";
+import React14, { Children as Children2, useCallback as useCallback7, useState as useState11 } from "react";
 import { LogOut as LogOut3, Settings as Settings3, User as User3, LoaderCircle as LoaderCircle3, RotateCw as RotateCw3, Menu as Menu2 } from "lucide-react";
 import { jsx as jsx24, jsxs as jsxs13 } from "react/jsx-runtime";
-var UserMenuContext2 = React13.createContext(void 0);
-var useUserMenu2 = () => React13.useContext(UserMenuContext2);
+var UserMenuContext2 = React14.createContext(void 0);
+var useUserMenu2 = () => React14.useContext(UserMenuContext2);
 var RefreshButton2 = ({ onRefresh, loading = false }) => {
   const handleRefresh = () => {
     if (onRefresh) {
@@ -4707,7 +4762,7 @@ var RefreshButton2 = ({ onRefresh, loading = false }) => {
   );
 };
 function UserMenu2({ children, user, onLogout }) {
-  const [open, setOpen] = useState10(false);
+  const [open, setOpen] = useState11(false);
   const handleToggleOpen = useCallback7(() => {
     setOpen((prevOpen) => !prevOpen);
   }, []);
@@ -4811,6 +4866,12 @@ var SimpleHeader = ({
     ] })
   ] }) }) }) });
 };
+
+// src/components/RelativeDate.tsx
+import { formatRelative } from "date-fns";
+function RelativeDate({ date }) {
+  return formatRelative(new Date(date), /* @__PURE__ */ new Date());
+}
 
 // src/validation/url-validators.ts
 var LINKEDIN_URL_REGEX = /^http(?:s)?:\/\/(?:www\.)?linkedin.com\//;
@@ -5808,8 +5869,13 @@ var createSupabaseClient = (config) => {
   });
 };
 var getEnvVar = (key) => {
+  if (typeof import.meta !== "undefined" && import.meta.env) {
+    const value = import.meta.env[key];
+    if (value !== void 0) return value;
+  }
   if (typeof process !== "undefined" && process.env) {
-    return process.env[key];
+    const value = process.env[key];
+    if (value !== void 0) return value;
   }
   if (typeof window !== "undefined" && window.__ENV__) {
     return window.__ENV__[key];
@@ -6466,6 +6532,7 @@ export {
   NUMBER_CONSTANTS,
   PRODUCT_TYPES,
   ProtectedRoute,
+  RelativeDate,
   SCHEMAS,
   SEAL_SIDES,
   ERROR_TYPES2 as SERVICES_ERROR_TYPES,
@@ -6541,6 +6608,7 @@ export {
   dismissAll,
   extractEmailDomain,
   extractEmailUsername,
+  fetchWithTimeout,
   filterBy,
   findBy,
   findIndexBy,
@@ -6583,6 +6651,7 @@ export {
   getRandomItems,
   getRecordCount,
   getRelativeTime,
+  getRelativeTimeString,
   getSignedUrl,
   getStandardSupabaseClient,
   getStartOfDay,
@@ -6664,6 +6733,7 @@ export {
   toSnakeCase,
   truncate,
   truncateWords,
+  ucFirst2 as ucFirst,
   union,
   updateAt,
   uploadMultipleFiles,
@@ -6680,6 +6750,7 @@ export {
   useDependentQueries,
   useErrorBoundary,
   useErrorHandler,
+  useIsMobile,
   useOfflineSync,
   useQuerySync,
   useSavedQueries,

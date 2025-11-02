@@ -81,6 +81,7 @@ __export(src_exports, {
   NUMBER_CONSTANTS: () => NUMBER_CONSTANTS,
   PRODUCT_TYPES: () => PRODUCT_TYPES,
   ProtectedRoute: () => ProtectedRoute,
+  RelativeDate: () => RelativeDate,
   SCHEMAS: () => SCHEMAS,
   SEAL_SIDES: () => SEAL_SIDES,
   SERVICES_ERROR_TYPES: () => ERROR_TYPES2,
@@ -156,6 +157,7 @@ __export(src_exports, {
   dismissAll: () => dismissAll,
   extractEmailDomain: () => extractEmailDomain,
   extractEmailUsername: () => extractEmailUsername,
+  fetchWithTimeout: () => fetchWithTimeout,
   filterBy: () => filterBy,
   findBy: () => findBy,
   findIndexBy: () => findIndexBy,
@@ -198,6 +200,7 @@ __export(src_exports, {
   getRandomItems: () => getRandomItems,
   getRecordCount: () => getRecordCount,
   getRelativeTime: () => getRelativeTime,
+  getRelativeTimeString: () => getRelativeTimeString,
   getSignedUrl: () => getSignedUrl,
   getStandardSupabaseClient: () => getStandardSupabaseClient,
   getStartOfDay: () => getStartOfDay,
@@ -279,6 +282,7 @@ __export(src_exports, {
   toSnakeCase: () => toSnakeCase,
   truncate: () => truncate,
   truncateWords: () => truncateWords,
+  ucFirst: () => ucFirst2,
   union: () => union,
   updateAt: () => updateAt,
   uploadMultipleFiles: () => uploadMultipleFiles,
@@ -295,6 +299,7 @@ __export(src_exports, {
   useDependentQueries: () => useDependentQueries,
   useErrorBoundary: () => useErrorBoundary,
   useErrorHandler: () => useErrorHandler,
+  useIsMobile: () => useIsMobile,
   useOfflineSync: () => useOfflineSync,
   useQuerySync: () => useQuerySync,
   useSavedQueries: () => useSavedQueries,
@@ -566,6 +571,25 @@ var hoursToMinutes = (hours) => {
 var minutesToHours = (minutes) => {
   return minutes / 60;
 };
+function getRelativeTimeString(dateString) {
+  const date = new Date(dateString);
+  date.setHours(0, 0, 0, 0);
+  const today = /* @__PURE__ */ new Date();
+  today.setHours(0, 0, 0, 0);
+  const diff = date.getTime() - today.getTime();
+  const unitDiff = Math.round(diff / (1e3 * 60 * 60 * 24));
+  if (Math.abs(unitDiff) > 7) {
+    return new Intl.DateTimeFormat(void 0, {
+      day: "numeric",
+      month: "long"
+    }).format(date);
+  }
+  const rtf = new Intl.RelativeTimeFormat(void 0, { numeric: "auto" });
+  return ucFirst(rtf.format(unitDiff, "day"));
+}
+function ucFirst(str) {
+  return str.charAt(0).toUpperCase() + str.slice(1);
+}
 var formatUtcDate = (isoString) => {
   if (!isoString) return "";
   const date = new Date(isoString);
@@ -754,6 +778,10 @@ var NUMBER_CONSTANTS = {
 };
 
 // src/utils/stringUtils.ts
+var ucFirst2 = (str) => {
+  if (!str) return "";
+  return str.charAt(0).toUpperCase() + str.slice(1);
+};
 var capitalize = (str) => {
   if (!str) return "";
   return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
@@ -1185,6 +1213,19 @@ var arrayComparison = {
     return arrayComparison.isSubset(subset, superset);
   }
 };
+
+// src/utils/fetchUtils.ts
+async function fetchWithTimeout(resource, options = {}) {
+  const { timeout = 2e3 } = options;
+  const controller = new AbortController();
+  const id = setTimeout(() => controller.abort(), timeout);
+  const response = await fetch(resource, {
+    ...options,
+    signal: controller.signal
+  });
+  clearTimeout(id);
+  return response;
+}
 
 // src/utils/index.ts
 function cn(...inputs) {
@@ -3133,6 +3174,25 @@ var useAuthGuard = (options = {}) => {
     isAuthorized
   };
 };
+
+// src/hooks/useMobile.ts
+var React9 = __toESM(require("react"), 1);
+var MOBILE_BREAKPOINT = 768;
+function useIsMobile() {
+  const [isMobile, setIsMobile] = React9.useState(
+    void 0
+  );
+  React9.useEffect(() => {
+    const mql = window.matchMedia(`(max-width: ${MOBILE_BREAKPOINT - 1}px)`);
+    const onChange = () => {
+      setIsMobile(window.innerWidth < MOBILE_BREAKPOINT);
+    };
+    mql.addEventListener("change", onChange);
+    setIsMobile(window.innerWidth < MOBILE_BREAKPOINT);
+    return () => mql.removeEventListener("change", onChange);
+  }, []);
+  return !!isMobile;
+}
 
 // src/hooks/useSupabaseQuery.ts
 var import_react_query2 = require("@tanstack/react-query");
@@ -5221,6 +5281,12 @@ var SimpleHeader = ({
   ] }) }) }) });
 };
 
+// src/components/RelativeDate.tsx
+var import_date_fns2 = require("date-fns");
+function RelativeDate({ date }) {
+  return (0, import_date_fns2.formatRelative)(new Date(date), /* @__PURE__ */ new Date());
+}
+
 // src/validation/url-validators.ts
 var LINKEDIN_URL_REGEX = /^http(?:s)?:\/\/(?:www\.)?linkedin.com\//;
 var isLinkedinUrl = (url) => {
@@ -6199,6 +6265,7 @@ var SupabaseService = class {
 
 // src/services/supabase.ts
 var import_supabase_js = require("@supabase/supabase-js");
+var import_meta = {};
 var createSupabaseClient = (config) => {
   const defaultOptions = {
     auth: {
@@ -6217,8 +6284,13 @@ var createSupabaseClient = (config) => {
   });
 };
 var getEnvVar = (key) => {
+  if (typeof import_meta !== "undefined" && import_meta.env) {
+    const value = import_meta.env[key];
+    if (value !== void 0) return value;
+  }
   if (typeof process !== "undefined" && process.env) {
-    return process.env[key];
+    const value = process.env[key];
+    if (value !== void 0) return value;
   }
   if (typeof window !== "undefined" && window.__ENV__) {
     return window.__ENV__[key];
@@ -6876,6 +6948,7 @@ function createPaginatedStore(entityName, defaultPerPage = 10, persistOptions) {
   NUMBER_CONSTANTS,
   PRODUCT_TYPES,
   ProtectedRoute,
+  RelativeDate,
   SCHEMAS,
   SEAL_SIDES,
   SERVICES_ERROR_TYPES,
@@ -6951,6 +7024,7 @@ function createPaginatedStore(entityName, defaultPerPage = 10, persistOptions) {
   dismissAll,
   extractEmailDomain,
   extractEmailUsername,
+  fetchWithTimeout,
   filterBy,
   findBy,
   findIndexBy,
@@ -6993,6 +7067,7 @@ function createPaginatedStore(entityName, defaultPerPage = 10, persistOptions) {
   getRandomItems,
   getRecordCount,
   getRelativeTime,
+  getRelativeTimeString,
   getSignedUrl,
   getStandardSupabaseClient,
   getStartOfDay,
@@ -7074,6 +7149,7 @@ function createPaginatedStore(entityName, defaultPerPage = 10, persistOptions) {
   toSnakeCase,
   truncate,
   truncateWords,
+  ucFirst,
   union,
   updateAt,
   uploadMultipleFiles,
@@ -7090,6 +7166,7 @@ function createPaginatedStore(entityName, defaultPerPage = 10, persistOptions) {
   useDependentQueries,
   useErrorBoundary,
   useErrorHandler,
+  useIsMobile,
   useOfflineSync,
   useQuerySync,
   useSavedQueries,

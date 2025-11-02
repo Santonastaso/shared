@@ -11,7 +11,8 @@ export {
   generateId,
   debounce,
   throttle,
-  handleApiError
+  handleApiError,
+  safeAsync
 } from './utils';
 export * from './utils/toast';
 export * from './utils/validation';
@@ -22,6 +23,7 @@ export * from './utils/dateUtils';
 export * from './utils/numberUtils';
 export * from './utils/stringUtils';
 export * from './utils/arrayUtils';
+export * from './utils/fetchUtils';
 
 // Services (with renamed conflicting exports)
 export {
@@ -77,6 +79,3 @@ export * from './constants';
 
 // Store factories
 export * from './stores';
-
-// Utils safe async (preferred version)
-export { safeAsync } from './utils';

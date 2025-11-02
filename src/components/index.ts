@@ -60,3 +60,6 @@ export { LoginPage } from './LoginPage';
 export { SimpleHeader } from './SimpleHeader';
 export { Avatar, AvatarImage, AvatarFallback } from './Avatar';
 export * from './DropdownMenu';
+
+// Date Components
+export { RelativeDate } from './RelativeDate';
