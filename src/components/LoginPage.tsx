@@ -18,167 +18,218 @@ export interface LoginPageProps {
   showForgotPassword?: boolean;
   /** Whether to show the sign up link */
   showSignUp?: boolean;
-  /** Custom forgot password URL */
-  forgotPasswordUrl?: string;
-  /** Custom sign up URL */
-  signUpUrl?: string;
-  /** Loading state */
-  isLoading?: boolean;
-  /** Error message to display */
-  error?: string;
-  /** Additional form fields */
-  additionalFields?: React.ReactNode;
-  /** Custom form validation */
-  onValidate?: (formData: Record<string, string>) => Record<string, string>;
-  /** Form submission handler */
-  onSubmit: (formData: Record<string, string>) => Promise<void>;
-  /** Custom labels for internationalization */
+  /** Custom labels for form elements */
   labels?: {
     signIn?: string;
     email?: string;
     password?: string;
     forgotPassword?: string;
     signUp?: string;
-    noAccount?: string;
-    signingIn?: string;
+    signUpText?: string;
   };
   /** Demo credentials for development */
   demoCredentials?: {
     email: string;
     password: string;
-    [key: string]: string;
   };
+  /** Loading state */
+  isLoading?: boolean;
+  /** Error message to display */
+  error?: string;
+  /** Form submission handler */
+  onSubmit: (data: { email: string; password: string }) => void;
+  /** Forgot password link URL */
+  forgotPasswordUrl?: string;
+  /** Sign up link URL */
+  signUpUrl?: string;
+  /** Additional form fields (like work center selection) */
+  additionalFields?: React.ReactNode;
 }
+
+/**
+ * Safely check if we're in development mode across CJS and ESM environments
+ */
+const isDevelopmentMode = (): boolean => {
+  // Try import.meta.env first (ESM/Vite)
+  if (typeof globalThis !== 'undefined' && (globalThis as any).import?.meta?.env) {
+    return (globalThis as any).import.meta.env.MODE === 'development';
+  }
+  // Try process.env (CJS/Node)
+  if (typeof process !== 'undefined' && process.env) {
+    return process.env.NODE_ENV === 'development';
+  }
+  // Fallback for browser environments
+  return false;
+};
 
 export const LoginPage: React.FC<LoginPageProps> = ({
   title,
   logo,
   backgroundImage,
-  backgroundColor = '#18181b', // zinc-900
+  backgroundColor = '#18181b',
   subtitle,
   showForgotPassword = true,
   showSignUp = true,
-  forgotPasswordUrl = '/forgot-password',
-  signUpUrl = '/signup',
+  labels = {},
+  demoCredentials,
   isLoading = false,
   error,
-  additionalFields,
-  onValidate,
   onSubmit,
-  labels = {
+  forgotPasswordUrl = '/forgot-password',
+  signUpUrl = '/signup',
+  additionalFields
+}) => {
+  const [formData, setFormData] = useState({
+    email: '',
+    password: ''
+  });
+
+  const defaultLabels = {
     signIn: 'Sign in',
     email: 'Email',
     password: 'Password',
     forgotPassword: 'Forgot your password?',
-    signUp: 'Create Account',
-    noAccount: "Don't have an account?",
-    signingIn: 'Signing in...',
-  },
-  demoCredentials,
-}) => {
-  const [formData, setFormData] = useState<Record<string, string>>({
-    email: '',
-    password: '',
-  });
-  const [formErrors, setFormErrors] = useState<Record<string, string>>({});
+    signUp: 'Sign up',
+    signUpText: "Don't have an account?",
+    ...labels
+  };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    onSubmit(formData);
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
-    
-    // Clear field error when user starts typing
-    if (formErrors[name]) {
-      setFormErrors(prev => ({ ...prev, [name]: '' }));
-    }
   };
 
-  const validateForm = () => {
-    let errors: Record<string, string> = {};
-    
-    // Basic validation
-    if (!formData.email.trim()) {
-      errors.email = 'Email is required';
-    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
-      errors.email = 'Please enter a valid email address';
-    }
-    
-    if (!formData.password) {
-      errors.password = 'Password is required';
-    }
-
-    // Custom validation
-    if (onValidate) {
-      const customErrors = onValidate(formData);
-      errors = { ...errors, ...customErrors };
-    }
-    
-    setFormErrors(errors);
-    return Object.keys(errors).length === 0;
-  };
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    
-    if (!validateForm()) {
-      return;
-    }
-
-    try {
-      await onSubmit(formData);
-    } catch (err) {
-      // Error handling is done by the parent component
-    }
-  };
-
-  const handleDemoCredentials = () => {
+  const fillDemoCredentials = () => {
     if (demoCredentials) {
-      setFormData(demoCredentials);
+      setFormData({
+        email: demoCredentials.email,
+        password: demoCredentials.password
+      });
     }
   };
 
-  const getFieldError = (fieldName: string) => {
-    return formErrors[fieldName] ? (
-      <span className="text-red-500 text-sm mt-1 block">
-        {formErrors[fieldName]}
-      </span>
-    ) : null;
-  };
+  // Debug: Log to verify SharedLoginPage is being rendered
+  console.log('🎨 SharedLoginPage: Rendering with props', { title, logo, subtitle });
 
   return (
-    <div className="min-h-screen flex">
-      <div className="container relative grid flex-col items-center justify-center sm:max-w-none lg:grid-cols-2 lg:px-0">
-        {/* Left Panel - Brand/Logo Section */}
-        <div className="relative hidden h-full flex-col bg-muted p-10 text-white dark:border-r lg:flex">
-          <div className="absolute inset-0 bg-zinc-900" />
-          <div className="relative z-20 flex items-center text-lg font-medium">
-            {logo && <img className="h-6 mr-2" src={logo} alt={title} />}
+    <div style={{ minHeight: '100vh', display: 'flex' }}>
+      <div style={{ 
+        width: '100%', 
+        position: 'relative', 
+        display: 'grid', 
+        gridTemplateColumns: '1fr 1fr',
+        alignItems: 'center', 
+        justifyContent: 'center' 
+      }}>
+        {/* Left Panel - Branding */}
+        <div 
+          style={{
+            position: 'relative',
+            height: '100vh',
+            display: 'flex',
+            flexDirection: 'column',
+            padding: '2.5rem',
+            color: 'white',
+            backgroundImage: backgroundImage ? `url(${backgroundImage})` : undefined,
+            backgroundColor: backgroundColor
+          }}
+        >
+          <div style={{ 
+            position: 'absolute', 
+            top: 0, 
+            left: 0, 
+            right: 0, 
+            bottom: 0, 
+            backgroundColor: backgroundColor 
+          }} />
+          <div style={{ 
+            position: 'relative', 
+            zIndex: 20, 
+            display: 'flex', 
+            alignItems: 'center', 
+            fontSize: '1.125rem', 
+            fontWeight: '500' 
+          }}>
+            {logo && <img style={{ height: '1.5rem', marginRight: '0.5rem' }} src={logo} alt={title} />}
             {title}
           </div>
           {subtitle && (
-            <div className="relative z-20 mt-auto">
-              <p className="text-lg">{subtitle}</p>
+            <div style={{ 
+              position: 'relative', 
+              zIndex: 20, 
+              marginTop: 'auto' 
+            }}>
+              <blockquote style={{ margin: 0 }}>
+                <p style={{ fontSize: '1.125rem', margin: 0 }}>{subtitle}</p>
+              </blockquote>
             </div>
           )}
         </div>
 
         {/* Right Panel - Login Form */}
-        <div className="lg:p-8">
-          <div className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]">
-            {/* Mobile Logo/Title */}
-            <div className="flex flex-col space-y-2 text-center lg:hidden">
-              {logo && <img className="h-8 mx-auto" src={logo} alt={title} />}
-              <h1 className="text-xl font-semibold">{title}</h1>
+        <div style={{ padding: '2rem' }}>
+          <div style={{ 
+            margin: '0 auto', 
+            display: 'flex', 
+            width: '100%', 
+            maxWidth: '350px',
+            flexDirection: 'column', 
+            justifyContent: 'center', 
+            gap: '1.5rem' 
+          }}>
+            <div style={{ 
+              display: 'flex', 
+              flexDirection: 'column', 
+              gap: '0.5rem', 
+              textAlign: 'center' 
+            }}>
+              <h1 style={{ 
+                fontSize: '1.5rem', 
+                fontWeight: '600', 
+                letterSpacing: '-0.025em',
+                margin: 0,
+                color: '#111827'
+              }}>
+                {defaultLabels.signIn}
+              </h1>
+              <p style={{ 
+                fontSize: '0.875rem', 
+                color: '#6b7280',
+                margin: 0
+              }}>
+                Enter your email below to sign in to your account
+              </p>
             </div>
 
-            <div className="flex flex-col space-y-2 text-center">
-              <h1 className="text-2xl font-semibold tracking-tight">{labels.signIn}</h1>
-            </div>
+            <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+              {error && (
+                <div style={{ 
+                  padding: '0.75rem', 
+                  fontSize: '0.875rem', 
+                  color: '#dc2626', 
+                  backgroundColor: '#fef2f2', 
+                  border: '1px solid #fecaca', 
+                  borderRadius: '0.375rem' 
+                }}>
+                  {error}
+                </div>
+              )}
 
-            <form onSubmit={handleSubmit} className="space-y-8">
-              {/* Email Field */}
-              <div className="space-y-2">
-                <label htmlFor="email" className="block text-sm font-medium">
-                  {labels.email}
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                <label 
+                  htmlFor="email" 
+                  style={{ 
+                    fontSize: '0.875rem', 
+                    fontWeight: '500', 
+                    color: '#374151' 
+                  }}
+                >
+                  {defaultLabels.email}
                 </label>
                 <Input
                   id="email"
@@ -186,17 +237,22 @@ export const LoginPage: React.FC<LoginPageProps> = ({
                   type="email"
                   value={formData.email}
                   onChange={handleChange}
-                  className={formErrors.email ? 'border-red-500' : ''}
+                  placeholder="name@example.com"
+                  required
                   disabled={isLoading}
-                  autoComplete="email"
                 />
-                {getFieldError('email')}
               </div>
 
-              {/* Password Field */}
-              <div className="space-y-2">
-                <label htmlFor="password" className="block text-sm font-medium">
-                  {labels.password}
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                <label 
+                  htmlFor="password" 
+                  style={{ 
+                    fontSize: '0.875rem', 
+                    fontWeight: '500', 
+                    color: '#374151' 
+                  }}
+                >
+                  {defaultLabels.password}
                 </label>
                 <Input
                   id="password"
@@ -204,106 +260,73 @@ export const LoginPage: React.FC<LoginPageProps> = ({
                   type="password"
                   value={formData.password}
                   onChange={handleChange}
-                  className={formErrors.password ? 'border-red-500' : ''}
+                  required
                   disabled={isLoading}
-                  autoComplete="current-password"
                 />
-                {getFieldError('password')}
               </div>
 
-              {/* Additional Fields */}
-              {additionalFields && (
-                <div className="space-y-4">
-                  {React.cloneElement(additionalFields as React.ReactElement, {
-                    formData: formData,
-                    handleChange: handleChange,
-                    formErrors: formErrors,
-                    getFieldError: getFieldError,
-                    isLoading: isLoading,
-                  } as any)}
-                </div>
-              )}
+              {additionalFields}
 
-              {/* Error Display */}
-              {error && (
-                <div className="bg-red-50 border border-red-200 rounded-md p-3">
-                  <div className="flex">
-                    <div className="flex-shrink-0">
-                      <span className="text-red-400">●</span>
-                    </div>
-                    <div className="ml-3">
-                      <p className="text-sm text-red-800">{error}</p>
-                    </div>
-                  </div>
-                </div>
-              )}
-
-              {/* Submit Button */}
               <Button
                 type="submit"
-                className="w-full cursor-pointer"
+                className="w-full text-white"
                 disabled={isLoading}
               >
-                {isLoading ? labels.signingIn : labels.signIn}
+                {isLoading ? 'Signing in...' : defaultLabels.signIn}
               </Button>
             </form>
 
-            {/* Additional Links */}
-            {showForgotPassword && (
-              <a
-                href={forgotPasswordUrl}
-                className="text-sm text-center hover:underline block"
-              >
-                {labels.forgotPassword}
-              </a>
-            )}
-
-            {showSignUp && (
-              <div className="text-center space-y-4">
-                <div className="relative">
-                  <div className="absolute inset-0 flex items-center">
-                    <div className="w-full border-t border-gray-300" />
-                  </div>
-                  <div className="relative flex justify-center text-sm">
-                    <span className="px-2 bg-background text-muted-foreground">
-                      {labels.noAccount}
-                    </span>
-                  </div>
-                </div>
-                <a href={signUpUrl}>
-                  <Button variant="outline" className="w-full">
-                    {labels.signUp}
-                  </Button>
-                </a>
-              </div>
-            )}
-
             {/* Demo Credentials (for development) */}
-            {demoCredentials && (typeof import.meta !== 'undefined' && (import.meta as any).env?.MODE === 'development') && (
+            {demoCredentials && isDevelopmentMode() && (
               <div className="mt-4 p-3 bg-gray-50 rounded-lg">
                 <details className="group">
                   <summary className="cursor-pointer text-sm font-medium text-gray-700 hover:text-gray-900">
                     Demo Credentials (Development Only)
                   </summary>
                   <div className="mt-2 space-y-2">
-                    <p className="text-sm text-gray-600">
-                      <strong>Email:</strong> {demoCredentials.email}
+                    <p className="text-xs text-gray-600">
+                      Email: {demoCredentials.email}
                     </p>
-                    <p className="text-sm text-gray-600">
-                      <strong>Password:</strong> {demoCredentials.password}
+                    <p className="text-xs text-gray-600">
+                      Password: {demoCredentials.password}
                     </p>
                     <Button
                       type="button"
                       variant="outline"
                       size="sm"
-                      onClick={handleDemoCredentials}
+                      onClick={fillDemoCredentials}
+                      className="w-full mt-2"
                     >
-                      Use Demo Credentials
+                      Fill Demo Credentials
                     </Button>
                   </div>
                 </details>
               </div>
             )}
+
+            {/* Footer Links */}
+            <div className="text-center space-y-4">
+              {showForgotPassword && (
+                <a
+                  href={forgotPasswordUrl}
+                  className="text-sm text-muted-foreground hover:text-primary underline-offset-4 hover:underline"
+                >
+                  {defaultLabels.forgotPassword}
+                </a>
+              )}
+
+              {showSignUp && (
+                <div className="text-sm text-muted-foreground">
+                  {defaultLabels.signUpText}{' '}
+                  <a
+                    href={signUpUrl}
+                    className="text-primary underline-offset-4 hover:underline"
+                  >
+                    {defaultLabels.signUp}
+                  </a>
+                </div>
+              )}
+            </div>
           </div>
         </div>
       </div>

@@ -167,7 +167,7 @@ export const SimpleHeader: React.FC<SimpleHeaderProps> = ({
     <nav className="flex-grow">
       <header className="bg-secondary">
         <div className="px-4">
-          <div className="flex justify-between items-center flex-1">
+          <div className="flex justify-between items-center flex-1 h-12">
             {/* Logo, Title, and Hamburger Menu */}
             <div className="flex items-center gap-2">
               {onToggleSidebar && (

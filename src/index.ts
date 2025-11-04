@@ -15,6 +15,9 @@ export {
 } from './utils';
 export * from './utils/toast';
 export * from './utils/validation';
+
+// Form validation utilities (from crm_demo patterns)
+export * from './validation';
 export * from './utils/dateUtils';
 export * from './utils/numberUtils';
 export * from './utils/stringUtils';
@@ -42,7 +45,28 @@ export {
   AuthProvider,
   useAuth,
   getStandardSupabaseClient,
-  getSupabaseClient
+  getSupabaseClient,
+  // Supabase storage utilities
+  uploadToSupabaseStorage,
+  checkFileExists,
+  deleteFromSupabaseStorage,
+  getSignedUrl,
+  uploadMultipleFiles,
+  // Supabase database utilities
+  applyFullTextSearch,
+  applyPagination,
+  recordExists,
+  getRecordCount,
+  batchInsert,
+  batchUpdate,
+  softDelete,
+  restoreRecord,
+  // Supabase data provider utilities
+  processFileUploads,
+  createAvatarProcessor,
+  createFullTextSearchProcessor,
+  validateSupabaseEnv,
+  createDataOperationErrorHandler
 } from './services';
 
 // Hooks
@@ -53,6 +77,6 @@ export * from './constants';
 
 // Store factories
 export * from './stores';
-
 // Utils safe async (preferred version)
 export { safeAsync } from './utils';
+

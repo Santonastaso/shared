@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo } from 'react';
 import { useForm } from 'react-hook-form';
 import { useErrorHandler } from '../hooks';
-import { showValidationError } from '../utils';
+import { showValidationError, cn } from '../utils';
 import { Input } from './input';
 import { Label } from './label';
 import { Button } from './button';
@@ -45,11 +45,13 @@ function GenericForm({
   initialData = {}, 
   onSubmit, 
   onSuccess, 
+  onCancel,
+  showCancel = true,
   isEditMode = false,
   isLoading = false,
   customActions = null,
   customFieldRenderers = {},
-  className = "p-1 bg-card rounded-lg shadow-sm border"
+  className = "bg-card rounded-lg shadow-sm border"
 }) {
   const { handleAsync } = useErrorHandler('GenericForm');
   
@@ -138,7 +140,13 @@ function GenericForm({
             <select
               {...register(field.name, field.validation)}
               disabled={field.disabled || isSubmitting}
-              className={`flex h-9 w-full rounded-md border bg-transparent px-3 py-1 text-sm shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring ${errors[field.name] ? 'border-red-500' : 'border-input'}`}
+              className={cn(
+                "file:text-foreground placeholder:text-muted-foreground selection:bg-primary selection:text-primary-foreground dark:bg-input/30 border-input flex h-9 w-full min-w-0 rounded-md border bg-transparent px-3 py-1 text-base shadow-xs transition-[color,box-shadow] outline-none disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 md:text-sm",
+                "focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px]",
+                "aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive",
+                errors[field.name] && "border-destructive",
+                field.className
+              )}
             >
               <option value="">{field.placeholder || `Seleziona ${field.label.toLowerCase()}`}</option>
               {field.options?.map(option => (
@@ -159,7 +167,11 @@ function GenericForm({
             <textarea
               {...baseInputProps}
               rows={field.rows || 3}
-              className={`w-full px-3 py-2 border border-input rounded-md bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent ${field.className || ''} ${errors[field.name] ? 'border-destructive' : ''}`}
+              className={cn(
+                "border-input placeholder:text-muted-foreground focus-visible:border-ring focus-visible:ring-ring/50 aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive dark:bg-input/30 flex field-sizing-content min-h-16 w-full rounded-md border bg-transparent px-3 py-2 text-base shadow-xs transition-[color,box-shadow] outline-none focus-visible:ring-[3px] disabled:cursor-not-allowed disabled:opacity-50 md:text-sm",
+                errors[field.name] && "border-destructive",
+                field.className
+              )}
             />
             {errors[field.name] && (
               <p className="text-sm text-destructive mt-1">{errors[field.name].message}</p>
@@ -248,7 +260,7 @@ function GenericForm({
     }
   };
 
-  // Render a section of fields - Simplified Tracc Style
+  // Render a section of fields - CRM Demo Style
   const renderSection = (section) => {
     const visibleFields = section.fields.filter(field => 
       !field.conditional || field.conditional(watch(field.name), watch, getValues)
@@ -257,11 +269,11 @@ function GenericForm({
     if (visibleFields.length === 0) return null;
 
     return (
-      <div key={section.title} className="space-y-4">
-        <h2 className="text-lg font-semibold text-foreground">
+      <div key={section.title} className="space-y-6">
+        <h2 className="text-xl font-semibold text-foreground border-b border-border pb-2">
           {section.title}
         </h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {visibleFields.map(field => (
             <div key={field.name} className="space-y-2">
               <Label htmlFor={field.name} className="text-sm font-medium text-foreground">
@@ -287,8 +299,8 @@ function GenericForm({
   };
 
   return (
-    <div className="bg-card rounded-lg border border-border shadow-sm p-6">
-      <form onSubmit={handleSubmit(handleFormSubmit)} noValidate className="space-y-6">
+    <div className="bg-card rounded-lg border border-border shadow-sm">
+      <form onSubmit={handleSubmit(handleFormSubmit)} noValidate className="p-6 space-y-8">
         {config.sections.map(renderSection)}
         
         {/* Render custom sections */}
@@ -302,10 +314,22 @@ function GenericForm({
           </div>
         )}
 
-        <div className="flex justify-end pt-6 border-t border-border">
+        <div className={`flex pt-6 border-t border-border ${showCancel ? 'justify-end gap-2' : 'justify-end'}`}>
+          {showCancel && (
+            <Button 
+              type="button"
+              variant="ghost"
+              onClick={onCancel || (() => window.history.back())}
+              disabled={isLoading || isSubmitting}
+              className="px-6 py-2"
+            >
+              Cancel
+            </Button>
+          )}
           <Button 
             type="submit" 
             disabled={isLoading || isSubmitting}
+            className="px-6 py-2"
           >
             {isLoading || isSubmitting
               ? (isEditMode ? config.editLoadingText : config.addLoadingText)

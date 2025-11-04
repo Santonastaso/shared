@@ -32,6 +32,7 @@ var src_exports = {};
 __export(src_exports, {
   ALERT_TYPES: () => ALERT_TYPES,
   AppHeader: () => AppHeader,
+  AuthLayout: () => AuthLayout,
   AuthProvider: () => AuthProvider,
   Avatar: () => Avatar,
   AvatarFallback: () => AvatarFallback,
@@ -71,14 +72,17 @@ __export(src_exports, {
   ExactHeader: () => ExactHeader,
   FIELD_CONFIGS: () => FIELD_CONFIGS,
   FilterDropdown: () => FilterDropdown_default,
+  FormPageLayout: () => FormPageLayout,
   GenericForm: () => GenericForm_default,
   Header: () => Header,
   Input: () => Input,
   Label: () => Label,
+  ListPageLayout: () => ListPageLayout,
   LoginPage: () => LoginPage,
   MACHINE_STATUSES: () => MACHINE_STATUSES,
   NUMBER_CONSTANTS: () => NUMBER_CONSTANTS,
   PRODUCT_TYPES: () => PRODUCT_TYPES,
+  ProtectedRoute: () => ProtectedRoute,
   SCHEMAS: () => SCHEMAS,
   SEAL_SIDES: () => SEAL_SIDES,
   SERVICES_ERROR_TYPES: () => ERROR_TYPES2,
@@ -86,6 +90,7 @@ __export(src_exports, {
   STRING_CONSTANTS: () => STRING_CONSTANTS,
   ServiceError: () => ServiceError,
   SimpleHeader: () => SimpleHeader,
+  Skeleton: () => Skeleton,
   SupabaseService: () => SupabaseService,
   TASK_STATUSES: () => TASK_STATUSES,
   Table: () => Table,
@@ -96,21 +101,28 @@ __export(src_exports, {
   TableHead: () => TableHead,
   TableHeader: () => TableHeader,
   TableRow: () => TableRow,
+  Textarea: () => Textarea,
   ThemeProvider: () => ThemeProvider,
   ThemeSwitch: () => ThemeSwitch,
+  UnifiedHeader: () => UnifiedHeader,
   VALIDATION_MESSAGES: () => VALIDATION_MESSAGES,
   WORK_CENTERS: () => WORK_CENTERS,
   addDaysToDate: () => addDaysToDate,
+  applyFullTextSearch: () => applyFullTextSearch,
+  applyPagination: () => applyPagination,
   arrayComparison: () => arrayComparison,
   average: () => average,
   averageBy: () => averageBy,
   averageNumbers: () => averageNumbers,
   badgeVariants: () => badgeVariants,
+  batchInsert: () => batchInsert,
+  batchUpdate: () => batchUpdate,
   buttonVariants: () => buttonVariants,
   calculatePercentage: () => calculatePercentage,
   calculatePercentageChange: () => calculatePercentageChange,
   capitalize: () => capitalize,
   capitalizeWords: () => capitalizeWords,
+  checkFileExists: () => checkFileExists,
   checkSupabaseConnection: () => checkSupabaseConnection,
   chunk: () => chunk,
   clampNumber: () => clampNumber,
@@ -125,9 +137,12 @@ __export(src_exports, {
   countOccurrences: () => countOccurrences,
   countWords: () => countWords,
   createArray: () => createArray,
+  createAvatarProcessor: () => createAvatarProcessor,
   createCRUDStore: () => createCRUDStore,
+  createDataOperationErrorHandler: () => createDataOperationErrorHandler,
   createDateRange: () => createDateRange,
   createEntityStore: () => createEntityStore,
+  createFullTextSearchProcessor: () => createFullTextSearchProcessor,
   createPaginatedStore: () => createPaginatedStore,
   createQueryKeys: () => createQueryKeys,
   createServiceHooks: () => createServiceHooks,
@@ -138,6 +153,7 @@ __export(src_exports, {
   debounce: () => debounce,
   defaultQueryConfig: () => defaultQueryConfig,
   defaultQueryErrorHandler: () => defaultQueryErrorHandler,
+  deleteFromSupabaseStorage: () => deleteFromSupabaseStorage,
   difference: () => difference,
   dismiss: () => dismiss,
   dismissAll: () => dismissAll,
@@ -183,7 +199,9 @@ __export(src_exports, {
   getNested: () => getNested,
   getRandomItem: () => getRandomItem,
   getRandomItems: () => getRandomItems,
+  getRecordCount: () => getRecordCount,
   getRelativeTime: () => getRelativeTime,
+  getSignedUrl: () => getSignedUrl,
   getStandardSupabaseClient: () => getStandardSupabaseClient,
   getStartOfDay: () => getStartOfDay,
   getSupabaseClient: () => getSupabaseClient,
@@ -196,7 +214,9 @@ __export(src_exports, {
   hoursToMinutes: () => hoursToMinutes,
   insertAt: () => insertAt,
   intersection: () => intersection,
+  isLinkedinUrl: () => isLinkedinUrl,
   isPalindrome: () => isPalindrome,
+  isUrl: () => isUrl,
   isValidDate: () => isValidDate,
   isValidEmail: () => isValidEmail,
   isValidNumber: () => isValidNumber,
@@ -217,13 +237,16 @@ __export(src_exports, {
   parseDate: () => parseDate,
   parseInteger: () => parseInteger,
   parseNumber: () => parseNumber,
+  processFileUploads: () => processFileUploads,
   randomInteger: () => randomInteger,
   randomNumber: () => randomNumber,
   range: () => range,
+  recordExists: () => recordExists,
   removeAt: () => removeAt,
   removeDuplicates: () => removeDuplicates,
   removeDuplicatesByKey: () => removeDuplicatesByKey,
   removeWhitespace: () => removeWhitespace,
+  restoreRecord: () => restoreRecord,
   reverse: () => reverse,
   roundNumber: () => roundNumber,
   safeAsync: () => safeAsync,
@@ -240,6 +263,7 @@ __export(src_exports, {
   shuffle: () => shuffle,
   skip: () => skip,
   skipLast: () => skipLast,
+  softDelete: () => softDelete,
   sortBy: () => sortBy,
   sortByMultiple: () => sortByMultiple,
   stringTemplates: () => stringTemplates,
@@ -260,19 +284,35 @@ __export(src_exports, {
   truncateWords: () => truncateWords,
   union: () => union,
   updateAt: () => updateAt,
+  uploadMultipleFiles: () => uploadMultipleFiles,
+  uploadToSupabaseStorage: () => uploadToSupabaseStorage,
+  useAdvancedInfiniteQuery: () => useAdvancedInfiniteQuery,
+  useAdvancedMutation: () => useAdvancedMutation,
+  useAdvancedQuery: () => useAdvancedQuery,
   useAuth: () => useAuth,
+  useAuthGuard: () => useAuthGuard,
+  useBulkOperations: () => useBulkOperations,
+  useColumnManager: () => useColumnManager,
   useDataService: () => useDataService,
+  useDataTable: () => useDataTable,
+  useDependentQueries: () => useDependentQueries,
   useErrorBoundary: () => useErrorBoundary,
   useErrorHandler: () => useErrorHandler,
+  useOfflineSync: () => useOfflineSync,
+  useQuerySync: () => useQuerySync,
+  useSavedQueries: () => useSavedQueries,
   useSidebar: () => useSidebar,
   useTheme: () => useTheme,
   useValidationErrorHandler: () => useValidationErrorHandler,
   validateData: () => validateData,
   validateDateRange: () => validateDateRange,
-  validateEmail: () => validateEmail,
+  validateMaxLength: () => validateMaxLength,
+  validateMinLength: () => validateMinLength,
+  validateNumber: () => validateNumber,
   validateNumericRanges: () => validateNumericRanges,
-  validateRequired: () => validateRequired,
+  validatePositiveNumber: () => validatePositiveNumber,
   validateRequiredFields: () => validateRequiredFields,
+  validateSupabaseEnv: () => validateSupabaseEnv,
   withErrorBoundary: () => withErrorBoundary
 });
 module.exports = __toCommonJS(src_exports);
@@ -359,22 +399,6 @@ var validateData = (data, schema) => {
 };
 var SCHEMAS = {
   // Applications should extend this with their specific schemas
-};
-var validateRequired = (data, requiredFields) => {
-  const errors = {};
-  requiredFields.forEach((field) => {
-    if (!data[field] || typeof data[field] === "string" && data[field].trim() === "") {
-      errors[field] = "This field is required";
-    }
-  });
-  return {
-    isValid: Object.keys(errors).length === 0,
-    errors
-  };
-};
-var validateEmail = (email) => {
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  return emailRegex.test(email);
 };
 
 // src/utils/dateUtils.ts
@@ -1260,8 +1284,8 @@ var buttonVariants = (0, import_class_variance_authority.cva)(
     variants: {
       variant: {
         default: "bg-primary text-primary-foreground shadow-xs hover:bg-primary/90",
-        destructive: "bg-destructive text-white shadow-xs hover:bg-destructive/90 focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40 dark:bg-destructive/60",
-        outline: "border bg-background shadow-xs hover:bg-accent hover:text-accent-foreground dark:bg-input/30 dark:border-input dark:hover:bg-input/50",
+        destructive: "bg-destructive text-destructive-foreground shadow-xs hover:bg-destructive/90 focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40",
+        outline: "border border-solid border-gray-300 bg-gray-100 text-gray-900 shadow-sm hover:bg-gray-200 hover:text-gray-900 dark:bg-gray-100 dark:border-gray-300 dark:text-gray-900 dark:hover:bg-gray-200",
         secondary: "bg-secondary text-secondary-foreground shadow-xs hover:bg-secondary/80",
         ghost: "hover:bg-accent hover:text-accent-foreground dark:hover:bg-accent/50",
         link: "text-primary underline-offset-4 hover:underline"
@@ -1549,9 +1573,45 @@ function TableCaption({ className, ...props }) {
   );
 }
 
+// src/utils/utils.ts
+var import_clsx2 = require("clsx");
+var import_tailwind_merge2 = require("tailwind-merge");
+function cn2(...inputs) {
+  return (0, import_tailwind_merge2.twMerge)((0, import_clsx2.clsx)(inputs));
+}
+
+// src/components/skeleton.tsx
+var import_jsx_runtime7 = require("react/jsx-runtime");
+function Skeleton({ className, ...props }) {
+  return /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(
+    "div",
+    {
+      "data-slot": "skeleton",
+      className: cn2("bg-accent animate-pulse rounded-md", className),
+      ...props
+    }
+  );
+}
+
+// src/components/textarea.tsx
+var import_jsx_runtime8 = require("react/jsx-runtime");
+function Textarea({ className, ...props }) {
+  return /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(
+    "textarea",
+    {
+      "data-slot": "textarea",
+      className: cn2(
+        "border-input placeholder:text-muted-foreground focus-visible:border-ring focus-visible:ring-ring/50 aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive dark:bg-input/30 flex field-sizing-content min-h-16 w-full rounded-md border bg-transparent px-3 py-2 text-base shadow-xs transition-[color,box-shadow] outline-none focus-visible:ring-[3px] disabled:cursor-not-allowed disabled:opacity-50 md:text-sm",
+        className
+      ),
+      ...props
+    }
+  );
+}
+
 // src/components/theme/ThemeProvider.tsx
 var import_react = require("react");
-var import_jsx_runtime7 = require("react/jsx-runtime");
+var import_jsx_runtime9 = require("react/jsx-runtime");
 var ThemeCtx = (0, import_react.createContext)(null);
 function applyTheme(t) {
   const root = document.documentElement;
@@ -1582,7 +1642,7 @@ var ThemeProvider = ({
     applyTheme(t);
   };
   const value = (0, import_react.useMemo)(() => ({ theme, setTheme }), [theme]);
-  return /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(ThemeCtx.Provider, { value, children });
+  return /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(ThemeCtx.Provider, { value, children });
 };
 var useTheme = () => {
   const ctx = (0, import_react.useContext)(ThemeCtx);
@@ -1591,10 +1651,10 @@ var useTheme = () => {
 };
 
 // src/components/theme/ThemeSwitch.tsx
-var import_jsx_runtime8 = require("react/jsx-runtime");
+var import_jsx_runtime10 = require("react/jsx-runtime");
 var ThemeSwitch = ({ className }) => {
   const { theme, setTheme } = useTheme();
-  return /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("div", { className: "inline-flex gap-2 items-center", children: /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("div", { className: "inline-flex gap-2 items-center", children: /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)(
     "select",
     {
       "aria-label": "Theme",
@@ -1608,9 +1668,9 @@ var ThemeSwitch = ({ className }) => {
         className
       ),
       children: [
-        /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("option", { value: "light", children: "Light" }),
-        /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("option", { value: "dark", children: "Dark" }),
-        /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("option", { value: "system", children: "System" })
+        /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("option", { value: "light", children: "Light" }),
+        /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("option", { value: "dark", children: "Dark" }),
+        /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("option", { value: "system", children: "System" })
       ]
     }
   ) });
@@ -1729,52 +1789,27 @@ var TASK_STATUSES = {
 };
 
 // src/components/DataTable.tsx
-var import_jsx_runtime9 = require("react/jsx-runtime");
-var Table2 = ({ children, className, ...props }) => /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("table", { className: `w-full border-collapse border border-gray-200 table-auto ${className || ""}`, ...props, children });
-var TableHeader2 = ({ children }) => /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("thead", { className: "bg-gray-50", children });
-var TableBody2 = ({ children }) => /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("tbody", { className: "divide-y divide-gray-200", children });
-var TableRow2 = ({ children, onClick, className }) => /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(
+var import_jsx_runtime11 = require("react/jsx-runtime");
+var Table2 = ({ children, className, ...props }) => /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("table", { className: `w-full border-collapse border border-border table-auto ${className || ""}`, ...props, children });
+var TableHeader2 = ({ children }) => /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("thead", { className: "bg-muted", children });
+var TableBody2 = ({ children }) => /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("tbody", { className: "divide-y divide-gray-200", children });
+var TableRow2 = ({ children, onClick, className }) => /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(
   "tr",
   {
     onClick,
-    className: `${onClick ? "cursor-pointer hover:bg-gray-50" : ""} ${className || ""}`,
+    className: `${onClick ? "cursor-pointer hover:bg-muted/50" : ""} ${className || ""}`,
     children
   }
 );
-var TableHead2 = ({ children }) => /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("th", { className: "px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider border-b border-gray-200 min-w-0", children });
-var TableCell2 = ({ children, colSpan, className }) => /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(
+var TableHead2 = ({ children }) => /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("th", { className: "px-4 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider border-b border-border min-w-0", children });
+var TableCell2 = ({ children, colSpan, className }) => /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(
   "td",
   {
     colSpan,
-    className: `px-4 py-3 text-sm text-gray-900 border-b border-gray-200 min-w-0 max-w-xs ${className || ""}`,
-    children: /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("div", { className: "truncate", title: typeof children === "string" ? children : "", children })
+    className: `px-4 py-3 text-sm text-foreground border-b border-border min-w-0 max-w-xs ${className || ""}`,
+    children: /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("div", { className: "truncate", title: typeof children === "string" ? children : "", children })
   }
 );
-var Button2 = ({ children, variant = "default", size = "default", onClick, disabled, className }) => {
-  const baseClasses = "inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none";
-  const variantClasses = {
-    default: "bg-primary text-primary-foreground hover:bg-primary/90",
-    destructive: "bg-destructive text-destructive-foreground hover:bg-destructive/90",
-    outline: "border border-input hover:bg-accent hover:text-accent-foreground",
-    secondary: "bg-secondary text-secondary-foreground hover:bg-secondary/80",
-    ghost: "hover:bg-accent hover:text-accent-foreground",
-    link: "underline-offset-4 hover:underline text-primary"
-  };
-  const sizeClasses = {
-    default: "h-10 py-2 px-4",
-    sm: "h-9 px-3 rounded-md",
-    lg: "h-11 px-8 rounded-md"
-  };
-  return /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(
-    "button",
-    {
-      onClick,
-      disabled,
-      className: `${baseClasses} ${variantClasses[variant] || variantClasses.default} ${sizeClasses[size] || sizeClasses.default} ${className || ""}`,
-      children
-    }
-  );
-};
 function DataTable({
   data,
   columns: userColumns,
@@ -1790,7 +1825,10 @@ function DataTable({
   pageSizeOptions = [...DATA_TABLE_DEFAULTS.PAGE_SIZE_OPTIONS],
   enableGlobalSearch = true,
   enableColumnVisibility = false,
-  enableRowSelection = false
+  enableRowSelection = false,
+  loading = false,
+  emptyMessage = "No results found.",
+  className
 }) {
   const [filters, setFilters] = (0, import_react2.useState)({});
   const [page, setPage] = (0, import_react2.useState)(0);
@@ -1798,13 +1836,15 @@ function DataTable({
   const [selectedIds, setSelectedIds] = (0, import_react2.useState)(/* @__PURE__ */ new Set());
   const [globalQuery, setGlobalQuery] = (0, import_react2.useState)("");
   const [sorting, setSorting] = (0, import_react2.useState)([]);
+  const [columnVisibility, setColumnVisibility] = (0, import_react2.useState)({});
+  const [showColumnDropdown, setShowColumnDropdown] = (0, import_react2.useState)(false);
   const columns = (0, import_react2.useMemo)(() => {
     const selectionColumn = enableRowSelection ? {
       id: "select",
       header: ({ table: table2 }) => {
         const currentPageRows = table2.getRowModel().rows.map((row) => row.original);
         const allSelected = currentPageRows.length > 0 && currentPageRows.every((r) => selectedIds.has(r.id));
-        return /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("div", { className: "w-8", children: /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(
+        return /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("div", { className: "w-8", children: /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(
           "input",
           {
             type: "checkbox",
@@ -1819,11 +1859,11 @@ function DataTable({
               }
               setSelectedIds(newSet);
             },
-            className: "h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+            className: "h-4 w-4 rounded border-border text-primary focus:ring-ring"
           }
         ) });
       },
-      cell: ({ row }) => /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("div", { className: "flex w-8", children: /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(
+      cell: ({ row }) => /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("div", { className: "flex w-8", children: /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(
         "input",
         {
           type: "checkbox",
@@ -1838,16 +1878,16 @@ function DataTable({
             }
             setSelectedIds(newSet);
           },
-          className: "h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+          className: "h-4 w-4 rounded border-border text-primary focus:ring-ring"
         }
       ) })
     } : null;
     const actionColumn = onEditRow || onDeleteRow ? {
       id: "actions",
       header: "Actions",
-      cell: ({ row }) => /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)("div", { className: "flex gap-2", children: [
-        onEditRow && /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(
-          Button2,
+      cell: ({ row }) => /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("div", { className: "flex gap-2", children: [
+        onEditRow && /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(
+          Button,
           {
             variant: "outline",
             size: "sm",
@@ -1855,8 +1895,8 @@ function DataTable({
             children: "Edit"
           }
         ),
-        onDeleteRow && /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(
-          Button2,
+        onDeleteRow && /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(
+          Button,
           {
             variant: "destructive",
             size: "sm",
@@ -1901,10 +1941,15 @@ function DataTable({
   const table = (0, import_react_table.useReactTable)({
     data: paginatedData,
     columns,
-    state: { sorting },
+    state: {
+      sorting,
+      columnVisibility
+    },
     onSortingChange: setSorting,
+    onColumnVisibilityChange: setColumnVisibility,
     getCoreRowModel: (0, import_react_table.getCoreRowModel)(),
-    getSortedRowModel: (0, import_react_table.getSortedRowModel)()
+    getSortedRowModel: (0, import_react_table.getSortedRowModel)(),
+    getFilteredRowModel: (0, import_react_table.getFilteredRowModel)()
   });
   const handleFilterChange = (column, value) => {
     setFilters((prev) => ({ ...prev, [column]: value }));
@@ -1915,9 +1960,9 @@ function DataTable({
     setGlobalQuery("");
     setPage(0);
   };
-  return /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)("div", { className: "w-full space-y-4", children: [
-    enableGlobalSearch && /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)("div", { className: "flex items-center gap-4", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("div", { className: "flex-1", children: /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("div", { className: `w-full space-y-1 ${className || ""}`, children: [
+    /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("div", { className: "flex items-center justify-between gap-4", children: [
+      enableGlobalSearch && /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("div", { className: "flex-1 max-w-sm", children: /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(
         "input",
         {
           type: "text",
@@ -1930,35 +1975,75 @@ function DataTable({
           className: "w-full px-3 py-2 border border-input rounded-md bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring"
         }
       ) }),
-      globalQuery && /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(Button2, { variant: "outline", onClick: clearFilters, children: "Clear Search" })
+      /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("div", { className: "flex items-center gap-2", children: [
+        globalQuery && /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(Button, { variant: "outline", size: "sm", onClick: clearFilters, children: "Clear Search" }),
+        enableColumnVisibility && /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("div", { className: "relative", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(
+            Button,
+            {
+              variant: "outline",
+              size: "sm",
+              onClick: () => setShowColumnDropdown(!showColumnDropdown),
+              children: "Columns \u2699\uFE0F"
+            }
+          ),
+          showColumnDropdown && /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)(import_jsx_runtime11.Fragment, { children: [
+            /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(
+              "div",
+              {
+                className: "fixed inset-0 z-10",
+                onClick: () => setShowColumnDropdown(false)
+              }
+            ),
+            /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("div", { className: "absolute right-0 mt-2 w-48 bg-popover border border-border rounded-md shadow-lg z-20 p-2", children: table.getAllColumns().filter((column) => column.getCanHide()).map((column) => /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("label", { className: "flex items-center gap-2 p-1 hover:bg-accent rounded cursor-pointer", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(
+                "input",
+                {
+                  type: "checkbox",
+                  checked: column.getIsVisible(),
+                  onChange: column.getToggleVisibilityHandler(),
+                  className: "h-4 w-4 rounded border-border"
+                }
+              ),
+              /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("span", { className: "text-sm capitalize", children: column.id.replace(/([A-Z])/g, " $1").replace(/^./, (str) => str.toUpperCase()) })
+            ] }, column.id)) })
+          ] })
+        ] })
+      ] })
     ] }),
-    /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("div", { className: "rounded-md border border-gray-200 overflow-hidden shadow-sm", children: /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("div", { className: "overflow-x-auto", children: /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)(Table2, { className: "min-w-full", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(TableHeader2, { children: table.getHeaderGroups().map((headerGroup) => /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(TableRow2, { children: headerGroup.headers.map((header) => /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(TableHead2, { children: header.isPlaceholder ? null : /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)(
+    /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("div", { className: "rounded-md border border-border overflow-hidden shadow-sm", children: /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("div", { className: "overflow-x-auto", children: /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)(Table2, { className: "min-w-full", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(TableHeader2, { children: table.getHeaderGroups().map((headerGroup) => /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(TableRow2, { children: headerGroup.headers.map((header) => /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(TableHead2, { children: header.isPlaceholder ? null : /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)(
         "div",
         {
           className: header.column.getCanSort() ? "cursor-pointer select-none flex items-center gap-2" : "",
           onClick: header.column.getToggleSortingHandler(),
           children: [
             (0, import_react_table.flexRender)(header.column.columnDef.header, header.getContext()),
-            {
-              asc: " \u{1F53C}",
-              desc: " \u{1F53D}"
-            }[header.column.getIsSorted()] ?? null
+            header.column.getCanSort() && /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("span", { className: "ml-1", children: {
+              asc: "\u2191",
+              desc: "\u2193"
+            }[header.column.getIsSorted()] ?? "\u2195\uFE0F" })
           ]
         }
       ) }, header.id)) }, headerGroup.id)) }),
-      /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(TableBody2, { children: table.getRowModel().rows.length ? table.getRowModel().rows.map((row) => /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(
+      /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(TableBody2, { children: loading ? /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(TableRow2, { children: /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(TableCell2, { colSpan: columns.length, className: "h-24 text-center", children: /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("div", { className: "flex items-center justify-center gap-2", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("div", { className: "animate-spin rounded-full h-4 w-4 border-b-2 border-foreground" }),
+        "Loading..."
+      ] }) }) }) : table.getRowModel().rows.length ? table.getRowModel().rows.map((row) => /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(
         TableRow2,
         {
           onClick: () => onRowClick && onRowClick(row.original),
           className: onRowClick ? "cursor-pointer hover:bg-muted/50" : "",
-          children: row.getVisibleCells().map((cell) => /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(TableCell2, { children: (0, import_react_table.flexRender)(cell.column.columnDef.cell, cell.getContext()) }, cell.id))
+          children: row.getVisibleCells().map((cell) => /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(TableCell2, { children: (0, import_react_table.flexRender)(cell.column.columnDef.cell, cell.getContext()) }, cell.id))
         },
         row.id
-      )) : /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(TableRow2, { children: /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(TableCell2, { colSpan: columns.length, className: "h-24 text-center", children: "No results found." }) }) })
+      )) : /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(TableRow2, { children: /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(TableCell2, { colSpan: columns.length, className: "h-24 text-center text-muted-foreground", children: /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("div", { className: "flex flex-col items-center gap-2", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("div", { className: "text-4xl", children: "\u{1F4CB}" }),
+        /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("div", { children: emptyMessage })
+      ] }) }) }) })
     ] }) }) }),
-    /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)("div", { className: "flex items-center justify-between", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)("div", { className: "text-sm text-muted-foreground", children: [
+    /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("div", { className: "flex items-center justify-between", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("div", { className: "text-sm text-muted-foreground", children: [
         "Showing ",
         page * pageSize + 1,
         " to ",
@@ -1967,9 +2052,9 @@ function DataTable({
         filteredData.length,
         " results"
       ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)("div", { className: "flex items-center space-x-2", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(
-          Button2,
+      /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("div", { className: "flex items-center space-x-2", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(
+          Button,
           {
             variant: "outline",
             size: "sm",
@@ -1978,14 +2063,14 @@ function DataTable({
             children: "Previous"
           }
         ),
-        /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)("span", { className: "text-sm", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("span", { className: "text-sm", children: [
           "Page ",
           page + 1,
           " of ",
           totalPages
         ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(
-          Button2,
+        /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(
+          Button,
           {
             variant: "outline",
             size: "sm",
@@ -1996,459 +2081,110 @@ function DataTable({
         )
       ] })
     ] }),
-    selectedIds.size > 0 && (onBulkDelete || onBulkExport) && /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)("div", { className: "flex items-center justify-between p-4 bg-muted rounded-md", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)("span", { className: "text-sm text-muted-foreground", children: [
-        selectedIds.size,
-        " items selected"
-      ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)("div", { className: "flex gap-2", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(
-          Button2,
+    selectedIds.size > 0 && (onBulkDelete || onBulkExport) && /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("div", { className: "sticky bottom-0 bg-background border-t border-border p-4 -mx-4 -mb-4 rounded-b-md", children: /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("div", { className: "flex items-center justify-between gap-4", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("div", { className: "flex items-center gap-3", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(
+          Button,
           {
-            variant: "outline",
+            variant: "ghost",
             size: "sm",
             onClick: () => setSelectedIds(/* @__PURE__ */ new Set()),
-            children: "Clear Selection"
+            className: "h-8 w-8 p-0",
+            children: "\u2715"
           }
         ),
-        onBulkExport && /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(
-          Button2,
+        /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("span", { className: "text-sm font-medium", children: [
+          selectedIds.size,
+          " item",
+          selectedIds.size > 1 ? "s" : "",
+          " selected"
+        ] })
+      ] }),
+      /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("div", { className: "flex gap-2", children: [
+        onBulkExport && /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(
+          Button,
           {
             variant: "outline",
             size: "sm",
             onClick: () => onBulkExport(Array.from(selectedIds)),
-            children: "Export Selected"
+            children: "\u{1F4E4} Export"
           }
         ),
-        onBulkDelete && /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(
-          Button2,
+        onBulkDelete && /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(
+          Button,
           {
             variant: "destructive",
             size: "sm",
             onClick: () => {
-              if (confirmAction(`Delete ${selectedIds.size} selected items?`)) {
+              if (confirmAction(`Delete ${selectedIds.size} selected items? This action cannot be undone.`)) {
                 onBulkDelete(Array.from(selectedIds));
                 setSelectedIds(/* @__PURE__ */ new Set());
               }
             },
-            children: "Delete Selected"
+            children: "\u{1F5D1}\uFE0F Delete"
           }
         )
       ] })
-    ] })
+    ] }) })
   ] });
 }
 
-// src/components/ErrorBoundary.tsx
-var import_react3 = __toESM(require("react"), 1);
-var import_jsx_runtime10 = require("react/jsx-runtime");
-var ErrorBoundary = class extends import_react3.default.Component {
-  constructor(props) {
-    super(props);
-    this.handleRetry = () => {
-      const maxRetries = this.props.maxRetries || 3;
-      if (this.state.retryCount < maxRetries) {
-        this.setState({
-          hasError: false,
-          error: null,
-          errorInfo: null,
-          errorId: null,
-          retryCount: this.state.retryCount + 1
-        });
-      }
-    };
-    this.handleReset = () => {
-      this.setState({
-        hasError: false,
-        error: null,
-        errorInfo: null,
-        errorId: null,
-        retryCount: 0
-      });
-    };
-    this.handleReportIssue = () => {
-      const subject = encodeURIComponent(`App Error Report - ${this.state.errorId}`);
-      const body = encodeURIComponent(`
-Error Report Details:
-- Error ID: ${this.state.errorId}
-- Error: ${this.state.error?.message || "Unknown error"}
-- URL: ${window.location.href}
-- User Agent: ${navigator.userAgent}
-- Timestamp: ${(/* @__PURE__ */ new Date()).toISOString()}
-
-Please describe what you were doing when this error occurred:
-    `);
-      window.open(`mailto:support@company.com?subject=${subject}&body=${body}`);
-    };
-    this.state = {
-      hasError: false,
-      error: null,
-      errorInfo: null,
-      errorId: null,
-      retryCount: 0
-    };
-  }
-  static getDerivedStateFromError(error) {
-    return {
-      hasError: true,
-      error,
-      errorId: generateId()
-    };
-  }
-  componentDidCatch(error, errorInfo) {
-    this.setState({
-      errorInfo,
-      errorId: this.state.errorId || generateId()
-    });
-    if (this.props.onError) {
-      this.props.onError(error, errorInfo);
-    }
-    if (process.env.NODE_ENV === "development") {
-      console.error("ErrorBoundary caught an error:", error, errorInfo);
-    }
-  }
-  render() {
-    if (this.state.hasError) {
-      if (this.props.fallback) {
-        return this.props.fallback(this.state.error, this.state.errorInfo, {
-          retry: this.handleRetry,
-          reset: this.handleReset,
-          retryCount: this.state.retryCount,
-          maxRetries: this.props.maxRetries || 3
-        });
-      }
-      return /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("div", { className: "min-h-screen flex items-center justify-center bg-background", children: /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("div", { className: "max-w-md w-full bg-card shadow-lg rounded-lg p-6 border", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("div", { className: "flex items-center mb-4", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("div", { className: "flex-shrink-0", children: /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("div", { className: "h-8 w-8 text-destructive text-2xl", children: "\u{1F6A8}" }) }),
-          /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("div", { className: "ml-3", children: /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("h3", { className: "text-lg font-medium text-foreground", children: "Something went wrong" }) })
-        ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("div", { className: "mb-4", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("p", { className: "text-sm text-muted-foreground", children: "We're sorry, but something unexpected happened. Our team has been notified and is working to fix this issue." }),
-          this.state.errorId && /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("p", { className: "text-xs text-muted-foreground mt-2", children: [
-            "Error ID: ",
-            /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("code", { className: "bg-muted px-1 rounded", children: this.state.errorId })
-          ] })
-        ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("div", { className: "flex space-x-3 mb-4", children: [
-          this.state.retryCount < (this.props.maxRetries || 3) && /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)(
-            "button",
-            {
-              onClick: this.handleRetry,
-              className: "flex-1 bg-blue-600 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500",
-              children: [
-                "Try Again (",
-                this.state.retryCount + 1,
-                "/",
-                (this.props.maxRetries || 3) + 1,
-                ")"
-              ]
-            }
-          ),
-          /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(
-            "button",
-            {
-              onClick: this.handleReset,
-              className: "flex-1 bg-gray-600 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500",
-              children: "Reset"
-            }
-          )
-        ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(
-          "button",
-          {
-            onClick: this.handleReportIssue,
-            className: "w-full bg-gray-100 text-gray-900 px-4 py-2 rounded-md text-sm font-medium hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-500 border border-gray-300",
-            children: "\u{1F4E7} Report Issue"
-          }
-        ),
-        process.env.NODE_ENV === "development" && this.state.error && /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("details", { className: "mt-4", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("summary", { className: "text-sm text-muted-foreground cursor-pointer hover:text-foreground", children: "Technical Details (Development)" }),
-          /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("div", { className: "mt-2 p-3 bg-muted rounded text-xs font-mono text-foreground overflow-auto max-h-40", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("div", { className: "mb-2", children: [
-              /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("strong", { children: "Error:" }),
-              " ",
-              this.state.error.message
-            ] }),
-            this.state.errorInfo?.componentStack && /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("div", { className: "mb-2", children: [
-              /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("strong", { children: "Component Stack:" }),
-              /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("pre", { className: "whitespace-pre-wrap text-xs", children: this.state.errorInfo.componentStack })
-            ] }),
-            this.state.error.stack && /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("div", { children: [
-              /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("strong", { children: "Stack Trace:" }),
-              /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("pre", { className: "whitespace-pre-wrap text-xs", children: this.state.error.stack })
-            ] })
-          ] })
-        ] })
-      ] }) });
-    }
-    return this.props.children;
-  }
-};
-var withErrorBoundary = (WrappedComponent, options = {}) => {
-  return function WithErrorBoundaryComponent(props) {
-    return /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(ErrorBoundary, { ...options, children: /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(WrappedComponent, { ...props }) });
-  };
-};
-var useErrorBoundary = () => {
-  const [error, setError] = import_react3.default.useState(null);
-  const resetError = import_react3.default.useCallback(() => {
-    setError(null);
-  }, []);
-  const captureError = import_react3.default.useCallback((error2) => {
-    setError(error2);
-  }, []);
-  import_react3.default.useEffect(() => {
-    if (error) {
-      throw error;
-    }
-  }, [error]);
-  return { captureError, resetError };
-};
-
-// src/components/Header.tsx
-var import_jsx_runtime11 = require("react/jsx-runtime");
-function Header({ user, onSignOut, onToggleSidebar, ThemeSwitch: ThemeSwitch2, Button: Button3, MenuIcon, LogOutIcon }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("header", { className: "bg-secondary shadow-sm border-b border-border", children: /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("div", { className: "flex items-center justify-between px-4 py-2", children: [
-    /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("div", { className: "flex items-center", children: /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(
-      "button",
-      {
-        onClick: onToggleSidebar,
-        className: "p-2 rounded-md text-muted-foreground hover:text-foreground hover:bg-accent focus:outline-none focus:ring-2 focus:ring-inset focus:ring-ring",
-        children: /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(MenuIcon, { className: "h-6 w-6" })
-      }
-    ) }),
-    /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("div", { className: "flex items-center space-x-4", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(ThemeSwitch2, {}),
-      /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("span", { className: "text-sm text-muted-foreground", children: user?.email?.split("@")[0] || "User" }),
-      /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)(
-        Button3,
-        {
-          variant: "outline",
-          size: "sm",
-          onClick: onSignOut,
-          className: "flex items-center gap-2",
-          children: [
-            /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(LogOutIcon, { className: "h-4 w-4" }),
-            "Logout"
-          ]
-        }
-      )
-    ] })
-  ] }) });
-}
-
-// src/components/FilterDropdown.tsx
-var import_react4 = require("react");
+// src/components/ListPageLayout.tsx
+var import_react_router_dom = require("react-router-dom");
 var import_jsx_runtime12 = require("react/jsx-runtime");
-var FilterDropdown = ({ column, options, onFilterChange, isOpen, onToggle, activeFilter }) => {
-  const [searchTerm, setSearchTerm] = (0, import_react4.useState)("");
-  const [position, setPosition] = (0, import_react4.useState)({ top: 0, left: 0 });
-  const [selectedValues, setSelectedValues] = (0, import_react4.useState)(/* @__PURE__ */ new Set());
-  const [isSelectAll, setIsSelectAll] = (0, import_react4.useState)(true);
-  const dropdownRef = (0, import_react4.useRef)(null);
-  const filteredOptions = (0, import_react4.useMemo)(() => {
-    if (!searchTerm) return options;
-    const filtered = options.filter(
-      (option) => option && option.toLowerCase().includes(searchTerm.toLowerCase())
-    );
-    return filtered;
-  }, [options, searchTerm, column]);
-  (0, import_react4.useEffect)(() => {
-    if (isOpen) {
-      if (activeFilter && Array.isArray(activeFilter)) {
-        setSelectedValues(new Set(activeFilter));
-        setIsSelectAll(activeFilter.length === options.length);
-      } else if (activeFilter) {
-        setSelectedValues(/* @__PURE__ */ new Set([activeFilter]));
-        setIsSelectAll(false);
-      } else {
-        setSelectedValues(new Set(options));
-        setIsSelectAll(true);
-      }
-    }
-  }, [isOpen, activeFilter, options]);
-  const handleOptionToggle = (option) => {
-    const newSelectedValues = new Set(selectedValues);
-    if (newSelectedValues.has(option)) {
-      newSelectedValues.delete(option);
-    } else {
-      newSelectedValues.add(option);
-    }
-    setSelectedValues(newSelectedValues);
-    setIsSelectAll(newSelectedValues.size === filteredOptions.length);
-  };
-  const handleSelectAll = () => {
-    if (isSelectAll) {
-      setSelectedValues(/* @__PURE__ */ new Set());
-      setIsSelectAll(false);
-    } else {
-      setSelectedValues(new Set(filteredOptions));
-      setIsSelectAll(true);
-    }
-  };
-  const handleClearFilter = () => {
-    setSelectedValues(/* @__PURE__ */ new Set());
-    setIsSelectAll(false);
-  };
-  const handleApplyFilter = () => {
-    const selectedArray = Array.from(selectedValues);
-    onFilterChange(column, selectedArray.length === 0 ? "" : selectedArray);
-    setSearchTerm("");
-    onToggle();
-  };
-  const handleCancel = () => {
-    setSearchTerm("");
-    onToggle();
-  };
-  (0, import_react4.useEffect)(() => {
-    const handleClickOutside = (event) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-        handleCancel();
-      }
-    };
-    if (isOpen) {
-      document.addEventListener("mousedown", handleClickOutside);
-    }
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [isOpen]);
-  (0, import_react4.useEffect)(() => {
-    if (!isOpen) {
-      setSearchTerm("");
-      setSelectedValues(/* @__PURE__ */ new Set());
-      setIsSelectAll(true);
-    }
-  }, [isOpen]);
-  (0, import_react4.useEffect)(() => {
-    if (isOpen && dropdownRef.current) {
-      const button = dropdownRef.current.querySelector("button");
-      if (button) {
-        const rect = button.getBoundingClientRect();
-        const viewportWidth = window.innerWidth;
-        const dropdownWidth = 192;
-        let leftPosition = 0;
-        if (rect.left + dropdownWidth > viewportWidth) {
-          leftPosition = -dropdownWidth + rect.width;
-        }
-        setPosition({
-          top: rect.height + 5,
-          // Position below the button with small gap
-          left: leftPosition
-        });
-      }
-    }
-  }, [isOpen]);
-  return /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("div", { className: "relative", ref: dropdownRef, children: [
+function ListPageLayout({
+  title,
+  createButtonText,
+  createButtonHref,
+  entityName,
+  data,
+  columns,
+  onRowClick,
+  onEditRow,
+  onDeleteRow,
+  enableFiltering = true,
+  filterableColumns = [],
+  enableGlobalSearch = false,
+  onBulkDelete,
+  onBulkExport,
+  loading = false,
+  emptyMessage,
+  detailComponent,
+  className
+}) {
+  const standardizedButtonText = createButtonText || `+ New ${entityName || "Item"}`;
+  return /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("div", { className: `space-y-1 ${className || ""}`, children: [
+    /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("div", { className: "flex items-center justify-between", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("h1", { className: "text-2xl font-semibold text-foreground", children: title }),
+      /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(import_react_router_dom.Link, { to: createButtonHref, children: /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(Button, { variant: "outline", children: standardizedButtonText }) })
+    ] }),
     /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(
-      "button",
+      DataTable,
       {
-        onClick: onToggle,
-        className: `inline-flex items-center justify-center w-4 h-4 transition-colors ${activeFilter ? "text-blue-600 hover:text-blue-700" : "text-gray-500 hover:text-gray-700"}`,
-        title: activeFilter ? `Filtro attivo: ${activeFilter}` : "Filtra",
-        children: /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("svg", { width: "12", height: "12", viewBox: "0 0 24 24", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("path", { d: "M10 18h4v-2h-4v2zM3 6v2h18V6H3zm3 7h12v-2H6v2z" }) })
+        data,
+        columns,
+        onRowClick,
+        onEditRow,
+        onDeleteRow,
+        enableFiltering,
+        filterableColumns,
+        enableGlobalSearch,
+        onBulkDelete,
+        onBulkExport,
+        loading,
+        emptyMessage
       }
     ),
-    isOpen && /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)(
-      "div",
-      {
-        className: "absolute bg-white border border-gray-300 rounded-md shadow-lg z-[99999] w-48",
-        style: {
-          top: position.top,
-          left: position.left
-        },
-        onClick: (e) => e.stopPropagation(),
-        children: [
-          /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("div", { className: "p-2", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("div", { className: "flex items-center justify-between mb-1", children: [
-              /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(
-                "button",
-                {
-                  onClick: handleSelectAll,
-                  className: "text-blue-600 text-xs font-medium hover:underline",
-                  children: isSelectAll ? "Select all" : `Select all ${filteredOptions.length}`
-                }
-              ),
-              /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(
-                "button",
-                {
-                  onClick: handleClearFilter,
-                  className: "text-blue-600 text-xs font-medium hover:underline",
-                  children: "Clear"
-                }
-              )
-            ] }),
-            /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("div", { className: "text-xs text-gray-600 mb-1", children: [
-              "Displaying ",
-              filteredOptions.length
-            ] }),
-            /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("div", { className: "relative mb-1", children: [
-              /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(
-                "input",
-                {
-                  type: "text",
-                  placeholder: "Search values...",
-                  value: searchTerm,
-                  onChange: (e) => setSearchTerm(e.target.value),
-                  className: "w-full px-2 py-1 text-xs border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-500"
-                }
-              ),
-              /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("div", { className: "absolute right-2 top-1/2 transform -translate-y-1/2", children: /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("svg", { width: "10", height: "10", viewBox: "0 0 24 24", fill: "currentColor", className: "text-gray-400", children: /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("path", { d: "M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z" }) }) })
-            ] }),
-            /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("div", { className: "h-16 overflow-y-auto border border-gray-200 rounded", children: [
-              filteredOptions.map((option, index) => /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)(
-                "label",
-                {
-                  className: "flex items-center px-2 py-1 hover:bg-gray-50 cursor-pointer",
-                  children: [
-                    /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(
-                      "input",
-                      {
-                        type: "checkbox",
-                        checked: selectedValues.has(option),
-                        onChange: () => handleOptionToggle(option),
-                        className: "mr-2 h-3 w-3 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
-                      }
-                    ),
-                    /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("span", { className: "text-xs truncate flex-1", children: option || "(Blanks)" })
-                  ]
-                },
-                `${option}-${index}`
-              )),
-              filteredOptions.length === 0 && searchTerm && /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("div", { className: "px-2 py-2 text-xs text-gray-500 text-center", children: "No results found" })
-            ] })
-          ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)("div", { className: "border-t border-gray-200 p-2 flex justify-end space-x-1", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(
-              "button",
-              {
-                onClick: handleCancel,
-                className: "px-2 py-1 text-xs text-gray-700 hover:bg-gray-100 rounded",
-                children: "Cancel"
-              }
-            ),
-            /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(
-              "button",
-              {
-                onClick: handleApplyFilter,
-                className: "px-2 py-1 text-xs bg-blue-600 text-white hover:bg-blue-700 rounded",
-                children: "OK"
-              }
-            )
-          ] })
-        ]
-      }
-    )
+    detailComponent
   ] });
-};
-var FilterDropdown_default = FilterDropdown;
+}
 
 // src/components/GenericForm.tsx
-var import_react6 = require("react");
+var import_react9 = require("react");
 var import_react_hook_form = require("react-hook-form");
 
 // src/hooks/useErrorHandler.ts
-var import_react5 = require("react");
+var import_react3 = require("react");
 var showError2 = (message) => console.error(message);
 var showWarning2 = (message) => console.warn(message);
 var showInfo2 = (message) => console.info(message);
@@ -2462,10 +2198,10 @@ var useErrorHandler = (options = {}) => {
     onRetry = null,
     onFallback = null
   } = options;
-  const [errors, setErrors] = (0, import_react5.useState)([]);
-  const [isRetrying, setIsRetrying] = (0, import_react5.useState)(false);
-  const retryCountRef = (0, import_react5.useRef)(0);
-  const handleError = (0, import_react5.useCallback)(async (error, context = "", customOptions = {}) => {
+  const [errors, setErrors] = (0, import_react3.useState)([]);
+  const [isRetrying, setIsRetrying] = (0, import_react3.useState)(false);
+  const retryCountRef = (0, import_react3.useRef)(0);
+  const handleError = (0, import_react3.useCallback)(async (error, context = "", customOptions = {}) => {
     const normalizedError = {
       id: `ERR_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
       message: error.message || "An unexpected error occurred",
@@ -2501,7 +2237,7 @@ var useErrorHandler = (options = {}) => {
     }
     return normalizedError;
   }, [logErrors, showUserMessages, onError]);
-  const handleAsync = (0, import_react5.useCallback)(async (asyncOperation, options2 = {}) => {
+  const handleAsync = (0, import_react3.useCallback)(async (asyncOperation, options2 = {}) => {
     const {
       context = "",
       fallbackMessage = "Operation failed",
@@ -2518,7 +2254,7 @@ var useErrorHandler = (options = {}) => {
       throw handledError;
     }
   }, [maxRetries, handleError]);
-  const retryOperation = (0, import_react5.useCallback)(async (operation, maxAttempts) => {
+  const retryOperation = (0, import_react3.useCallback)(async (operation, maxAttempts) => {
     let lastError;
     for (let attempt = 1; attempt <= maxAttempts; attempt++) {
       try {
@@ -2546,7 +2282,7 @@ var useErrorHandler = (options = {}) => {
     retryCountRef.current = 0;
     throw lastError;
   }, [retryDelay, onRetry, showUserMessages]);
-  const handleValidationError = (0, import_react5.useCallback)((message, details = {}) => {
+  const handleValidationError = (0, import_react3.useCallback)((message, details = {}) => {
     const error = {
       message,
       type: ERROR_TYPES.VALIDATION_ERROR,
@@ -2556,7 +2292,7 @@ var useErrorHandler = (options = {}) => {
     };
     return handleError(error, "validation");
   }, [handleError]);
-  const handleNetworkError = (0, import_react5.useCallback)((message = "Network connection failed") => {
+  const handleNetworkError = (0, import_react3.useCallback)((message = "Network connection failed") => {
     const error = {
       message,
       type: ERROR_TYPES.NETWORK_ERROR,
@@ -2565,7 +2301,7 @@ var useErrorHandler = (options = {}) => {
     };
     return handleError(error, "network");
   }, [handleError]);
-  const handleAuthError = (0, import_react5.useCallback)((message = "Authentication failed") => {
+  const handleAuthError = (0, import_react3.useCallback)((message = "Authentication failed") => {
     const error = {
       message,
       type: ERROR_TYPES.AUTHENTICATION_ERROR,
@@ -2574,16 +2310,16 @@ var useErrorHandler = (options = {}) => {
     };
     return handleError(error, "authentication");
   }, [handleError]);
-  const clearErrors = (0, import_react5.useCallback)(() => {
+  const clearErrors = (0, import_react3.useCallback)(() => {
     setErrors([]);
   }, []);
-  const clearError = (0, import_react5.useCallback)((errorId) => {
+  const clearError = (0, import_react3.useCallback)((errorId) => {
     setErrors((prev) => prev.filter((error) => error.id !== errorId));
   }, []);
-  const getErrorsByType = (0, import_react5.useCallback)((type) => {
+  const getErrorsByType = (0, import_react3.useCallback)((type) => {
     return errors.filter((error) => error.type === type);
   }, [errors]);
-  const hasCriticalErrors = (0, import_react5.useCallback)(() => {
+  const hasCriticalErrors = (0, import_react3.useCallback)(() => {
     return errors.some((error) => error.severity === "critical");
   }, [errors]);
   return {
@@ -2611,10 +2347,10 @@ var useValidationErrorHandler = () => {
     showUserMessages: false
     // Don't show toast for validation errors
   });
-  const handleFieldError = (0, import_react5.useCallback)((field, message) => {
+  const handleFieldError = (0, import_react3.useCallback)((field, message) => {
     return handleValidationError(`Field '${field}': ${message}`, { field });
   }, [handleValidationError]);
-  const handleRequiredFieldError = (0, import_react5.useCallback)((field) => {
+  const handleRequiredFieldError = (0, import_react3.useCallback)((field) => {
     return handleValidationError(`Field '${field}' is required`, { field, type: "required" });
   }, [handleValidationError]);
   return {
@@ -2735,6 +2471,185 @@ function useDataService(service, resourceName) {
     invalidateDetail: (id) => queryClient.invalidateQueries({ queryKey: [resourceName, "detail", id] })
   };
 }
+
+// src/hooks/useAuthGuard.ts
+var import_react5 = require("react");
+
+// src/services/AuthProvider.tsx
+var import_react4 = require("react");
+var import_jsx_runtime13 = require("react/jsx-runtime");
+var AuthContext = (0, import_react4.createContext)(null);
+var AuthProvider = ({
+  children,
+  supabaseClient,
+  onAuthStateChange
+}) => {
+  const [user, setUser] = (0, import_react4.useState)(null);
+  const [session, setSession] = (0, import_react4.useState)(null);
+  const [loading, setLoading] = (0, import_react4.useState)(true);
+  const [error, setError] = (0, import_react4.useState)(null);
+  (0, import_react4.useEffect)(() => {
+    const getInitialSession = async () => {
+      try {
+        const { data: { session: initialSession }, error: error2 } = await supabaseClient.auth.getSession();
+        if (error2) {
+          setError("Failed to initialize authentication");
+        } else {
+          setSession(initialSession);
+          setUser(initialSession?.user ?? null);
+          onAuthStateChange?.(initialSession?.user ?? null, initialSession);
+        }
+      } catch (err) {
+        setError("Authentication initialization failed");
+      } finally {
+        setLoading(false);
+      }
+    };
+    getInitialSession();
+    const { data: { subscription } } = supabaseClient.auth.onAuthStateChange(
+      async (event, session2) => {
+        setSession(session2);
+        setUser(session2?.user ?? null);
+        setError(null);
+        onAuthStateChange?.(session2?.user ?? null, session2);
+        if (event === "SIGNED_OUT") {
+          setLoading(false);
+        }
+      }
+    );
+    return () => subscription.unsubscribe();
+  }, [supabaseClient, onAuthStateChange]);
+  const signIn = async (email, password) => {
+    try {
+      setError(null);
+      const { error: error2 } = await supabaseClient.auth.signInWithPassword({
+        email,
+        password
+      });
+      if (error2) {
+        setError(error2.message);
+        return { error: error2.message };
+      }
+      return {};
+    } catch (err) {
+      const errorMessage = "Sign in failed";
+      setError(errorMessage);
+      return { error: errorMessage };
+    }
+  };
+  const signUp = async (email, password, metadata) => {
+    try {
+      setError(null);
+      const { error: error2 } = await supabaseClient.auth.signUp({
+        email,
+        password,
+        options: {
+          data: metadata
+        }
+      });
+      if (error2) {
+        setError(error2.message);
+        return { error: error2.message };
+      }
+      return {};
+    } catch (err) {
+      const errorMessage = "Sign up failed";
+      setError(errorMessage);
+      return { error: errorMessage };
+    }
+  };
+  const signOut = async () => {
+    try {
+      setError(null);
+      await supabaseClient.auth.signOut();
+    } catch (err) {
+      setError("Sign out failed");
+    }
+  };
+  const resetPassword = async (email) => {
+    try {
+      setError(null);
+      const { error: error2 } = await supabaseClient.auth.resetPasswordForEmail(email);
+      if (error2) {
+        setError(error2.message);
+        return { error: error2.message };
+      }
+      return {};
+    } catch (err) {
+      const errorMessage = "Password reset failed";
+      setError(errorMessage);
+      return { error: errorMessage };
+    }
+  };
+  const value = {
+    user,
+    session,
+    loading,
+    error,
+    signIn,
+    signUp,
+    signOut,
+    resetPassword
+  };
+  return /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(AuthContext.Provider, { value, children });
+};
+var useAuth = () => {
+  const context = (0, import_react4.useContext)(AuthContext);
+  if (!context) {
+    throw new Error("useAuth must be used within an AuthProvider");
+  }
+  return context;
+};
+
+// src/hooks/useAuthGuard.ts
+var useAuthGuard = (options = {}) => {
+  const {
+    redirectTo,
+    authorize,
+    requiredRoles = [],
+    requiredPermissions = [],
+    onUnauthorized
+  } = options;
+  const { user, session, loading } = useAuth();
+  const isAuthenticated = !loading && !!user && !!session;
+  const isAuthorized = (() => {
+    if (loading || !user || !session) return false;
+    if (authorize && !authorize(user, session)) {
+      return false;
+    }
+    if (requiredRoles.length > 0) {
+      const userRoles = user.user_metadata?.roles || user.app_metadata?.roles || [];
+      const hasRequiredRole = requiredRoles.some(
+        (role) => Array.isArray(userRoles) ? userRoles.includes(role) : userRoles === role
+      );
+      if (!hasRequiredRole) return false;
+    }
+    if (requiredPermissions.length > 0) {
+      const userPermissions = user.user_metadata?.permissions || user.app_metadata?.permissions || [];
+      const hasRequiredPermission = requiredPermissions.some(
+        (permission) => Array.isArray(userPermissions) ? userPermissions.includes(permission) : userPermissions === permission
+      );
+      if (!hasRequiredPermission) return false;
+    }
+    return true;
+  })();
+  (0, import_react5.useEffect)(() => {
+    if (!loading && !isAuthorized) {
+      if (onUnauthorized) {
+        onUnauthorized();
+      } else if (redirectTo) {
+        window.location.href = redirectTo;
+      }
+    }
+  }, [loading, isAuthorized, redirectTo, onUnauthorized]);
+  return {
+    user,
+    session,
+    loading,
+    isAuthenticated,
+    isAuthorized
+  };
+};
 
 // src/hooks/useSupabaseQuery.ts
 var import_react_query2 = require("@tanstack/react-query");
@@ -2990,21 +2905,724 @@ var defaultQueryConfig = {
   }
 };
 
+// src/hooks/useBulkOperations.ts
+var import_react6 = require("react");
+var import_react_query3 = require("@tanstack/react-query");
+function useBulkOperations(resource) {
+  const queryClient = (0, import_react_query3.useQueryClient)();
+  const bulkUpdate = (0, import_react6.useCallback)(
+    async (items, mutationFn, options = {}) => {
+      const { onSuccess, onError, onSettled, optimisticUpdate = true, invalidateQueries = [] } = options;
+      try {
+        if (optimisticUpdate) {
+          queryClient.setQueryData([resource], (oldData) => {
+            if (!oldData) return oldData;
+            return oldData.map((item) => {
+              const update = items.find((u) => u.id === item.id);
+              return update ? { ...item, ...update.data } : item;
+            });
+          });
+        }
+        const results = await Promise.all(items.map(mutationFn));
+        invalidateQueries.forEach((queryKey) => {
+          queryClient.invalidateQueries({ queryKey });
+        });
+        onSuccess?.(results);
+        return results;
+      } catch (error) {
+        if (optimisticUpdate) {
+          queryClient.invalidateQueries({ queryKey: [resource] });
+        }
+        onError?.(error);
+        throw error;
+      } finally {
+        onSettled?.();
+      }
+    },
+    [queryClient, resource]
+  );
+  const bulkDelete = (0, import_react6.useCallback)(
+    async (ids, mutationFn, options = {}) => {
+      const { onSuccess, onError, onSettled, optimisticUpdate = true, invalidateQueries = [] } = options;
+      try {
+        if (optimisticUpdate) {
+          queryClient.setQueryData([resource], (oldData) => {
+            if (!oldData) return oldData;
+            return oldData.filter((item) => !ids.includes(item.id));
+          });
+        }
+        await Promise.all(ids.map(mutationFn));
+        invalidateQueries.forEach((queryKey) => {
+          queryClient.invalidateQueries({ queryKey });
+        });
+        onSuccess?.(ids);
+        return ids;
+      } catch (error) {
+        if (optimisticUpdate) {
+          queryClient.invalidateQueries({ queryKey: [resource] });
+        }
+        onError?.(error);
+        throw error;
+      } finally {
+        onSettled?.();
+      }
+    },
+    [queryClient, resource]
+  );
+  const bulkExport = (0, import_react6.useCallback)(
+    (data, options = {}) => {
+      const {
+        format: format2 = "csv",
+        filename = `${resource}-export`,
+        columns,
+        includeHeaders = true
+      } = options;
+      if (!data || data.length === 0) {
+        throw new Error("No data to export");
+      }
+      switch (format2) {
+        case "csv":
+          return exportToCSV(data, { filename, columns, includeHeaders });
+        case "json":
+          return exportToJSON(data, { filename });
+        default:
+          throw new Error(`Unsupported export format: ${format2}`);
+      }
+    },
+    [resource]
+  );
+  return (0, import_react6.useMemo)(
+    () => ({
+      bulkUpdate,
+      bulkDelete,
+      bulkExport
+    }),
+    [bulkUpdate, bulkDelete, bulkExport]
+  );
+}
+function exportToCSV(data, options) {
+  const { filename, columns, includeHeaders } = options;
+  if (data.length === 0) return;
+  const firstItem = data[0];
+  const headers = columns || Object.keys(firstItem);
+  let csvContent = "";
+  if (includeHeaders) {
+    csvContent += headers.join(",") + "\n";
+  }
+  data.forEach((item) => {
+    const row = headers.map((header) => {
+      const value = item[header];
+      if (typeof value === "string" && (value.includes(",") || value.includes('"'))) {
+        return `"${value.replace(/"/g, '""')}"`;
+      }
+      return value ?? "";
+    });
+    csvContent += row.join(",") + "\n";
+  });
+  const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+  const link = document.createElement("a");
+  const url = URL.createObjectURL(blob);
+  link.setAttribute("href", url);
+  link.setAttribute("download", `${filename}.csv`);
+  link.style.visibility = "hidden";
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+}
+function exportToJSON(data, options) {
+  const { filename } = options;
+  const jsonContent = JSON.stringify(data, null, 2);
+  const blob = new Blob([jsonContent], { type: "application/json;charset=utf-8;" });
+  const link = document.createElement("a");
+  const url = URL.createObjectURL(blob);
+  link.setAttribute("href", url);
+  link.setAttribute("download", `${filename}.json`);
+  link.style.visibility = "hidden";
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+}
+function useSavedQueries(resource) {
+  const storageKey = `${resource}.savedQueries`;
+  const getSavedQueries = (0, import_react6.useCallback)(() => {
+    try {
+      const saved = localStorage.getItem(storageKey);
+      return saved ? JSON.parse(saved) : [];
+    } catch {
+      return [];
+    }
+  }, [storageKey]);
+  const saveQuery = (0, import_react6.useCallback)((query) => {
+    const queries = getSavedQueries();
+    const newQuery = {
+      ...query,
+      id: `${Date.now()}-${Math.random().toString(36).substr(2, 9)}`
+    };
+    const updated = [...queries, newQuery];
+    localStorage.setItem(storageKey, JSON.stringify(updated));
+    return newQuery;
+  }, [getSavedQueries, storageKey]);
+  const deleteQuery = (0, import_react6.useCallback)((id) => {
+    const queries = getSavedQueries();
+    const updated = queries.filter((q) => q.id !== id);
+    localStorage.setItem(storageKey, JSON.stringify(updated));
+  }, [getSavedQueries, storageKey]);
+  const updateQuery = (0, import_react6.useCallback)((id, updates) => {
+    const queries = getSavedQueries();
+    const updated = queries.map((q) => q.id === id ? { ...q, ...updates } : q);
+    localStorage.setItem(storageKey, JSON.stringify(updated));
+  }, [getSavedQueries, storageKey]);
+  return (0, import_react6.useMemo)(
+    () => ({
+      queries: getSavedQueries(),
+      saveQuery,
+      deleteQuery,
+      updateQuery
+    }),
+    [getSavedQueries, saveQuery, deleteQuery, updateQuery]
+  );
+}
+
+// src/hooks/useDataTable.ts
+var import_react7 = require("react");
+function useDataTable(options) {
+  const {
+    defaultColumns,
+    defaultSort,
+    defaultPerPage = 25,
+    storageKey,
+    persistState = true
+  } = options;
+  const getInitialState = (0, import_react7.useCallback)(() => {
+    if (persistState && storageKey) {
+      try {
+        const saved = localStorage.getItem(`dataTable.${storageKey}`);
+        if (saved) {
+          const parsed = JSON.parse(saved);
+          return {
+            columns: defaultColumns,
+            sort: parsed.sort || defaultSort,
+            filters: parsed.filters || [],
+            pagination: {
+              page: 1,
+              perPage: parsed.pagination?.perPage || defaultPerPage,
+              total: 0
+            },
+            selectedIds: [],
+            hiddenColumns: parsed.hiddenColumns || [],
+            columnOrder: parsed.columnOrder || defaultColumns.map((c) => c.id)
+          };
+        }
+      } catch {
+      }
+    }
+    return {
+      columns: defaultColumns,
+      sort: defaultSort,
+      filters: [],
+      pagination: { page: 1, perPage: defaultPerPage, total: 0 },
+      selectedIds: [],
+      hiddenColumns: [],
+      columnOrder: defaultColumns.map((c) => c.id)
+    };
+  }, [defaultColumns, defaultSort, defaultPerPage, persistState, storageKey]);
+  const [state, setState] = (0, import_react7.useState)(getInitialState);
+  const persistStateToStorage = (0, import_react7.useCallback)((newState) => {
+    if (persistState && storageKey) {
+      try {
+        const toSave = {
+          sort: newState.sort,
+          filters: newState.filters,
+          pagination: { perPage: newState.pagination.perPage },
+          hiddenColumns: newState.hiddenColumns,
+          columnOrder: newState.columnOrder
+        };
+        localStorage.setItem(`dataTable.${storageKey}`, JSON.stringify(toSave));
+      } catch {
+      }
+    }
+  }, [persistState, storageKey]);
+  const showColumn = (0, import_react7.useCallback)((columnId) => {
+    setState((prev) => {
+      const newState = {
+        ...prev,
+        hiddenColumns: prev.hiddenColumns.filter((id) => id !== columnId)
+      };
+      persistStateToStorage(newState);
+      return newState;
+    });
+  }, [persistStateToStorage]);
+  const hideColumn = (0, import_react7.useCallback)((columnId) => {
+    setState((prev) => {
+      const newState = {
+        ...prev,
+        hiddenColumns: [...prev.hiddenColumns, columnId]
+      };
+      persistStateToStorage(newState);
+      return newState;
+    });
+  }, [persistStateToStorage]);
+  const reorderColumns = (0, import_react7.useCallback)((newOrder) => {
+    setState((prev) => {
+      const newState = {
+        ...prev,
+        columnOrder: newOrder
+      };
+      persistStateToStorage(newState);
+      return newState;
+    });
+  }, [persistStateToStorage]);
+  const resetColumns = (0, import_react7.useCallback)(() => {
+    setState((prev) => {
+      const newState = {
+        ...prev,
+        hiddenColumns: [],
+        columnOrder: defaultColumns.map((c) => c.id)
+      };
+      persistStateToStorage(newState);
+      return newState;
+    });
+  }, [defaultColumns, persistStateToStorage]);
+  const setSort = (0, import_react7.useCallback)((field, order) => {
+    setState((prev) => {
+      const currentSort = prev.sort;
+      let newOrder = "ASC";
+      if (order) {
+        newOrder = order;
+      } else if (currentSort?.field === field) {
+        newOrder = currentSort.order === "ASC" ? "DESC" : "ASC";
+      }
+      const newState = {
+        ...prev,
+        sort: { field, order: newOrder },
+        pagination: { ...prev.pagination, page: 1 }
+        // Reset to first page
+      };
+      persistStateToStorage(newState);
+      return newState;
+    });
+  }, [persistStateToStorage]);
+  const clearSort = (0, import_react7.useCallback)(() => {
+    setState((prev) => {
+      const newState = {
+        ...prev,
+        sort: void 0
+      };
+      persistStateToStorage(newState);
+      return newState;
+    });
+  }, [persistStateToStorage]);
+  const addFilter = (0, import_react7.useCallback)((filter) => {
+    setState((prev) => {
+      const newState = {
+        ...prev,
+        filters: [...prev.filters.filter((f) => f.field !== filter.field), filter],
+        pagination: { ...prev.pagination, page: 1 }
+        // Reset to first page
+      };
+      persistStateToStorage(newState);
+      return newState;
+    });
+  }, [persistStateToStorage]);
+  const removeFilter = (0, import_react7.useCallback)((field) => {
+    setState((prev) => {
+      const newState = {
+        ...prev,
+        filters: prev.filters.filter((f) => f.field !== field),
+        pagination: { ...prev.pagination, page: 1 }
+        // Reset to first page
+      };
+      persistStateToStorage(newState);
+      return newState;
+    });
+  }, [persistStateToStorage]);
+  const clearFilters = (0, import_react7.useCallback)(() => {
+    setState((prev) => {
+      const newState = {
+        ...prev,
+        filters: [],
+        pagination: { ...prev.pagination, page: 1 }
+        // Reset to first page
+      };
+      persistStateToStorage(newState);
+      return newState;
+    });
+  }, [persistStateToStorage]);
+  const setPage = (0, import_react7.useCallback)((page) => {
+    setState((prev) => ({
+      ...prev,
+      pagination: { ...prev.pagination, page }
+    }));
+  }, []);
+  const setPerPage = (0, import_react7.useCallback)((perPage) => {
+    setState((prev) => {
+      const newState = {
+        ...prev,
+        pagination: { ...prev.pagination, perPage, page: 1 }
+      };
+      persistStateToStorage(newState);
+      return newState;
+    });
+  }, [persistStateToStorage]);
+  const setTotal = (0, import_react7.useCallback)((total) => {
+    setState((prev) => ({
+      ...prev,
+      pagination: { ...prev.pagination, total }
+    }));
+  }, []);
+  const selectItem = (0, import_react7.useCallback)((id) => {
+    setState((prev) => ({
+      ...prev,
+      selectedIds: [...prev.selectedIds, id]
+    }));
+  }, []);
+  const deselectItem = (0, import_react7.useCallback)((id) => {
+    setState((prev) => ({
+      ...prev,
+      selectedIds: prev.selectedIds.filter((selectedId) => selectedId !== id)
+    }));
+  }, []);
+  const toggleItem = (0, import_react7.useCallback)((id) => {
+    setState((prev) => ({
+      ...prev,
+      selectedIds: prev.selectedIds.includes(id) ? prev.selectedIds.filter((selectedId) => selectedId !== id) : [...prev.selectedIds, id]
+    }));
+  }, []);
+  const selectAll = (0, import_react7.useCallback)((ids) => {
+    setState((prev) => ({
+      ...prev,
+      selectedIds: ids
+    }));
+  }, []);
+  const clearSelection = (0, import_react7.useCallback)(() => {
+    setState((prev) => ({
+      ...prev,
+      selectedIds: []
+    }));
+  }, []);
+  const visibleColumns = (0, import_react7.useMemo)(() => {
+    return state.columnOrder.map((id) => state.columns.find((col) => col.id === id)).filter(
+      (col) => col !== void 0 && !state.hiddenColumns.includes(col.id)
+    );
+  }, [state.columns, state.columnOrder, state.hiddenColumns]);
+  const hasFilters = (0, import_react7.useMemo)(() => state.filters.length > 0, [state.filters]);
+  const hasSelection = (0, import_react7.useMemo)(() => state.selectedIds.length > 0, [state.selectedIds]);
+  const reset = (0, import_react7.useCallback)(() => {
+    const newState = getInitialState();
+    setState(newState);
+    persistStateToStorage(newState);
+  }, [getInitialState, persistStateToStorage]);
+  return {
+    // State
+    state,
+    visibleColumns,
+    hasFilters,
+    hasSelection,
+    // Column management
+    showColumn,
+    hideColumn,
+    reorderColumns,
+    resetColumns,
+    // Sorting
+    setSort,
+    clearSort,
+    // Filtering
+    addFilter,
+    removeFilter,
+    clearFilters,
+    // Pagination
+    setPage,
+    setPerPage,
+    setTotal,
+    // Selection
+    selectItem,
+    deselectItem,
+    toggleItem,
+    selectAll,
+    clearSelection,
+    // Utilities
+    reset
+  };
+}
+function useColumnManager(columns, storageKey) {
+  const [hiddenColumns, setHiddenColumns] = (0, import_react7.useState)(() => {
+    if (storageKey) {
+      try {
+        const saved = localStorage.getItem(`columnManager.${storageKey}`);
+        return saved ? JSON.parse(saved) : [];
+      } catch {
+        return [];
+      }
+    }
+    return [];
+  });
+  const [columnOrder, setColumnOrder] = (0, import_react7.useState)(() => {
+    if (storageKey) {
+      try {
+        const saved = localStorage.getItem(`columnOrder.${storageKey}`);
+        return saved ? JSON.parse(saved) : columns.map((c) => c.id);
+      } catch {
+        return columns.map((c) => c.id);
+      }
+    }
+    return columns.map((c) => c.id);
+  });
+  const persistState = (0, import_react7.useCallback)(() => {
+    if (storageKey) {
+      try {
+        localStorage.setItem(`columnManager.${storageKey}`, JSON.stringify(hiddenColumns));
+        localStorage.setItem(`columnOrder.${storageKey}`, JSON.stringify(columnOrder));
+      } catch {
+      }
+    }
+  }, [storageKey, hiddenColumns, columnOrder]);
+  const toggleColumn = (0, import_react7.useCallback)((columnId) => {
+    setHiddenColumns((prev) => {
+      const newHidden = prev.includes(columnId) ? prev.filter((id) => id !== columnId) : [...prev, columnId];
+      setTimeout(() => persistState(), 0);
+      return newHidden;
+    });
+  }, [persistState]);
+  const reorderColumns = (0, import_react7.useCallback)((newOrder) => {
+    setColumnOrder(newOrder);
+    setTimeout(() => persistState(), 0);
+  }, [persistState]);
+  const resetColumns = (0, import_react7.useCallback)(() => {
+    setHiddenColumns([]);
+    setColumnOrder(columns.map((c) => c.id));
+    setTimeout(() => persistState(), 0);
+  }, [columns, persistState]);
+  const visibleColumns = (0, import_react7.useMemo)(() => {
+    return columnOrder.map((id) => columns.find((col) => col.id === id)).filter(
+      (col) => col !== void 0 && !hiddenColumns.includes(col.id)
+    );
+  }, [columns, columnOrder, hiddenColumns]);
+  return {
+    hiddenColumns,
+    columnOrder,
+    visibleColumns,
+    toggleColumn,
+    reorderColumns,
+    resetColumns
+  };
+}
+
+// src/hooks/useAdvancedQuery.ts
+var import_react_query4 = require("@tanstack/react-query");
+var import_react8 = require("react");
+function useAdvancedQuery(queryKey, queryFn, options = {}) {
+  const {
+    invalidateOnWindowFocus = false,
+    backgroundRefetch = true,
+    retryOnNetworkError = true,
+    ...queryOptions
+  } = options;
+  return (0, import_react_query4.useQuery)({
+    queryKey,
+    queryFn,
+    staleTime: 5 * 60 * 1e3,
+    // 5 minutes default
+    gcTime: 10 * 60 * 1e3,
+    // 10 minutes default (was cacheTime)
+    refetchOnWindowFocus: invalidateOnWindowFocus,
+    refetchInBackground: backgroundRefetch,
+    retry: (failureCount, error) => {
+      if (error?.status >= 400 && error?.status < 500) {
+        return false;
+      }
+      if (retryOnNetworkError && (error?.code === "NETWORK_ERROR" || !navigator.onLine)) {
+        return failureCount < 3;
+      }
+      return failureCount < 3;
+    },
+    retryDelay: (attemptIndex) => Math.min(1e3 * 2 ** attemptIndex, 3e4),
+    ...queryOptions
+  });
+}
+function useAdvancedMutation(mutationFn, options = {}) {
+  const queryClient = (0, import_react_query4.useQueryClient)();
+  const {
+    optimisticUpdate,
+    invalidateQueries = [],
+    updateQueries = [],
+    onSuccess,
+    onError,
+    onSettled,
+    ...mutationOptions
+  } = options;
+  return (0, import_react_query4.useMutation)({
+    mutationFn,
+    onMutate: async (variables) => {
+      if (optimisticUpdate) {
+        const { updateFn } = optimisticUpdate;
+        await queryClient.cancelQueries();
+        const previousData = queryClient.getQueryData(invalidateQueries[0] || []);
+        if (invalidateQueries[0]) {
+          queryClient.setQueryData(
+            invalidateQueries[0],
+            (oldData) => updateFn(oldData, variables)
+          );
+        }
+        return { previousData };
+      }
+    },
+    onSuccess: (data, variables, context) => {
+      updateQueries.forEach(({ queryKey, updateFn }) => {
+        queryClient.setQueryData(
+          queryKey,
+          (oldData) => updateFn(oldData, data, variables)
+        );
+      });
+      invalidateQueries.forEach((queryKey) => {
+        queryClient.invalidateQueries({ queryKey });
+      });
+      onSuccess?.(data, variables, context);
+    },
+    onError: (error, variables, context) => {
+      if (optimisticUpdate?.rollbackOnError !== false && context?.previousData && invalidateQueries[0]) {
+        queryClient.setQueryData(invalidateQueries[0], context.previousData);
+      }
+      onError?.(error, variables, context);
+    },
+    onSettled: (data, error, variables, context) => {
+      invalidateQueries.forEach((queryKey) => {
+        queryClient.invalidateQueries({ queryKey });
+      });
+      onSettled?.(data, error, variables, context);
+    },
+    ...mutationOptions
+  });
+}
+function useAdvancedInfiniteQuery(queryKey, queryFn, options = {}) {
+  const {
+    getNextPageParam = () => void 0,
+    getPreviousPageParam = () => void 0,
+    initialPageParam = 1,
+    maxPages = 10,
+    staleTime = 5 * 60 * 1e3,
+    gcTime = 10 * 60 * 1e3
+  } = options;
+  return (0, import_react_query4.useQuery)({
+    queryKey,
+    queryFn: () => queryFn({ pageParam: initialPageParam }),
+    staleTime,
+    gcTime
+    // Note: useInfiniteQuery would be used here in a real implementation
+    // This is a simplified version for demonstration
+  });
+}
+function useDependentQueries(firstQuery, secondQuery) {
+  const first2 = (0, import_react_query4.useQuery)({
+    queryKey: firstQuery.queryKey,
+    queryFn: firstQuery.queryFn,
+    ...firstQuery.options
+  });
+  const second = (0, import_react_query4.useQuery)({
+    queryKey: first2.data ? secondQuery.queryKey(first2.data) : ["dependent-disabled"],
+    queryFn: () => first2.data ? secondQuery.queryFn(first2.data) : Promise.reject("No data"),
+    enabled: !!first2.data && !first2.isError,
+    ...secondQuery.options
+  });
+  return {
+    first: first2,
+    second,
+    isLoading: first2.isLoading || first2.data && second.isLoading,
+    isError: first2.isError || second.isError,
+    error: first2.error || second.error,
+    data: second.data
+  };
+}
+function useQuerySync(queryKey, onDataChange) {
+  const queryClient = (0, import_react_query4.useQueryClient)();
+  const data = queryClient.getQueryData(queryKey);
+  const setData = (0, import_react8.useCallback)((updater) => {
+    queryClient.setQueryData(queryKey, updater);
+  }, [queryClient, queryKey]);
+  const invalidate = (0, import_react8.useCallback)(() => {
+    queryClient.invalidateQueries({ queryKey });
+  }, [queryClient, queryKey]);
+  const refetch = (0, import_react8.useCallback)(() => {
+    return queryClient.refetchQueries({ queryKey });
+  }, [queryClient, queryKey]);
+  (0, import_react8.useMemo)(() => {
+    onDataChange?.(data);
+  }, [data, onDataChange]);
+  return {
+    data,
+    setData,
+    invalidate,
+    refetch
+  };
+}
+function useOfflineSync(queryKey, queryFn, options = {}) {
+  const {
+    syncInterval = 3e4,
+    // 30 seconds
+    retryOnReconnect = true,
+    persistToStorage = false,
+    storageKey
+  } = options;
+  const queryClient = (0, import_react_query4.useQueryClient)();
+  (0, import_react8.useMemo)(() => {
+    if (persistToStorage && storageKey) {
+      try {
+        const stored = localStorage.getItem(storageKey);
+        if (stored) {
+          const data = JSON.parse(stored);
+          queryClient.setQueryData(queryKey, data);
+        }
+      } catch {
+      }
+    }
+  }, [queryClient, queryKey, persistToStorage, storageKey]);
+  const query = (0, import_react_query4.useQuery)({
+    queryKey,
+    queryFn,
+    staleTime: syncInterval,
+    refetchInterval: navigator.onLine ? syncInterval : false,
+    refetchIntervalInBackground: true,
+    retry: (failureCount, error) => {
+      if (!navigator.onLine) return false;
+      return failureCount < 3;
+    }
+  });
+  (0, import_react8.useMemo)(() => {
+    if (persistToStorage && storageKey && query.data) {
+      try {
+        localStorage.setItem(storageKey, JSON.stringify(query.data));
+      } catch {
+      }
+    }
+  }, [query.data, persistToStorage, storageKey]);
+  (0, import_react8.useMemo)(() => {
+    if (retryOnReconnect) {
+      const handleOnline = () => {
+        queryClient.refetchQueries({ queryKey });
+      };
+      window.addEventListener("online", handleOnline);
+      return () => window.removeEventListener("online", handleOnline);
+    }
+  }, [queryClient, queryKey, retryOnReconnect]);
+  return query;
+}
+
 // src/components/GenericForm.tsx
-var import_jsx_runtime13 = require("react/jsx-runtime");
+var import_jsx_runtime14 = require("react/jsx-runtime");
 function GenericForm({
   config,
   initialData = {},
   onSubmit,
   onSuccess,
+  onCancel,
+  showCancel = true,
   isEditMode = false,
   isLoading = false,
   customActions = null,
   customFieldRenderers = {},
-  className = "p-1 bg-card rounded-lg shadow-sm border"
+  className = "bg-card rounded-lg shadow-sm border"
 }) {
   const { handleAsync } = useErrorHandler("GenericForm");
-  const initialFormData = (0, import_react6.useMemo)(() => {
+  const initialFormData = (0, import_react9.useMemo)(() => {
     const formData = {};
     config.sections.forEach((section) => {
       section.fields.forEach((field) => {
@@ -3070,36 +3688,46 @@ function GenericForm({
     };
     switch (field.type) {
       case "select":
-        return /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)("div", { children: [
-          /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)(
+        return /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)("div", { children: [
+          /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)(
             "select",
             {
               ...register(field.name, field.validation),
               disabled: field.disabled || isSubmitting,
-              className: `flex h-9 w-full rounded-md border bg-transparent px-3 py-1 text-sm shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring ${errors[field.name] ? "border-red-500" : "border-input"}`,
+              className: cn(
+                "file:text-foreground placeholder:text-muted-foreground selection:bg-primary selection:text-primary-foreground dark:bg-input/30 border-input flex h-9 w-full min-w-0 rounded-md border bg-transparent px-3 py-1 text-base shadow-xs transition-[color,box-shadow] outline-none disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 md:text-sm",
+                "focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px]",
+                "aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive",
+                errors[field.name] && "border-destructive",
+                field.className
+              ),
               children: [
-                /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("option", { value: "", children: field.placeholder || `Seleziona ${field.label.toLowerCase()}` }),
-                field.options?.map((option) => /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("option", { value: option.value, children: option.label }, option.value))
+                /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("option", { value: "", children: field.placeholder || `Seleziona ${field.label.toLowerCase()}` }),
+                field.options?.map((option) => /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("option", { value: option.value, children: option.label }, option.value))
               ]
             }
           ),
-          errors[field.name] && /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("p", { className: "text-sm text-destructive mt-1", children: errors[field.name].message })
+          errors[field.name] && /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("p", { className: "text-sm text-destructive mt-1", children: errors[field.name].message })
         ] });
       case "textarea":
-        return /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)("div", { children: [
-          /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(
+        return /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)("div", { children: [
+          /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(
             "textarea",
             {
               ...baseInputProps,
               rows: field.rows || 3,
-              className: `w-full px-3 py-2 border border-input rounded-md bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent ${field.className || ""} ${errors[field.name] ? "border-destructive" : ""}`
+              className: cn(
+                "border-input placeholder:text-muted-foreground focus-visible:border-ring focus-visible:ring-ring/50 aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive dark:bg-input/30 flex field-sizing-content min-h-16 w-full rounded-md border bg-transparent px-3 py-2 text-base shadow-xs transition-[color,box-shadow] outline-none focus-visible:ring-[3px] disabled:cursor-not-allowed disabled:opacity-50 md:text-sm",
+                errors[field.name] && "border-destructive",
+                field.className
+              )
             }
           ),
-          errors[field.name] && /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("p", { className: "text-sm text-destructive mt-1", children: errors[field.name].message })
+          errors[field.name] && /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("p", { className: "text-sm text-destructive mt-1", children: errors[field.name].message })
         ] });
       case "checkbox":
-        return /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("div", { className: "flex flex-wrap gap-2", children: field.options?.map((option) => /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)("div", { className: "flex items-center space-x-2", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(
+        return /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("div", { className: "flex flex-wrap gap-2", children: field.options?.map((option) => /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)("div", { className: "flex items-center space-x-2", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(
             "input",
             {
               type: "checkbox",
@@ -3117,33 +3745,33 @@ function GenericForm({
               className: "h-4 w-4 text-primary border-gray-300 rounded focus:ring-primary"
             }
           ),
-          /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(Label, { htmlFor: `${field.name}_${option.value}`, className: "text-[10px] font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70", children: option.label })
+          /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(Label, { htmlFor: `${field.name}_${option.value}`, className: "text-[10px] font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70", children: option.label })
         ] }, option.value)) });
       case "datetime-local":
-        return /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)("div", { children: [
-          /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(Input, { type: "datetime-local", ...baseInputProps, className: `${baseInputProps.className} ${errors[field.name] ? "border-red-500" : ""}` }),
-          errors[field.name] && /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("p", { className: "text-sm text-destructive mt-1", children: errors[field.name].message })
+        return /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)("div", { children: [
+          /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(Input, { type: "datetime-local", ...baseInputProps, className: `${baseInputProps.className} ${errors[field.name] ? "border-red-500" : ""}` }),
+          errors[field.name] && /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("p", { className: "text-sm text-destructive mt-1", children: errors[field.name].message })
         ] });
       case "date":
-        return /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)("div", { children: [
-          /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(Input, { type: "date", ...baseInputProps, className: `${baseInputProps.className} ${errors[field.name] ? "border-red-500" : ""}` }),
-          errors[field.name] && /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("p", { className: "text-sm text-destructive mt-1", children: errors[field.name].message })
+        return /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)("div", { children: [
+          /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(Input, { type: "date", ...baseInputProps, className: `${baseInputProps.className} ${errors[field.name] ? "border-red-500" : ""}` }),
+          errors[field.name] && /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("p", { className: "text-sm text-destructive mt-1", children: errors[field.name].message })
         ] });
       case "time":
-        return /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)("div", { children: [
-          /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(Input, { type: "time", ...baseInputProps, className: `${baseInputProps.className} ${errors[field.name] ? "border-red-500" : ""}` }),
-          errors[field.name] && /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("p", { className: "text-sm text-destructive mt-1", children: errors[field.name].message })
+        return /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)("div", { children: [
+          /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(Input, { type: "time", ...baseInputProps, className: `${baseInputProps.className} ${errors[field.name] ? "border-red-500" : ""}` }),
+          errors[field.name] && /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("p", { className: "text-sm text-destructive mt-1", children: errors[field.name].message })
         ] });
       case "number":
-        return /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)("div", { children: [
-          /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(Input, { type: "number", ...baseInputProps, className: `${baseInputProps.className} ${errors[field.name] ? "border-red-500" : ""}` }),
-          errors[field.name] && /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("p", { className: "text-sm text-destructive mt-1", children: errors[field.name].message })
+        return /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)("div", { children: [
+          /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(Input, { type: "number", ...baseInputProps, className: `${baseInputProps.className} ${errors[field.name] ? "border-red-500" : ""}` }),
+          errors[field.name] && /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("p", { className: "text-sm text-destructive mt-1", children: errors[field.name].message })
         ] });
       case "text":
       default:
-        return /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)("div", { children: [
-          /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(Input, { type: "text", ...baseInputProps, className: `${baseInputProps.className} ${errors[field.name] ? "border-red-500" : ""}` }),
-          errors[field.name] && /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("p", { className: "text-sm text-destructive mt-1", children: errors[field.name].message })
+        return /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)("div", { children: [
+          /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(Input, { type: "text", ...baseInputProps, className: `${baseInputProps.className} ${errors[field.name] ? "border-red-500" : ""}` }),
+          errors[field.name] && /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("p", { className: "text-sm text-destructive mt-1", children: errors[field.name].message })
         ] });
     }
   };
@@ -3152,16 +3780,16 @@ function GenericForm({
       (field) => !field.conditional || field.conditional(watch(field.name), watch, getValues)
     );
     if (visibleFields.length === 0) return null;
-    return /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)("div", { className: "space-y-4", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("h2", { className: "text-lg font-semibold text-foreground", children: section.title }),
-      /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("div", { className: "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4", children: visibleFields.map((field) => /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)("div", { className: "space-y-2", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)(Label, { htmlFor: field.name, className: "text-sm font-medium text-foreground", children: [
+    return /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)("div", { className: "space-y-6", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("h2", { className: "text-xl font-semibold text-foreground border-b border-border pb-2", children: section.title }),
+      /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("div", { className: "grid grid-cols-1 md:grid-cols-2 gap-6", children: visibleFields.map((field) => /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)("div", { className: "space-y-2", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)(Label, { htmlFor: field.name, className: "text-sm font-medium text-foreground", children: [
           field.label,
           " ",
-          field.required && /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("span", { className: "text-destructive", children: "*" })
+          field.required && /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("span", { className: "text-destructive", children: "*" })
         ] }),
         renderField(field),
-        field.helpText && /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("p", { className: "text-xs text-muted-foreground", children: field.helpText })
+        field.helpText && /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("p", { className: "text-xs text-muted-foreground", children: field.helpText })
       ] }, field.name)) })
     ] }, section.title);
   };
@@ -3171,36 +3799,599 @@ function GenericForm({
     }
     return null;
   };
-  return /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("div", { className: "bg-card rounded-lg border border-border shadow-sm p-6", children: /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)("form", { onSubmit: handleSubmit(handleFormSubmit), noValidate: true, className: "space-y-6", children: [
+  return /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("div", { className: "bg-card rounded-lg border border-border shadow-sm", children: /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)("form", { onSubmit: handleSubmit(handleFormSubmit), noValidate: true, className: "p-6 space-y-8", children: [
     config.sections.map(renderSection),
     config.customFields && Object.keys(config.customFields).map(
-      (sectionKey) => /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("div", { children: renderCustomSection(sectionKey) }, sectionKey)
+      (sectionKey) => /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("div", { children: renderCustomSection(sectionKey) }, sectionKey)
     ),
-    customActions && /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("div", { className: "space-y-4", children: customActions }),
-    /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("div", { className: "flex justify-end pt-6 border-t border-border", children: /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(
-      Button,
-      {
-        type: "submit",
-        disabled: isLoading || isSubmitting,
-        children: isLoading || isSubmitting ? isEditMode ? config.editLoadingText : config.addLoadingText : isEditMode ? config.editButtonText : config.addButtonText
-      }
-    ) })
+    customActions && /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("div", { className: "space-y-4", children: customActions }),
+    /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)("div", { className: `flex pt-6 border-t border-border ${showCancel ? "justify-end gap-2" : "justify-end"}`, children: [
+      showCancel && /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(
+        Button,
+        {
+          type: "button",
+          variant: "ghost",
+          onClick: onCancel || (() => window.history.back()),
+          disabled: isLoading || isSubmitting,
+          className: "px-6 py-2",
+          children: "Cancel"
+        }
+      ),
+      /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(
+        Button,
+        {
+          type: "submit",
+          disabled: isLoading || isSubmitting,
+          className: "px-6 py-2",
+          children: isLoading || isSubmitting ? isEditMode ? config.editLoadingText : config.addLoadingText : isEditMode ? config.editButtonText : config.addButtonText
+        }
+      )
+    ] })
   ] }) });
 }
 var GenericForm_default = GenericForm;
 
+// src/components/FormPageLayout.tsx
+var import_jsx_runtime15 = require("react/jsx-runtime");
+function FormPageLayout({
+  title,
+  editTitle,
+  isEditMode = false,
+  formConfig,
+  initialData = {},
+  onSubmit,
+  onCancel,
+  showCancel = true,
+  isLoading = false,
+  customActions,
+  customFieldRenderers = {},
+  className
+}) {
+  const pageTitle = isEditMode ? editTitle || title.replace("Nuovo", "Modifica") : title;
+  return /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("div", { className: `space-y-2 ${className || ""}`, children: [
+    /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("div", { className: "flex items-center justify-between", children: /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("h1", { className: "text-2xl font-semibold text-foreground", children: pageTitle }) }),
+    /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(
+      GenericForm_default,
+      {
+        config: formConfig,
+        initialData,
+        onSubmit,
+        onCancel,
+        showCancel,
+        isEditMode,
+        isLoading,
+        customActions,
+        customFieldRenderers
+      }
+    )
+  ] });
+}
+
+// src/components/ErrorBoundary.tsx
+var import_react10 = __toESM(require("react"), 1);
+var import_jsx_runtime16 = require("react/jsx-runtime");
+var ErrorBoundary = class extends import_react10.default.Component {
+  constructor(props) {
+    super(props);
+    this.handleRetry = () => {
+      const maxRetries = this.props.maxRetries || 3;
+      if (this.state.retryCount < maxRetries) {
+        this.setState({
+          hasError: false,
+          error: null,
+          errorInfo: null,
+          errorId: null,
+          retryCount: this.state.retryCount + 1
+        });
+      }
+    };
+    this.handleReset = () => {
+      this.setState({
+        hasError: false,
+        error: null,
+        errorInfo: null,
+        errorId: null,
+        retryCount: 0
+      });
+    };
+    this.handleReportIssue = () => {
+      const subject = encodeURIComponent(`App Error Report - ${this.state.errorId}`);
+      const body = encodeURIComponent(`
+Error Report Details:
+- Error ID: ${this.state.errorId}
+- Error: ${this.state.error?.message || "Unknown error"}
+- URL: ${window.location.href}
+- User Agent: ${navigator.userAgent}
+- Timestamp: ${(/* @__PURE__ */ new Date()).toISOString()}
+
+Please describe what you were doing when this error occurred:
+    `);
+      window.open(`mailto:support@company.com?subject=${subject}&body=${body}`);
+    };
+    this.state = {
+      hasError: false,
+      error: null,
+      errorInfo: null,
+      errorId: null,
+      retryCount: 0
+    };
+  }
+  static getDerivedStateFromError(error) {
+    return {
+      hasError: true,
+      error,
+      errorId: generateId()
+    };
+  }
+  componentDidCatch(error, errorInfo) {
+    this.setState({
+      errorInfo,
+      errorId: this.state.errorId || generateId()
+    });
+    if (this.props.onError) {
+      this.props.onError(error, errorInfo);
+    }
+    if (process.env.NODE_ENV === "development") {
+      console.error("ErrorBoundary caught an error:", error, errorInfo);
+    }
+  }
+  render() {
+    if (this.state.hasError) {
+      if (this.props.fallback) {
+        return this.props.fallback(this.state.error, this.state.errorInfo, {
+          retry: this.handleRetry,
+          reset: this.handleReset,
+          retryCount: this.state.retryCount,
+          maxRetries: this.props.maxRetries || 3
+        });
+      }
+      return /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("div", { className: "min-h-screen flex items-center justify-center bg-background", children: /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("div", { className: "max-w-md w-full bg-card shadow-lg rounded-lg p-6 border", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("div", { className: "flex items-center mb-4", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("div", { className: "flex-shrink-0", children: /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("div", { className: "h-8 w-8 text-destructive text-2xl", children: "\u{1F6A8}" }) }),
+          /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("div", { className: "ml-3", children: /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("h3", { className: "text-lg font-medium text-foreground", children: "Something went wrong" }) })
+        ] }),
+        /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("div", { className: "mb-4", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("p", { className: "text-sm text-muted-foreground", children: "We're sorry, but something unexpected happened. Our team has been notified and is working to fix this issue." }),
+          this.state.errorId && /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("p", { className: "text-xs text-muted-foreground mt-2", children: [
+            "Error ID: ",
+            /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("code", { className: "bg-muted px-1 rounded", children: this.state.errorId })
+          ] })
+        ] }),
+        /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("div", { className: "flex space-x-3 mb-4", children: [
+          this.state.retryCount < (this.props.maxRetries || 3) && /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)(
+            "button",
+            {
+              onClick: this.handleRetry,
+              className: "flex-1 bg-blue-600 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500",
+              children: [
+                "Try Again (",
+                this.state.retryCount + 1,
+                "/",
+                (this.props.maxRetries || 3) + 1,
+                ")"
+              ]
+            }
+          ),
+          /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(
+            "button",
+            {
+              onClick: this.handleReset,
+              className: "flex-1 bg-gray-600 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500",
+              children: "Reset"
+            }
+          )
+        ] }),
+        /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(
+          "button",
+          {
+            onClick: this.handleReportIssue,
+            className: "w-full bg-gray-100 text-gray-900 px-4 py-2 rounded-md text-sm font-medium hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-500 border border-gray-300",
+            children: "\u{1F4E7} Report Issue"
+          }
+        ),
+        process.env.NODE_ENV === "development" && this.state.error && /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("details", { className: "mt-4", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("summary", { className: "text-sm text-muted-foreground cursor-pointer hover:text-foreground", children: "Technical Details (Development)" }),
+          /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("div", { className: "mt-2 p-3 bg-muted rounded text-xs font-mono text-foreground overflow-auto max-h-40", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("div", { className: "mb-2", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("strong", { children: "Error:" }),
+              " ",
+              this.state.error.message
+            ] }),
+            this.state.errorInfo?.componentStack && /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("div", { className: "mb-2", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("strong", { children: "Component Stack:" }),
+              /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("pre", { className: "whitespace-pre-wrap text-xs", children: this.state.errorInfo.componentStack })
+            ] }),
+            this.state.error.stack && /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("div", { children: [
+              /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("strong", { children: "Stack Trace:" }),
+              /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("pre", { className: "whitespace-pre-wrap text-xs", children: this.state.error.stack })
+            ] })
+          ] })
+        ] })
+      ] }) });
+    }
+    return this.props.children;
+  }
+};
+var withErrorBoundary = (WrappedComponent, options = {}) => {
+  return function WithErrorBoundaryComponent(props) {
+    return /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(ErrorBoundary, { ...options, children: /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(WrappedComponent, { ...props }) });
+  };
+};
+var useErrorBoundary = () => {
+  const [error, setError] = import_react10.default.useState(null);
+  const resetError = import_react10.default.useCallback(() => {
+    setError(null);
+  }, []);
+  const captureError = import_react10.default.useCallback((error2) => {
+    setError(error2);
+  }, []);
+  import_react10.default.useEffect(() => {
+    if (error) {
+      throw error;
+    }
+  }, [error]);
+  return { captureError, resetError };
+};
+
+// src/components/Header.tsx
+var import_jsx_runtime17 = require("react/jsx-runtime");
+function Header({ user, onSignOut, onToggleSidebar, ThemeSwitch: ThemeSwitch2, Button: Button2, MenuIcon, LogOutIcon }) {
+  return /* @__PURE__ */ (0, import_jsx_runtime17.jsx)("header", { className: "bg-secondary shadow-sm border-b border-border", children: /* @__PURE__ */ (0, import_jsx_runtime17.jsxs)("div", { className: "flex items-center justify-between px-4 py-2", children: [
+    /* @__PURE__ */ (0, import_jsx_runtime17.jsx)("div", { className: "flex items-center", children: /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(
+      "button",
+      {
+        onClick: onToggleSidebar,
+        className: "p-2 rounded-md text-muted-foreground hover:text-foreground hover:bg-accent focus:outline-none focus:ring-2 focus:ring-inset focus:ring-ring",
+        children: /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(MenuIcon, { className: "h-6 w-6" })
+      }
+    ) }),
+    /* @__PURE__ */ (0, import_jsx_runtime17.jsxs)("div", { className: "flex items-center space-x-4", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(ThemeSwitch2, {}),
+      /* @__PURE__ */ (0, import_jsx_runtime17.jsx)("span", { className: "text-sm text-muted-foreground", children: user?.email?.split("@")[0] || "User" }),
+      /* @__PURE__ */ (0, import_jsx_runtime17.jsxs)(
+        Button2,
+        {
+          variant: "outline",
+          size: "sm",
+          onClick: onSignOut,
+          className: "flex items-center gap-2",
+          children: [
+            /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(LogOutIcon, { className: "h-4 w-4" }),
+            "Logout"
+          ]
+        }
+      )
+    ] })
+  ] }) });
+}
+
+// src/components/ProtectedRoute.tsx
+var import_jsx_runtime18 = require("react/jsx-runtime");
+var ProtectedRoute = ({
+  children,
+  loadingComponent,
+  unauthorizedComponent,
+  redirectTo,
+  authorize,
+  requiredRoles = [],
+  requiredPermissions = []
+}) => {
+  const { user, session, loading } = useAuth();
+  if (loading) {
+    return loadingComponent ? /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(import_jsx_runtime18.Fragment, { children: loadingComponent }) : /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("div", { className: "flex items-center justify-center min-h-screen", children: /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("div", { className: "animate-spin rounded-full h-8 w-8 border-b-2 border-primary" }) });
+  }
+  if (!user || !session) {
+    if (redirectTo) {
+      window.location.href = redirectTo;
+      return null;
+    }
+    return unauthorizedComponent ? /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(import_jsx_runtime18.Fragment, { children: unauthorizedComponent }) : /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("div", { className: "flex items-center justify-center min-h-screen", children: /* @__PURE__ */ (0, import_jsx_runtime18.jsxs)("div", { className: "text-center space-y-4", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("h2", { className: "text-2xl font-semibold", children: "Authentication Required" }),
+      /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("p", { className: "text-muted-foreground", children: "Please sign in to access this content." })
+    ] }) });
+  }
+  if (authorize && !authorize(user, session)) {
+    return unauthorizedComponent ? /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(import_jsx_runtime18.Fragment, { children: unauthorizedComponent }) : /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("div", { className: "flex items-center justify-center min-h-screen", children: /* @__PURE__ */ (0, import_jsx_runtime18.jsxs)("div", { className: "text-center space-y-4", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("h2", { className: "text-2xl font-semibold", children: "Access Denied" }),
+      /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("p", { className: "text-muted-foreground", children: "You don't have permission to access this content." })
+    ] }) });
+  }
+  if (requiredRoles.length > 0) {
+    const userRoles = user.user_metadata?.roles || user.app_metadata?.roles || [];
+    const hasRequiredRole = requiredRoles.some(
+      (role) => Array.isArray(userRoles) ? userRoles.includes(role) : userRoles === role
+    );
+    if (!hasRequiredRole) {
+      return unauthorizedComponent ? /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(import_jsx_runtime18.Fragment, { children: unauthorizedComponent }) : /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("div", { className: "flex items-center justify-center min-h-screen", children: /* @__PURE__ */ (0, import_jsx_runtime18.jsxs)("div", { className: "text-center space-y-4", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("h2", { className: "text-2xl font-semibold", children: "Insufficient Permissions" }),
+        /* @__PURE__ */ (0, import_jsx_runtime18.jsxs)("p", { className: "text-muted-foreground", children: [
+          "You need one of the following roles: ",
+          requiredRoles.join(", ")
+        ] })
+      ] }) });
+    }
+  }
+  if (requiredPermissions.length > 0) {
+    const userPermissions = user.user_metadata?.permissions || user.app_metadata?.permissions || [];
+    const hasRequiredPermission = requiredPermissions.some(
+      (permission) => Array.isArray(userPermissions) ? userPermissions.includes(permission) : userPermissions === permission
+    );
+    if (!hasRequiredPermission) {
+      return unauthorizedComponent ? /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(import_jsx_runtime18.Fragment, { children: unauthorizedComponent }) : /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("div", { className: "flex items-center justify-center min-h-screen", children: /* @__PURE__ */ (0, import_jsx_runtime18.jsxs)("div", { className: "text-center space-y-4", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("h2", { className: "text-2xl font-semibold", children: "Insufficient Permissions" }),
+        /* @__PURE__ */ (0, import_jsx_runtime18.jsxs)("p", { className: "text-muted-foreground", children: [
+          "You need one of the following permissions: ",
+          requiredPermissions.join(", ")
+        ] })
+      ] }) });
+    }
+  }
+  return /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(import_jsx_runtime18.Fragment, { children });
+};
+
+// src/components/auth/AuthLayout.tsx
+var import_jsx_runtime19 = require("react/jsx-runtime");
+var AuthLayout = ({
+  children,
+  title,
+  logo,
+  backgroundImage,
+  backgroundColor = "#18181b",
+  // zinc-900
+  subtitle,
+  showNotifications = true,
+  notificationComponent
+}) => {
+  return /* @__PURE__ */ (0, import_jsx_runtime19.jsxs)("div", { className: "min-h-screen flex", children: [
+    /* @__PURE__ */ (0, import_jsx_runtime19.jsxs)("div", { className: "container relative grid flex-col items-center justify-center sm:max-w-none lg:grid-cols-2 lg:px-0", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime19.jsxs)(
+        "div",
+        {
+          className: "relative hidden h-full flex-col bg-muted p-10 text-white dark:border-r lg:flex",
+          style: {
+            backgroundImage: backgroundImage ? `url(${backgroundImage})` : void 0,
+            backgroundColor: backgroundImage ? void 0 : backgroundColor
+          },
+          children: [
+            !backgroundImage && /* @__PURE__ */ (0, import_jsx_runtime19.jsx)("div", { className: "absolute inset-0 bg-zinc-900" }),
+            /* @__PURE__ */ (0, import_jsx_runtime19.jsxs)("div", { className: "relative z-20 flex items-center text-lg font-medium", children: [
+              logo && /* @__PURE__ */ (0, import_jsx_runtime19.jsx)("img", { className: "h-6 mr-2", src: logo, alt: title }),
+              title
+            ] }),
+            subtitle && /* @__PURE__ */ (0, import_jsx_runtime19.jsx)("div", { className: "relative z-20 mt-auto", children: /* @__PURE__ */ (0, import_jsx_runtime19.jsx)("p", { className: "text-lg", children: subtitle }) })
+          ]
+        }
+      ),
+      /* @__PURE__ */ (0, import_jsx_runtime19.jsx)("div", { className: "lg:p-8", children: /* @__PURE__ */ (0, import_jsx_runtime19.jsxs)("div", { className: "mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime19.jsxs)("div", { className: "flex flex-col space-y-2 text-center lg:hidden", children: [
+          logo && /* @__PURE__ */ (0, import_jsx_runtime19.jsx)("img", { className: "h-8 mx-auto", src: logo, alt: title }),
+          /* @__PURE__ */ (0, import_jsx_runtime19.jsx)("h1", { className: "text-xl font-semibold", children: title })
+        ] }),
+        children
+      ] }) })
+    ] }),
+    showNotifications && (notificationComponent || /* @__PURE__ */ (0, import_jsx_runtime19.jsx)("div", { id: "auth-notifications", className: "fixed top-4 right-4 z-50" }))
+  ] });
+};
+
+// src/components/FilterDropdown.tsx
+var import_react11 = require("react");
+var import_jsx_runtime20 = require("react/jsx-runtime");
+var FilterDropdown = ({ column, options, onFilterChange, isOpen, onToggle, activeFilter }) => {
+  const [searchTerm, setSearchTerm] = (0, import_react11.useState)("");
+  const [position, setPosition] = (0, import_react11.useState)({ top: 0, left: 0 });
+  const [selectedValues, setSelectedValues] = (0, import_react11.useState)(/* @__PURE__ */ new Set());
+  const [isSelectAll, setIsSelectAll] = (0, import_react11.useState)(true);
+  const dropdownRef = (0, import_react11.useRef)(null);
+  const filteredOptions = (0, import_react11.useMemo)(() => {
+    if (!searchTerm) return options;
+    const filtered = options.filter(
+      (option) => option && option.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+    return filtered;
+  }, [options, searchTerm, column]);
+  (0, import_react11.useEffect)(() => {
+    if (isOpen) {
+      if (activeFilter && Array.isArray(activeFilter)) {
+        setSelectedValues(new Set(activeFilter));
+        setIsSelectAll(activeFilter.length === options.length);
+      } else if (activeFilter) {
+        setSelectedValues(/* @__PURE__ */ new Set([activeFilter]));
+        setIsSelectAll(false);
+      } else {
+        setSelectedValues(new Set(options));
+        setIsSelectAll(true);
+      }
+    }
+  }, [isOpen, activeFilter, options]);
+  const handleOptionToggle = (option) => {
+    const newSelectedValues = new Set(selectedValues);
+    if (newSelectedValues.has(option)) {
+      newSelectedValues.delete(option);
+    } else {
+      newSelectedValues.add(option);
+    }
+    setSelectedValues(newSelectedValues);
+    setIsSelectAll(newSelectedValues.size === filteredOptions.length);
+  };
+  const handleSelectAll = () => {
+    if (isSelectAll) {
+      setSelectedValues(/* @__PURE__ */ new Set());
+      setIsSelectAll(false);
+    } else {
+      setSelectedValues(new Set(filteredOptions));
+      setIsSelectAll(true);
+    }
+  };
+  const handleClearFilter = () => {
+    setSelectedValues(/* @__PURE__ */ new Set());
+    setIsSelectAll(false);
+  };
+  const handleApplyFilter = () => {
+    const selectedArray = Array.from(selectedValues);
+    onFilterChange(column, selectedArray.length === 0 ? "" : selectedArray);
+    setSearchTerm("");
+    onToggle();
+  };
+  const handleCancel = () => {
+    setSearchTerm("");
+    onToggle();
+  };
+  (0, import_react11.useEffect)(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        handleCancel();
+      }
+    };
+    if (isOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isOpen]);
+  (0, import_react11.useEffect)(() => {
+    if (!isOpen) {
+      setSearchTerm("");
+      setSelectedValues(/* @__PURE__ */ new Set());
+      setIsSelectAll(true);
+    }
+  }, [isOpen]);
+  (0, import_react11.useEffect)(() => {
+    if (isOpen && dropdownRef.current) {
+      const button = dropdownRef.current.querySelector("button");
+      if (button) {
+        const rect = button.getBoundingClientRect();
+        const viewportWidth = window.innerWidth;
+        const dropdownWidth = 192;
+        let leftPosition = 0;
+        if (rect.left + dropdownWidth > viewportWidth) {
+          leftPosition = -dropdownWidth + rect.width;
+        }
+        setPosition({
+          top: rect.height + 5,
+          // Position below the button with small gap
+          left: leftPosition
+        });
+      }
+    }
+  }, [isOpen]);
+  return /* @__PURE__ */ (0, import_jsx_runtime20.jsxs)("div", { className: "relative", ref: dropdownRef, children: [
+    /* @__PURE__ */ (0, import_jsx_runtime20.jsx)(
+      "button",
+      {
+        onClick: onToggle,
+        className: `inline-flex items-center justify-center w-4 h-4 transition-colors ${activeFilter ? "text-blue-600 hover:text-blue-700" : "text-gray-500 hover:text-gray-700"}`,
+        title: activeFilter ? `Filtro attivo: ${activeFilter}` : "Filtra",
+        children: /* @__PURE__ */ (0, import_jsx_runtime20.jsx)("svg", { width: "12", height: "12", viewBox: "0 0 24 24", fill: "currentColor", children: /* @__PURE__ */ (0, import_jsx_runtime20.jsx)("path", { d: "M10 18h4v-2h-4v2zM3 6v2h18V6H3zm3 7h12v-2H6v2z" }) })
+      }
+    ),
+    isOpen && /* @__PURE__ */ (0, import_jsx_runtime20.jsxs)(
+      "div",
+      {
+        className: "absolute bg-white border border-gray-300 rounded-md shadow-lg z-[99999] w-48",
+        style: {
+          top: position.top,
+          left: position.left
+        },
+        onClick: (e) => e.stopPropagation(),
+        children: [
+          /* @__PURE__ */ (0, import_jsx_runtime20.jsxs)("div", { className: "p-2", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime20.jsxs)("div", { className: "flex items-center justify-between mb-1", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime20.jsx)(
+                "button",
+                {
+                  onClick: handleSelectAll,
+                  className: "text-blue-600 text-xs font-medium hover:underline",
+                  children: isSelectAll ? "Select all" : `Select all ${filteredOptions.length}`
+                }
+              ),
+              /* @__PURE__ */ (0, import_jsx_runtime20.jsx)(
+                "button",
+                {
+                  onClick: handleClearFilter,
+                  className: "text-blue-600 text-xs font-medium hover:underline",
+                  children: "Clear"
+                }
+              )
+            ] }),
+            /* @__PURE__ */ (0, import_jsx_runtime20.jsxs)("div", { className: "text-xs text-gray-600 mb-1", children: [
+              "Displaying ",
+              filteredOptions.length
+            ] }),
+            /* @__PURE__ */ (0, import_jsx_runtime20.jsxs)("div", { className: "relative mb-1", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime20.jsx)(
+                "input",
+                {
+                  type: "text",
+                  placeholder: "Search values...",
+                  value: searchTerm,
+                  onChange: (e) => setSearchTerm(e.target.value),
+                  className: "w-full px-2 py-1 text-xs border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-500"
+                }
+              ),
+              /* @__PURE__ */ (0, import_jsx_runtime20.jsx)("div", { className: "absolute right-2 top-1/2 transform -translate-y-1/2", children: /* @__PURE__ */ (0, import_jsx_runtime20.jsx)("svg", { width: "10", height: "10", viewBox: "0 0 24 24", fill: "currentColor", className: "text-gray-400", children: /* @__PURE__ */ (0, import_jsx_runtime20.jsx)("path", { d: "M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z" }) }) })
+            ] }),
+            /* @__PURE__ */ (0, import_jsx_runtime20.jsxs)("div", { className: "h-16 overflow-y-auto border border-gray-200 rounded", children: [
+              filteredOptions.map((option, index) => /* @__PURE__ */ (0, import_jsx_runtime20.jsxs)(
+                "label",
+                {
+                  className: "flex items-center px-2 py-1 hover:bg-gray-50 cursor-pointer",
+                  children: [
+                    /* @__PURE__ */ (0, import_jsx_runtime20.jsx)(
+                      "input",
+                      {
+                        type: "checkbox",
+                        checked: selectedValues.has(option),
+                        onChange: () => handleOptionToggle(option),
+                        className: "mr-2 h-3 w-3 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                      }
+                    ),
+                    /* @__PURE__ */ (0, import_jsx_runtime20.jsx)("span", { className: "text-xs truncate flex-1", children: option || "(Blanks)" })
+                  ]
+                },
+                `${option}-${index}`
+              )),
+              filteredOptions.length === 0 && searchTerm && /* @__PURE__ */ (0, import_jsx_runtime20.jsx)("div", { className: "px-2 py-2 text-xs text-gray-500 text-center", children: "No results found" })
+            ] })
+          ] }),
+          /* @__PURE__ */ (0, import_jsx_runtime20.jsxs)("div", { className: "border-t border-gray-200 p-2 flex justify-end space-x-1", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime20.jsx)(
+              "button",
+              {
+                onClick: handleCancel,
+                className: "px-2 py-1 text-xs text-gray-700 hover:bg-gray-100 rounded",
+                children: "Cancel"
+              }
+            ),
+            /* @__PURE__ */ (0, import_jsx_runtime20.jsx)(
+              "button",
+              {
+                onClick: handleApplyFilter,
+                className: "px-2 py-1 text-xs bg-blue-600 text-white hover:bg-blue-700 rounded",
+                children: "OK"
+              }
+            )
+          ] })
+        ]
+      }
+    )
+  ] });
+};
+var FilterDropdown_default = FilterDropdown;
+
 // src/components/AppHeader.tsx
-var import_react7 = require("react");
+var import_react12 = require("react");
 var import_lucide_react2 = require("lucide-react");
 
 // src/components/Avatar.tsx
 var AvatarPrimitive = __toESM(require("@radix-ui/react-avatar"), 1);
-var import_jsx_runtime14 = require("react/jsx-runtime");
+var import_jsx_runtime21 = require("react/jsx-runtime");
 function Avatar({
   className,
   ...props
 }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(
     AvatarPrimitive.Root,
     {
       "data-slot": "avatar",
@@ -3216,7 +4407,7 @@ function AvatarImage({
   className,
   ...props
 }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(
     AvatarPrimitive.Image,
     {
       "data-slot": "avatar-image",
@@ -3229,12 +4420,12 @@ function AvatarFallback({
   className,
   ...props
 }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime21.jsx)(
     AvatarPrimitive.Fallback,
     {
       "data-slot": "avatar-fallback",
       className: cn(
-        "bg-primary text-primary-foreground flex size-full items-center justify-center rounded-full font-medium",
+        "bg-muted flex size-full items-center justify-center rounded-full",
         className
       ),
       ...props
@@ -3245,21 +4436,21 @@ function AvatarFallback({
 // src/components/DropdownMenu.tsx
 var DropdownMenuPrimitive = __toESM(require("@radix-ui/react-dropdown-menu"), 1);
 var import_lucide_react = require("lucide-react");
-var import_jsx_runtime15 = require("react/jsx-runtime");
+var import_jsx_runtime22 = require("react/jsx-runtime");
 function DropdownMenu({
   ...props
 }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(DropdownMenuPrimitive.Root, { "data-slot": "dropdown-menu", ...props });
+  return /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(DropdownMenuPrimitive.Root, { "data-slot": "dropdown-menu", ...props });
 }
 function DropdownMenuPortal({
   ...props
 }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(DropdownMenuPrimitive.Portal, { "data-slot": "dropdown-menu-portal", ...props });
+  return /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(DropdownMenuPrimitive.Portal, { "data-slot": "dropdown-menu-portal", ...props });
 }
 function DropdownMenuTrigger({
   ...props
 }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(
     DropdownMenuPrimitive.Trigger,
     {
       "data-slot": "dropdown-menu-trigger",
@@ -3272,7 +4463,7 @@ function DropdownMenuContent({
   sideOffset = 4,
   ...props
 }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(DropdownMenuPrimitive.Portal, { children: /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(DropdownMenuPrimitive.Portal, { children: /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(
     DropdownMenuPrimitive.Content,
     {
       "data-slot": "dropdown-menu-content",
@@ -3288,7 +4479,7 @@ function DropdownMenuContent({
 function DropdownMenuGroup({
   ...props
 }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(DropdownMenuPrimitive.Group, { "data-slot": "dropdown-menu-group", ...props });
+  return /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(DropdownMenuPrimitive.Group, { "data-slot": "dropdown-menu-group", ...props });
 }
 function DropdownMenuItem({
   className,
@@ -3296,7 +4487,7 @@ function DropdownMenuItem({
   variant = "default",
   ...props
 }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(
     DropdownMenuPrimitive.Item,
     {
       "data-slot": "dropdown-menu-item",
@@ -3316,7 +4507,7 @@ function DropdownMenuCheckboxItem({
   checked,
   ...props
 }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime22.jsxs)(
     DropdownMenuPrimitive.CheckboxItem,
     {
       "data-slot": "dropdown-menu-checkbox-item",
@@ -3327,7 +4518,7 @@ function DropdownMenuCheckboxItem({
       checked,
       ...props,
       children: [
-        /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("span", { className: "pointer-events-none absolute left-2 flex size-3.5 items-center justify-center", children: /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(DropdownMenuPrimitive.ItemIndicator, { children: /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(import_lucide_react.CheckIcon, { className: "size-4" }) }) }),
+        /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("span", { className: "pointer-events-none absolute left-2 flex size-3.5 items-center justify-center", children: /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(DropdownMenuPrimitive.ItemIndicator, { children: /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(import_lucide_react.CheckIcon, { className: "size-4" }) }) }),
         children
       ]
     }
@@ -3336,7 +4527,7 @@ function DropdownMenuCheckboxItem({
 function DropdownMenuRadioGroup({
   ...props
 }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(
     DropdownMenuPrimitive.RadioGroup,
     {
       "data-slot": "dropdown-menu-radio-group",
@@ -3349,7 +4540,7 @@ function DropdownMenuRadioItem({
   children,
   ...props
 }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime22.jsxs)(
     DropdownMenuPrimitive.RadioItem,
     {
       "data-slot": "dropdown-menu-radio-item",
@@ -3359,7 +4550,7 @@ function DropdownMenuRadioItem({
       ),
       ...props,
       children: [
-        /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("span", { className: "pointer-events-none absolute left-2 flex size-3.5 items-center justify-center", children: /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(DropdownMenuPrimitive.ItemIndicator, { children: /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(import_lucide_react.CircleIcon, { className: "size-2 fill-current" }) }) }),
+        /* @__PURE__ */ (0, import_jsx_runtime22.jsx)("span", { className: "pointer-events-none absolute left-2 flex size-3.5 items-center justify-center", children: /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(DropdownMenuPrimitive.ItemIndicator, { children: /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(import_lucide_react.CircleIcon, { className: "size-2 fill-current" }) }) }),
         children
       ]
     }
@@ -3370,7 +4561,7 @@ function DropdownMenuLabel({
   inset,
   ...props
 }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(
     DropdownMenuPrimitive.Label,
     {
       "data-slot": "dropdown-menu-label",
@@ -3387,7 +4578,7 @@ function DropdownMenuSeparator({
   className,
   ...props
 }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(
     DropdownMenuPrimitive.Separator,
     {
       "data-slot": "dropdown-menu-separator",
@@ -3400,7 +4591,7 @@ function DropdownMenuShortcut({
   className,
   ...props
 }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(
     "span",
     {
       "data-slot": "dropdown-menu-shortcut",
@@ -3415,7 +4606,7 @@ function DropdownMenuShortcut({
 function DropdownMenuSub({
   ...props
 }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(DropdownMenuPrimitive.Sub, { "data-slot": "dropdown-menu-sub", ...props });
+  return /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(DropdownMenuPrimitive.Sub, { "data-slot": "dropdown-menu-sub", ...props });
 }
 function DropdownMenuSubTrigger({
   className,
@@ -3423,7 +4614,7 @@ function DropdownMenuSubTrigger({
   children,
   ...props
 }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime22.jsxs)(
     DropdownMenuPrimitive.SubTrigger,
     {
       "data-slot": "dropdown-menu-sub-trigger",
@@ -3435,7 +4626,7 @@ function DropdownMenuSubTrigger({
       ...props,
       children: [
         children,
-        /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(import_lucide_react.ChevronRightIcon, { className: "ml-auto size-4" })
+        /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(import_lucide_react.ChevronRightIcon, { className: "ml-auto size-4" })
       ]
     }
   );
@@ -3444,7 +4635,7 @@ function DropdownMenuSubContent({
   className,
   ...props
 }) {
-  return /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime22.jsx)(
     DropdownMenuPrimitive.SubContent,
     {
       "data-slot": "dropdown-menu-sub-content",
@@ -3458,9 +4649,9 @@ function DropdownMenuSubContent({
 }
 
 // src/components/AppHeader.tsx
-var import_jsx_runtime16 = require("react/jsx-runtime");
+var import_jsx_runtime23 = require("react/jsx-runtime");
 var SafeLink = ({ to, children, className }) => {
-  return /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("a", { href: to, className, children });
+  return /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("a", { href: to, className, children });
 };
 var AppHeader = ({
   title,
@@ -3475,31 +4666,31 @@ var AppHeader = ({
   isLoading = false,
   customMenuItems
 }) => {
-  const [isUserMenuOpen, setIsUserMenuOpen] = (0, import_react7.useState)(false);
-  const handleUserMenuToggle = (0, import_react7.useCallback)(() => {
+  const [isUserMenuOpen, setIsUserMenuOpen] = (0, import_react12.useState)(false);
+  const handleUserMenuToggle = (0, import_react12.useCallback)(() => {
     setIsUserMenuOpen((prev) => !prev);
   }, []);
-  const handleUserMenuClose = (0, import_react7.useCallback)(() => {
+  const handleUserMenuClose = (0, import_react12.useCallback)(() => {
     setIsUserMenuOpen(false);
   }, []);
-  return /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("header", { className: "bg-secondary border-b", children: /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("div", { className: "px-4", children: /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("div", { className: "flex justify-between items-center h-16", children: [
-    /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("div", { className: "flex items-center gap-2", children: [
-      onToggleSidebar && /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("header", { className: "bg-secondary border-b", children: /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("div", { className: "px-4", children: /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)("div", { className: "flex justify-between items-center h-16", children: [
+    /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)("div", { className: "flex items-center gap-2", children: [
+      onToggleSidebar && /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(
         "button",
         {
           onClick: onToggleSidebar,
           className: "p-2 rounded-md text-muted-foreground hover:text-foreground hover:bg-accent focus:outline-none focus:ring-2 focus:ring-inset focus:ring-ring",
-          children: /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(import_lucide_react2.Menu, { className: "h-5 w-5" })
+          children: /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(import_lucide_react2.Menu, { className: "h-5 w-5" })
         }
       ),
-      /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)(
+      /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)(
         SafeLink,
         {
           to: "/",
           className: "flex items-center gap-2 text-secondary-foreground no-underline hover:opacity-80 transition-opacity",
           children: [
-            logo && /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)(import_jsx_runtime16.Fragment, { children: [
-              /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(
+            logo && /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)(import_jsx_runtime23.Fragment, { children: [
+              /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(
                 "img",
                 {
                   className: "[.light_&]:hidden h-6",
@@ -3507,7 +4698,7 @@ var AppHeader = ({
                   alt: title
                 }
               ),
-              /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(
+              /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(
                 "img",
                 {
                   className: "[.dark_&]:hidden h-6",
@@ -3516,12 +4707,12 @@ var AppHeader = ({
                 }
               )
             ] }),
-            /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("h1", { className: "text-xl font-semibold", children: title })
+            /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("h1", { className: "text-xl font-semibold", children: title })
           ]
         }
       )
     ] }),
-    navigationItems.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("nav", { className: "hidden md:flex", children: navigationItems.map((item) => /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(
+    navigationItems.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("nav", { className: "hidden md:flex", children: navigationItems.map((item) => /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(
       SafeLink,
       {
         to: item.to,
@@ -3530,48 +4721,48 @@ var AppHeader = ({
       },
       item.to
     )) }),
-    /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("div", { className: "flex items-center gap-2", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(ThemeSwitch, {}),
-      onRefresh && /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(
+    /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)("div", { className: "flex items-center gap-2", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(ThemeSwitch, {}),
+      onRefresh && /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(
         Button,
         {
           onClick: onRefresh,
           variant: "ghost",
           size: "icon",
           className: "hidden sm:inline-flex",
-          children: isLoading ? /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(import_lucide_react2.LoaderCircle, { className: "h-4 w-4 animate-spin" }) : /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(import_lucide_react2.RotateCw, { className: "h-4 w-4" })
+          children: isLoading ? /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(import_lucide_react2.LoaderCircle, { className: "h-4 w-4 animate-spin" }) : /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(import_lucide_react2.RotateCw, { className: "h-4 w-4" })
         }
       ),
-      user && /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)(DropdownMenu, { open: isUserMenuOpen, onOpenChange: setIsUserMenuOpen, children: [
-        /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(DropdownMenuTrigger, { asChild: true, children: /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(
+      user && /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)(DropdownMenu, { open: isUserMenuOpen, onOpenChange: setIsUserMenuOpen, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(DropdownMenuTrigger, { asChild: true, children: /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(
           Button,
           {
             variant: "ghost",
             className: "relative h-8 w-8 rounded-full",
-            children: /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)(Avatar, { className: "h-8 w-8", children: [
-              /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(AvatarImage, { src: user.avatar, role: "presentation" }),
-              /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(AvatarFallback, { children: user.name?.charAt(0)?.toUpperCase() || "U" })
+            children: /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)(Avatar, { className: "h-8 w-8", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(AvatarImage, { src: user.avatar, role: "presentation" }),
+              /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(AvatarFallback, { children: user.name?.charAt(0)?.toUpperCase() || "U" })
             ] })
           }
         ) }),
-        /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)(DropdownMenuContent, { className: "w-56", align: "end", forceMount: true, children: [
-          /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(DropdownMenuLabel, { className: "font-normal", children: /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("div", { className: "flex flex-col space-y-1", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("p", { className: "text-sm font-medium leading-none", children: user.name }),
-            user.email && /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("p", { className: "text-xs text-muted-foreground", children: user.email })
+        /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)(DropdownMenuContent, { className: "w-56", align: "end", forceMount: true, children: [
+          /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(DropdownMenuLabel, { className: "font-normal", children: /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)("div", { className: "flex flex-col space-y-1", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("p", { className: "text-sm font-medium leading-none", children: user.name }),
+            user.email && /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("p", { className: "text-xs text-muted-foreground", children: user.email })
           ] }) }),
-          /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(DropdownMenuSeparator, {}),
-          onSettings && /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)(DropdownMenuItem, { onClick: onSettings, className: "cursor-pointer", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(import_lucide_react2.Settings, { className: "mr-2 h-4 w-4" }),
+          /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(DropdownMenuSeparator, {}),
+          onSettings && /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)(DropdownMenuItem, { onClick: onSettings, className: "cursor-pointer", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(import_lucide_react2.Settings, { className: "mr-2 h-4 w-4" }),
             "My info"
           ] }),
-          onUsers && /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)(DropdownMenuItem, { onClick: onUsers, className: "cursor-pointer", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(import_lucide_react2.User, { className: "mr-2 h-4 w-4" }),
+          onUsers && /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)(DropdownMenuItem, { onClick: onUsers, className: "cursor-pointer", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(import_lucide_react2.User, { className: "mr-2 h-4 w-4" }),
             "Users"
           ] }),
           customMenuItems,
-          (onSettings || onUsers || customMenuItems) && /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(DropdownMenuSeparator, {}),
-          onLogout && /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)(DropdownMenuItem, { onClick: onLogout, className: "cursor-pointer", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(import_lucide_react2.LogOut, { className: "mr-2 h-4 w-4" }),
+          (onSettings || onUsers || customMenuItems) && /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(DropdownMenuSeparator, {}),
+          onLogout && /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)(DropdownMenuItem, { onClick: onLogout, className: "cursor-pointer", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(import_lucide_react2.LogOut, { className: "mr-2 h-4 w-4" }),
             "Log out"
           ] })
         ] })
@@ -3581,11 +4772,14 @@ var AppHeader = ({
 };
 
 // src/components/ExactHeader.tsx
-var import_react8 = __toESM(require("react"), 1);
+var import_react13 = __toESM(require("react"), 1);
 var import_lucide_react3 = require("lucide-react");
-var import_jsx_runtime17 = require("react/jsx-runtime");
-var UserMenuContext = import_react8.default.createContext(void 0);
-var useUserMenu = () => import_react8.default.useContext(UserMenuContext);
+var import_jsx_runtime24 = require("react/jsx-runtime");
+var SafeLink2 = ({ to, children, className }) => {
+  return /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("a", { href: to, className, children });
+};
+var UserMenuContext = import_react13.default.createContext(void 0);
+var useUserMenu = () => import_react13.default.useContext(UserMenuContext);
 var RefreshButton = ({ onRefresh, loading = false }) => {
   const handleRefresh = () => {
     if (onRefresh) {
@@ -3594,23 +4788,23 @@ var RefreshButton = ({ onRefresh, loading = false }) => {
       window.location.reload();
     }
   };
-  return /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(
     Button,
     {
       onClick: handleRefresh,
       variant: "ghost",
       size: "icon",
       className: "hidden sm:inline-flex",
-      children: loading ? /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(import_lucide_react3.LoaderCircle, { className: "animate-spin" }) : /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(import_lucide_react3.RotateCw, {})
+      children: loading ? /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(import_lucide_react3.LoaderCircle, { className: "animate-spin" }) : /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(import_lucide_react3.RotateCw, {})
     }
   );
 };
 function UserMenu({ children, user, onLogout }) {
-  const [open, setOpen] = (0, import_react8.useState)(false);
-  const handleToggleOpen = (0, import_react8.useCallback)(() => {
+  const [open, setOpen] = (0, import_react13.useState)(false);
+  const handleToggleOpen = (0, import_react13.useCallback)(() => {
     setOpen((prevOpen) => !prevOpen);
   }, []);
-  const handleClose = (0, import_react8.useCallback)(() => {
+  const handleClose = (0, import_react13.useCallback)(() => {
     setOpen(false);
   }, []);
   const handleLogout = () => {
@@ -3619,41 +4813,38 @@ function UserMenu({ children, user, onLogout }) {
     }
     setOpen(false);
   };
-  return /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(UserMenuContext.Provider, { value: { onClose: handleClose }, children: /* @__PURE__ */ (0, import_jsx_runtime17.jsxs)(DropdownMenu, { open, onOpenChange: handleToggleOpen, children: [
-    /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(DropdownMenuTrigger, { asChild: true, children: /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(UserMenuContext.Provider, { value: { onClose: handleClose }, children: /* @__PURE__ */ (0, import_jsx_runtime24.jsxs)(DropdownMenu, { open, onOpenChange: handleToggleOpen, children: [
+    /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(DropdownMenuTrigger, { asChild: true, children: /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(
       Button,
       {
         variant: "ghost",
         className: "relative h-8 w-8 ml-2 rounded-full",
-        children: /* @__PURE__ */ (0, import_jsx_runtime17.jsxs)(Avatar, { className: "h-8 w-8", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(AvatarImage, { src: user?.avatar, role: "presentation" }),
-          /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(AvatarFallback, { children: user?.name?.charAt(0) || "U" })
+        children: /* @__PURE__ */ (0, import_jsx_runtime24.jsxs)(Avatar, { className: "h-8 w-8", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(AvatarImage, { src: user?.avatar, role: "presentation" }),
+          /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(AvatarFallback, { children: user?.name?.charAt(0) || "U" })
         ] })
       }
     ) }),
-    /* @__PURE__ */ (0, import_jsx_runtime17.jsxs)(DropdownMenuContent, { className: "w-56", align: "end", forceMount: true, children: [
-      /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(DropdownMenuLabel, { className: "font-normal", children: /* @__PURE__ */ (0, import_jsx_runtime17.jsxs)("div", { className: "flex flex-col space-y-1", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime17.jsx)("p", { className: "text-sm font-medium leading-none", children: user?.name || "User" }),
-        user?.email && /* @__PURE__ */ (0, import_jsx_runtime17.jsx)("p", { className: "text-xs text-muted-foreground", children: user.email })
+    /* @__PURE__ */ (0, import_jsx_runtime24.jsxs)(DropdownMenuContent, { className: "w-56", align: "end", forceMount: true, children: [
+      /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(DropdownMenuLabel, { className: "font-normal", children: /* @__PURE__ */ (0, import_jsx_runtime24.jsxs)("div", { className: "flex flex-col space-y-1", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("p", { className: "text-sm font-medium leading-none", children: user?.name || "User" }),
+        user?.email && /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("p", { className: "text-xs text-muted-foreground", children: user.email })
       ] }) }),
-      /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(DropdownMenuSeparator, {}),
+      /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(DropdownMenuSeparator, {}),
       children,
-      import_react8.Children.count(children) > 0 && /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(DropdownMenuSeparator, {}),
-      /* @__PURE__ */ (0, import_jsx_runtime17.jsxs)(DropdownMenuItem, { onClick: handleLogout, className: "cursor-pointer", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(import_lucide_react3.LogOut, {}),
+      import_react13.Children.count(children) > 0 && /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(DropdownMenuSeparator, {}),
+      /* @__PURE__ */ (0, import_jsx_runtime24.jsxs)(DropdownMenuItem, { onClick: handleLogout, className: "cursor-pointer", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(import_lucide_react3.LogOut, {}),
         "Log out"
       ] })
     ] })
   ] }) });
 }
-var SafeLink2 = ({ to, children, className }) => {
-  return /* @__PURE__ */ (0, import_jsx_runtime17.jsx)("a", { href: to, className, children });
-};
 var NavigationTab = ({
   label,
   to,
   isActive
-}) => /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(
+}) => /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(
   SafeLink2,
   {
     to,
@@ -3663,15 +4854,15 @@ var NavigationTab = ({
 );
 var UsersMenu = () => {
   const { onClose } = useUserMenu() ?? {};
-  return /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(DropdownMenuItem, { asChild: true, onClick: onClose, children: /* @__PURE__ */ (0, import_jsx_runtime17.jsxs)(Link, { to: "/sales", className: "flex items-center gap-2", children: [
-    /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(import_lucide_react3.User, {}),
+  return /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(DropdownMenuItem, { asChild: true, onClick: onClose, children: /* @__PURE__ */ (0, import_jsx_runtime24.jsxs)(SafeLink2, { to: "/sales", className: "flex items-center gap-2", children: [
+    /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(import_lucide_react3.User, {}),
     " Users"
   ] }) });
 };
 var ConfigurationMenu = () => {
   const { onClose } = useUserMenu() ?? {};
-  return /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(DropdownMenuItem, { asChild: true, onClick: onClose, children: /* @__PURE__ */ (0, import_jsx_runtime17.jsxs)(Link, { to: "/settings", className: "flex items-center gap-2", children: [
-    /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(import_lucide_react3.Settings, {}),
+  return /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(DropdownMenuItem, { asChild: true, onClick: onClose, children: /* @__PURE__ */ (0, import_jsx_runtime24.jsxs)(SafeLink2, { to: "/settings", className: "flex items-center gap-2", children: [
+    /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(import_lucide_react3.Settings, {}),
     "My info"
   ] }) });
 };
@@ -3685,14 +4876,14 @@ var ExactHeader = ({
   onRefresh,
   loading = false
 }) => {
-  return /* @__PURE__ */ (0, import_jsx_runtime17.jsx)("nav", { className: "flex-grow", children: /* @__PURE__ */ (0, import_jsx_runtime17.jsx)("header", { className: "bg-secondary", children: /* @__PURE__ */ (0, import_jsx_runtime17.jsx)("div", { className: "px-4", children: /* @__PURE__ */ (0, import_jsx_runtime17.jsxs)("div", { className: "flex justify-between items-center flex-1", children: [
-    /* @__PURE__ */ (0, import_jsx_runtime17.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("nav", { className: "flex-grow", children: /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("header", { className: "bg-secondary", children: /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("div", { className: "px-4", children: /* @__PURE__ */ (0, import_jsx_runtime24.jsxs)("div", { className: "flex justify-between items-center flex-1 h-12", children: [
+    /* @__PURE__ */ (0, import_jsx_runtime24.jsxs)(
       SafeLink2,
       {
         to: "/",
         className: "flex items-center gap-2 text-secondary-foreground no-underline",
         children: [
-          darkModeLogo && /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(
+          darkModeLogo && /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(
             "img",
             {
               className: "[.light_&]:hidden h-6",
@@ -3700,7 +4891,7 @@ var ExactHeader = ({
               alt: title
             }
           ),
-          lightModeLogo && /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(
+          lightModeLogo && /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(
             "img",
             {
               className: "[.dark_&]:hidden h-6",
@@ -3708,11 +4899,11 @@ var ExactHeader = ({
               alt: title
             }
           ),
-          /* @__PURE__ */ (0, import_jsx_runtime17.jsx)("h1", { className: "text-xl font-semibold", children: title })
+          /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("h1", { className: "text-xl font-semibold", children: title })
         ]
       }
     ),
-    /* @__PURE__ */ (0, import_jsx_runtime17.jsx)("div", { children: /* @__PURE__ */ (0, import_jsx_runtime17.jsx)("nav", { className: "flex", children: navigationItems.map((item) => /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(
+    /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("div", { className: "flex-1 flex justify-center", children: /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("nav", { className: "flex", children: navigationItems.map((item) => /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(
       NavigationTab,
       {
         label: item.label,
@@ -3721,114 +4912,176 @@ var ExactHeader = ({
       },
       item.to
     )) }) }),
-    /* @__PURE__ */ (0, import_jsx_runtime17.jsxs)("div", { className: "flex items-center", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(ThemeSwitch, {}),
-      /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(RefreshButton, { onRefresh, loading }),
-      /* @__PURE__ */ (0, import_jsx_runtime17.jsxs)(UserMenu, { user, onLogout, children: [
-        /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(ConfigurationMenu, {}),
-        /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(UsersMenu, {})
+    /* @__PURE__ */ (0, import_jsx_runtime24.jsxs)("div", { className: "flex items-center", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(ThemeSwitch, {}),
+      /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(RefreshButton, { onRefresh, loading }),
+      /* @__PURE__ */ (0, import_jsx_runtime24.jsxs)(UserMenu, { user, onLogout, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(ConfigurationMenu, {}),
+        /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(UsersMenu, {})
       ] })
     ] })
   ] }) }) }) });
 };
 
 // src/components/LoginPage.tsx
-var import_react9 = __toESM(require("react"), 1);
-var import_jsx_runtime18 = require("react/jsx-runtime");
-var import_meta = {};
+var import_react14 = require("react");
+var import_jsx_runtime25 = require("react/jsx-runtime");
+var isDevelopmentMode = () => {
+  if (typeof globalThis !== "undefined" && globalThis.import?.meta?.env) {
+    return globalThis.import.meta.env.MODE === "development";
+  }
+  if (typeof process !== "undefined" && process.env) {
+    return process.env.NODE_ENV === "development";
+  }
+  return false;
+};
 var LoginPage = ({
   title,
   logo,
   backgroundImage,
   backgroundColor = "#18181b",
-  // zinc-900
   subtitle,
   showForgotPassword = true,
   showSignUp = true,
-  forgotPasswordUrl = "/forgot-password",
-  signUpUrl = "/signup",
+  labels = {},
+  demoCredentials,
   isLoading = false,
   error,
-  additionalFields,
-  onValidate,
   onSubmit,
-  labels = {
+  forgotPasswordUrl = "/forgot-password",
+  signUpUrl = "/signup",
+  additionalFields
+}) => {
+  const [formData, setFormData] = (0, import_react14.useState)({
+    email: "",
+    password: ""
+  });
+  const defaultLabels = {
     signIn: "Sign in",
     email: "Email",
     password: "Password",
     forgotPassword: "Forgot your password?",
-    signUp: "Create Account",
-    noAccount: "Don't have an account?",
-    signingIn: "Signing in..."
-  },
-  demoCredentials
-}) => {
-  const [formData, setFormData] = (0, import_react9.useState)({
-    email: "",
-    password: ""
-  });
-  const [formErrors, setFormErrors] = (0, import_react9.useState)({});
+    signUp: "Sign up",
+    signUpText: "Don't have an account?",
+    ...labels
+  };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    onSubmit(formData);
+  };
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
-    if (formErrors[name]) {
-      setFormErrors((prev) => ({ ...prev, [name]: "" }));
-    }
   };
-  const validateForm = () => {
-    let errors = {};
-    if (!formData.email.trim()) {
-      errors.email = "Email is required";
-    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
-      errors.email = "Please enter a valid email address";
-    }
-    if (!formData.password) {
-      errors.password = "Password is required";
-    }
-    if (onValidate) {
-      const customErrors = onValidate(formData);
-      errors = { ...errors, ...customErrors };
-    }
-    setFormErrors(errors);
-    return Object.keys(errors).length === 0;
-  };
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    if (!validateForm()) {
-      return;
-    }
-    try {
-      await onSubmit(formData);
-    } catch (err) {
-    }
-  };
-  const handleDemoCredentials = () => {
+  const fillDemoCredentials = () => {
     if (demoCredentials) {
-      setFormData(demoCredentials);
+      setFormData({
+        email: demoCredentials.email,
+        password: demoCredentials.password
+      });
     }
   };
-  const getFieldError = (fieldName) => {
-    return formErrors[fieldName] ? /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("span", { className: "text-red-500 text-sm mt-1 block", children: formErrors[fieldName] }) : null;
-  };
-  return /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("div", { className: "min-h-screen flex", children: /* @__PURE__ */ (0, import_jsx_runtime18.jsxs)("div", { className: "container relative grid flex-col items-center justify-center sm:max-w-none lg:grid-cols-2 lg:px-0", children: [
-    /* @__PURE__ */ (0, import_jsx_runtime18.jsxs)("div", { className: "relative hidden h-full flex-col bg-muted p-10 text-white dark:border-r lg:flex", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("div", { className: "absolute inset-0 bg-zinc-900" }),
-      /* @__PURE__ */ (0, import_jsx_runtime18.jsxs)("div", { className: "relative z-20 flex items-center text-lg font-medium", children: [
-        logo && /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("img", { className: "h-6 mr-2", src: logo, alt: title }),
-        title
+  console.log("\u{1F3A8} SharedLoginPage: Rendering with props", { title, logo, subtitle });
+  return /* @__PURE__ */ (0, import_jsx_runtime25.jsx)("div", { style: { minHeight: "100vh", display: "flex" }, children: /* @__PURE__ */ (0, import_jsx_runtime25.jsxs)("div", { style: {
+    width: "100%",
+    position: "relative",
+    display: "grid",
+    gridTemplateColumns: "1fr 1fr",
+    alignItems: "center",
+    justifyContent: "center"
+  }, children: [
+    /* @__PURE__ */ (0, import_jsx_runtime25.jsxs)(
+      "div",
+      {
+        style: {
+          position: "relative",
+          height: "100vh",
+          display: "flex",
+          flexDirection: "column",
+          padding: "2.5rem",
+          color: "white",
+          backgroundImage: backgroundImage ? `url(${backgroundImage})` : void 0,
+          backgroundColor
+        },
+        children: [
+          /* @__PURE__ */ (0, import_jsx_runtime25.jsx)("div", { style: {
+            position: "absolute",
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            backgroundColor
+          } }),
+          /* @__PURE__ */ (0, import_jsx_runtime25.jsxs)("div", { style: {
+            position: "relative",
+            zIndex: 20,
+            display: "flex",
+            alignItems: "center",
+            fontSize: "1.125rem",
+            fontWeight: "500"
+          }, children: [
+            logo && /* @__PURE__ */ (0, import_jsx_runtime25.jsx)("img", { style: { height: "1.5rem", marginRight: "0.5rem" }, src: logo, alt: title }),
+            title
+          ] }),
+          subtitle && /* @__PURE__ */ (0, import_jsx_runtime25.jsx)("div", { style: {
+            position: "relative",
+            zIndex: 20,
+            marginTop: "auto"
+          }, children: /* @__PURE__ */ (0, import_jsx_runtime25.jsx)("blockquote", { style: { margin: 0 }, children: /* @__PURE__ */ (0, import_jsx_runtime25.jsx)("p", { style: { fontSize: "1.125rem", margin: 0 }, children: subtitle }) }) })
+        ]
+      }
+    ),
+    /* @__PURE__ */ (0, import_jsx_runtime25.jsx)("div", { style: { padding: "2rem" }, children: /* @__PURE__ */ (0, import_jsx_runtime25.jsxs)("div", { style: {
+      margin: "0 auto",
+      display: "flex",
+      width: "100%",
+      maxWidth: "350px",
+      flexDirection: "column",
+      justifyContent: "center",
+      gap: "1.5rem"
+    }, children: [
+      /* @__PURE__ */ (0, import_jsx_runtime25.jsxs)("div", { style: {
+        display: "flex",
+        flexDirection: "column",
+        gap: "0.5rem",
+        textAlign: "center"
+      }, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime25.jsx)("h1", { style: {
+          fontSize: "1.5rem",
+          fontWeight: "600",
+          letterSpacing: "-0.025em",
+          margin: 0,
+          color: "#111827"
+        }, children: defaultLabels.signIn }),
+        /* @__PURE__ */ (0, import_jsx_runtime25.jsx)("p", { style: {
+          fontSize: "0.875rem",
+          color: "#6b7280",
+          margin: 0
+        }, children: "Enter your email below to sign in to your account" })
       ] }),
-      subtitle && /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("div", { className: "relative z-20 mt-auto", children: /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("p", { className: "text-lg", children: subtitle }) })
-    ] }),
-    /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("div", { className: "lg:p-8", children: /* @__PURE__ */ (0, import_jsx_runtime18.jsxs)("div", { className: "mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime18.jsxs)("div", { className: "flex flex-col space-y-2 text-center lg:hidden", children: [
-        logo && /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("img", { className: "h-8 mx-auto", src: logo, alt: title }),
-        /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("h1", { className: "text-xl font-semibold", children: title })
-      ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("div", { className: "flex flex-col space-y-2 text-center", children: /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("h1", { className: "text-2xl font-semibold tracking-tight", children: labels.signIn }) }),
-      /* @__PURE__ */ (0, import_jsx_runtime18.jsxs)("form", { onSubmit: handleSubmit, className: "space-y-8", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime18.jsxs)("div", { className: "space-y-2", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("label", { htmlFor: "email", className: "block text-sm font-medium", children: labels.email }),
-          /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(
+      /* @__PURE__ */ (0, import_jsx_runtime25.jsxs)("form", { onSubmit: handleSubmit, style: { display: "flex", flexDirection: "column", gap: "1rem" }, children: [
+        error && /* @__PURE__ */ (0, import_jsx_runtime25.jsx)("div", { style: {
+          padding: "0.75rem",
+          fontSize: "0.875rem",
+          color: "#dc2626",
+          backgroundColor: "#fef2f2",
+          border: "1px solid #fecaca",
+          borderRadius: "0.375rem"
+        }, children: error }),
+        /* @__PURE__ */ (0, import_jsx_runtime25.jsxs)("div", { style: { display: "flex", flexDirection: "column", gap: "0.5rem" }, children: [
+          /* @__PURE__ */ (0, import_jsx_runtime25.jsx)(
+            "label",
+            {
+              htmlFor: "email",
+              style: {
+                fontSize: "0.875rem",
+                fontWeight: "500",
+                color: "#374151"
+              },
+              children: defaultLabels.email
+            }
+          ),
+          /* @__PURE__ */ (0, import_jsx_runtime25.jsx)(
             Input,
             {
               id: "email",
@@ -3836,16 +5089,26 @@ var LoginPage = ({
               type: "email",
               value: formData.email,
               onChange: handleChange,
-              className: formErrors.email ? "border-red-500" : "",
-              disabled: isLoading,
-              autoComplete: "email"
+              placeholder: "name@example.com",
+              required: true,
+              disabled: isLoading
+            }
+          )
+        ] }),
+        /* @__PURE__ */ (0, import_jsx_runtime25.jsxs)("div", { style: { display: "flex", flexDirection: "column", gap: "0.5rem" }, children: [
+          /* @__PURE__ */ (0, import_jsx_runtime25.jsx)(
+            "label",
+            {
+              htmlFor: "password",
+              style: {
+                fontSize: "0.875rem",
+                fontWeight: "500",
+                color: "#374151"
+              },
+              children: defaultLabels.password
             }
           ),
-          getFieldError("email")
-        ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime18.jsxs)("div", { className: "space-y-2", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("label", { htmlFor: "password", className: "block text-sm font-medium", children: labels.password }),
-          /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(
+          /* @__PURE__ */ (0, import_jsx_runtime25.jsx)(
             Input,
             {
               id: "password",
@@ -3853,84 +5116,78 @@ var LoginPage = ({
               type: "password",
               value: formData.password,
               onChange: handleChange,
-              className: formErrors.password ? "border-red-500" : "",
-              disabled: isLoading,
-              autoComplete: "current-password"
+              required: true,
+              disabled: isLoading
             }
-          ),
-          getFieldError("password")
+          )
         ] }),
-        additionalFields && /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("div", { className: "space-y-4", children: import_react9.default.cloneElement(additionalFields, {
-          formData,
-          handleChange,
-          formErrors,
-          getFieldError,
-          isLoading
-        }) }),
-        error && /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("div", { className: "bg-red-50 border border-red-200 rounded-md p-3", children: /* @__PURE__ */ (0, import_jsx_runtime18.jsxs)("div", { className: "flex", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("div", { className: "flex-shrink-0", children: /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("span", { className: "text-red-400", children: "\u25CF" }) }),
-          /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("div", { className: "ml-3", children: /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("p", { className: "text-sm text-red-800", children: error }) })
-        ] }) }),
-        /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(
+        additionalFields,
+        /* @__PURE__ */ (0, import_jsx_runtime25.jsx)(
           Button,
           {
             type: "submit",
-            className: "w-full cursor-pointer",
+            className: "w-full text-white",
             disabled: isLoading,
-            children: isLoading ? labels.signingIn : labels.signIn
+            children: isLoading ? "Signing in..." : defaultLabels.signIn
           }
         )
       ] }),
-      showForgotPassword && /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(
-        "a",
-        {
-          href: forgotPasswordUrl,
-          className: "text-sm text-center hover:underline block",
-          children: labels.forgotPassword
-        }
-      ),
-      showSignUp && /* @__PURE__ */ (0, import_jsx_runtime18.jsxs)("div", { className: "text-center space-y-4", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime18.jsxs)("div", { className: "relative", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("div", { className: "absolute inset-0 flex items-center", children: /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("div", { className: "w-full border-t border-gray-300" }) }),
-          /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("div", { className: "relative flex justify-center text-sm", children: /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("span", { className: "px-2 bg-background text-muted-foreground", children: labels.noAccount }) })
-        ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("a", { href: signUpUrl, children: /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(Button, { variant: "outline", className: "w-full", children: labels.signUp }) })
-      ] }),
-      demoCredentials && (typeof import_meta !== "undefined" && import_meta.env?.MODE === "development") && /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("div", { className: "mt-4 p-3 bg-gray-50 rounded-lg", children: /* @__PURE__ */ (0, import_jsx_runtime18.jsxs)("details", { className: "group", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("summary", { className: "cursor-pointer text-sm font-medium text-gray-700 hover:text-gray-900", children: "Demo Credentials (Development Only)" }),
-        /* @__PURE__ */ (0, import_jsx_runtime18.jsxs)("div", { className: "mt-2 space-y-2", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime18.jsxs)("p", { className: "text-sm text-gray-600", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("strong", { children: "Email:" }),
-            " ",
+      demoCredentials && isDevelopmentMode() && /* @__PURE__ */ (0, import_jsx_runtime25.jsx)("div", { className: "mt-4 p-3 bg-gray-50 rounded-lg", children: /* @__PURE__ */ (0, import_jsx_runtime25.jsxs)("details", { className: "group", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime25.jsx)("summary", { className: "cursor-pointer text-sm font-medium text-gray-700 hover:text-gray-900", children: "Demo Credentials (Development Only)" }),
+        /* @__PURE__ */ (0, import_jsx_runtime25.jsxs)("div", { className: "mt-2 space-y-2", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime25.jsxs)("p", { className: "text-xs text-gray-600", children: [
+            "Email: ",
             demoCredentials.email
           ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime18.jsxs)("p", { className: "text-sm text-gray-600", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("strong", { children: "Password:" }),
-            " ",
+          /* @__PURE__ */ (0, import_jsx_runtime25.jsxs)("p", { className: "text-xs text-gray-600", children: [
+            "Password: ",
             demoCredentials.password
           ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(
+          /* @__PURE__ */ (0, import_jsx_runtime25.jsx)(
             Button,
             {
               type: "button",
               variant: "outline",
               size: "sm",
-              onClick: handleDemoCredentials,
-              children: "Use Demo Credentials"
+              onClick: fillDemoCredentials,
+              className: "w-full mt-2",
+              children: "Fill Demo Credentials"
             }
           )
         ] })
-      ] }) })
+      ] }) }),
+      /* @__PURE__ */ (0, import_jsx_runtime25.jsxs)("div", { className: "text-center space-y-4", children: [
+        showForgotPassword && /* @__PURE__ */ (0, import_jsx_runtime25.jsx)(
+          "a",
+          {
+            href: forgotPasswordUrl,
+            className: "text-sm text-muted-foreground hover:text-primary underline-offset-4 hover:underline",
+            children: defaultLabels.forgotPassword
+          }
+        ),
+        showSignUp && /* @__PURE__ */ (0, import_jsx_runtime25.jsxs)("div", { className: "text-sm text-muted-foreground", children: [
+          defaultLabels.signUpText,
+          " ",
+          /* @__PURE__ */ (0, import_jsx_runtime25.jsx)(
+            "a",
+            {
+              href: signUpUrl,
+              className: "text-primary underline-offset-4 hover:underline",
+              children: defaultLabels.signUp
+            }
+          )
+        ] })
+      ] })
     ] }) })
   ] }) });
 };
 
 // src/components/SimpleHeader.tsx
-var import_react10 = __toESM(require("react"), 1);
+var import_react15 = __toESM(require("react"), 1);
 var import_lucide_react4 = require("lucide-react");
-var import_jsx_runtime19 = require("react/jsx-runtime");
-var UserMenuContext2 = import_react10.default.createContext(void 0);
-var useUserMenu2 = () => import_react10.default.useContext(UserMenuContext2);
+var import_jsx_runtime26 = require("react/jsx-runtime");
+var UserMenuContext2 = import_react15.default.createContext(void 0);
+var useUserMenu2 = () => import_react15.default.useContext(UserMenuContext2);
 var RefreshButton2 = ({ onRefresh, loading = false }) => {
   const handleRefresh = () => {
     if (onRefresh) {
@@ -3939,23 +5196,23 @@ var RefreshButton2 = ({ onRefresh, loading = false }) => {
       window.location.reload();
     }
   };
-  return /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(
     Button,
     {
       onClick: handleRefresh,
       variant: "ghost",
       size: "icon",
       className: "hidden sm:inline-flex",
-      children: loading ? /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(import_lucide_react4.LoaderCircle, { className: "animate-spin" }) : /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(import_lucide_react4.RotateCw, {})
+      children: loading ? /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(import_lucide_react4.LoaderCircle, { className: "animate-spin" }) : /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(import_lucide_react4.RotateCw, {})
     }
   );
 };
 function UserMenu2({ children, user, onLogout }) {
-  const [open, setOpen] = (0, import_react10.useState)(false);
-  const handleToggleOpen = (0, import_react10.useCallback)(() => {
+  const [open, setOpen] = (0, import_react15.useState)(false);
+  const handleToggleOpen = (0, import_react15.useCallback)(() => {
     setOpen((prevOpen) => !prevOpen);
   }, []);
-  const handleClose = (0, import_react10.useCallback)(() => {
+  const handleClose = (0, import_react15.useCallback)(() => {
     setOpen(false);
   }, []);
   const handleLogout = () => {
@@ -3964,28 +5221,28 @@ function UserMenu2({ children, user, onLogout }) {
     }
     setOpen(false);
   };
-  return /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(UserMenuContext2.Provider, { value: { onClose: handleClose }, children: /* @__PURE__ */ (0, import_jsx_runtime19.jsxs)(DropdownMenu, { open, onOpenChange: handleToggleOpen, children: [
-    /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(DropdownMenuTrigger, { asChild: true, children: /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(UserMenuContext2.Provider, { value: { onClose: handleClose }, children: /* @__PURE__ */ (0, import_jsx_runtime26.jsxs)(DropdownMenu, { open, onOpenChange: handleToggleOpen, children: [
+    /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(DropdownMenuTrigger, { asChild: true, children: /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(
       Button,
       {
         variant: "ghost",
         className: "relative h-8 w-8 ml-2 rounded-full",
-        children: /* @__PURE__ */ (0, import_jsx_runtime19.jsxs)(Avatar, { className: "h-8 w-8", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(AvatarImage, { src: user?.avatar, role: "presentation" }),
-          /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(AvatarFallback, { children: user?.name?.charAt(0) || "U" })
+        children: /* @__PURE__ */ (0, import_jsx_runtime26.jsxs)(Avatar, { className: "h-8 w-8", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(AvatarImage, { src: user?.avatar, role: "presentation" }),
+          /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(AvatarFallback, { children: user?.name?.charAt(0) || "U" })
         ] })
       }
     ) }),
-    /* @__PURE__ */ (0, import_jsx_runtime19.jsxs)(DropdownMenuContent, { className: "w-56", align: "end", forceMount: true, children: [
-      /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(DropdownMenuLabel, { className: "font-normal", children: /* @__PURE__ */ (0, import_jsx_runtime19.jsxs)("div", { className: "flex flex-col space-y-1", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime19.jsx)("p", { className: "text-sm font-medium leading-none", children: user?.name || "User" }),
-        user?.email && /* @__PURE__ */ (0, import_jsx_runtime19.jsx)("p", { className: "text-xs text-muted-foreground", children: user.email })
+    /* @__PURE__ */ (0, import_jsx_runtime26.jsxs)(DropdownMenuContent, { className: "w-56", align: "end", forceMount: true, children: [
+      /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(DropdownMenuLabel, { className: "font-normal", children: /* @__PURE__ */ (0, import_jsx_runtime26.jsxs)("div", { className: "flex flex-col space-y-1", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime26.jsx)("p", { className: "text-sm font-medium leading-none", children: user?.name || "User" }),
+        user?.email && /* @__PURE__ */ (0, import_jsx_runtime26.jsx)("p", { className: "text-xs text-muted-foreground", children: user.email })
       ] }) }),
-      /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(DropdownMenuSeparator, {}),
+      /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(DropdownMenuSeparator, {}),
       children,
-      import_react10.Children.count(children) > 0 && /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(DropdownMenuSeparator, {}),
-      /* @__PURE__ */ (0, import_jsx_runtime19.jsxs)(DropdownMenuItem, { onClick: handleLogout, className: "cursor-pointer", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(import_lucide_react4.LogOut, {}),
+      import_react15.Children.count(children) > 0 && /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(DropdownMenuSeparator, {}),
+      /* @__PURE__ */ (0, import_jsx_runtime26.jsxs)(DropdownMenuItem, { onClick: handleLogout, className: "cursor-pointer", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(import_lucide_react4.LogOut, {}),
         "Log out"
       ] })
     ] })
@@ -3993,15 +5250,15 @@ function UserMenu2({ children, user, onLogout }) {
 }
 var UsersMenu2 = () => {
   const { onClose } = useUserMenu2() ?? {};
-  return /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(DropdownMenuItem, { onClick: onClose, children: /* @__PURE__ */ (0, import_jsx_runtime19.jsxs)("div", { className: "flex items-center gap-2", children: [
-    /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(import_lucide_react4.User, {}),
+  return /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(DropdownMenuItem, { onClick: onClose, children: /* @__PURE__ */ (0, import_jsx_runtime26.jsxs)("div", { className: "flex items-center gap-2", children: [
+    /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(import_lucide_react4.User, {}),
     " Users"
   ] }) });
 };
 var ConfigurationMenu2 = () => {
   const { onClose } = useUserMenu2() ?? {};
-  return /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(DropdownMenuItem, { onClick: onClose, children: /* @__PURE__ */ (0, import_jsx_runtime19.jsxs)("div", { className: "flex items-center gap-2", children: [
-    /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(import_lucide_react4.Settings, {}),
+  return /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(DropdownMenuItem, { onClick: onClose, children: /* @__PURE__ */ (0, import_jsx_runtime26.jsxs)("div", { className: "flex items-center gap-2", children: [
+    /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(import_lucide_react4.Settings, {}),
     "My info"
   ] }) });
 };
@@ -4015,18 +5272,18 @@ var SimpleHeader = ({
   onToggleSidebar,
   loading = false
 }) => {
-  return /* @__PURE__ */ (0, import_jsx_runtime19.jsx)("nav", { className: "flex-grow", children: /* @__PURE__ */ (0, import_jsx_runtime19.jsx)("header", { className: "bg-secondary", children: /* @__PURE__ */ (0, import_jsx_runtime19.jsx)("div", { className: "px-4", children: /* @__PURE__ */ (0, import_jsx_runtime19.jsxs)("div", { className: "flex justify-between items-center flex-1", children: [
-    /* @__PURE__ */ (0, import_jsx_runtime19.jsxs)("div", { className: "flex items-center gap-2", children: [
-      onToggleSidebar && /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime26.jsx)("nav", { className: "flex-grow", children: /* @__PURE__ */ (0, import_jsx_runtime26.jsx)("header", { className: "bg-secondary", children: /* @__PURE__ */ (0, import_jsx_runtime26.jsx)("div", { className: "px-4", children: /* @__PURE__ */ (0, import_jsx_runtime26.jsxs)("div", { className: "flex justify-between items-center flex-1 h-12", children: [
+    /* @__PURE__ */ (0, import_jsx_runtime26.jsxs)("div", { className: "flex items-center gap-2", children: [
+      onToggleSidebar && /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(
         "button",
         {
           onClick: onToggleSidebar,
           className: "p-2 rounded-md text-muted-foreground hover:text-foreground hover:bg-accent focus:outline-none focus:ring-2 focus:ring-inset focus:ring-ring",
-          children: /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(import_lucide_react4.Menu, { className: "h-5 w-5" })
+          children: /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(import_lucide_react4.Menu, { className: "h-5 w-5" })
         }
       ),
-      /* @__PURE__ */ (0, import_jsx_runtime19.jsxs)("div", { className: "flex items-center gap-2 text-secondary-foreground", children: [
-        darkModeLogo && /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(
+      /* @__PURE__ */ (0, import_jsx_runtime26.jsxs)("div", { className: "flex items-center gap-2 text-secondary-foreground", children: [
+        darkModeLogo && /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(
           "img",
           {
             className: "[.light_&]:hidden h-6",
@@ -4034,7 +5291,7 @@ var SimpleHeader = ({
             alt: title
           }
         ),
-        lightModeLogo && /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(
+        lightModeLogo && /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(
           "img",
           {
             className: "[.dark_&]:hidden h-6",
@@ -4042,18 +5299,181 @@ var SimpleHeader = ({
             alt: title
           }
         ),
-        /* @__PURE__ */ (0, import_jsx_runtime19.jsx)("h1", { className: "text-xl font-semibold", children: title })
+        /* @__PURE__ */ (0, import_jsx_runtime26.jsx)("h1", { className: "text-xl font-semibold", children: title })
       ] })
     ] }),
-    /* @__PURE__ */ (0, import_jsx_runtime19.jsxs)("div", { className: "flex items-center", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(ThemeSwitch, {}),
-      /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(RefreshButton2, { onRefresh, loading }),
-      /* @__PURE__ */ (0, import_jsx_runtime19.jsxs)(UserMenu2, { user, onLogout, children: [
-        /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(ConfigurationMenu2, {}),
-        /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(UsersMenu2, {})
+    /* @__PURE__ */ (0, import_jsx_runtime26.jsxs)("div", { className: "flex items-center", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(ThemeSwitch, {}),
+      /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(RefreshButton2, { onRefresh, loading }),
+      /* @__PURE__ */ (0, import_jsx_runtime26.jsxs)(UserMenu2, { user, onLogout, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(ConfigurationMenu2, {}),
+        /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(UsersMenu2, {})
       ] })
     ] })
   ] }) }) }) });
+};
+
+// src/components/UnifiedHeader.tsx
+var import_react16 = require("react");
+var import_lucide_react5 = require("lucide-react");
+var import_jsx_runtime27 = require("react/jsx-runtime");
+var UnifiedHeader = ({
+  title,
+  darkModeLogo,
+  lightModeLogo,
+  user,
+  onLogout,
+  onRefresh,
+  loading = false,
+  LinkComponent = "a",
+  userMenuItems,
+  navigationItems = []
+}) => {
+  const [userMenuOpen, setUserMenuOpen] = (0, import_react16.useState)(false);
+  const handleUserMenuToggle = (0, import_react16.useCallback)(() => {
+    setUserMenuOpen((prev) => !prev);
+  }, []);
+  const handleUserMenuClose = (0, import_react16.useCallback)(() => {
+    setUserMenuOpen(false);
+  }, []);
+  const handleLogout = () => {
+    if (onLogout) {
+      onLogout();
+    }
+    setUserMenuOpen(false);
+  };
+  const handleRefresh = () => {
+    if (onRefresh) {
+      onRefresh();
+    }
+  };
+  return /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("nav", { className: "flex-grow", children: /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("header", { className: "bg-secondary", children: /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("div", { className: "px-4", children: /* @__PURE__ */ (0, import_jsx_runtime27.jsxs)("div", { className: "flex justify-between items-center flex-1 h-12", children: [
+    /* @__PURE__ */ (0, import_jsx_runtime27.jsxs)(
+      LinkComponent,
+      {
+        to: "/",
+        className: "flex items-center gap-2 text-secondary-foreground no-underline",
+        children: [
+          darkModeLogo && /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(
+            "img",
+            {
+              className: "[.light_&]:hidden h-6",
+              src: darkModeLogo,
+              alt: title
+            }
+          ),
+          lightModeLogo && /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(
+            "img",
+            {
+              className: "[.dark_&]:hidden h-6",
+              src: lightModeLogo,
+              alt: title
+            }
+          ),
+          /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("h1", { className: "text-xl font-semibold", children: title })
+        ]
+      }
+    ),
+    /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("div", { className: "flex-1 flex justify-center", children: /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("nav", { className: "flex", children: navigationItems.map((item) => /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(
+      LinkComponent,
+      {
+        to: item.to,
+        className: `px-3 py-2 text-sm font-medium rounded-md transition-colors ${item.isActive ? "bg-primary text-primary-foreground" : "text-muted-foreground hover:text-foreground hover:bg-accent"}`,
+        children: item.label
+      },
+      item.to
+    )) }) }),
+    /* @__PURE__ */ (0, import_jsx_runtime27.jsxs)("div", { className: "flex items-center", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(ThemeSwitch, {}),
+      /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(
+        Button,
+        {
+          onClick: handleRefresh,
+          variant: "ghost",
+          size: "icon",
+          className: "hidden sm:inline-flex",
+          disabled: loading,
+          children: loading ? /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(import_lucide_react5.LoaderCircle, { className: "h-4 w-4 animate-spin" }) : /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(import_lucide_react5.RotateCw, { className: "h-4 w-4" })
+        }
+      ),
+      user && /* @__PURE__ */ (0, import_jsx_runtime27.jsxs)(DropdownMenu, { open: userMenuOpen, onOpenChange: handleUserMenuToggle, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(DropdownMenuTrigger, { asChild: true, children: /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(
+          Button,
+          {
+            variant: "ghost",
+            className: "relative h-8 w-8 ml-2 rounded-full",
+            children: /* @__PURE__ */ (0, import_jsx_runtime27.jsxs)(Avatar, { className: "h-8 w-8", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(AvatarImage, { src: user.avatar, role: "presentation" }),
+              /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(AvatarFallback, { children: user.name?.charAt(0) || "U" })
+            ] })
+          }
+        ) }),
+        /* @__PURE__ */ (0, import_jsx_runtime27.jsxs)(DropdownMenuContent, { className: "w-56", align: "end", forceMount: true, children: [
+          /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(DropdownMenuLabel, { className: "font-normal", children: /* @__PURE__ */ (0, import_jsx_runtime27.jsxs)("div", { className: "flex flex-col space-y-1", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("p", { className: "text-sm font-medium leading-none", children: user.name || "User" }),
+            user.email && /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("p", { className: "text-xs text-muted-foreground", children: user.email })
+          ] }) }),
+          /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(DropdownMenuSeparator, {}),
+          userMenuItems,
+          userMenuItems && /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(DropdownMenuSeparator, {}),
+          /* @__PURE__ */ (0, import_jsx_runtime27.jsxs)(DropdownMenuItem, { onClick: handleLogout, className: "cursor-pointer", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(import_lucide_react5.LogOut, { className: "mr-2 h-4 w-4" }),
+            "Log out"
+          ] })
+        ] })
+      ] })
+    ] })
+  ] }) }) }) });
+};
+
+// src/validation/url-validators.ts
+var LINKEDIN_URL_REGEX = /^http(?:s)?:\/\/(?:www\.)?linkedin.com\//;
+var isLinkedinUrl = (url) => {
+  if (!url) return;
+  try {
+    const parsedUrl = new URL(url);
+    if (!parsedUrl.href.match(LINKEDIN_URL_REGEX)) {
+      return "URL must be from linkedin.com";
+    }
+  } catch {
+    return "Must be a valid URL";
+  }
+};
+var isUrl = (url) => {
+  if (!url) return;
+  const UrlRegex = new RegExp(
+    /^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([-.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/i
+  );
+  if (!UrlRegex.test(url)) {
+    return "Must be a valid URL";
+  }
+};
+
+// src/validation/form-validators.ts
+var validateMinLength = (minLength) => (value) => {
+  if (!value) return;
+  if (value.length < minLength) {
+    return `Must be at least ${minLength} characters long`;
+  }
+};
+var validateMaxLength = (maxLength) => (value) => {
+  if (!value) return;
+  if (value.length > maxLength) {
+    return `Must be no more than ${maxLength} characters long`;
+  }
+};
+var validateNumber = (value) => {
+  if (value === null || value === void 0 || value === "") return;
+  if (isNaN(Number(value))) {
+    return "Must be a valid number";
+  }
+};
+var validatePositiveNumber = (value) => {
+  const numberError = validateNumber(value);
+  if (numberError) return numberError;
+  if (value !== null && value !== void 0 && value !== "" && Number(value) <= 0) {
+    return "Must be a positive number";
+  }
 };
 
 // src/services/BaseService.ts
@@ -4984,7 +6404,7 @@ var SupabaseService = class {
 
 // src/services/supabase.ts
 var import_supabase_js = require("@supabase/supabase-js");
-var import_meta2 = {};
+var import_meta = {};
 var createSupabaseClient = (config) => {
   const defaultOptions = {
     auth: {
@@ -5002,9 +6422,23 @@ var createSupabaseClient = (config) => {
     ...config.options
   });
 };
+var getEnvVar = (key) => {
+  if (typeof import_meta !== "undefined" && import_meta.env) {
+    const value = import_meta.env[key];
+    if (value !== void 0) return value;
+  }
+  if (typeof process !== "undefined" && process.env) {
+    const value = process.env[key];
+    if (value !== void 0) return value;
+  }
+  if (typeof window !== "undefined" && window.__ENV__) {
+    return window.__ENV__[key];
+  }
+  return void 0;
+};
 var createSupabaseFromEnv = () => {
-  const url = import_meta2.env?.VITE_SUPABASE_URL || process.env.VITE_SUPABASE_URL;
-  const anonKey = import_meta2.env?.VITE_SUPABASE_ANON_KEY || process.env.VITE_SUPABASE_ANON_KEY;
+  const url = getEnvVar("VITE_SUPABASE_URL");
+  const anonKey = getEnvVar("VITE_SUPABASE_ANON_KEY");
   if (!url) {
     throw new Error("Missing VITE_SUPABASE_URL environment variable");
   }
@@ -5044,130 +6478,266 @@ var getSupabaseClient = () => {
   return _supabaseClient;
 };
 
-// src/services/AuthProvider.tsx
-var import_react11 = require("react");
-var import_jsx_runtime20 = require("react/jsx-runtime");
-var AuthContext = (0, import_react11.createContext)(null);
-var AuthProvider = ({
-  children,
-  supabaseClient,
-  onAuthStateChange
-}) => {
-  const [user, setUser] = (0, import_react11.useState)(null);
-  const [session, setSession] = (0, import_react11.useState)(null);
-  const [loading, setLoading] = (0, import_react11.useState)(true);
-  const [error, setError] = (0, import_react11.useState)(null);
-  (0, import_react11.useEffect)(() => {
-    const getInitialSession = async () => {
-      try {
-        const { data: { session: initialSession }, error: error2 } = await supabaseClient.auth.getSession();
-        if (error2) {
-          setError("Failed to initialize authentication");
-        } else {
-          setSession(initialSession);
-          setUser(initialSession?.user ?? null);
-          onAuthStateChange?.(initialSession?.user ?? null, initialSession);
-        }
-      } catch (err) {
-        setError("Authentication initialization failed");
-      } finally {
-        setLoading(false);
+// src/services/supabase-storage.ts
+var uploadToSupabaseStorage = async (supabase, file, options = {}) => {
+  const {
+    bucket = "attachments",
+    folder = "",
+    generateFileName = true,
+    overwrite = false
+  } = options;
+  let fileName;
+  if (generateFileName) {
+    const fileExt = file instanceof File ? file.name.split(".").pop() : "bin";
+    fileName = `${Math.random().toString(36).substring(2)}.${fileExt}`;
+  } else if (file instanceof File) {
+    fileName = file.name;
+  } else {
+    fileName = `${Math.random().toString(36).substring(2)}.bin`;
+  }
+  const filePath = folder ? `${folder}/${fileName}` : fileName;
+  const { error: uploadError } = await supabase.storage.from(bucket).upload(filePath, file, {
+    upsert: overwrite
+  });
+  if (uploadError) {
+    console.error("Upload error:", uploadError);
+    throw new Error(`Failed to upload file: ${uploadError.message}`);
+  }
+  const { data } = supabase.storage.from(bucket).getPublicUrl(filePath);
+  return {
+    path: filePath,
+    src: data.publicUrl,
+    type: file instanceof File ? file.type : void 0,
+    size: file.size,
+    name: file instanceof File ? file.name : fileName
+  };
+};
+var checkFileExists = async (supabase, path, bucket = "attachments") => {
+  try {
+    const { error } = await supabase.storage.from(bucket).createSignedUrl(path, 60);
+    return !error;
+  } catch {
+    return false;
+  }
+};
+var deleteFromSupabaseStorage = async (supabase, path, bucket = "attachments") => {
+  const { error } = await supabase.storage.from(bucket).remove([path]);
+  if (error) {
+    console.error("Delete error:", error);
+    throw new Error(`Failed to delete file: ${error.message}`);
+  }
+};
+var getSignedUrl = async (supabase, path, expiresIn = 3600, bucket = "attachments") => {
+  const { data, error } = await supabase.storage.from(bucket).createSignedUrl(path, expiresIn);
+  if (error) {
+    throw new Error(`Failed to create signed URL: ${error.message}`);
+  }
+  return data.signedUrl;
+};
+var uploadMultipleFiles = async (supabase, files, options = {}) => {
+  const uploadPromises = files.map(
+    (file) => uploadToSupabaseStorage(supabase, file, options)
+  );
+  return Promise.all(uploadPromises);
+};
+
+// src/services/supabase-database.ts
+var applyFullTextSearch = (supabase, table, options) => {
+  const { columns, query, language = "english" } = options;
+  if (!query.trim()) {
+    return supabase.from(table).select("*");
+  }
+  const searchQuery = query.split(" ").filter((term) => term.length > 0).map((term) => `${term}:*`).join(" & ");
+  let queryBuilder = supabase.from(table).select("*");
+  const searchConditions = columns.map(
+    (column) => `${column}.fts(${language}).${searchQuery}`
+  ).join(",");
+  return queryBuilder.or(searchConditions);
+};
+var applyPagination = (queryBuilder, params) => {
+  const { page = 1, perPage = 10, sortBy: sortBy2, sortOrder = "asc" } = params;
+  const from = (page - 1) * perPage;
+  const to = from + perPage - 1;
+  let query = queryBuilder.range(from, to);
+  if (sortBy2) {
+    query = query.order(sortBy2, { ascending: sortOrder === "asc" });
+  }
+  return query;
+};
+var recordExists = async (supabase, table, conditions) => {
+  let query = supabase.from(table).select("id", { count: "exact" });
+  Object.entries(conditions).forEach(([key, value]) => {
+    query = query.eq(key, value);
+  });
+  const { count, error } = await query;
+  if (error) {
+    throw new Error(`Failed to check record existence: ${error.message}`);
+  }
+  return (count || 0) > 0;
+};
+var getRecordCount = async (supabase, table, filters = {}) => {
+  let query = supabase.from(table).select("*", { count: "exact", head: true });
+  Object.entries(filters).forEach(([key, value]) => {
+    if (Array.isArray(value)) {
+      query = query.in(key, value);
+    } else {
+      query = query.eq(key, value);
+    }
+  });
+  const { count, error } = await query;
+  if (error) {
+    throw new Error(`Failed to get record count: ${error.message}`);
+  }
+  return count || 0;
+};
+var batchInsert = async (supabase, table, records, batchSize = 100) => {
+  const results = [];
+  for (let i = 0; i < records.length; i += batchSize) {
+    const batch = records.slice(i, i + batchSize);
+    const { data, error } = await supabase.from(table).insert(batch).select();
+    if (error) {
+      throw new Error(`Batch insert failed: ${error.message}`);
+    }
+    if (data) {
+      results.push(...data);
+    }
+  }
+  return results;
+};
+var batchUpdate = async (supabase, table, updates) => {
+  const updatePromises = updates.map(
+    ({ id, data }) => supabase.from(table).update(data).eq("id", id).select().single()
+  );
+  const results = await Promise.all(updatePromises);
+  results.forEach((result, index) => {
+    if (result.error) {
+      throw new Error(`Update failed for record ${updates[index].id}: ${result.error.message}`);
+    }
+  });
+  return results.map((result) => result.data).filter(Boolean);
+};
+var softDelete = async (supabase, table, id) => {
+  const { data, error } = await supabase.from(table).update({ deleted_at: (/* @__PURE__ */ new Date()).toISOString() }).eq("id", id).select().single();
+  if (error) {
+    throw new Error(`Soft delete failed: ${error.message}`);
+  }
+  return data;
+};
+var restoreRecord = async (supabase, table, id) => {
+  const { data, error } = await supabase.from(table).update({ deleted_at: null }).eq("id", id).select().single();
+  if (error) {
+    throw new Error(`Restore failed: ${error.message}`);
+  }
+  return data;
+};
+
+// src/services/supabase-data-provider.ts
+var processFileUploads = async (data, fileFields, supabase, options = {}) => {
+  const processedData = { ...data };
+  for (const fieldName of fileFields) {
+    const fileData = data[fieldName];
+    if (!fileData) continue;
+    if (fileData.rawFile instanceof File) {
+      const uploadedFile = await uploadFileToStorage(fileData, supabase, options);
+      processedData[fieldName] = uploadedFile;
+    } else if (Array.isArray(fileData)) {
+      const uploadedFiles = await Promise.all(
+        fileData.map(
+          (file) => file.rawFile instanceof File ? uploadFileToStorage(file, supabase, options) : file
+        )
+      );
+      processedData[fieldName] = uploadedFiles;
+    }
+  }
+  return processedData;
+};
+var uploadFileToStorage = async (fileData, supabase, options) => {
+  const { bucket = "attachments", folder = "", generateFileName = true } = options;
+  if (!fileData.src.startsWith("blob:") && !fileData.src.startsWith("data:")) {
+    if (fileData.path) {
+      const { error } = await supabase.storage.from(bucket).createSignedUrl(fileData.path, 60);
+      if (!error) {
+        return fileData;
+      }
+    }
+  }
+  const dataContent = fileData.src ? await fetch(fileData.src).then((res) => res.blob()) : fileData.rawFile;
+  const file = fileData.rawFile;
+  const fileExt = file.name.split(".").pop();
+  const fileName = generateFileName ? `${Math.random()}.${fileExt}` : file.name;
+  const filePath = folder ? `${folder}/${fileName}` : fileName;
+  const { error: uploadError } = await supabase.storage.from(bucket).upload(filePath, dataContent);
+  if (uploadError) {
+    console.error("Upload error:", uploadError);
+    throw new Error("Failed to upload attachment");
+  }
+  const { data } = supabase.storage.from(bucket).getPublicUrl(filePath);
+  return {
+    ...fileData,
+    path: filePath,
+    src: data.publicUrl,
+    type: file.type
+  };
+};
+var createAvatarProcessor = (getAvatarFn) => {
+  return async (params, supabase, options = {}) => {
+    let avatar = params.data.avatar;
+    if (typeof avatar !== "object" || avatar === null || !avatar.src) {
+      avatar = await getAvatarFn(params.data);
+    } else if (avatar.rawFile instanceof File) {
+      avatar = await uploadFileToStorage(avatar, supabase, options);
+    }
+    return {
+      ...params,
+      data: {
+        ...params.data,
+        avatar
       }
     };
-    getInitialSession();
-    const { data: { subscription } } = supabaseClient.auth.onAuthStateChange(
-      async (event, session2) => {
-        setSession(session2);
-        setUser(session2?.user ?? null);
-        setError(null);
-        onAuthStateChange?.(session2?.user ?? null, session2);
-        if (event === "SIGNED_OUT") {
-          setLoading(false);
-        }
-      }
-    );
-    return () => subscription.unsubscribe();
-  }, [supabaseClient, onAuthStateChange]);
-  const signIn = async (email, password) => {
-    try {
-      setError(null);
-      const { error: error2 } = await supabaseClient.auth.signInWithPassword({
-        email,
-        password
-      });
-      if (error2) {
-        setError(error2.message);
-        return { error: error2.message };
-      }
-      return {};
-    } catch (err) {
-      const errorMessage = "Sign in failed";
-      setError(errorMessage);
-      return { error: errorMessage };
-    }
   };
-  const signUp = async (email, password, metadata) => {
-    try {
-      setError(null);
-      const { error: error2 } = await supabaseClient.auth.signUp({
-        email,
-        password,
-        options: {
-          data: metadata
-        }
-      });
-      if (error2) {
-        setError(error2.message);
-        return { error: error2.message };
-      }
-      return {};
-    } catch (err) {
-      const errorMessage = "Sign up failed";
-      setError(errorMessage);
-      return { error: errorMessage };
-    }
-  };
-  const signOut = async () => {
-    try {
-      setError(null);
-      await supabaseClient.auth.signOut();
-    } catch (err) {
-      setError("Sign out failed");
-    }
-  };
-  const resetPassword = async (email) => {
-    try {
-      setError(null);
-      const { error: error2 } = await supabaseClient.auth.resetPasswordForEmail(email);
-      if (error2) {
-        setError(error2.message);
-        return { error: error2.message };
-      }
-      return {};
-    } catch (err) {
-      const errorMessage = "Password reset failed";
-      setError(errorMessage);
-      return { error: errorMessage };
-    }
-  };
-  const value = {
-    user,
-    session,
-    loading,
-    error,
-    signIn,
-    signUp,
-    signOut,
-    resetPassword
-  };
-  return /* @__PURE__ */ (0, import_jsx_runtime20.jsx)(AuthContext.Provider, { value, children });
 };
-var useAuth = () => {
-  const context = (0, import_react11.useContext)(AuthContext);
-  if (!context) {
-    throw new Error("useAuth must be used within an AuthProvider");
+var createFullTextSearchProcessor = (columns) => {
+  return (params) => {
+    const { filter } = params;
+    if (!filter || !filter.q) {
+      return params;
+    }
+    const searchQuery = filter.q;
+    delete filter.q;
+    const searchConditions = columns.reduce((acc, column) => {
+      acc[`${column}@ilike`] = `%${searchQuery}%`;
+      return acc;
+    }, {});
+    return {
+      ...params,
+      filter: {
+        ...filter,
+        $or: searchConditions
+      }
+    };
+  };
+};
+var validateSupabaseEnv = (envVars) => {
+  const missing = Object.entries(envVars).filter(([, value]) => !value).map(([key]) => key);
+  if (missing.length > 0) {
+    throw new Error(`Missing required environment variables: ${missing.join(", ")}`);
   }
-  return context;
+};
+var createDataOperationErrorHandler = (operation) => {
+  return (error, context) => {
+    const contextStr = context ? ` (${context})` : "";
+    console.error(`${operation} error${contextStr}:`, error);
+    if (error.code === "23505") {
+      throw new Error("This record already exists");
+    } else if (error.code === "23503") {
+      throw new Error("Cannot perform this operation due to related records");
+    } else if (error.code === "PGRST116") {
+      throw new Error("Record not found");
+    } else if (error.message?.includes("JWT")) {
+      throw new Error("Authentication error. Please refresh the page");
+    }
+    throw new Error(error.message || `${operation} failed`);
+  };
 };
 
 // src/stores/storeFactory.ts
@@ -5468,6 +7038,7 @@ function createPaginatedStore(entityName, defaultPerPage = 10, persistOptions) {
 0 && (module.exports = {
   ALERT_TYPES,
   AppHeader,
+  AuthLayout,
   AuthProvider,
   Avatar,
   AvatarFallback,
@@ -5507,14 +7078,17 @@ function createPaginatedStore(entityName, defaultPerPage = 10, persistOptions) {
   ExactHeader,
   FIELD_CONFIGS,
   FilterDropdown,
+  FormPageLayout,
   GenericForm,
   Header,
   Input,
   Label,
+  ListPageLayout,
   LoginPage,
   MACHINE_STATUSES,
   NUMBER_CONSTANTS,
   PRODUCT_TYPES,
+  ProtectedRoute,
   SCHEMAS,
   SEAL_SIDES,
   SERVICES_ERROR_TYPES,
@@ -5522,6 +7096,7 @@ function createPaginatedStore(entityName, defaultPerPage = 10, persistOptions) {
   STRING_CONSTANTS,
   ServiceError,
   SimpleHeader,
+  Skeleton,
   SupabaseService,
   TASK_STATUSES,
   Table,
@@ -5532,21 +7107,28 @@ function createPaginatedStore(entityName, defaultPerPage = 10, persistOptions) {
   TableHead,
   TableHeader,
   TableRow,
+  Textarea,
   ThemeProvider,
   ThemeSwitch,
+  UnifiedHeader,
   VALIDATION_MESSAGES,
   WORK_CENTERS,
   addDaysToDate,
+  applyFullTextSearch,
+  applyPagination,
   arrayComparison,
   average,
   averageBy,
   averageNumbers,
   badgeVariants,
+  batchInsert,
+  batchUpdate,
   buttonVariants,
   calculatePercentage,
   calculatePercentageChange,
   capitalize,
   capitalizeWords,
+  checkFileExists,
   checkSupabaseConnection,
   chunk,
   clampNumber,
@@ -5561,9 +7143,12 @@ function createPaginatedStore(entityName, defaultPerPage = 10, persistOptions) {
   countOccurrences,
   countWords,
   createArray,
+  createAvatarProcessor,
   createCRUDStore,
+  createDataOperationErrorHandler,
   createDateRange,
   createEntityStore,
+  createFullTextSearchProcessor,
   createPaginatedStore,
   createQueryKeys,
   createServiceHooks,
@@ -5574,6 +7159,7 @@ function createPaginatedStore(entityName, defaultPerPage = 10, persistOptions) {
   debounce,
   defaultQueryConfig,
   defaultQueryErrorHandler,
+  deleteFromSupabaseStorage,
   difference,
   dismiss,
   dismissAll,
@@ -5619,7 +7205,9 @@ function createPaginatedStore(entityName, defaultPerPage = 10, persistOptions) {
   getNested,
   getRandomItem,
   getRandomItems,
+  getRecordCount,
   getRelativeTime,
+  getSignedUrl,
   getStandardSupabaseClient,
   getStartOfDay,
   getSupabaseClient,
@@ -5632,7 +7220,9 @@ function createPaginatedStore(entityName, defaultPerPage = 10, persistOptions) {
   hoursToMinutes,
   insertAt,
   intersection,
+  isLinkedinUrl,
   isPalindrome,
+  isUrl,
   isValidDate,
   isValidEmail,
   isValidNumber,
@@ -5653,13 +7243,16 @@ function createPaginatedStore(entityName, defaultPerPage = 10, persistOptions) {
   parseDate,
   parseInteger,
   parseNumber,
+  processFileUploads,
   randomInteger,
   randomNumber,
   range,
+  recordExists,
   removeAt,
   removeDuplicates,
   removeDuplicatesByKey,
   removeWhitespace,
+  restoreRecord,
   reverse,
   roundNumber,
   safeAsync,
@@ -5676,6 +7269,7 @@ function createPaginatedStore(entityName, defaultPerPage = 10, persistOptions) {
   shuffle,
   skip,
   skipLast,
+  softDelete,
   sortBy,
   sortByMultiple,
   stringTemplates,
@@ -5696,19 +7290,35 @@ function createPaginatedStore(entityName, defaultPerPage = 10, persistOptions) {
   truncateWords,
   union,
   updateAt,
+  uploadMultipleFiles,
+  uploadToSupabaseStorage,
+  useAdvancedInfiniteQuery,
+  useAdvancedMutation,
+  useAdvancedQuery,
   useAuth,
+  useAuthGuard,
+  useBulkOperations,
+  useColumnManager,
   useDataService,
+  useDataTable,
+  useDependentQueries,
   useErrorBoundary,
   useErrorHandler,
+  useOfflineSync,
+  useQuerySync,
+  useSavedQueries,
   useSidebar,
   useTheme,
   useValidationErrorHandler,
   validateData,
   validateDateRange,
-  validateEmail,
+  validateMaxLength,
+  validateMinLength,
+  validateNumber,
   validateNumericRanges,
-  validateRequired,
+  validatePositiveNumber,
   validateRequiredFields,
+  validateSupabaseEnv,
   withErrorBoundary
 });
 //# sourceMappingURL=index.cjs.map

@@ -1,18 +1,18 @@
 import React, { useState, useMemo } from 'react';
-import { useReactTable, getCoreRowModel, flexRender, getSortedRowModel, type ColumnDef } from '@tanstack/react-table';
+import { useReactTable, getCoreRowModel, flexRender, getSortedRowModel, getFilteredRowModel, type ColumnDef, type VisibilityState } from '@tanstack/react-table';
+import { Button } from './button';
 // Note: These would normally be imported from @santonastaso/crm-ui
 // For now using placeholder interfaces
 interface TableProps { children: React.ReactNode; className?: string; }
-interface ButtonProps { children: React.ReactNode; variant?: string; size?: string; onClick?: () => void; disabled?: boolean; className?: string; }
 
 const Table = ({ children, className, ...props }: TableProps) => (
-  <table className={`w-full border-collapse border border-gray-200 table-auto ${className || ''}`} {...props}>
+  <table className={`w-full border-collapse border border-border table-auto ${className || ''}`} {...props}>
     {children}
   </table>
 );
 
 const TableHeader = ({ children }: { children: React.ReactNode }) => (
-  <thead className="bg-gray-50">
+  <thead className="bg-muted">
     {children}
   </thead>
 );
@@ -26,14 +26,14 @@ const TableBody = ({ children }: { children: React.ReactNode }) => (
 const TableRow = ({ children, onClick, className }: { children: React.ReactNode; onClick?: () => void; className?: string }) => (
   <tr 
     onClick={onClick} 
-    className={`${onClick ? 'cursor-pointer hover:bg-gray-50' : ''} ${className || ''}`}
+    className={`${onClick ? 'cursor-pointer hover:bg-muted/50' : ''} ${className || ''}`}
   >
     {children}
   </tr>
 );
 
 const TableHead = ({ children }: { children: React.ReactNode }) => (
-  <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider border-b border-gray-200 min-w-0">
+  <th className="px-4 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider border-b border-border min-w-0">
     {children}
   </th>
 );
@@ -41,7 +41,7 @@ const TableHead = ({ children }: { children: React.ReactNode }) => (
 const TableCell = ({ children, colSpan, className }: { children: React.ReactNode; colSpan?: number; className?: string }) => (
   <td 
     colSpan={colSpan} 
-    className={`px-4 py-3 text-sm text-gray-900 border-b border-gray-200 min-w-0 max-w-xs ${className || ''}`}
+    className={`px-4 py-3 text-sm text-foreground border-b border-border min-w-0 max-w-xs ${className || ''}`}
   >
     <div className="truncate" title={typeof children === 'string' ? children : ''}>
       {children}
@@ -49,34 +49,7 @@ const TableCell = ({ children, colSpan, className }: { children: React.ReactNode
   </td>
 );
 
-const Button = ({ children, variant = 'default', size = 'default', onClick, disabled, className }: ButtonProps) => {
-  const baseClasses = 'inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none';
-  
-  const variantClasses = {
-    default: 'bg-primary text-primary-foreground hover:bg-primary/90',
-    destructive: 'bg-destructive text-destructive-foreground hover:bg-destructive/90',
-    outline: 'border border-input hover:bg-accent hover:text-accent-foreground',
-    secondary: 'bg-secondary text-secondary-foreground hover:bg-secondary/80',
-    ghost: 'hover:bg-accent hover:text-accent-foreground',
-    link: 'underline-offset-4 hover:underline text-primary'
-  };
-  
-  const sizeClasses = {
-    default: 'h-10 py-2 px-4',
-    sm: 'h-9 px-3 rounded-md',
-    lg: 'h-11 px-8 rounded-md'
-  };
-  
-  return (
-    <button 
-      onClick={onClick} 
-      disabled={disabled} 
-      className={`${baseClasses} ${variantClasses[variant as keyof typeof variantClasses] || variantClasses.default} ${sizeClasses[size as keyof typeof sizeClasses] || sizeClasses.default} ${className || ''}`}
-    >
-      {children}
-    </button>
-  );
-};
+// Use the shared Button component instead of local definition
 import { confirmAction, getNested } from '../utils';
 import { DATA_TABLE_DEFAULTS } from '../constants';
 
@@ -96,6 +69,9 @@ interface DataTableProps<T> {
   enableGlobalSearch?: boolean;
   enableColumnVisibility?: boolean;
   enableRowSelection?: boolean;
+  loading?: boolean;
+  emptyMessage?: string;
+  className?: string;
 }
 
 /**
@@ -117,7 +93,10 @@ export function DataTable<T extends Record<string, any>>({
   pageSizeOptions = [...DATA_TABLE_DEFAULTS.PAGE_SIZE_OPTIONS],
   enableGlobalSearch = true,
   enableColumnVisibility = false,
-  enableRowSelection = false
+  enableRowSelection = false,
+  loading = false,
+  emptyMessage = "No results found.",
+  className
 }: DataTableProps<T>) {
   // State management
   const [filters, setFilters] = useState<Record<string, string>>({});
@@ -126,6 +105,8 @@ export function DataTable<T extends Record<string, any>>({
   const [selectedIds, setSelectedIds] = useState<Set<string | number>>(new Set());
   const [globalQuery, setGlobalQuery] = useState('');
   const [sorting, setSorting] = useState<any[]>([]);
+  const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
+  const [showColumnDropdown, setShowColumnDropdown] = useState(false);
 
   // Build columns with selection and actions
   const columns = useMemo(() => {
@@ -150,7 +131,7 @@ export function DataTable<T extends Record<string, any>>({
                 }
                 setSelectedIds(newSet);
               }}
-              className="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+              className="h-4 w-4 rounded border-border text-primary focus:ring-ring"
             />
           </div>
         );
@@ -170,7 +151,7 @@ export function DataTable<T extends Record<string, any>>({
               }
               setSelectedIds(newSet);
             }}
-            className="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+            className="h-4 w-4 rounded border-border text-primary focus:ring-ring"
           />
         </div>
       )
@@ -249,10 +230,15 @@ export function DataTable<T extends Record<string, any>>({
   const table = useReactTable({
     data: paginatedData,
     columns,
-    state: { sorting },
+    state: { 
+      sorting,
+      columnVisibility,
+    },
     onSortingChange: setSorting,
+    onColumnVisibilityChange: setColumnVisibility,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
+    getFilteredRowModel: getFilteredRowModel(),
   });
 
   const handleFilterChange = (column: string, value: string) => {
@@ -267,11 +253,11 @@ export function DataTable<T extends Record<string, any>>({
   };
 
   return (
-    <div className="w-full space-y-4">
-      {/* Search Only - Remove individual column filters */}
-      {enableGlobalSearch && (
-        <div className="flex items-center gap-4">
-          <div className="flex-1">
+    <div className={`w-full space-y-1 ${className || ''}`}>
+      {/* Toolbar with Search and Column Visibility */}
+      <div className="flex items-center justify-between gap-4">
+        {enableGlobalSearch && (
+          <div className="flex-1 max-w-sm">
             <input
               type="text"
               placeholder="Search all columns..."
@@ -283,16 +269,58 @@ export function DataTable<T extends Record<string, any>>({
               className="w-full px-3 py-2 border border-input rounded-md bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring"
             />
           </div>
+        )}
+        
+        <div className="flex items-center gap-2">
           {globalQuery && (
-            <Button variant="outline" onClick={clearFilters}>
+            <Button variant="outline" size="sm" onClick={clearFilters}>
               Clear Search
             </Button>
           )}
+          
+          {/* Column Visibility Toggle - Fixed React Implementation */}
+          {enableColumnVisibility && (
+            <div className="relative">
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => setShowColumnDropdown(!showColumnDropdown)}
+              >
+                Columns ⚙️
+              </Button>
+              {showColumnDropdown && (
+                <>
+                  {/* Backdrop to close dropdown */}
+                  <div 
+                    className="fixed inset-0 z-10" 
+                    onClick={() => setShowColumnDropdown(false)}
+                  />
+                  <div className="absolute right-0 mt-2 w-48 bg-popover border border-border rounded-md shadow-lg z-20 p-2">
+                    {table.getAllColumns()
+                      .filter(column => column.getCanHide())
+                      .map(column => (
+                        <label key={column.id} className="flex items-center gap-2 p-1 hover:bg-accent rounded cursor-pointer">
+                          <input
+                            type="checkbox"
+                            checked={column.getIsVisible()}
+                            onChange={column.getToggleVisibilityHandler()}
+                            className="h-4 w-4 rounded border-border"
+                          />
+                          <span className="text-sm capitalize">
+                            {column.id.replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase())}
+                          </span>
+                        </label>
+                      ))}
+                  </div>
+                </>
+              )}
+            </div>
+          )}
         </div>
-      )}
+      </div>
 
       {/* Table with horizontal scrolling */}
-      <div className="rounded-md border border-gray-200 overflow-hidden shadow-sm">
+      <div className="rounded-md border border-border overflow-hidden shadow-sm">
         <div className="overflow-x-auto">
           <Table className="min-w-full">
           <TableHeader>
@@ -306,10 +334,14 @@ export function DataTable<T extends Record<string, any>>({
                         onClick={header.column.getToggleSortingHandler()}
                       >
                         {flexRender(header.column.columnDef.header, header.getContext())}
-                        {{
-                          asc: ' 🔼',
-                          desc: ' 🔽',
-                        }[header.column.getIsSorted() as string] ?? null}
+                        {header.column.getCanSort() && (
+                          <span className="ml-1">
+                            {{
+                              asc: '↑',
+                              desc: '↓',
+                            }[header.column.getIsSorted() as string] ?? '↕️'}
+                          </span>
+                        )}
                       </div>
                     )}
                   </TableHead>
@@ -318,7 +350,16 @@ export function DataTable<T extends Record<string, any>>({
             ))}
           </TableHeader>
           <TableBody>
-            {table.getRowModel().rows.length ? (
+            {loading ? (
+              <TableRow>
+                <TableCell colSpan={columns.length} className="h-24 text-center">
+                  <div className="flex items-center justify-center gap-2">
+                    <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-foreground"></div>
+                    Loading...
+                  </div>
+                </TableCell>
+              </TableRow>
+            ) : table.getRowModel().rows.length ? (
               table.getRowModel().rows.map((row) => (
                 <TableRow
                   key={row.id}
@@ -334,8 +375,11 @@ export function DataTable<T extends Record<string, any>>({
               ))
             ) : (
               <TableRow>
-                <TableCell colSpan={columns.length} className="h-24 text-center">
-                  No results found.
+                <TableCell colSpan={columns.length} className="h-24 text-center text-muted-foreground">
+                  <div className="flex flex-col items-center gap-2">
+                    <div className="text-4xl">📋</div>
+                    <div>{emptyMessage}</div>
+                  </div>
                 </TableCell>
               </TableRow>
             )}
@@ -375,43 +419,48 @@ export function DataTable<T extends Record<string, any>>({
         </div>
       </div>
 
-      {/* Bulk Actions */}
+      {/* Enhanced Bulk Actions Toolbar - Improved positioning */}
       {selectedIds.size > 0 && (onBulkDelete || onBulkExport) && (
-        <div className="flex items-center justify-between p-4 bg-muted rounded-md">
-          <span className="text-sm text-muted-foreground">
-            {selectedIds.size} items selected
-          </span>
-          <div className="flex gap-2">
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => setSelectedIds(new Set())}
-            >
-              Clear Selection
-            </Button>
-            {onBulkExport && (
+        <div className="sticky bottom-0 bg-background border-t border-border p-4 -mx-4 -mb-4 rounded-b-md">
+          <div className="flex items-center justify-between gap-4">
+            <div className="flex items-center gap-3">
               <Button
-                variant="outline"
+                variant="ghost"
                 size="sm"
-                onClick={() => onBulkExport(Array.from(selectedIds))}
+                onClick={() => setSelectedIds(new Set())}
+                className="h-8 w-8 p-0"
               >
-                Export Selected
+                ✕
               </Button>
-            )}
-            {onBulkDelete && (
-              <Button
-                variant="destructive"
-                size="sm"
-                onClick={() => {
-                  if (confirmAction(`Delete ${selectedIds.size} selected items?`)) {
-                    onBulkDelete(Array.from(selectedIds));
-                    setSelectedIds(new Set());
-                  }
-                }}
-              >
-                Delete Selected
-              </Button>
-            )}
+              <span className="text-sm font-medium">
+                {selectedIds.size} item{selectedIds.size > 1 ? 's' : ''} selected
+              </span>
+            </div>
+            <div className="flex gap-2">
+              {onBulkExport && (
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => onBulkExport(Array.from(selectedIds))}
+                >
+                  📤 Export
+                </Button>
+              )}
+              {onBulkDelete && (
+                <Button
+                  variant="destructive"
+                  size="sm"
+                  onClick={() => {
+                    if (confirmAction(`Delete ${selectedIds.size} selected items? This action cannot be undone.`)) {
+                      onBulkDelete(Array.from(selectedIds));
+                      setSelectedIds(new Set());
+                    }
+                  }}
+                >
+                  🗑️ Delete
+                </Button>
+              )}
+            </div>
           </div>
         </div>
       )}
