@@ -38,6 +38,8 @@ export { ThemeSwitch } from './theme/ThemeSwitch';
 
 // Advanced Components
 export { DataTable } from './DataTable';
+export { ListPageLayout } from './ListPageLayout';
+export { FormPageLayout } from './FormPageLayout';
 export { ErrorBoundary, withErrorBoundary, useErrorBoundary } from './ErrorBoundary';
 export { Header } from './Header';
 

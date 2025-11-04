@@ -253,7 +253,7 @@ export function DataTable<T extends Record<string, any>>({
   };
 
   return (
-    <div className={`w-full space-y-4 ${className || ''}`}>
+    <div className={`w-full space-y-1 ${className || ''}`}>
       {/* Toolbar with Search and Column Visibility */}
       <div className="flex items-center justify-between gap-4">
         {enableGlobalSearch && (

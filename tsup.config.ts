@@ -40,7 +40,9 @@ export default defineConfig({
     "sonner",
     "vaul",
     "yup",
-    "date-fns"
+    "date-fns",
+    "tailwindcss",
+    "tw-animate-css"
   ],
   noExternal: [],
   // Force externalization using rollup options

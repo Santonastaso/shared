@@ -12,6 +12,15 @@ import {
   DropdownMenuTrigger,
 } from './DropdownMenu';
 
+// Simple Link Component that uses anchor tags for maximum compatibility
+const SafeLink = ({ to, children, className }: { to: string; children: React.ReactNode; className?: string }) => {
+  return (
+    <a href={to} className={className}>
+      {children}
+    </a>
+  );
+};
+
 // UserMenu Context
 export type UserMenuContextValue = {
   onClose: () => void;
@@ -112,15 +121,6 @@ export function UserMenu({ children, user, onLogout }: UserMenuProps) {
   );
 }
 
-// Simple Link Component that uses anchor tags for maximum compatibility
-const SafeLink = ({ to, children, className }: { to: string; children: React.ReactNode; className?: string }) => {
-  return (
-    <a href={to} className={className}>
-      {children}
-    </a>
-  );
-};
-
 // NavigationTab Component
 const NavigationTab = ({
   label,
@@ -148,9 +148,9 @@ const UsersMenu = () => {
   const { onClose } = useUserMenu() ?? {};
   return (
     <DropdownMenuItem asChild onClick={onClose}>
-      <Link to="/sales" className="flex items-center gap-2">
+      <SafeLink to="/sales" className="flex items-center gap-2">
         <User /> Users
-      </Link>
+      </SafeLink>
     </DropdownMenuItem>
   );
 };
@@ -160,10 +160,10 @@ const ConfigurationMenu = () => {
   const { onClose } = useUserMenu() ?? {};
   return (
     <DropdownMenuItem asChild onClick={onClose}>
-      <Link to="/settings" className="flex items-center gap-2">
+      <SafeLink to="/settings" className="flex items-center gap-2">
         <Settings />
         My info
-      </Link>
+      </SafeLink>
     </DropdownMenuItem>
   );
 };
@@ -202,7 +202,7 @@ export const ExactHeader: React.FC<ExactHeaderProps> = ({
     <nav className="flex-grow">
       <header className="bg-secondary">
         <div className="px-4">
-          <div className="flex justify-between items-center flex-1">
+          <div className="flex justify-between items-center flex-1 h-12">
             <SafeLink
               to="/"
               className="flex items-center gap-2 text-secondary-foreground no-underline"
@@ -223,7 +223,7 @@ export const ExactHeader: React.FC<ExactHeaderProps> = ({
               )}
               <h1 className="text-xl font-semibold">{title}</h1>
             </SafeLink>
-            <div>
+            <div className="flex-1 flex justify-center">
               <nav className="flex">
                 {navigationItems.map((item) => (
                   <NavigationTab
