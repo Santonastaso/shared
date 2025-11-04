@@ -98,7 +98,6 @@ input[type=time] {
 }
 @layer base {
   body {
-    @apply bg-background text-foreground;
     font-family:
       "Inter",
       ui-sans-serif,
