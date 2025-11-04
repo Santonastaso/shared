@@ -5065,8 +5065,298 @@ var LoginPage = ({
 // src/components/CRMLoginPage.tsx
 var import_react15 = require("react");
 
-// src/components/TextInput.tsx
+// src/components/Notification.tsx
+var import_sonner2 = require("sonner");
 var import_jsx_runtime24 = require("react/jsx-runtime");
+var Notification = ({
+  position = "bottom-center",
+  richColors = true,
+  closeButton = true,
+  ...props
+}) => {
+  const { theme } = useTheme();
+  return /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(
+    import_sonner2.Toaster,
+    {
+      richColors,
+      theme,
+      closeButton,
+      position,
+      ...props
+    }
+  );
+};
+
+// src/components/CRMLoginPage.tsx
+var import_jsx_runtime25 = require("react/jsx-runtime");
+var CRMLoginPage = ({
+  title,
+  logo,
+  subtitle,
+  redirectTo,
+  useLogin,
+  useNotify,
+  Form: Form2,
+  TextInput: TextInput2,
+  required,
+  Link: Link3
+}) => {
+  const [loading, setLoading] = (0, import_react15.useState)(false);
+  const login = useLogin();
+  const notify = useNotify();
+  const handleSubmit = (values) => {
+    setLoading(true);
+    login(values, redirectTo).then(() => {
+      setLoading(false);
+    }).catch((error) => {
+      setLoading(false);
+      notify(
+        typeof error === "string" ? error : typeof error === "undefined" || !error.message ? "ra.auth.sign_in_error" : error.message,
+        {
+          type: "error",
+          messageArgs: {
+            _: typeof error === "string" ? error : error && error.message ? error.message : void 0
+          }
+        }
+      );
+    });
+  };
+  return /* @__PURE__ */ (0, import_jsx_runtime25.jsxs)("div", { className: "min-h-screen flex", children: [
+    /* @__PURE__ */ (0, import_jsx_runtime25.jsxs)("div", { className: "container relative grid flex-col items-center justify-center sm:max-w-none lg:grid-cols-2 lg:px-0", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime25.jsxs)("div", { className: "relative hidden h-full flex-col bg-muted p-10 text-white dark:border-r lg:flex", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime25.jsx)("div", { className: "absolute inset-0 bg-zinc-900" }),
+        /* @__PURE__ */ (0, import_jsx_runtime25.jsxs)("div", { className: "relative z-20 flex items-center text-lg font-medium", children: [
+          logo && /* @__PURE__ */ (0, import_jsx_runtime25.jsx)("img", { className: "h-6 mr-2", src: logo, alt: title }),
+          title
+        ] }),
+        subtitle && /* @__PURE__ */ (0, import_jsx_runtime25.jsx)("div", { className: "relative z-20 mt-auto", children: /* @__PURE__ */ (0, import_jsx_runtime25.jsx)("p", { className: "text-lg", children: subtitle }) })
+      ] }),
+      /* @__PURE__ */ (0, import_jsx_runtime25.jsx)("div", { className: "lg:p-8", children: /* @__PURE__ */ (0, import_jsx_runtime25.jsxs)("div", { className: "mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime25.jsxs)("div", { className: "flex flex-col space-y-2 text-center lg:hidden", children: [
+          logo && /* @__PURE__ */ (0, import_jsx_runtime25.jsx)("img", { className: "h-8 mx-auto", src: logo, alt: title }),
+          /* @__PURE__ */ (0, import_jsx_runtime25.jsx)("h1", { className: "text-xl font-semibold", children: title })
+        ] }),
+        /* @__PURE__ */ (0, import_jsx_runtime25.jsx)("div", { className: "flex flex-col space-y-2 text-center", children: /* @__PURE__ */ (0, import_jsx_runtime25.jsx)("h1", { className: "text-2xl font-semibold tracking-tight", children: "Sign in" }) }),
+        /* @__PURE__ */ (0, import_jsx_runtime25.jsxs)(Form2, { className: "space-y-8", onSubmit: handleSubmit, children: [
+          /* @__PURE__ */ (0, import_jsx_runtime25.jsx)(
+            TextInput2,
+            {
+              label: "Email",
+              source: "email",
+              type: "email",
+              validate: required()
+            }
+          ),
+          /* @__PURE__ */ (0, import_jsx_runtime25.jsx)(
+            TextInput2,
+            {
+              label: "Password",
+              source: "password",
+              type: "password",
+              validate: required()
+            }
+          ),
+          /* @__PURE__ */ (0, import_jsx_runtime25.jsx)(
+            Button,
+            {
+              type: "submit",
+              className: "w-full cursor-pointer",
+              disabled: loading,
+              children: "Sign in"
+            }
+          )
+        ] }),
+        /* @__PURE__ */ (0, import_jsx_runtime25.jsx)(
+          Link3,
+          {
+            to: "/forgot-password",
+            className: "text-sm text-center hover:underline",
+            children: "Forgot your password?"
+          }
+        )
+      ] }) })
+    ] }),
+    /* @__PURE__ */ (0, import_jsx_runtime25.jsx)(Notification, {})
+  ] });
+};
+
+// src/components/SimpleHeader.tsx
+var import_react16 = __toESM(require("react"), 1);
+var import_lucide_react4 = require("lucide-react");
+var import_jsx_runtime26 = require("react/jsx-runtime");
+var UserMenuContext2 = import_react16.default.createContext(void 0);
+var useUserMenu2 = () => import_react16.default.useContext(UserMenuContext2);
+var RefreshButton2 = ({ onRefresh, loading = false }) => {
+  const handleRefresh = () => {
+    if (onRefresh) {
+      onRefresh();
+    } else {
+      window.location.reload();
+    }
+  };
+  return /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(
+    Button,
+    {
+      onClick: handleRefresh,
+      variant: "ghost",
+      size: "icon",
+      className: "hidden sm:inline-flex",
+      children: loading ? /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(import_lucide_react4.LoaderCircle, { className: "animate-spin" }) : /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(import_lucide_react4.RotateCw, {})
+    }
+  );
+};
+function UserMenu2({ children, user, onLogout }) {
+  const [open, setOpen] = (0, import_react16.useState)(false);
+  const handleToggleOpen = (0, import_react16.useCallback)(() => {
+    setOpen((prevOpen) => !prevOpen);
+  }, []);
+  const handleClose = (0, import_react16.useCallback)(() => {
+    setOpen(false);
+  }, []);
+  const handleLogout = () => {
+    if (onLogout) {
+      onLogout();
+    }
+    setOpen(false);
+  };
+  return /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(UserMenuContext2.Provider, { value: { onClose: handleClose }, children: /* @__PURE__ */ (0, import_jsx_runtime26.jsxs)(DropdownMenu, { open, onOpenChange: handleToggleOpen, children: [
+    /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(DropdownMenuTrigger, { asChild: true, children: /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(
+      Button,
+      {
+        variant: "ghost",
+        className: "relative h-8 w-8 ml-2 rounded-full",
+        children: /* @__PURE__ */ (0, import_jsx_runtime26.jsxs)(Avatar, { className: "h-8 w-8", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(AvatarImage, { src: user?.avatar, role: "presentation" }),
+          /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(AvatarFallback, { children: user?.name?.charAt(0) || "U" })
+        ] })
+      }
+    ) }),
+    /* @__PURE__ */ (0, import_jsx_runtime26.jsxs)(DropdownMenuContent, { className: "w-56", align: "end", forceMount: true, children: [
+      /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(DropdownMenuLabel, { className: "font-normal", children: /* @__PURE__ */ (0, import_jsx_runtime26.jsxs)("div", { className: "flex flex-col space-y-1", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime26.jsx)("p", { className: "text-sm font-medium leading-none", children: user?.name || "User" }),
+        user?.email && /* @__PURE__ */ (0, import_jsx_runtime26.jsx)("p", { className: "text-xs text-muted-foreground", children: user.email })
+      ] }) }),
+      /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(DropdownMenuSeparator, {}),
+      children,
+      import_react16.Children.count(children) > 0 && /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(DropdownMenuSeparator, {}),
+      /* @__PURE__ */ (0, import_jsx_runtime26.jsxs)(DropdownMenuItem, { onClick: handleLogout, className: "cursor-pointer", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(import_lucide_react4.LogOut, {}),
+        "Log out"
+      ] })
+    ] })
+  ] }) });
+}
+var UsersMenu2 = () => {
+  const { onClose } = useUserMenu2() ?? {};
+  return /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(DropdownMenuItem, { onClick: onClose, children: /* @__PURE__ */ (0, import_jsx_runtime26.jsxs)("div", { className: "flex items-center gap-2", children: [
+    /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(import_lucide_react4.User, {}),
+    " Users"
+  ] }) });
+};
+var ConfigurationMenu2 = () => {
+  const { onClose } = useUserMenu2() ?? {};
+  return /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(DropdownMenuItem, { onClick: onClose, children: /* @__PURE__ */ (0, import_jsx_runtime26.jsxs)("div", { className: "flex items-center gap-2", children: [
+    /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(import_lucide_react4.Settings, {}),
+    "My info"
+  ] }) });
+};
+var SimpleHeader = ({
+  title,
+  darkModeLogo,
+  lightModeLogo,
+  user,
+  onLogout,
+  onRefresh,
+  onToggleSidebar,
+  loading = false
+}) => {
+  return /* @__PURE__ */ (0, import_jsx_runtime26.jsx)("nav", { className: "flex-grow", children: /* @__PURE__ */ (0, import_jsx_runtime26.jsx)("header", { className: "bg-secondary", children: /* @__PURE__ */ (0, import_jsx_runtime26.jsx)("div", { className: "px-4", children: /* @__PURE__ */ (0, import_jsx_runtime26.jsxs)("div", { className: "flex justify-between items-center flex-1", children: [
+    /* @__PURE__ */ (0, import_jsx_runtime26.jsxs)("div", { className: "flex items-center gap-2", children: [
+      onToggleSidebar && /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(
+        "button",
+        {
+          onClick: onToggleSidebar,
+          className: "p-2 rounded-md text-muted-foreground hover:text-foreground hover:bg-accent focus:outline-none focus:ring-2 focus:ring-inset focus:ring-ring",
+          children: /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(import_lucide_react4.Menu, { className: "h-5 w-5" })
+        }
+      ),
+      /* @__PURE__ */ (0, import_jsx_runtime26.jsxs)("div", { className: "flex items-center gap-2 text-secondary-foreground", children: [
+        darkModeLogo && /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(
+          "img",
+          {
+            className: "[.light_&]:hidden h-6",
+            src: darkModeLogo,
+            alt: title
+          }
+        ),
+        lightModeLogo && /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(
+          "img",
+          {
+            className: "[.dark_&]:hidden h-6",
+            src: lightModeLogo,
+            alt: title
+          }
+        ),
+        /* @__PURE__ */ (0, import_jsx_runtime26.jsx)("h1", { className: "text-xl font-semibold", children: title })
+      ] })
+    ] }),
+    /* @__PURE__ */ (0, import_jsx_runtime26.jsxs)("div", { className: "flex items-center", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(ThemeSwitch, {}),
+      /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(RefreshButton2, { onRefresh, loading }),
+      /* @__PURE__ */ (0, import_jsx_runtime26.jsxs)(UserMenu2, { user, onLogout, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(ConfigurationMenu2, {}),
+        /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(UsersMenu2, {})
+      ] })
+    ] })
+  ] }) }) }) });
+};
+
+// src/components/WorkCenterSelect.tsx
+var import_jsx_runtime27 = require("react/jsx-runtime");
+var WorkCenterSelect = ({
+  workCenters,
+  value,
+  onChange,
+  label = "Work Center",
+  required = false,
+  disabled = false,
+  error,
+  placeholder = "Select a work center"
+}) => {
+  const handleChange = (e) => {
+    onChange(e.target.value);
+  };
+  return /* @__PURE__ */ (0, import_jsx_runtime27.jsxs)("div", { className: "space-y-2", children: [
+    /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(Label, { htmlFor: "workCenter", children: label }),
+    /* @__PURE__ */ (0, import_jsx_runtime27.jsxs)(
+      "select",
+      {
+        id: "workCenter",
+        name: "workCenter",
+        value,
+        onChange: handleChange,
+        required,
+        disabled,
+        className: `
+          flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm 
+          ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium 
+          placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 
+          focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed 
+          disabled:opacity-50
+          ${error ? "border-red-500" : ""}
+        `,
+        children: [
+          /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("option", { value: "", children: placeholder }),
+          workCenters.map((center) => /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("option", { value: center.value, children: center.label }, center.value))
+        ]
+      }
+    ),
+    error && /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("span", { className: "text-sm text-red-600", children: error })
+  ] });
+};
+
+// src/components/TextInput.tsx
+var import_jsx_runtime28 = require("react/jsx-runtime");
 var TextInput = ({
   label,
   source,
@@ -5091,13 +5381,13 @@ var TextInput = ({
   const inputName = name || source;
   const inputId = id || inputName;
   const adjustedValue = type === "datetime-local" && value ? value.slice(0, 16) : type === "date" && value ? value.slice(0, 10) : value;
-  return /* @__PURE__ */ (0, import_jsx_runtime24.jsxs)("div", { className: `w-full space-y-2 ${className || ""}`, children: [
-    label && /* @__PURE__ */ (0, import_jsx_runtime24.jsxs)(Label, { htmlFor: inputId, children: [
+  return /* @__PURE__ */ (0, import_jsx_runtime28.jsxs)("div", { className: `w-full space-y-2 ${className || ""}`, children: [
+    label && /* @__PURE__ */ (0, import_jsx_runtime28.jsxs)(Label, { htmlFor: inputId, children: [
       label,
-      required && /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("span", { className: "text-red-500 ml-1", children: "*" })
+      required && /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("span", { className: "text-red-500 ml-1", children: "*" })
     ] }),
-    /* @__PURE__ */ (0, import_jsx_runtime24.jsxs)("div", { className: "space-y-1", children: [
-      multiline ? /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(
+    /* @__PURE__ */ (0, import_jsx_runtime28.jsxs)("div", { className: "space-y-1", children: [
+      multiline ? /* @__PURE__ */ (0, import_jsx_runtime28.jsx)(
         Textarea,
         {
           id: inputId,
@@ -5111,7 +5401,7 @@ var TextInput = ({
           className: `${inputClassName || ""} ${error ? "border-red-500" : ""}`,
           ...rest
         }
-      ) : /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(
+      ) : /* @__PURE__ */ (0, import_jsx_runtime28.jsx)(
         Input,
         {
           id: inputId,
@@ -5127,298 +5417,9 @@ var TextInput = ({
           ...rest
         }
       ),
-      error && /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("p", { className: "text-sm text-red-600", children: error }),
-      helperText && !error && /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("p", { className: "text-sm text-muted-foreground", children: helperText })
+      error && /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("p", { className: "text-sm text-red-600", children: error }),
+      helperText && !error && /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("p", { className: "text-sm text-muted-foreground", children: helperText })
     ] })
-  ] });
-};
-
-// src/components/Notification.tsx
-var import_sonner2 = require("sonner");
-var import_jsx_runtime25 = require("react/jsx-runtime");
-var Notification = ({
-  position = "bottom-center",
-  richColors = true,
-  closeButton = true,
-  ...props
-}) => {
-  const { theme } = useTheme();
-  return /* @__PURE__ */ (0, import_jsx_runtime25.jsx)(
-    import_sonner2.Toaster,
-    {
-      richColors,
-      theme,
-      closeButton,
-      position,
-      ...props
-    }
-  );
-};
-
-// src/components/CRMLoginPage.tsx
-var import_jsx_runtime26 = require("react/jsx-runtime");
-var CRMLoginPage = ({
-  title,
-  logo,
-  subtitle,
-  redirectTo,
-  useLogin,
-  useNotify,
-  Form: Form2,
-  required,
-  Link: Link3
-}) => {
-  const [loading, setLoading] = (0, import_react15.useState)(false);
-  const login = useLogin();
-  const notify = useNotify();
-  const handleSubmit = (values) => {
-    setLoading(true);
-    login(values, redirectTo).then(() => {
-      setLoading(false);
-    }).catch((error) => {
-      setLoading(false);
-      notify(
-        typeof error === "string" ? error : typeof error === "undefined" || !error.message ? "ra.auth.sign_in_error" : error.message,
-        {
-          type: "error",
-          messageArgs: {
-            _: typeof error === "string" ? error : error && error.message ? error.message : void 0
-          }
-        }
-      );
-    });
-  };
-  return /* @__PURE__ */ (0, import_jsx_runtime26.jsxs)("div", { className: "min-h-screen flex", children: [
-    /* @__PURE__ */ (0, import_jsx_runtime26.jsxs)("div", { className: "container relative grid flex-col items-center justify-center sm:max-w-none lg:grid-cols-2 lg:px-0", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime26.jsxs)("div", { className: "relative hidden h-full flex-col bg-muted p-10 text-white dark:border-r lg:flex", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime26.jsx)("div", { className: "absolute inset-0 bg-zinc-900" }),
-        /* @__PURE__ */ (0, import_jsx_runtime26.jsxs)("div", { className: "relative z-20 flex items-center text-lg font-medium", children: [
-          logo && /* @__PURE__ */ (0, import_jsx_runtime26.jsx)("img", { className: "h-6 mr-2", src: logo, alt: title }),
-          title
-        ] }),
-        subtitle && /* @__PURE__ */ (0, import_jsx_runtime26.jsx)("div", { className: "relative z-20 mt-auto", children: /* @__PURE__ */ (0, import_jsx_runtime26.jsx)("p", { className: "text-lg", children: subtitle }) })
-      ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime26.jsx)("div", { className: "lg:p-8", children: /* @__PURE__ */ (0, import_jsx_runtime26.jsxs)("div", { className: "mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime26.jsxs)("div", { className: "flex flex-col space-y-2 text-center lg:hidden", children: [
-          logo && /* @__PURE__ */ (0, import_jsx_runtime26.jsx)("img", { className: "h-8 mx-auto", src: logo, alt: title }),
-          /* @__PURE__ */ (0, import_jsx_runtime26.jsx)("h1", { className: "text-xl font-semibold", children: title })
-        ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime26.jsx)("div", { className: "flex flex-col space-y-2 text-center", children: /* @__PURE__ */ (0, import_jsx_runtime26.jsx)("h1", { className: "text-2xl font-semibold tracking-tight", children: "Sign in" }) }),
-        /* @__PURE__ */ (0, import_jsx_runtime26.jsxs)(Form2, { className: "space-y-8", onSubmit: handleSubmit, children: [
-          /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(
-            TextInput,
-            {
-              label: "Email",
-              source: "email",
-              type: "email",
-              validate: required()
-            }
-          ),
-          /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(
-            TextInput,
-            {
-              label: "Password",
-              source: "password",
-              type: "password",
-              validate: required()
-            }
-          ),
-          /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(
-            Button,
-            {
-              type: "submit",
-              className: "w-full cursor-pointer",
-              disabled: loading,
-              children: "Sign in"
-            }
-          )
-        ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(
-          Link3,
-          {
-            to: "/forgot-password",
-            className: "text-sm text-center hover:underline",
-            children: "Forgot your password?"
-          }
-        )
-      ] }) })
-    ] }),
-    /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(Notification, {})
-  ] });
-};
-
-// src/components/SimpleHeader.tsx
-var import_react16 = __toESM(require("react"), 1);
-var import_lucide_react4 = require("lucide-react");
-var import_jsx_runtime27 = require("react/jsx-runtime");
-var UserMenuContext2 = import_react16.default.createContext(void 0);
-var useUserMenu2 = () => import_react16.default.useContext(UserMenuContext2);
-var RefreshButton2 = ({ onRefresh, loading = false }) => {
-  const handleRefresh = () => {
-    if (onRefresh) {
-      onRefresh();
-    } else {
-      window.location.reload();
-    }
-  };
-  return /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(
-    Button,
-    {
-      onClick: handleRefresh,
-      variant: "ghost",
-      size: "icon",
-      className: "hidden sm:inline-flex",
-      children: loading ? /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(import_lucide_react4.LoaderCircle, { className: "animate-spin" }) : /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(import_lucide_react4.RotateCw, {})
-    }
-  );
-};
-function UserMenu2({ children, user, onLogout }) {
-  const [open, setOpen] = (0, import_react16.useState)(false);
-  const handleToggleOpen = (0, import_react16.useCallback)(() => {
-    setOpen((prevOpen) => !prevOpen);
-  }, []);
-  const handleClose = (0, import_react16.useCallback)(() => {
-    setOpen(false);
-  }, []);
-  const handleLogout = () => {
-    if (onLogout) {
-      onLogout();
-    }
-    setOpen(false);
-  };
-  return /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(UserMenuContext2.Provider, { value: { onClose: handleClose }, children: /* @__PURE__ */ (0, import_jsx_runtime27.jsxs)(DropdownMenu, { open, onOpenChange: handleToggleOpen, children: [
-    /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(DropdownMenuTrigger, { asChild: true, children: /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(
-      Button,
-      {
-        variant: "ghost",
-        className: "relative h-8 w-8 ml-2 rounded-full",
-        children: /* @__PURE__ */ (0, import_jsx_runtime27.jsxs)(Avatar, { className: "h-8 w-8", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(AvatarImage, { src: user?.avatar, role: "presentation" }),
-          /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(AvatarFallback, { children: user?.name?.charAt(0) || "U" })
-        ] })
-      }
-    ) }),
-    /* @__PURE__ */ (0, import_jsx_runtime27.jsxs)(DropdownMenuContent, { className: "w-56", align: "end", forceMount: true, children: [
-      /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(DropdownMenuLabel, { className: "font-normal", children: /* @__PURE__ */ (0, import_jsx_runtime27.jsxs)("div", { className: "flex flex-col space-y-1", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("p", { className: "text-sm font-medium leading-none", children: user?.name || "User" }),
-        user?.email && /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("p", { className: "text-xs text-muted-foreground", children: user.email })
-      ] }) }),
-      /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(DropdownMenuSeparator, {}),
-      children,
-      import_react16.Children.count(children) > 0 && /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(DropdownMenuSeparator, {}),
-      /* @__PURE__ */ (0, import_jsx_runtime27.jsxs)(DropdownMenuItem, { onClick: handleLogout, className: "cursor-pointer", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(import_lucide_react4.LogOut, {}),
-        "Log out"
-      ] })
-    ] })
-  ] }) });
-}
-var UsersMenu2 = () => {
-  const { onClose } = useUserMenu2() ?? {};
-  return /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(DropdownMenuItem, { onClick: onClose, children: /* @__PURE__ */ (0, import_jsx_runtime27.jsxs)("div", { className: "flex items-center gap-2", children: [
-    /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(import_lucide_react4.User, {}),
-    " Users"
-  ] }) });
-};
-var ConfigurationMenu2 = () => {
-  const { onClose } = useUserMenu2() ?? {};
-  return /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(DropdownMenuItem, { onClick: onClose, children: /* @__PURE__ */ (0, import_jsx_runtime27.jsxs)("div", { className: "flex items-center gap-2", children: [
-    /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(import_lucide_react4.Settings, {}),
-    "My info"
-  ] }) });
-};
-var SimpleHeader = ({
-  title,
-  darkModeLogo,
-  lightModeLogo,
-  user,
-  onLogout,
-  onRefresh,
-  onToggleSidebar,
-  loading = false
-}) => {
-  return /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("nav", { className: "flex-grow", children: /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("header", { className: "bg-secondary", children: /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("div", { className: "px-4", children: /* @__PURE__ */ (0, import_jsx_runtime27.jsxs)("div", { className: "flex justify-between items-center flex-1", children: [
-    /* @__PURE__ */ (0, import_jsx_runtime27.jsxs)("div", { className: "flex items-center gap-2", children: [
-      onToggleSidebar && /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(
-        "button",
-        {
-          onClick: onToggleSidebar,
-          className: "p-2 rounded-md text-muted-foreground hover:text-foreground hover:bg-accent focus:outline-none focus:ring-2 focus:ring-inset focus:ring-ring",
-          children: /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(import_lucide_react4.Menu, { className: "h-5 w-5" })
-        }
-      ),
-      /* @__PURE__ */ (0, import_jsx_runtime27.jsxs)("div", { className: "flex items-center gap-2 text-secondary-foreground", children: [
-        darkModeLogo && /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(
-          "img",
-          {
-            className: "[.light_&]:hidden h-6",
-            src: darkModeLogo,
-            alt: title
-          }
-        ),
-        lightModeLogo && /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(
-          "img",
-          {
-            className: "[.dark_&]:hidden h-6",
-            src: lightModeLogo,
-            alt: title
-          }
-        ),
-        /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("h1", { className: "text-xl font-semibold", children: title })
-      ] })
-    ] }),
-    /* @__PURE__ */ (0, import_jsx_runtime27.jsxs)("div", { className: "flex items-center", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(ThemeSwitch, {}),
-      /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(RefreshButton2, { onRefresh, loading }),
-      /* @__PURE__ */ (0, import_jsx_runtime27.jsxs)(UserMenu2, { user, onLogout, children: [
-        /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(ConfigurationMenu2, {}),
-        /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(UsersMenu2, {})
-      ] })
-    ] })
-  ] }) }) }) });
-};
-
-// src/components/WorkCenterSelect.tsx
-var import_jsx_runtime28 = require("react/jsx-runtime");
-var WorkCenterSelect = ({
-  workCenters,
-  value,
-  onChange,
-  label = "Work Center",
-  required = false,
-  disabled = false,
-  error,
-  placeholder = "Select a work center"
-}) => {
-  const handleChange = (e) => {
-    onChange(e.target.value);
-  };
-  return /* @__PURE__ */ (0, import_jsx_runtime28.jsxs)("div", { className: "space-y-2", children: [
-    /* @__PURE__ */ (0, import_jsx_runtime28.jsx)(Label, { htmlFor: "workCenter", children: label }),
-    /* @__PURE__ */ (0, import_jsx_runtime28.jsxs)(
-      "select",
-      {
-        id: "workCenter",
-        name: "workCenter",
-        value,
-        onChange: handleChange,
-        required,
-        disabled,
-        className: `
-          flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm 
-          ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium 
-          placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 
-          focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed 
-          disabled:opacity-50
-          ${error ? "border-red-500" : ""}
-        `,
-        children: [
-          /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("option", { value: "", children: placeholder }),
-          workCenters.map((center) => /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("option", { value: center.value, children: center.label }, center.value))
-        ]
-      }
-    ),
-    error && /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("span", { className: "text-sm text-red-600", children: error })
   ] });
 };
 

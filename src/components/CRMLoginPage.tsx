@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Button } from './button';
-import { TextInput } from './TextInput';
 import { Notification } from './Notification';
 
 export interface CRMLoginPageProps {
@@ -18,6 +17,8 @@ export interface CRMLoginPageProps {
   useNotify: () => (message: string, options?: any) => void;
   /** ra-core Form component */
   Form: React.ComponentType<any>;
+  /** ra-core TextInput component */
+  TextInput: React.ComponentType<any>;
   /** ra-core required validator */
   required: () => (value: any) => string | undefined;
   /** Link component (react-router Link) */
@@ -38,6 +39,7 @@ export const CRMLoginPage: React.FC<CRMLoginPageProps> = ({
   useLogin,
   useNotify,
   Form,
+  TextInput,
   required,
   Link
 }) => {
