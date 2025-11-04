@@ -97,9 +97,6 @@ input[type=time] {
   right: 0.75rem;
 }
 @layer base {
-  * {
-    @apply border-border;
-  }
   body {
     @apply bg-background text-foreground;
     font-family:
