@@ -4479,10 +4479,12 @@ var ExactHeader = ({
 
 // src/components/LoginPage.tsx
 import { useState as useState10 } from "react";
-import { jsx as jsx23, jsxs as jsxs12 } from "react/jsx-runtime";
+import { Link as Link2 } from "react-router-dom";
+import { Fragment as Fragment4, jsx as jsx23, jsxs as jsxs12 } from "react/jsx-runtime";
 var isDevelopmentMode = () => {
   if (typeof globalThis !== "undefined" && globalThis.import?.meta?.env) {
-    return globalThis.import.meta.env.MODE === "development";
+    const env = globalThis.import.meta.env;
+    return env.MODE === "development" || env.DEV === true;
   }
   if (typeof process !== "undefined" && process.env) {
     return process.env.NODE_ENV === "development";
@@ -4504,7 +4506,9 @@ var LoginPage = ({
   onSubmit,
   forgotPasswordUrl = "/forgot-password",
   signUpUrl = "/signup",
-  additionalFields
+  additionalFields,
+  additionalData = {},
+  onAdditionalDataChange
 }) => {
   const [formData, setFormData] = useState10({
     email: "",
@@ -4521,7 +4525,7 @@ var LoginPage = ({
   };
   const handleSubmit = (e) => {
     e.preventDefault();
-    onSubmit(formData);
+    onSubmit({ ...formData, ...additionalData });
   };
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -4535,106 +4539,25 @@ var LoginPage = ({
       });
     }
   };
-  console.log("\u{1F3A8} SharedLoginPage: Rendering with props", { title, logo, subtitle });
-  return /* @__PURE__ */ jsx23("div", { style: { minHeight: "100vh", display: "flex" }, children: /* @__PURE__ */ jsxs12("div", { style: {
-    width: "100%",
-    position: "relative",
-    display: "grid",
-    gridTemplateColumns: "1fr 1fr",
-    alignItems: "center",
-    justifyContent: "center"
-  }, children: [
-    /* @__PURE__ */ jsxs12(
-      "div",
-      {
-        style: {
-          position: "relative",
-          height: "100vh",
-          display: "flex",
-          flexDirection: "column",
-          padding: "2.5rem",
-          color: "white",
-          backgroundImage: backgroundImage ? `url(${backgroundImage})` : void 0,
-          backgroundColor
-        },
-        children: [
-          /* @__PURE__ */ jsx23("div", { style: {
-            position: "absolute",
-            top: 0,
-            left: 0,
-            right: 0,
-            bottom: 0,
-            backgroundColor
-          } }),
-          /* @__PURE__ */ jsxs12("div", { style: {
-            position: "relative",
-            zIndex: 20,
-            display: "flex",
-            alignItems: "center",
-            fontSize: "1.125rem",
-            fontWeight: "500"
-          }, children: [
-            logo && /* @__PURE__ */ jsx23("img", { style: { height: "1.5rem", marginRight: "0.5rem" }, src: logo, alt: title }),
-            title
-          ] }),
-          subtitle && /* @__PURE__ */ jsx23("div", { style: {
-            position: "relative",
-            zIndex: 20,
-            marginTop: "auto"
-          }, children: /* @__PURE__ */ jsx23("blockquote", { style: { margin: 0 }, children: /* @__PURE__ */ jsx23("p", { style: { fontSize: "1.125rem", margin: 0 }, children: subtitle }) }) })
-        ]
-      }
-    ),
-    /* @__PURE__ */ jsx23("div", { style: { padding: "2rem" }, children: /* @__PURE__ */ jsxs12("div", { style: {
-      margin: "0 auto",
-      display: "flex",
-      width: "100%",
-      maxWidth: "350px",
-      flexDirection: "column",
-      justifyContent: "center",
-      gap: "1.5rem"
-    }, children: [
-      /* @__PURE__ */ jsxs12("div", { style: {
-        display: "flex",
-        flexDirection: "column",
-        gap: "0.5rem",
-        textAlign: "center"
-      }, children: [
-        /* @__PURE__ */ jsx23("h1", { style: {
-          fontSize: "1.5rem",
-          fontWeight: "600",
-          letterSpacing: "-0.025em",
-          margin: 0,
-          color: "#111827"
-        }, children: defaultLabels.signIn }),
-        /* @__PURE__ */ jsx23("p", { style: {
-          fontSize: "0.875rem",
-          color: "#6b7280",
-          margin: 0
-        }, children: "Enter your email below to sign in to your account" })
+  return /* @__PURE__ */ jsx23("div", { className: "min-h-screen flex", children: /* @__PURE__ */ jsxs12("div", { className: "container relative grid flex-col items-center justify-center sm:max-w-none lg:grid-cols-2 lg:px-0", children: [
+    /* @__PURE__ */ jsxs12("div", { className: "relative hidden h-full flex-col bg-muted p-10 text-white dark:border-r lg:flex", children: [
+      /* @__PURE__ */ jsx23("div", { className: "absolute inset-0 bg-zinc-900" }),
+      /* @__PURE__ */ jsxs12("div", { className: "relative z-20 flex items-center text-lg font-medium", children: [
+        logo && /* @__PURE__ */ jsx23("img", { className: "h-6 mr-2", src: logo, alt: title }),
+        title
       ] }),
-      /* @__PURE__ */ jsxs12("form", { onSubmit: handleSubmit, style: { display: "flex", flexDirection: "column", gap: "1rem" }, children: [
-        error && /* @__PURE__ */ jsx23("div", { style: {
-          padding: "0.75rem",
-          fontSize: "0.875rem",
-          color: "#dc2626",
-          backgroundColor: "#fef2f2",
-          border: "1px solid #fecaca",
-          borderRadius: "0.375rem"
-        }, children: error }),
-        /* @__PURE__ */ jsxs12("div", { style: { display: "flex", flexDirection: "column", gap: "0.5rem" }, children: [
-          /* @__PURE__ */ jsx23(
-            "label",
-            {
-              htmlFor: "email",
-              style: {
-                fontSize: "0.875rem",
-                fontWeight: "500",
-                color: "#374151"
-              },
-              children: defaultLabels.email
-            }
-          ),
+      subtitle && /* @__PURE__ */ jsx23("div", { className: "relative z-20 mt-auto", children: /* @__PURE__ */ jsx23("p", { className: "text-lg", children: subtitle }) })
+    ] }),
+    /* @__PURE__ */ jsx23("div", { className: "lg:p-8", children: /* @__PURE__ */ jsxs12("div", { className: "mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]", children: [
+      /* @__PURE__ */ jsxs12("div", { className: "flex flex-col space-y-2 text-center lg:hidden", children: [
+        logo && /* @__PURE__ */ jsx23("img", { className: "h-8 mx-auto", src: logo, alt: title }),
+        /* @__PURE__ */ jsx23("h1", { className: "text-xl font-semibold", children: title })
+      ] }),
+      /* @__PURE__ */ jsx23("div", { className: "flex flex-col space-y-2 text-center", children: /* @__PURE__ */ jsx23("h1", { className: "text-2xl font-semibold tracking-tight", children: defaultLabels.signIn }) }),
+      /* @__PURE__ */ jsxs12("form", { className: "space-y-8", onSubmit: handleSubmit, children: [
+        error && /* @__PURE__ */ jsx23("div", { className: "p-3 text-sm text-red-600 bg-red-50 border border-red-200 rounded-md", children: error }),
+        /* @__PURE__ */ jsxs12("div", { className: "space-y-2", children: [
+          /* @__PURE__ */ jsx23(Label, { htmlFor: "email", children: defaultLabels.email }),
           /* @__PURE__ */ jsx23(
             Input,
             {
@@ -4649,19 +4572,8 @@ var LoginPage = ({
             }
           )
         ] }),
-        /* @__PURE__ */ jsxs12("div", { style: { display: "flex", flexDirection: "column", gap: "0.5rem" }, children: [
-          /* @__PURE__ */ jsx23(
-            "label",
-            {
-              htmlFor: "password",
-              style: {
-                fontSize: "0.875rem",
-                fontWeight: "500",
-                color: "#374151"
-              },
-              children: defaultLabels.password
-            }
-          ),
+        /* @__PURE__ */ jsxs12("div", { className: "space-y-2", children: [
+          /* @__PURE__ */ jsx23(Label, { htmlFor: "password", children: defaultLabels.password }),
           /* @__PURE__ */ jsx23(
             Input,
             {
@@ -4680,21 +4592,38 @@ var LoginPage = ({
           Button,
           {
             type: "submit",
-            className: "w-full text-white",
+            className: "w-full cursor-pointer",
             disabled: isLoading,
             children: isLoading ? "Signing in..." : defaultLabels.signIn
           }
         )
       ] }),
-      demoCredentials && isDevelopmentMode() && /* @__PURE__ */ jsx23("div", { className: "mt-4 p-3 bg-gray-50 rounded-lg", children: /* @__PURE__ */ jsxs12("details", { className: "group", children: [
-        /* @__PURE__ */ jsx23("summary", { className: "cursor-pointer text-sm font-medium text-gray-700 hover:text-gray-900", children: "Demo Credentials (Development Only)" }),
-        /* @__PURE__ */ jsxs12("div", { className: "mt-2 space-y-2", children: [
-          /* @__PURE__ */ jsxs12("p", { className: "text-xs text-gray-600", children: [
-            "Email: ",
+      showForgotPassword && /* @__PURE__ */ jsx23(
+        Link2,
+        {
+          to: forgotPasswordUrl,
+          className: "text-sm text-center hover:underline",
+          children: defaultLabels.forgotPassword
+        }
+      ),
+      showSignUp && /* @__PURE__ */ jsxs12(Fragment4, { children: [
+        /* @__PURE__ */ jsxs12("div", { className: "relative", children: [
+          /* @__PURE__ */ jsx23("div", { className: "absolute inset-0 flex items-center", children: /* @__PURE__ */ jsx23("div", { className: "w-full border-t border-gray-300" }) }),
+          /* @__PURE__ */ jsx23("div", { className: "relative flex justify-center text-sm", children: /* @__PURE__ */ jsx23("span", { className: "px-2 bg-background text-muted-foreground", children: defaultLabels.signUpText }) })
+        ] }),
+        /* @__PURE__ */ jsx23(Link2, { to: signUpUrl, children: /* @__PURE__ */ jsx23(Button, { variant: "outline", className: "w-full", children: defaultLabels.signUp }) })
+      ] }),
+      isDevelopmentMode() && demoCredentials && /* @__PURE__ */ jsx23("div", { className: "mt-4 p-3 bg-muted rounded-lg", children: /* @__PURE__ */ jsxs12("details", { className: "group", children: [
+        /* @__PURE__ */ jsx23("summary", { className: "cursor-pointer text-sm font-medium text-muted-foreground hover:text-foreground", children: "Demo Credentials (Development Only)" }),
+        /* @__PURE__ */ jsxs12("div", { className: "mt-2 space-y-1", children: [
+          /* @__PURE__ */ jsxs12("p", { className: "text-xs text-muted-foreground", children: [
+            /* @__PURE__ */ jsx23("strong", { children: "Email:" }),
+            " ",
             demoCredentials.email
           ] }),
-          /* @__PURE__ */ jsxs12("p", { className: "text-xs text-gray-600", children: [
-            "Password: ",
+          /* @__PURE__ */ jsxs12("p", { className: "text-xs text-muted-foreground", children: [
+            /* @__PURE__ */ jsx23("strong", { children: "Password:" }),
+            " ",
             demoCredentials.password
           ] }),
           /* @__PURE__ */ jsx23(
@@ -4704,34 +4633,12 @@ var LoginPage = ({
               variant: "outline",
               size: "sm",
               onClick: fillDemoCredentials,
-              className: "w-full mt-2",
-              children: "Fill Demo Credentials"
+              className: "mt-2",
+              children: "Use Demo Credentials"
             }
           )
         ] })
-      ] }) }),
-      /* @__PURE__ */ jsxs12("div", { className: "text-center space-y-4", children: [
-        showForgotPassword && /* @__PURE__ */ jsx23(
-          "a",
-          {
-            href: forgotPasswordUrl,
-            className: "text-sm text-muted-foreground hover:text-primary underline-offset-4 hover:underline",
-            children: defaultLabels.forgotPassword
-          }
-        ),
-        showSignUp && /* @__PURE__ */ jsxs12("div", { className: "text-sm text-muted-foreground", children: [
-          defaultLabels.signUpText,
-          " ",
-          /* @__PURE__ */ jsx23(
-            "a",
-            {
-              href: signUpUrl,
-              className: "text-primary underline-offset-4 hover:underline",
-              children: defaultLabels.signUp
-            }
-          )
-        ] })
-      ] })
+      ] }) })
     ] }) })
   ] }) });
 };
@@ -4865,6 +4772,50 @@ var SimpleHeader = ({
       ] })
     ] })
   ] }) }) }) });
+};
+
+// src/components/WorkCenterSelect.tsx
+import { jsx as jsx25, jsxs as jsxs14 } from "react/jsx-runtime";
+var WorkCenterSelect = ({
+  workCenters,
+  value,
+  onChange,
+  label = "Work Center",
+  required = false,
+  disabled = false,
+  error,
+  placeholder = "Select a work center"
+}) => {
+  const handleChange = (e) => {
+    onChange(e.target.value);
+  };
+  return /* @__PURE__ */ jsxs14("div", { className: "space-y-2", children: [
+    /* @__PURE__ */ jsx25(Label, { htmlFor: "workCenter", children: label }),
+    /* @__PURE__ */ jsxs14(
+      "select",
+      {
+        id: "workCenter",
+        name: "workCenter",
+        value,
+        onChange: handleChange,
+        required,
+        disabled,
+        className: `
+          flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm 
+          ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium 
+          placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 
+          focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed 
+          disabled:opacity-50
+          ${error ? "border-red-500" : ""}
+        `,
+        children: [
+          /* @__PURE__ */ jsx25("option", { value: "", children: placeholder }),
+          workCenters.map((center) => /* @__PURE__ */ jsx25("option", { value: center.value, children: center.label }, center.value))
+        ]
+      }
+    ),
+    error && /* @__PURE__ */ jsx25("span", { className: "text-sm text-red-600", children: error })
+  ] });
 };
 
 // src/components/RelativeDate.tsx
@@ -6556,6 +6507,7 @@ export {
   ThemeSwitch,
   VALIDATION_MESSAGES,
   WORK_CENTERS,
+  WorkCenterSelect,
   addDaysToDate,
   applyFullTextSearch,
   applyPagination,

@@ -105,6 +105,7 @@ __export(src_exports, {
   ThemeSwitch: () => ThemeSwitch,
   VALIDATION_MESSAGES: () => VALIDATION_MESSAGES,
   WORK_CENTERS: () => WORK_CENTERS,
+  WorkCenterSelect: () => WorkCenterSelect,
   addDaysToDate: () => addDaysToDate,
   applyFullTextSearch: () => applyFullTextSearch,
   applyPagination: () => applyPagination,
@@ -4893,10 +4894,12 @@ var ExactHeader = ({
 
 // src/components/LoginPage.tsx
 var import_react14 = require("react");
+var import_react_router_dom = require("react-router-dom");
 var import_jsx_runtime23 = require("react/jsx-runtime");
 var isDevelopmentMode = () => {
   if (typeof globalThis !== "undefined" && globalThis.import?.meta?.env) {
-    return globalThis.import.meta.env.MODE === "development";
+    const env = globalThis.import.meta.env;
+    return env.MODE === "development" || env.DEV === true;
   }
   if (typeof process !== "undefined" && process.env) {
     return process.env.NODE_ENV === "development";
@@ -4918,7 +4921,9 @@ var LoginPage = ({
   onSubmit,
   forgotPasswordUrl = "/forgot-password",
   signUpUrl = "/signup",
-  additionalFields
+  additionalFields,
+  additionalData = {},
+  onAdditionalDataChange
 }) => {
   const [formData, setFormData] = (0, import_react14.useState)({
     email: "",
@@ -4935,7 +4940,7 @@ var LoginPage = ({
   };
   const handleSubmit = (e) => {
     e.preventDefault();
-    onSubmit(formData);
+    onSubmit({ ...formData, ...additionalData });
   };
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -4949,106 +4954,25 @@ var LoginPage = ({
       });
     }
   };
-  console.log("\u{1F3A8} SharedLoginPage: Rendering with props", { title, logo, subtitle });
-  return /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("div", { style: { minHeight: "100vh", display: "flex" }, children: /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)("div", { style: {
-    width: "100%",
-    position: "relative",
-    display: "grid",
-    gridTemplateColumns: "1fr 1fr",
-    alignItems: "center",
-    justifyContent: "center"
-  }, children: [
-    /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)(
-      "div",
-      {
-        style: {
-          position: "relative",
-          height: "100vh",
-          display: "flex",
-          flexDirection: "column",
-          padding: "2.5rem",
-          color: "white",
-          backgroundImage: backgroundImage ? `url(${backgroundImage})` : void 0,
-          backgroundColor
-        },
-        children: [
-          /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("div", { style: {
-            position: "absolute",
-            top: 0,
-            left: 0,
-            right: 0,
-            bottom: 0,
-            backgroundColor
-          } }),
-          /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)("div", { style: {
-            position: "relative",
-            zIndex: 20,
-            display: "flex",
-            alignItems: "center",
-            fontSize: "1.125rem",
-            fontWeight: "500"
-          }, children: [
-            logo && /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("img", { style: { height: "1.5rem", marginRight: "0.5rem" }, src: logo, alt: title }),
-            title
-          ] }),
-          subtitle && /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("div", { style: {
-            position: "relative",
-            zIndex: 20,
-            marginTop: "auto"
-          }, children: /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("blockquote", { style: { margin: 0 }, children: /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("p", { style: { fontSize: "1.125rem", margin: 0 }, children: subtitle }) }) })
-        ]
-      }
-    ),
-    /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("div", { style: { padding: "2rem" }, children: /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)("div", { style: {
-      margin: "0 auto",
-      display: "flex",
-      width: "100%",
-      maxWidth: "350px",
-      flexDirection: "column",
-      justifyContent: "center",
-      gap: "1.5rem"
-    }, children: [
-      /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)("div", { style: {
-        display: "flex",
-        flexDirection: "column",
-        gap: "0.5rem",
-        textAlign: "center"
-      }, children: [
-        /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("h1", { style: {
-          fontSize: "1.5rem",
-          fontWeight: "600",
-          letterSpacing: "-0.025em",
-          margin: 0,
-          color: "#111827"
-        }, children: defaultLabels.signIn }),
-        /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("p", { style: {
-          fontSize: "0.875rem",
-          color: "#6b7280",
-          margin: 0
-        }, children: "Enter your email below to sign in to your account" })
+  return /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("div", { className: "min-h-screen flex", children: /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)("div", { className: "container relative grid flex-col items-center justify-center sm:max-w-none lg:grid-cols-2 lg:px-0", children: [
+    /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)("div", { className: "relative hidden h-full flex-col bg-muted p-10 text-white dark:border-r lg:flex", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("div", { className: "absolute inset-0 bg-zinc-900" }),
+      /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)("div", { className: "relative z-20 flex items-center text-lg font-medium", children: [
+        logo && /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("img", { className: "h-6 mr-2", src: logo, alt: title }),
+        title
       ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)("form", { onSubmit: handleSubmit, style: { display: "flex", flexDirection: "column", gap: "1rem" }, children: [
-        error && /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("div", { style: {
-          padding: "0.75rem",
-          fontSize: "0.875rem",
-          color: "#dc2626",
-          backgroundColor: "#fef2f2",
-          border: "1px solid #fecaca",
-          borderRadius: "0.375rem"
-        }, children: error }),
-        /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)("div", { style: { display: "flex", flexDirection: "column", gap: "0.5rem" }, children: [
-          /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(
-            "label",
-            {
-              htmlFor: "email",
-              style: {
-                fontSize: "0.875rem",
-                fontWeight: "500",
-                color: "#374151"
-              },
-              children: defaultLabels.email
-            }
-          ),
+      subtitle && /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("div", { className: "relative z-20 mt-auto", children: /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("p", { className: "text-lg", children: subtitle }) })
+    ] }),
+    /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("div", { className: "lg:p-8", children: /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)("div", { className: "mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)("div", { className: "flex flex-col space-y-2 text-center lg:hidden", children: [
+        logo && /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("img", { className: "h-8 mx-auto", src: logo, alt: title }),
+        /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("h1", { className: "text-xl font-semibold", children: title })
+      ] }),
+      /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("div", { className: "flex flex-col space-y-2 text-center", children: /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("h1", { className: "text-2xl font-semibold tracking-tight", children: defaultLabels.signIn }) }),
+      /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)("form", { className: "space-y-8", onSubmit: handleSubmit, children: [
+        error && /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("div", { className: "p-3 text-sm text-red-600 bg-red-50 border border-red-200 rounded-md", children: error }),
+        /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)("div", { className: "space-y-2", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(Label, { htmlFor: "email", children: defaultLabels.email }),
           /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(
             Input,
             {
@@ -5063,19 +4987,8 @@ var LoginPage = ({
             }
           )
         ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)("div", { style: { display: "flex", flexDirection: "column", gap: "0.5rem" }, children: [
-          /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(
-            "label",
-            {
-              htmlFor: "password",
-              style: {
-                fontSize: "0.875rem",
-                fontWeight: "500",
-                color: "#374151"
-              },
-              children: defaultLabels.password
-            }
-          ),
+        /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)("div", { className: "space-y-2", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(Label, { htmlFor: "password", children: defaultLabels.password }),
           /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(
             Input,
             {
@@ -5094,21 +5007,38 @@ var LoginPage = ({
           Button,
           {
             type: "submit",
-            className: "w-full text-white",
+            className: "w-full cursor-pointer",
             disabled: isLoading,
             children: isLoading ? "Signing in..." : defaultLabels.signIn
           }
         )
       ] }),
-      demoCredentials && isDevelopmentMode() && /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("div", { className: "mt-4 p-3 bg-gray-50 rounded-lg", children: /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)("details", { className: "group", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("summary", { className: "cursor-pointer text-sm font-medium text-gray-700 hover:text-gray-900", children: "Demo Credentials (Development Only)" }),
-        /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)("div", { className: "mt-2 space-y-2", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)("p", { className: "text-xs text-gray-600", children: [
-            "Email: ",
+      showForgotPassword && /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(
+        import_react_router_dom.Link,
+        {
+          to: forgotPasswordUrl,
+          className: "text-sm text-center hover:underline",
+          children: defaultLabels.forgotPassword
+        }
+      ),
+      showSignUp && /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)(import_jsx_runtime23.Fragment, { children: [
+        /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)("div", { className: "relative", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("div", { className: "absolute inset-0 flex items-center", children: /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("div", { className: "w-full border-t border-gray-300" }) }),
+          /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("div", { className: "relative flex justify-center text-sm", children: /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("span", { className: "px-2 bg-background text-muted-foreground", children: defaultLabels.signUpText }) })
+        ] }),
+        /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(import_react_router_dom.Link, { to: signUpUrl, children: /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(Button, { variant: "outline", className: "w-full", children: defaultLabels.signUp }) })
+      ] }),
+      isDevelopmentMode() && demoCredentials && /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("div", { className: "mt-4 p-3 bg-muted rounded-lg", children: /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)("details", { className: "group", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("summary", { className: "cursor-pointer text-sm font-medium text-muted-foreground hover:text-foreground", children: "Demo Credentials (Development Only)" }),
+        /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)("div", { className: "mt-2 space-y-1", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)("p", { className: "text-xs text-muted-foreground", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("strong", { children: "Email:" }),
+            " ",
             demoCredentials.email
           ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)("p", { className: "text-xs text-gray-600", children: [
-            "Password: ",
+          /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)("p", { className: "text-xs text-muted-foreground", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("strong", { children: "Password:" }),
+            " ",
             demoCredentials.password
           ] }),
           /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(
@@ -5118,34 +5048,12 @@ var LoginPage = ({
               variant: "outline",
               size: "sm",
               onClick: fillDemoCredentials,
-              className: "w-full mt-2",
-              children: "Fill Demo Credentials"
+              className: "mt-2",
+              children: "Use Demo Credentials"
             }
           )
         ] })
-      ] }) }),
-      /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)("div", { className: "text-center space-y-4", children: [
-        showForgotPassword && /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(
-          "a",
-          {
-            href: forgotPasswordUrl,
-            className: "text-sm text-muted-foreground hover:text-primary underline-offset-4 hover:underline",
-            children: defaultLabels.forgotPassword
-          }
-        ),
-        showSignUp && /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)("div", { className: "text-sm text-muted-foreground", children: [
-          defaultLabels.signUpText,
-          " ",
-          /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(
-            "a",
-            {
-              href: signUpUrl,
-              className: "text-primary underline-offset-4 hover:underline",
-              children: defaultLabels.signUp
-            }
-          )
-        ] })
-      ] })
+      ] }) })
     ] }) })
   ] }) });
 };
@@ -5279,6 +5187,50 @@ var SimpleHeader = ({
       ] })
     ] })
   ] }) }) }) });
+};
+
+// src/components/WorkCenterSelect.tsx
+var import_jsx_runtime25 = require("react/jsx-runtime");
+var WorkCenterSelect = ({
+  workCenters,
+  value,
+  onChange,
+  label = "Work Center",
+  required = false,
+  disabled = false,
+  error,
+  placeholder = "Select a work center"
+}) => {
+  const handleChange = (e) => {
+    onChange(e.target.value);
+  };
+  return /* @__PURE__ */ (0, import_jsx_runtime25.jsxs)("div", { className: "space-y-2", children: [
+    /* @__PURE__ */ (0, import_jsx_runtime25.jsx)(Label, { htmlFor: "workCenter", children: label }),
+    /* @__PURE__ */ (0, import_jsx_runtime25.jsxs)(
+      "select",
+      {
+        id: "workCenter",
+        name: "workCenter",
+        value,
+        onChange: handleChange,
+        required,
+        disabled,
+        className: `
+          flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm 
+          ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium 
+          placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 
+          focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed 
+          disabled:opacity-50
+          ${error ? "border-red-500" : ""}
+        `,
+        children: [
+          /* @__PURE__ */ (0, import_jsx_runtime25.jsx)("option", { value: "", children: placeholder }),
+          workCenters.map((center) => /* @__PURE__ */ (0, import_jsx_runtime25.jsx)("option", { value: center.value, children: center.label }, center.value))
+        ]
+      }
+    ),
+    error && /* @__PURE__ */ (0, import_jsx_runtime25.jsx)("span", { className: "text-sm text-red-600", children: error })
+  ] });
 };
 
 // src/components/RelativeDate.tsx
@@ -6972,6 +6924,7 @@ function createPaginatedStore(entityName, defaultPerPage = 10, persistOptions) {
   ThemeSwitch,
   VALIDATION_MESSAGES,
   WORK_CENTERS,
+  WorkCenterSelect,
   addDaysToDate,
   applyFullTextSearch,
   applyPagination,

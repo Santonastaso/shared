@@ -58,6 +58,7 @@ export { AppHeader } from './AppHeader';
 export { ExactHeader } from './ExactHeader';
 export { LoginPage } from './LoginPage';
 export { SimpleHeader } from './SimpleHeader';
+export { WorkCenterSelect } from './WorkCenterSelect';
 export { Avatar, AvatarImage, AvatarFallback } from './Avatar';
 export * from './DropdownMenu';
 
