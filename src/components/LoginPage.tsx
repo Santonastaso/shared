@@ -130,136 +130,134 @@ export const LoginPage: React.FC<LoginPageProps> = ({
   };
 
   return (
-    <div className="min-h-screen flex">
-      <div className="container relative grid flex-col items-center justify-center sm:max-w-none lg:grid-cols-2 lg:px-0">
-        {/* Left Panel - Brand/Logo Section (matches crm_demo exactly) */}
-        <div className="relative hidden h-full flex-col bg-muted p-10 text-white dark:border-r lg:flex">
-          <div className="absolute inset-0 bg-zinc-900" />
-          <div className="relative z-20 flex items-center text-lg font-medium">
-            {logo && <img className="h-6 mr-2" src={logo} alt={title} />}
-            {title}
+    <div className="min-h-screen w-full flex">
+      {/* Left Panel - Brand/Logo Section */}
+      <div className="hidden lg:flex lg:w-1/2 relative flex-col bg-muted p-10 text-white">
+        <div className="absolute inset-0 bg-zinc-900" />
+        <div className="relative z-20 flex items-center text-lg font-medium">
+          {logo && <img className="h-6 mr-2" src={logo} alt={title} />}
+          {title}
+        </div>
+        {subtitle && (
+          <div className="relative z-20 mt-auto">
+            <p className="text-lg">{subtitle}</p>
           </div>
-          {subtitle && (
-            <div className="relative z-20 mt-auto">
-              <p className="text-lg">{subtitle}</p>
+        )}
+      </div>
+
+      {/* Right Panel - Login Form */}
+      <div className="w-full lg:w-1/2 flex items-center justify-center p-8">
+        <div className="w-full max-w-sm space-y-6">
+          {/* Mobile Logo/Title */}
+          <div className="flex flex-col space-y-2 text-center lg:hidden">
+            {logo && <img className="h-8 mx-auto" src={logo} alt={title} />}
+            <h1 className="text-xl font-semibold">{title}</h1>
+          </div>
+
+          {/* Sign in header */}
+          <div className="flex flex-col space-y-2 text-center">
+            <h1 className="text-2xl font-semibold tracking-tight">{defaultLabels.signIn}</h1>
+          </div>
+
+          {/* Login Form */}
+          <form className="space-y-8" onSubmit={handleSubmit}>
+            {error && (
+              <div className="p-3 text-sm text-red-600 bg-red-50 border border-red-200 rounded-md">
+                {error}
+              </div>
+            )}
+
+            <div className="space-y-2">
+              <Label htmlFor="email">{defaultLabels.email}</Label>
+              <Input
+                id="email"
+                name="email"
+                type="email"
+                value={formData.email}
+                onChange={handleChange}
+                placeholder="name@example.com"
+                required
+                disabled={isLoading}
+              />
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="password">{defaultLabels.password}</Label>
+              <Input
+                id="password"
+                name="password"
+                type="password"
+                value={formData.password}
+                onChange={handleChange}
+                required
+                disabled={isLoading}
+              />
+            </div>
+
+            {/* Additional fields (like work center for scheduler_demo) */}
+            {additionalFields}
+
+            <Button
+              type="submit"
+              className="w-full cursor-pointer"
+              disabled={isLoading}
+            >
+              {isLoading ? 'Signing in...' : defaultLabels.signIn}
+            </Button>
+          </form>
+
+          {/* Forgot Password Link */}
+          {showForgotPassword && (
+            <Link
+              to={forgotPasswordUrl}
+              className="block text-sm text-center hover:underline"
+            >
+              {defaultLabels.forgotPassword}
+            </Link>
+          )}
+
+          {/* Sign Up Section */}
+          {showSignUp && (
+            <>
+              <div className="relative">
+                <div className="absolute inset-0 flex items-center">
+                  <div className="w-full border-t border-gray-300" />
+                </div>
+                <div className="relative flex justify-center text-sm">
+                  <span className="px-2 bg-background text-muted-foreground">{defaultLabels.signUpText}</span>
+                </div>
+              </div>
+              <Link to={signUpUrl}>
+                <Button variant="outline" className="w-full">
+                  {defaultLabels.signUp}
+                </Button>
+              </Link>
+            </>
+          )}
+
+          {/* Demo Credentials (Development Only) */}
+          {isDevelopmentMode() && demoCredentials && (
+            <div className="mt-4 p-3 bg-muted rounded-lg">
+              <details className="group">
+                <summary className="cursor-pointer text-sm font-medium text-muted-foreground hover:text-foreground">
+                  Demo Credentials (Development Only)
+                </summary>
+                <div className="mt-2 space-y-1">
+                  <p className="text-xs text-muted-foreground"><strong>Email:</strong> {demoCredentials.email}</p>
+                  <p className="text-xs text-muted-foreground"><strong>Password:</strong> {demoCredentials.password}</p>
+                  <Button
+                    type="button"
+                    variant="outline"
+                    size="sm"
+                    onClick={fillDemoCredentials}
+                    className="mt-2"
+                  >
+                    Use Demo Credentials
+                  </Button>
+                </div>
+              </details>
             </div>
           )}
-        </div>
-
-        {/* Right Panel - Login Form (matches crm_demo exactly) */}
-        <div className="lg:p-8">
-          <div className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]">
-            {/* Mobile Logo/Title */}
-            <div className="flex flex-col space-y-2 text-center lg:hidden">
-              {logo && <img className="h-8 mx-auto" src={logo} alt={title} />}
-              <h1 className="text-xl font-semibold">{title}</h1>
-            </div>
-
-            {/* Sign in header */}
-            <div className="flex flex-col space-y-2 text-center">
-              <h1 className="text-2xl font-semibold tracking-tight">{defaultLabels.signIn}</h1>
-            </div>
-
-            {/* Login Form */}
-            <form className="space-y-8" onSubmit={handleSubmit}>
-              {error && (
-                <div className="p-3 text-sm text-red-600 bg-red-50 border border-red-200 rounded-md">
-                  {error}
-                </div>
-              )}
-
-              <div className="space-y-2">
-                <Label htmlFor="email">{defaultLabels.email}</Label>
-                <Input
-                  id="email"
-                  name="email"
-                  type="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  placeholder="name@example.com"
-                  required
-                  disabled={isLoading}
-                />
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="password">{defaultLabels.password}</Label>
-                <Input
-                  id="password"
-                  name="password"
-                  type="password"
-                  value={formData.password}
-                  onChange={handleChange}
-                  required
-                  disabled={isLoading}
-                />
-              </div>
-
-              {/* Additional fields (like work center for scheduler_demo) */}
-              {additionalFields}
-
-              <Button
-                type="submit"
-                className="w-full cursor-pointer"
-                disabled={isLoading}
-              >
-                {isLoading ? 'Signing in...' : defaultLabels.signIn}
-              </Button>
-            </form>
-
-            {/* Forgot Password Link */}
-            {showForgotPassword && (
-              <Link
-                to={forgotPasswordUrl}
-                className="text-sm text-center hover:underline"
-              >
-                {defaultLabels.forgotPassword}
-              </Link>
-            )}
-
-            {/* Sign Up Section */}
-            {showSignUp && (
-              <>
-                <div className="relative">
-                  <div className="absolute inset-0 flex items-center">
-                    <div className="w-full border-t border-gray-300" />
-                  </div>
-                  <div className="relative flex justify-center text-sm">
-                    <span className="px-2 bg-background text-muted-foreground">{defaultLabels.signUpText}</span>
-                  </div>
-                </div>
-                <Link to={signUpUrl}>
-                  <Button variant="outline" className="w-full">
-                    {defaultLabels.signUp}
-                  </Button>
-                </Link>
-              </>
-            )}
-
-            {/* Demo Credentials (Development Only) */}
-            {isDevelopmentMode() && demoCredentials && (
-              <div className="mt-4 p-3 bg-muted rounded-lg">
-                <details className="group">
-                  <summary className="cursor-pointer text-sm font-medium text-muted-foreground hover:text-foreground">
-                    Demo Credentials (Development Only)
-                  </summary>
-                  <div className="mt-2 space-y-1">
-                    <p className="text-xs text-muted-foreground"><strong>Email:</strong> {demoCredentials.email}</p>
-                    <p className="text-xs text-muted-foreground"><strong>Password:</strong> {demoCredentials.password}</p>
-                    <Button
-                      type="button"
-                      variant="outline"
-                      size="sm"
-                      onClick={fillDemoCredentials}
-                      className="mt-2"
-                    >
-                      Use Demo Credentials
-                    </Button>
-                  </div>
-                </details>
-              </div>
-            )}
-          </div>
         </div>
       </div>
     </div>

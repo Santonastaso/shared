@@ -4958,8 +4958,8 @@ var LoginPage = ({
       });
     }
   };
-  return /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("div", { className: "min-h-screen flex", children: /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)("div", { className: "container relative grid flex-col items-center justify-center sm:max-w-none lg:grid-cols-2 lg:px-0", children: [
-    /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)("div", { className: "relative hidden h-full flex-col bg-muted p-10 text-white dark:border-r lg:flex", children: [
+  return /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)("div", { className: "min-h-screen w-full flex", children: [
+    /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)("div", { className: "hidden lg:flex lg:w-1/2 relative flex-col bg-muted p-10 text-white", children: [
       /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("div", { className: "absolute inset-0 bg-zinc-900" }),
       /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)("div", { className: "relative z-20 flex items-center text-lg font-medium", children: [
         logo && /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("img", { className: "h-6 mr-2", src: logo, alt: title }),
@@ -4967,7 +4967,7 @@ var LoginPage = ({
       ] }),
       subtitle && /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("div", { className: "relative z-20 mt-auto", children: /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("p", { className: "text-lg", children: subtitle }) })
     ] }),
-    /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("div", { className: "lg:p-8", children: /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)("div", { className: "mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]", children: [
+    /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("div", { className: "w-full lg:w-1/2 flex items-center justify-center p-8", children: /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)("div", { className: "w-full max-w-sm space-y-6", children: [
       /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)("div", { className: "flex flex-col space-y-2 text-center lg:hidden", children: [
         logo && /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("img", { className: "h-8 mx-auto", src: logo, alt: title }),
         /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("h1", { className: "text-xl font-semibold", children: title })
@@ -5021,7 +5021,7 @@ var LoginPage = ({
         import_react_router_dom.Link,
         {
           to: forgotPasswordUrl,
-          className: "text-sm text-center hover:underline",
+          className: "block text-sm text-center hover:underline",
           children: defaultLabels.forgotPassword
         }
       ),
@@ -5059,7 +5059,7 @@ var LoginPage = ({
         ] })
       ] }) })
     ] }) })
-  ] }) });
+  ] });
 };
 
 // src/components/CRMLoginPage.tsx
