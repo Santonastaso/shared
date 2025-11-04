@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import { Button } from './button';
 import { Input } from './input';
-import { Label } from './label';
-import { Link } from 'react-router-dom';
+import { Card } from './card';
 
 export interface LoginPageProps {
   /** Application title */
@@ -38,17 +37,13 @@ export interface LoginPageProps {
   /** Error message to display */
   error?: string;
   /** Form submission handler */
-  onSubmit: (data: { email: string; password: string; [key: string]: any }) => void;
+  onSubmit: (data: { email: string; password: string }) => void;
   /** Forgot password link URL */
   forgotPasswordUrl?: string;
   /** Sign up link URL */
   signUpUrl?: string;
   /** Additional form fields (like work center selection) */
   additionalFields?: React.ReactNode;
-  /** Additional form data from additionalFields */
-  additionalData?: Record<string, any>;
-  /** Callback when additional data changes */
-  onAdditionalDataChange?: (data: Record<string, any>) => void;
 }
 
 /**
@@ -57,25 +52,16 @@ export interface LoginPageProps {
 const isDevelopmentMode = (): boolean => {
   // Try import.meta.env first (ESM/Vite)
   if (typeof globalThis !== 'undefined' && (globalThis as any).import?.meta?.env) {
-    const env = (globalThis as any).import.meta.env;
-    return env.MODE === 'development' || env.DEV === true;
+    return (globalThis as any).import.meta.env.MODE === 'development';
   }
-  
   // Try process.env (CJS/Node)
   if (typeof process !== 'undefined' && process.env) {
     return process.env.NODE_ENV === 'development';
   }
-  
   // Fallback for browser environments
   return false;
 };
 
-/**
- * CRM-style Login Page Component
- * 
- * Matches the exact styling and layout of crm_demo's login page.
- * Supports additional fields for apps like scheduler_demo that need work center selection.
- */
 export const LoginPage: React.FC<LoginPageProps> = ({
   title,
   logo,
@@ -91,9 +77,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({
   onSubmit,
   forgotPasswordUrl = '/forgot-password',
   signUpUrl = '/signup',
-  additionalFields,
-  additionalData = {},
-  onAdditionalDataChange
+  additionalFields
 }) => {
   const [formData, setFormData] = useState({
     email: '',
@@ -112,7 +96,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    onSubmit({ ...formData, ...additionalData });
+    onSubmit(formData);
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -129,134 +113,221 @@ export const LoginPage: React.FC<LoginPageProps> = ({
     }
   };
 
+  // Debug: Log to verify SharedLoginPage is being rendered
+  console.log('🎨 SharedLoginPage: Rendering with props', { title, logo, subtitle });
+
   return (
-    <div className="min-h-screen w-full flex">
-      {/* Left Panel - Brand/Logo Section */}
-      <div className="hidden lg:flex lg:w-1/2 relative flex-col p-10 text-white" style={{ backgroundColor: '#18181b' }}>
-        <div className="relative z-20 flex items-center text-lg font-medium">
-          {logo && <img className="h-6 mr-2" src={logo} alt={title} />}
-          {title}
+    <div style={{ minHeight: '100vh', display: 'flex' }}>
+      <div style={{ 
+        width: '100%', 
+        position: 'relative', 
+        display: 'grid', 
+        gridTemplateColumns: '1fr 1fr',
+        alignItems: 'center', 
+        justifyContent: 'center' 
+      }}>
+        {/* Left Panel - Branding */}
+        <div 
+          style={{
+            position: 'relative',
+            height: '100vh',
+            display: 'flex',
+            flexDirection: 'column',
+            padding: '2.5rem',
+            color: 'white',
+            backgroundImage: backgroundImage ? `url(${backgroundImage})` : undefined,
+            backgroundColor: backgroundColor
+          }}
+        >
+          <div style={{ 
+            position: 'absolute', 
+            top: 0, 
+            left: 0, 
+            right: 0, 
+            bottom: 0, 
+            backgroundColor: backgroundColor 
+          }} />
+          <div style={{ 
+            position: 'relative', 
+            zIndex: 20, 
+            display: 'flex', 
+            alignItems: 'center', 
+            fontSize: '1.125rem', 
+            fontWeight: '500' 
+          }}>
+            {logo && <img style={{ height: '1.5rem', marginRight: '0.5rem' }} src={logo} alt={title} />}
+            {title}
+          </div>
+          {subtitle && (
+            <div style={{ 
+              position: 'relative', 
+              zIndex: 20, 
+              marginTop: 'auto' 
+            }}>
+              <blockquote style={{ margin: 0 }}>
+                <p style={{ fontSize: '1.125rem', margin: 0 }}>{subtitle}</p>
+              </blockquote>
+            </div>
+          )}
         </div>
-        {subtitle && (
-          <div className="relative z-20 mt-auto">
-            <p className="text-lg">{subtitle}</p>
-          </div>
-        )}
-      </div>
 
-      {/* Right Panel - Login Form */}
-      <div className="w-full lg:w-1/2 flex items-center justify-center p-8 bg-white">
-        <div className="w-full max-w-sm space-y-6">
-          {/* Mobile Logo/Title */}
-          <div className="flex flex-col space-y-2 text-center lg:hidden">
-            {logo && <img className="h-8 mx-auto" src={logo} alt={title} />}
-            <h1 className="text-xl font-semibold">{title}</h1>
-          </div>
+        {/* Right Panel - Login Form */}
+        <div style={{ padding: '2rem' }}>
+          <div style={{ 
+            margin: '0 auto', 
+            display: 'flex', 
+            width: '100%', 
+            maxWidth: '350px',
+            flexDirection: 'column', 
+            justifyContent: 'center', 
+            gap: '1.5rem' 
+          }}>
+            <div style={{ 
+              display: 'flex', 
+              flexDirection: 'column', 
+              gap: '0.5rem', 
+              textAlign: 'center' 
+            }}>
+              <h1 style={{ 
+                fontSize: '1.5rem', 
+                fontWeight: '600', 
+                letterSpacing: '-0.025em',
+                margin: 0,
+                color: '#111827'
+              }}>
+                {defaultLabels.signIn}
+              </h1>
+              <p style={{ 
+                fontSize: '0.875rem', 
+                color: '#6b7280',
+                margin: 0
+              }}>
+                Enter your email below to sign in to your account
+              </p>
+            </div>
 
-          {/* Sign in header */}
-          <div className="flex flex-col space-y-2 text-center">
-            <h1 className="text-2xl font-semibold tracking-tight">{defaultLabels.signIn}</h1>
-          </div>
+            <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+              {error && (
+                <div style={{ 
+                  padding: '0.75rem', 
+                  fontSize: '0.875rem', 
+                  color: '#dc2626', 
+                  backgroundColor: '#fef2f2', 
+                  border: '1px solid #fecaca', 
+                  borderRadius: '0.375rem' 
+                }}>
+                  {error}
+                </div>
+              )}
 
-          {/* Login Form */}
-          <form className="space-y-8" onSubmit={handleSubmit}>
-            {error && (
-              <div className="p-3 text-sm text-red-600 bg-red-50 border border-red-200 rounded-md">
-                {error}
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                <label 
+                  htmlFor="email" 
+                  style={{ 
+                    fontSize: '0.875rem', 
+                    fontWeight: '500', 
+                    color: '#374151' 
+                  }}
+                >
+                  {defaultLabels.email}
+                </label>
+                <Input
+                  id="email"
+                  name="email"
+                  type="email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  placeholder="name@example.com"
+                  required
+                  disabled={isLoading}
+                />
+              </div>
+
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                <label 
+                  htmlFor="password" 
+                  style={{ 
+                    fontSize: '0.875rem', 
+                    fontWeight: '500', 
+                    color: '#374151' 
+                  }}
+                >
+                  {defaultLabels.password}
+                </label>
+                <Input
+                  id="password"
+                  name="password"
+                  type="password"
+                  value={formData.password}
+                  onChange={handleChange}
+                  required
+                  disabled={isLoading}
+                />
+              </div>
+
+              {additionalFields}
+
+              <Button
+                type="submit"
+                className="w-full text-white"
+                disabled={isLoading}
+              >
+                {isLoading ? 'Signing in...' : defaultLabels.signIn}
+              </Button>
+            </form>
+
+            {/* Demo Credentials (for development) */}
+            {demoCredentials && isDevelopmentMode() && (
+              <div className="mt-4 p-3 bg-gray-50 rounded-lg">
+                <details className="group">
+                  <summary className="cursor-pointer text-sm font-medium text-gray-700 hover:text-gray-900">
+                    Demo Credentials (Development Only)
+                  </summary>
+                  <div className="mt-2 space-y-2">
+                    <p className="text-xs text-gray-600">
+                      Email: {demoCredentials.email}
+                    </p>
+                    <p className="text-xs text-gray-600">
+                      Password: {demoCredentials.password}
+                    </p>
+                    <Button
+                      type="button"
+                      variant="outline"
+                      size="sm"
+                      onClick={fillDemoCredentials}
+                      className="w-full mt-2"
+                    >
+                      Fill Demo Credentials
+                    </Button>
+                  </div>
+                </details>
               </div>
             )}
 
-            <div className="space-y-2">
-              <Label htmlFor="email">{defaultLabels.email}</Label>
-              <Input
-                id="email"
-                name="email"
-                type="email"
-                value={formData.email}
-                onChange={handleChange}
-                placeholder="name@example.com"
-                required
-                disabled={isLoading}
-              />
-            </div>
+            {/* Footer Links */}
+            <div className="text-center space-y-4">
+              {showForgotPassword && (
+                <a
+                  href={forgotPasswordUrl}
+                  className="text-sm text-muted-foreground hover:text-primary underline-offset-4 hover:underline"
+                >
+                  {defaultLabels.forgotPassword}
+                </a>
+              )}
 
-            <div className="space-y-2">
-              <Label htmlFor="password">{defaultLabels.password}</Label>
-              <Input
-                id="password"
-                name="password"
-                type="password"
-                value={formData.password}
-                onChange={handleChange}
-                required
-                disabled={isLoading}
-              />
-            </div>
-
-            {/* Additional fields (like work center for scheduler_demo) */}
-            {additionalFields}
-
-            <Button
-              type="submit"
-              className="w-full cursor-pointer"
-              disabled={isLoading}
-            >
-              {isLoading ? 'Signing in...' : defaultLabels.signIn}
-            </Button>
-          </form>
-
-          {/* Forgot Password Link */}
-          {showForgotPassword && (
-            <Link
-              to={forgotPasswordUrl}
-              className="block text-sm text-center hover:underline"
-            >
-              {defaultLabels.forgotPassword}
-            </Link>
-          )}
-
-          {/* Sign Up Section */}
-          {showSignUp && (
-            <>
-              <div className="relative">
-                <div className="absolute inset-0 flex items-center">
-                  <div className="w-full border-t border-gray-300" />
-                </div>
-                <div className="relative flex justify-center text-sm">
-                  <span className="px-2 bg-background text-muted-foreground">{defaultLabels.signUpText}</span>
-                </div>
-              </div>
-              <Link to={signUpUrl}>
-                <Button variant="outline" className="w-full">
-                  {defaultLabels.signUp}
-                </Button>
-              </Link>
-            </>
-          )}
-
-          {/* Demo Credentials (Development Only) */}
-          {isDevelopmentMode() && demoCredentials && (
-            <div className="mt-4 p-3 bg-muted rounded-lg">
-              <details className="group">
-                <summary className="cursor-pointer text-sm font-medium text-muted-foreground hover:text-foreground">
-                  Demo Credentials (Development Only)
-                </summary>
-                <div className="mt-2 space-y-1">
-                  <p className="text-xs text-muted-foreground"><strong>Email:</strong> {demoCredentials.email}</p>
-                  <p className="text-xs text-muted-foreground"><strong>Password:</strong> {demoCredentials.password}</p>
-                  <Button
-                    type="button"
-                    variant="outline"
-                    size="sm"
-                    onClick={fillDemoCredentials}
-                    className="mt-2"
+              {showSignUp && (
+                <div className="text-sm text-muted-foreground">
+                  {defaultLabels.signUpText}{' '}
+                  <a
+                    href={signUpUrl}
+                    className="text-primary underline-offset-4 hover:underline"
                   >
-                    Use Demo Credentials
-                  </Button>
+                    {defaultLabels.signUp}
+                  </a>
                 </div>
-              </details>
+              )}
             </div>
-          )}
+          </div>
         </div>
       </div>
     </div>

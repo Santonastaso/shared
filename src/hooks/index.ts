@@ -2,7 +2,6 @@ export { useErrorHandler, useValidationErrorHandler } from './useErrorHandler';
 export { useSidebar } from './useSidebar';
 export * from './useDataService';
 export * from './useAuthGuard';
-export { useIsMobile } from './useMobile';
 
 // React Query hooks for Supabase
 export {

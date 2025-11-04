@@ -90,6 +90,9 @@ export const throttle = <T extends (...args: any[]) => any>(
   };
 };
 
+// Re-export toast utilities
+export * from './toast';
+
 /**
  * Safe async wrapper that handles errors gracefully
  */
@@ -142,9 +145,6 @@ export const handleApiError = (error: any, context: any = {}): Error => {
   return new Error(errorMessage);
 };
 
-// Re-export toast utilities
-export * from './toast';
-
 // Re-export validation utilities
 export * from './validation';
 
@@ -153,4 +153,3 @@ export * from './dateUtils';
 export * from './numberUtils';
 export * from './stringUtils';
 export * from './arrayUtils';
-export * from './fetchUtils';

@@ -16,11 +16,7 @@
       "import": "./dist/constants.js",
       "require": "./dist/constants.cjs"
     },
-    "./styles.css": {
-      "import": "./dist/styles.css",
-      "require": "./dist/styles.css",
-      "default": "./dist/styles.css"
-    }
+    "./styles.css": "./dist/styles.css"
   },
   "files": [
     "dist"

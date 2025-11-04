@@ -42,7 +42,6 @@ __export(src_exports, {
   Button: () => Button,
   COMMON_STATUSES: () => COMMON_STATUSES,
   CONFIRMATION_TYPES: () => CONFIRMATION_TYPES,
-  CRMLoginPage: () => CRMLoginPage,
   Card: () => Card,
   CardContent: () => CardContent,
   CardDescription: () => CardDescription,
@@ -73,7 +72,6 @@ __export(src_exports, {
   ExactHeader: () => ExactHeader,
   FIELD_CONFIGS: () => FIELD_CONFIGS,
   FilterDropdown: () => FilterDropdown_default,
-  Form: () => Form,
   GenericForm: () => GenericForm_default,
   Header: () => Header,
   Input: () => Input,
@@ -81,10 +79,8 @@ __export(src_exports, {
   LoginPage: () => LoginPage,
   MACHINE_STATUSES: () => MACHINE_STATUSES,
   NUMBER_CONSTANTS: () => NUMBER_CONSTANTS,
-  Notification: () => Notification,
   PRODUCT_TYPES: () => PRODUCT_TYPES,
   ProtectedRoute: () => ProtectedRoute,
-  RelativeDate: () => RelativeDate,
   SCHEMAS: () => SCHEMAS,
   SEAL_SIDES: () => SEAL_SIDES,
   SERVICES_ERROR_TYPES: () => ERROR_TYPES2,
@@ -103,13 +99,12 @@ __export(src_exports, {
   TableHead: () => TableHead,
   TableHeader: () => TableHeader,
   TableRow: () => TableRow,
-  TextInput: () => TextInput,
   Textarea: () => Textarea,
   ThemeProvider: () => ThemeProvider,
   ThemeSwitch: () => ThemeSwitch,
+  UnifiedHeader: () => UnifiedHeader,
   VALIDATION_MESSAGES: () => VALIDATION_MESSAGES,
   WORK_CENTERS: () => WORK_CENTERS,
-  WorkCenterSelect: () => WorkCenterSelect,
   addDaysToDate: () => addDaysToDate,
   applyFullTextSearch: () => applyFullTextSearch,
   applyPagination: () => applyPagination,
@@ -162,7 +157,6 @@ __export(src_exports, {
   dismissAll: () => dismissAll,
   extractEmailDomain: () => extractEmailDomain,
   extractEmailUsername: () => extractEmailUsername,
-  fetchWithTimeout: () => fetchWithTimeout,
   filterBy: () => filterBy,
   findBy: () => findBy,
   findIndexBy: () => findIndexBy,
@@ -205,7 +199,6 @@ __export(src_exports, {
   getRandomItems: () => getRandomItems,
   getRecordCount: () => getRecordCount,
   getRelativeTime: () => getRelativeTime,
-  getRelativeTimeString: () => getRelativeTimeString,
   getSignedUrl: () => getSignedUrl,
   getStandardSupabaseClient: () => getStandardSupabaseClient,
   getStartOfDay: () => getStartOfDay,
@@ -287,7 +280,6 @@ __export(src_exports, {
   toSnakeCase: () => toSnakeCase,
   truncate: () => truncate,
   truncateWords: () => truncateWords,
-  ucFirst: () => ucFirst2,
   union: () => union,
   updateAt: () => updateAt,
   uploadMultipleFiles: () => uploadMultipleFiles,
@@ -304,7 +296,6 @@ __export(src_exports, {
   useDependentQueries: () => useDependentQueries,
   useErrorBoundary: () => useErrorBoundary,
   useErrorHandler: () => useErrorHandler,
-  useIsMobile: () => useIsMobile,
   useOfflineSync: () => useOfflineSync,
   useQuerySync: () => useQuerySync,
   useSavedQueries: () => useSavedQueries,
@@ -576,25 +567,6 @@ var hoursToMinutes = (hours) => {
 var minutesToHours = (minutes) => {
   return minutes / 60;
 };
-function getRelativeTimeString(dateString) {
-  const date = new Date(dateString);
-  date.setHours(0, 0, 0, 0);
-  const today = /* @__PURE__ */ new Date();
-  today.setHours(0, 0, 0, 0);
-  const diff = date.getTime() - today.getTime();
-  const unitDiff = Math.round(diff / (1e3 * 60 * 60 * 24));
-  if (Math.abs(unitDiff) > 7) {
-    return new Intl.DateTimeFormat(void 0, {
-      day: "numeric",
-      month: "long"
-    }).format(date);
-  }
-  const rtf = new Intl.RelativeTimeFormat(void 0, { numeric: "auto" });
-  return ucFirst(rtf.format(unitDiff, "day"));
-}
-function ucFirst(str) {
-  return str.charAt(0).toUpperCase() + str.slice(1);
-}
 var formatUtcDate = (isoString) => {
   if (!isoString) return "";
   const date = new Date(isoString);
@@ -783,10 +755,6 @@ var NUMBER_CONSTANTS = {
 };
 
 // src/utils/stringUtils.ts
-var ucFirst2 = (str) => {
-  if (!str) return "";
-  return str.charAt(0).toUpperCase() + str.slice(1);
-};
 var capitalize = (str) => {
   if (!str) return "";
   return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
@@ -1218,19 +1186,6 @@ var arrayComparison = {
     return arrayComparison.isSubset(subset, superset);
   }
 };
-
-// src/utils/fetchUtils.ts
-async function fetchWithTimeout(resource, options = {}) {
-  const { timeout = 2e3 } = options;
-  const controller = new AbortController();
-  const id = setTimeout(() => controller.abort(), timeout);
-  const response = await fetch(resource, {
-    ...options,
-    signal: controller.signal
-  });
-  clearTimeout(id);
-  return response;
-}
 
 // src/utils/index.ts
 function cn(...inputs) {
@@ -3180,25 +3135,6 @@ var useAuthGuard = (options = {}) => {
   };
 };
 
-// src/hooks/useMobile.ts
-var React9 = __toESM(require("react"), 1);
-var MOBILE_BREAKPOINT = 768;
-function useIsMobile() {
-  const [isMobile, setIsMobile] = React9.useState(
-    void 0
-  );
-  React9.useEffect(() => {
-    const mql = window.matchMedia(`(max-width: ${MOBILE_BREAKPOINT - 1}px)`);
-    const onChange = () => {
-      setIsMobile(window.innerWidth < MOBILE_BREAKPOINT);
-    };
-    mql.addEventListener("change", onChange);
-    setIsMobile(window.innerWidth < MOBILE_BREAKPOINT);
-    return () => mql.removeEventListener("change", onChange);
-  }, []);
-  return !!isMobile;
-}
-
 // src/hooks/useSupabaseQuery.ts
 var import_react_query2 = require("@tanstack/react-query");
 var createQueryKeys = (tableName) => ({
@@ -4898,12 +4834,10 @@ var ExactHeader = ({
 
 // src/components/LoginPage.tsx
 var import_react14 = require("react");
-var import_react_router_dom = require("react-router-dom");
 var import_jsx_runtime23 = require("react/jsx-runtime");
 var isDevelopmentMode = () => {
   if (typeof globalThis !== "undefined" && globalThis.import?.meta?.env) {
-    const env = globalThis.import.meta.env;
-    return env.MODE === "development" || env.DEV === true;
+    return globalThis.import.meta.env.MODE === "development";
   }
   if (typeof process !== "undefined" && process.env) {
     return process.env.NODE_ENV === "development";
@@ -4925,9 +4859,7 @@ var LoginPage = ({
   onSubmit,
   forgotPasswordUrl = "/forgot-password",
   signUpUrl = "/signup",
-  additionalFields,
-  additionalData = {},
-  onAdditionalDataChange
+  additionalFields
 }) => {
   const [formData, setFormData] = (0, import_react14.useState)({
     email: "",
@@ -4944,7 +4876,7 @@ var LoginPage = ({
   };
   const handleSubmit = (e) => {
     e.preventDefault();
-    onSubmit({ ...formData, ...additionalData });
+    onSubmit(formData);
   };
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -4958,24 +4890,106 @@ var LoginPage = ({
       });
     }
   };
-  return /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)("div", { className: "min-h-screen w-full flex", children: [
-    /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)("div", { className: "hidden lg:flex lg:w-1/2 relative flex-col p-10 text-white", style: { backgroundColor: "#18181b" }, children: [
-      /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)("div", { className: "relative z-20 flex items-center text-lg font-medium", children: [
-        logo && /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("img", { className: "h-6 mr-2", src: logo, alt: title }),
-        title
+  console.log("\u{1F3A8} SharedLoginPage: Rendering with props", { title, logo, subtitle });
+  return /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("div", { style: { minHeight: "100vh", display: "flex" }, children: /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)("div", { style: {
+    width: "100%",
+    position: "relative",
+    display: "grid",
+    gridTemplateColumns: "1fr 1fr",
+    alignItems: "center",
+    justifyContent: "center"
+  }, children: [
+    /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)(
+      "div",
+      {
+        style: {
+          position: "relative",
+          height: "100vh",
+          display: "flex",
+          flexDirection: "column",
+          padding: "2.5rem",
+          color: "white",
+          backgroundImage: backgroundImage ? `url(${backgroundImage})` : void 0,
+          backgroundColor
+        },
+        children: [
+          /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("div", { style: {
+            position: "absolute",
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            backgroundColor
+          } }),
+          /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)("div", { style: {
+            position: "relative",
+            zIndex: 20,
+            display: "flex",
+            alignItems: "center",
+            fontSize: "1.125rem",
+            fontWeight: "500"
+          }, children: [
+            logo && /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("img", { style: { height: "1.5rem", marginRight: "0.5rem" }, src: logo, alt: title }),
+            title
+          ] }),
+          subtitle && /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("div", { style: {
+            position: "relative",
+            zIndex: 20,
+            marginTop: "auto"
+          }, children: /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("blockquote", { style: { margin: 0 }, children: /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("p", { style: { fontSize: "1.125rem", margin: 0 }, children: subtitle }) }) })
+        ]
+      }
+    ),
+    /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("div", { style: { padding: "2rem" }, children: /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)("div", { style: {
+      margin: "0 auto",
+      display: "flex",
+      width: "100%",
+      maxWidth: "350px",
+      flexDirection: "column",
+      justifyContent: "center",
+      gap: "1.5rem"
+    }, children: [
+      /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)("div", { style: {
+        display: "flex",
+        flexDirection: "column",
+        gap: "0.5rem",
+        textAlign: "center"
+      }, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("h1", { style: {
+          fontSize: "1.5rem",
+          fontWeight: "600",
+          letterSpacing: "-0.025em",
+          margin: 0,
+          color: "#111827"
+        }, children: defaultLabels.signIn }),
+        /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("p", { style: {
+          fontSize: "0.875rem",
+          color: "#6b7280",
+          margin: 0
+        }, children: "Enter your email below to sign in to your account" })
       ] }),
-      subtitle && /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("div", { className: "relative z-20 mt-auto", children: /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("p", { className: "text-lg", children: subtitle }) })
-    ] }),
-    /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("div", { className: "w-full lg:w-1/2 flex items-center justify-center p-8 bg-white", children: /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)("div", { className: "w-full max-w-sm space-y-6", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)("div", { className: "flex flex-col space-y-2 text-center lg:hidden", children: [
-        logo && /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("img", { className: "h-8 mx-auto", src: logo, alt: title }),
-        /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("h1", { className: "text-xl font-semibold", children: title })
-      ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("div", { className: "flex flex-col space-y-2 text-center", children: /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("h1", { className: "text-2xl font-semibold tracking-tight", children: defaultLabels.signIn }) }),
-      /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)("form", { className: "space-y-8", onSubmit: handleSubmit, children: [
-        error && /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("div", { className: "p-3 text-sm text-red-600 bg-red-50 border border-red-200 rounded-md", children: error }),
-        /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)("div", { className: "space-y-2", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(Label, { htmlFor: "email", children: defaultLabels.email }),
+      /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)("form", { onSubmit: handleSubmit, style: { display: "flex", flexDirection: "column", gap: "1rem" }, children: [
+        error && /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("div", { style: {
+          padding: "0.75rem",
+          fontSize: "0.875rem",
+          color: "#dc2626",
+          backgroundColor: "#fef2f2",
+          border: "1px solid #fecaca",
+          borderRadius: "0.375rem"
+        }, children: error }),
+        /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)("div", { style: { display: "flex", flexDirection: "column", gap: "0.5rem" }, children: [
+          /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(
+            "label",
+            {
+              htmlFor: "email",
+              style: {
+                fontSize: "0.875rem",
+                fontWeight: "500",
+                color: "#374151"
+              },
+              children: defaultLabels.email
+            }
+          ),
           /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(
             Input,
             {
@@ -4990,8 +5004,19 @@ var LoginPage = ({
             }
           )
         ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)("div", { className: "space-y-2", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(Label, { htmlFor: "password", children: defaultLabels.password }),
+        /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)("div", { style: { display: "flex", flexDirection: "column", gap: "0.5rem" }, children: [
+          /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(
+            "label",
+            {
+              htmlFor: "password",
+              style: {
+                fontSize: "0.875rem",
+                fontWeight: "500",
+                color: "#374151"
+              },
+              children: defaultLabels.password
+            }
+          ),
           /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(
             Input,
             {
@@ -5010,38 +5035,21 @@ var LoginPage = ({
           Button,
           {
             type: "submit",
-            className: "w-full cursor-pointer",
+            className: "w-full text-white",
             disabled: isLoading,
             children: isLoading ? "Signing in..." : defaultLabels.signIn
           }
         )
       ] }),
-      showForgotPassword && /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(
-        import_react_router_dom.Link,
-        {
-          to: forgotPasswordUrl,
-          className: "block text-sm text-center hover:underline",
-          children: defaultLabels.forgotPassword
-        }
-      ),
-      showSignUp && /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)(import_jsx_runtime23.Fragment, { children: [
-        /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)("div", { className: "relative", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("div", { className: "absolute inset-0 flex items-center", children: /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("div", { className: "w-full border-t border-gray-300" }) }),
-          /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("div", { className: "relative flex justify-center text-sm", children: /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("span", { className: "px-2 bg-background text-muted-foreground", children: defaultLabels.signUpText }) })
-        ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(import_react_router_dom.Link, { to: signUpUrl, children: /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(Button, { variant: "outline", className: "w-full", children: defaultLabels.signUp }) })
-      ] }),
-      isDevelopmentMode() && demoCredentials && /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("div", { className: "mt-4 p-3 bg-muted rounded-lg", children: /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)("details", { className: "group", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("summary", { className: "cursor-pointer text-sm font-medium text-muted-foreground hover:text-foreground", children: "Demo Credentials (Development Only)" }),
-        /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)("div", { className: "mt-2 space-y-1", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)("p", { className: "text-xs text-muted-foreground", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("strong", { children: "Email:" }),
-            " ",
+      demoCredentials && isDevelopmentMode() && /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("div", { className: "mt-4 p-3 bg-gray-50 rounded-lg", children: /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)("details", { className: "group", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("summary", { className: "cursor-pointer text-sm font-medium text-gray-700 hover:text-gray-900", children: "Demo Credentials (Development Only)" }),
+        /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)("div", { className: "mt-2 space-y-2", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)("p", { className: "text-xs text-gray-600", children: [
+            "Email: ",
             demoCredentials.email
           ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)("p", { className: "text-xs text-muted-foreground", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime23.jsx)("strong", { children: "Password:" }),
-            " ",
+          /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)("p", { className: "text-xs text-gray-600", children: [
+            "Password: ",
             demoCredentials.password
           ] }),
           /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(
@@ -5051,140 +5059,44 @@ var LoginPage = ({
               variant: "outline",
               size: "sm",
               onClick: fillDemoCredentials,
-              className: "mt-2",
-              children: "Use Demo Credentials"
+              className: "w-full mt-2",
+              children: "Fill Demo Credentials"
             }
           )
         ] })
-      ] }) })
-    ] }) })
-  ] });
-};
-
-// src/components/CRMLoginPage.tsx
-var import_react15 = require("react");
-
-// src/components/Notification.tsx
-var import_sonner2 = require("sonner");
-var import_jsx_runtime24 = require("react/jsx-runtime");
-var Notification = ({
-  position = "bottom-center",
-  richColors = true,
-  closeButton = true,
-  ...props
-}) => {
-  const { theme } = useTheme();
-  return /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(
-    import_sonner2.Toaster,
-    {
-      richColors,
-      theme,
-      closeButton,
-      position,
-      ...props
-    }
-  );
-};
-
-// src/components/CRMLoginPage.tsx
-var import_jsx_runtime25 = require("react/jsx-runtime");
-var CRMLoginPage = ({
-  title,
-  logo,
-  subtitle,
-  redirectTo,
-  useLogin,
-  useNotify,
-  Form: Form2,
-  TextInput: TextInput2,
-  required,
-  Link: Link3
-}) => {
-  const [loading, setLoading] = (0, import_react15.useState)(false);
-  const login = useLogin();
-  const notify = useNotify();
-  const handleSubmit = (values) => {
-    setLoading(true);
-    login(values, redirectTo).then(() => {
-      setLoading(false);
-    }).catch((error) => {
-      setLoading(false);
-      notify(
-        typeof error === "string" ? error : typeof error === "undefined" || !error.message ? "ra.auth.sign_in_error" : error.message,
-        {
-          type: "error",
-          messageArgs: {
-            _: typeof error === "string" ? error : error && error.message ? error.message : void 0
+      ] }) }),
+      /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)("div", { className: "text-center space-y-4", children: [
+        showForgotPassword && /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(
+          "a",
+          {
+            href: forgotPasswordUrl,
+            className: "text-sm text-muted-foreground hover:text-primary underline-offset-4 hover:underline",
+            children: defaultLabels.forgotPassword
           }
-        }
-      );
-    });
-  };
-  return /* @__PURE__ */ (0, import_jsx_runtime25.jsxs)("div", { className: "min-h-screen flex", children: [
-    /* @__PURE__ */ (0, import_jsx_runtime25.jsxs)("div", { className: "container relative grid flex-col items-center justify-center sm:max-w-none lg:grid-cols-2 lg:px-0", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime25.jsxs)("div", { className: "relative hidden h-full flex-col bg-muted p-10 text-white dark:border-r lg:flex", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime25.jsx)("div", { className: "absolute inset-0 bg-zinc-900" }),
-        /* @__PURE__ */ (0, import_jsx_runtime25.jsxs)("div", { className: "relative z-20 flex items-center text-lg font-medium", children: [
-          logo && /* @__PURE__ */ (0, import_jsx_runtime25.jsx)("img", { className: "h-6 mr-2", src: logo, alt: title }),
-          title
-        ] }),
-        subtitle && /* @__PURE__ */ (0, import_jsx_runtime25.jsx)("div", { className: "relative z-20 mt-auto", children: /* @__PURE__ */ (0, import_jsx_runtime25.jsx)("p", { className: "text-lg", children: subtitle }) })
-      ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime25.jsx)("div", { className: "lg:p-8", children: /* @__PURE__ */ (0, import_jsx_runtime25.jsxs)("div", { className: "mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime25.jsxs)("div", { className: "flex flex-col space-y-2 text-center lg:hidden", children: [
-          logo && /* @__PURE__ */ (0, import_jsx_runtime25.jsx)("img", { className: "h-8 mx-auto", src: logo, alt: title }),
-          /* @__PURE__ */ (0, import_jsx_runtime25.jsx)("h1", { className: "text-xl font-semibold", children: title })
-        ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime25.jsx)("div", { className: "flex flex-col space-y-2 text-center", children: /* @__PURE__ */ (0, import_jsx_runtime25.jsx)("h1", { className: "text-2xl font-semibold tracking-tight", children: "Sign in" }) }),
-        /* @__PURE__ */ (0, import_jsx_runtime25.jsxs)(Form2, { className: "space-y-8", onSubmit: handleSubmit, children: [
-          /* @__PURE__ */ (0, import_jsx_runtime25.jsx)(
-            TextInput2,
+        ),
+        showSignUp && /* @__PURE__ */ (0, import_jsx_runtime23.jsxs)("div", { className: "text-sm text-muted-foreground", children: [
+          defaultLabels.signUpText,
+          " ",
+          /* @__PURE__ */ (0, import_jsx_runtime23.jsx)(
+            "a",
             {
-              label: "Email",
-              source: "email",
-              type: "email",
-              validate: required()
-            }
-          ),
-          /* @__PURE__ */ (0, import_jsx_runtime25.jsx)(
-            TextInput2,
-            {
-              label: "Password",
-              source: "password",
-              type: "password",
-              validate: required()
-            }
-          ),
-          /* @__PURE__ */ (0, import_jsx_runtime25.jsx)(
-            Button,
-            {
-              type: "submit",
-              className: "cursor-pointer",
-              disabled: loading,
-              children: "Sign in"
+              href: signUpUrl,
+              className: "text-primary underline-offset-4 hover:underline",
+              children: defaultLabels.signUp
             }
           )
-        ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime25.jsx)(
-          Link3,
-          {
-            to: "/forgot-password",
-            className: "text-sm text-center hover:underline",
-            children: "Forgot your password?"
-          }
-        )
-      ] }) })
-    ] }),
-    /* @__PURE__ */ (0, import_jsx_runtime25.jsx)(Notification, {})
-  ] });
+        ] })
+      ] })
+    ] }) })
+  ] }) });
 };
 
 // src/components/SimpleHeader.tsx
-var import_react16 = __toESM(require("react"), 1);
+var import_react15 = __toESM(require("react"), 1);
 var import_lucide_react4 = require("lucide-react");
-var import_jsx_runtime26 = require("react/jsx-runtime");
-var UserMenuContext2 = import_react16.default.createContext(void 0);
-var useUserMenu2 = () => import_react16.default.useContext(UserMenuContext2);
+var import_jsx_runtime24 = require("react/jsx-runtime");
+var UserMenuContext2 = import_react15.default.createContext(void 0);
+var useUserMenu2 = () => import_react15.default.useContext(UserMenuContext2);
 var RefreshButton2 = ({ onRefresh, loading = false }) => {
   const handleRefresh = () => {
     if (onRefresh) {
@@ -5193,23 +5105,23 @@ var RefreshButton2 = ({ onRefresh, loading = false }) => {
       window.location.reload();
     }
   };
-  return /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(
     Button,
     {
       onClick: handleRefresh,
       variant: "ghost",
       size: "icon",
       className: "hidden sm:inline-flex",
-      children: loading ? /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(import_lucide_react4.LoaderCircle, { className: "animate-spin" }) : /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(import_lucide_react4.RotateCw, {})
+      children: loading ? /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(import_lucide_react4.LoaderCircle, { className: "animate-spin" }) : /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(import_lucide_react4.RotateCw, {})
     }
   );
 };
 function UserMenu2({ children, user, onLogout }) {
-  const [open, setOpen] = (0, import_react16.useState)(false);
-  const handleToggleOpen = (0, import_react16.useCallback)(() => {
+  const [open, setOpen] = (0, import_react15.useState)(false);
+  const handleToggleOpen = (0, import_react15.useCallback)(() => {
     setOpen((prevOpen) => !prevOpen);
   }, []);
-  const handleClose = (0, import_react16.useCallback)(() => {
+  const handleClose = (0, import_react15.useCallback)(() => {
     setOpen(false);
   }, []);
   const handleLogout = () => {
@@ -5218,28 +5130,28 @@ function UserMenu2({ children, user, onLogout }) {
     }
     setOpen(false);
   };
-  return /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(UserMenuContext2.Provider, { value: { onClose: handleClose }, children: /* @__PURE__ */ (0, import_jsx_runtime26.jsxs)(DropdownMenu, { open, onOpenChange: handleToggleOpen, children: [
-    /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(DropdownMenuTrigger, { asChild: true, children: /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(UserMenuContext2.Provider, { value: { onClose: handleClose }, children: /* @__PURE__ */ (0, import_jsx_runtime24.jsxs)(DropdownMenu, { open, onOpenChange: handleToggleOpen, children: [
+    /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(DropdownMenuTrigger, { asChild: true, children: /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(
       Button,
       {
         variant: "ghost",
         className: "relative h-8 w-8 ml-2 rounded-full",
-        children: /* @__PURE__ */ (0, import_jsx_runtime26.jsxs)(Avatar, { className: "h-8 w-8", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(AvatarImage, { src: user?.avatar, role: "presentation" }),
-          /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(AvatarFallback, { children: user?.name?.charAt(0) || "U" })
+        children: /* @__PURE__ */ (0, import_jsx_runtime24.jsxs)(Avatar, { className: "h-8 w-8", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(AvatarImage, { src: user?.avatar, role: "presentation" }),
+          /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(AvatarFallback, { children: user?.name?.charAt(0) || "U" })
         ] })
       }
     ) }),
-    /* @__PURE__ */ (0, import_jsx_runtime26.jsxs)(DropdownMenuContent, { className: "w-56", align: "end", forceMount: true, children: [
-      /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(DropdownMenuLabel, { className: "font-normal", children: /* @__PURE__ */ (0, import_jsx_runtime26.jsxs)("div", { className: "flex flex-col space-y-1", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime26.jsx)("p", { className: "text-sm font-medium leading-none", children: user?.name || "User" }),
-        user?.email && /* @__PURE__ */ (0, import_jsx_runtime26.jsx)("p", { className: "text-xs text-muted-foreground", children: user.email })
+    /* @__PURE__ */ (0, import_jsx_runtime24.jsxs)(DropdownMenuContent, { className: "w-56", align: "end", forceMount: true, children: [
+      /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(DropdownMenuLabel, { className: "font-normal", children: /* @__PURE__ */ (0, import_jsx_runtime24.jsxs)("div", { className: "flex flex-col space-y-1", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("p", { className: "text-sm font-medium leading-none", children: user?.name || "User" }),
+        user?.email && /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("p", { className: "text-xs text-muted-foreground", children: user.email })
       ] }) }),
-      /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(DropdownMenuSeparator, {}),
+      /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(DropdownMenuSeparator, {}),
       children,
-      import_react16.Children.count(children) > 0 && /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(DropdownMenuSeparator, {}),
-      /* @__PURE__ */ (0, import_jsx_runtime26.jsxs)(DropdownMenuItem, { onClick: handleLogout, className: "cursor-pointer", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(import_lucide_react4.LogOut, {}),
+      import_react15.Children.count(children) > 0 && /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(DropdownMenuSeparator, {}),
+      /* @__PURE__ */ (0, import_jsx_runtime24.jsxs)(DropdownMenuItem, { onClick: handleLogout, className: "cursor-pointer", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(import_lucide_react4.LogOut, {}),
         "Log out"
       ] })
     ] })
@@ -5247,15 +5159,15 @@ function UserMenu2({ children, user, onLogout }) {
 }
 var UsersMenu2 = () => {
   const { onClose } = useUserMenu2() ?? {};
-  return /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(DropdownMenuItem, { onClick: onClose, children: /* @__PURE__ */ (0, import_jsx_runtime26.jsxs)("div", { className: "flex items-center gap-2", children: [
-    /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(import_lucide_react4.User, {}),
+  return /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(DropdownMenuItem, { onClick: onClose, children: /* @__PURE__ */ (0, import_jsx_runtime24.jsxs)("div", { className: "flex items-center gap-2", children: [
+    /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(import_lucide_react4.User, {}),
     " Users"
   ] }) });
 };
 var ConfigurationMenu2 = () => {
   const { onClose } = useUserMenu2() ?? {};
-  return /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(DropdownMenuItem, { onClick: onClose, children: /* @__PURE__ */ (0, import_jsx_runtime26.jsxs)("div", { className: "flex items-center gap-2", children: [
-    /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(import_lucide_react4.Settings, {}),
+  return /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(DropdownMenuItem, { onClick: onClose, children: /* @__PURE__ */ (0, import_jsx_runtime24.jsxs)("div", { className: "flex items-center gap-2", children: [
+    /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(import_lucide_react4.Settings, {}),
     "My info"
   ] }) });
 };
@@ -5269,18 +5181,18 @@ var SimpleHeader = ({
   onToggleSidebar,
   loading = false
 }) => {
-  return /* @__PURE__ */ (0, import_jsx_runtime26.jsx)("nav", { className: "flex-grow", children: /* @__PURE__ */ (0, import_jsx_runtime26.jsx)("header", { className: "bg-secondary", children: /* @__PURE__ */ (0, import_jsx_runtime26.jsx)("div", { className: "px-4", children: /* @__PURE__ */ (0, import_jsx_runtime26.jsxs)("div", { className: "flex justify-between items-center flex-1", children: [
-    /* @__PURE__ */ (0, import_jsx_runtime26.jsxs)("div", { className: "flex items-center gap-2", children: [
-      onToggleSidebar && /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("nav", { className: "flex-grow", children: /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("header", { className: "bg-secondary", children: /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("div", { className: "px-4", children: /* @__PURE__ */ (0, import_jsx_runtime24.jsxs)("div", { className: "flex justify-between items-center flex-1", children: [
+    /* @__PURE__ */ (0, import_jsx_runtime24.jsxs)("div", { className: "flex items-center gap-2", children: [
+      onToggleSidebar && /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(
         "button",
         {
           onClick: onToggleSidebar,
           className: "p-2 rounded-md text-muted-foreground hover:text-foreground hover:bg-accent focus:outline-none focus:ring-2 focus:ring-inset focus:ring-ring",
-          children: /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(import_lucide_react4.Menu, { className: "h-5 w-5" })
+          children: /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(import_lucide_react4.Menu, { className: "h-5 w-5" })
         }
       ),
-      /* @__PURE__ */ (0, import_jsx_runtime26.jsxs)("div", { className: "flex items-center gap-2 text-secondary-foreground", children: [
-        darkModeLogo && /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(
+      /* @__PURE__ */ (0, import_jsx_runtime24.jsxs)("div", { className: "flex items-center gap-2 text-secondary-foreground", children: [
+        darkModeLogo && /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(
           "img",
           {
             className: "[.light_&]:hidden h-6",
@@ -5288,7 +5200,7 @@ var SimpleHeader = ({
             alt: title
           }
         ),
-        lightModeLogo && /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(
+        lightModeLogo && /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(
           "img",
           {
             className: "[.dark_&]:hidden h-6",
@@ -5296,162 +5208,134 @@ var SimpleHeader = ({
             alt: title
           }
         ),
-        /* @__PURE__ */ (0, import_jsx_runtime26.jsx)("h1", { className: "text-xl font-semibold", children: title })
+        /* @__PURE__ */ (0, import_jsx_runtime24.jsx)("h1", { className: "text-xl font-semibold", children: title })
       ] })
     ] }),
-    /* @__PURE__ */ (0, import_jsx_runtime26.jsxs)("div", { className: "flex items-center", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(ThemeSwitch, {}),
-      /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(RefreshButton2, { onRefresh, loading }),
-      /* @__PURE__ */ (0, import_jsx_runtime26.jsxs)(UserMenu2, { user, onLogout, children: [
-        /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(ConfigurationMenu2, {}),
-        /* @__PURE__ */ (0, import_jsx_runtime26.jsx)(UsersMenu2, {})
+    /* @__PURE__ */ (0, import_jsx_runtime24.jsxs)("div", { className: "flex items-center", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(ThemeSwitch, {}),
+      /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(RefreshButton2, { onRefresh, loading }),
+      /* @__PURE__ */ (0, import_jsx_runtime24.jsxs)(UserMenu2, { user, onLogout, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(ConfigurationMenu2, {}),
+        /* @__PURE__ */ (0, import_jsx_runtime24.jsx)(UsersMenu2, {})
       ] })
     ] })
   ] }) }) }) });
 };
 
-// src/components/WorkCenterSelect.tsx
-var import_jsx_runtime27 = require("react/jsx-runtime");
-var WorkCenterSelect = ({
-  workCenters,
-  value,
-  onChange,
-  label = "Work Center",
-  required = false,
-  disabled = false,
-  error,
-  placeholder = "Select a work center"
+// src/components/UnifiedHeader.tsx
+var import_react16 = require("react");
+var import_lucide_react5 = require("lucide-react");
+var import_jsx_runtime25 = require("react/jsx-runtime");
+var UnifiedHeader = ({
+  title,
+  darkModeLogo,
+  lightModeLogo,
+  user,
+  onLogout,
+  onRefresh,
+  loading = false,
+  LinkComponent = "a",
+  userMenuItems,
+  navigationItems = []
 }) => {
-  const handleChange = (e) => {
-    onChange(e.target.value);
+  const [userMenuOpen, setUserMenuOpen] = (0, import_react16.useState)(false);
+  const handleUserMenuToggle = (0, import_react16.useCallback)(() => {
+    setUserMenuOpen((prev) => !prev);
+  }, []);
+  const handleUserMenuClose = (0, import_react16.useCallback)(() => {
+    setUserMenuOpen(false);
+  }, []);
+  const handleLogout = () => {
+    if (onLogout) {
+      onLogout();
+    }
+    setUserMenuOpen(false);
   };
-  return /* @__PURE__ */ (0, import_jsx_runtime27.jsxs)("div", { className: "space-y-2", children: [
-    /* @__PURE__ */ (0, import_jsx_runtime27.jsx)(Label, { htmlFor: "workCenter", children: label }),
-    /* @__PURE__ */ (0, import_jsx_runtime27.jsxs)(
-      "select",
-      {
-        id: "workCenter",
-        name: "workCenter",
-        value,
-        onChange: handleChange,
-        required,
-        disabled,
-        className: `
-          flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm 
-          ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium 
-          placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 
-          focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed 
-          disabled:opacity-50
-          ${error ? "border-red-500" : ""}
-        `,
-        children: [
-          /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("option", { value: "", children: placeholder }),
-          workCenters.map((center) => /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("option", { value: center.value, children: center.label }, center.value))
-        ]
-      }
-    ),
-    error && /* @__PURE__ */ (0, import_jsx_runtime27.jsx)("span", { className: "text-sm text-red-600", children: error })
-  ] });
-};
-
-// src/components/TextInput.tsx
-var import_jsx_runtime28 = require("react/jsx-runtime");
-var TextInput = ({
-  label,
-  source,
-  type = "text",
-  multiline = false,
-  inputClassName,
-  className,
-  validate,
-  format: format2,
-  helperText,
-  required = false,
-  placeholder,
-  disabled = false,
-  value,
-  onChange,
-  onBlur,
-  name,
-  id,
-  error,
-  ...rest
-}) => {
-  const inputName = name || source;
-  const inputId = id || inputName;
-  const adjustedValue = type === "datetime-local" && value ? value.slice(0, 16) : type === "date" && value ? value.slice(0, 10) : value;
-  return /* @__PURE__ */ (0, import_jsx_runtime28.jsxs)("div", { className: `w-full space-y-2 ${className || ""}`, children: [
-    label && /* @__PURE__ */ (0, import_jsx_runtime28.jsxs)(Label, { htmlFor: inputId, children: [
-      label,
-      required && /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("span", { className: "text-red-500 ml-1", children: "*" })
-    ] }),
-    /* @__PURE__ */ (0, import_jsx_runtime28.jsxs)("div", { className: "space-y-1", children: [
-      multiline ? /* @__PURE__ */ (0, import_jsx_runtime28.jsx)(
-        Textarea,
+  const handleRefresh = () => {
+    if (onRefresh) {
+      onRefresh();
+    }
+  };
+  return /* @__PURE__ */ (0, import_jsx_runtime25.jsx)("header", { className: "bg-secondary border-b border-border", children: /* @__PURE__ */ (0, import_jsx_runtime25.jsx)("div", { className: "px-4", children: /* @__PURE__ */ (0, import_jsx_runtime25.jsxs)("div", { className: "flex justify-between items-center h-12", children: [
+    /* @__PURE__ */ (0, import_jsx_runtime25.jsxs)("div", { className: "flex items-center", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime25.jsxs)(
+        LinkComponent,
         {
-          id: inputId,
-          name: inputName,
-          value: adjustedValue || "",
-          onChange,
-          onBlur,
-          placeholder,
-          disabled,
-          required,
-          className: `${inputClassName || ""} ${error ? "border-red-500" : ""}`,
-          ...rest
-        }
-      ) : /* @__PURE__ */ (0, import_jsx_runtime28.jsx)(
-        Input,
-        {
-          id: inputId,
-          name: inputName,
-          type,
-          value: adjustedValue || "",
-          onChange,
-          onBlur,
-          placeholder,
-          disabled,
-          required,
-          className: `${inputClassName || ""} ${error ? "border-red-500" : ""}`,
-          ...rest
+          to: "/",
+          className: "flex items-center gap-2 text-secondary-foreground no-underline mr-6",
+          children: [
+            darkModeLogo && /* @__PURE__ */ (0, import_jsx_runtime25.jsx)(
+              "img",
+              {
+                className: "[.light_&]:hidden h-6",
+                src: darkModeLogo,
+                alt: title
+              }
+            ),
+            lightModeLogo && /* @__PURE__ */ (0, import_jsx_runtime25.jsx)(
+              "img",
+              {
+                className: "[.dark_&]:hidden h-6",
+                src: lightModeLogo,
+                alt: title
+              }
+            ),
+            /* @__PURE__ */ (0, import_jsx_runtime25.jsx)("h1", { className: "text-xl font-semibold", children: title })
+          ]
         }
       ),
-      error && /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("p", { className: "text-sm text-red-600", children: error }),
-      helperText && !error && /* @__PURE__ */ (0, import_jsx_runtime28.jsx)("p", { className: "text-sm text-muted-foreground", children: helperText })
+      navigationItems.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime25.jsx)("nav", { className: "flex", children: navigationItems.map((item) => /* @__PURE__ */ (0, import_jsx_runtime25.jsx)(
+        LinkComponent,
+        {
+          to: item.to,
+          className: `px-3 py-2 text-sm font-medium rounded-md transition-colors ${item.isActive ? "bg-primary text-primary-foreground" : "text-muted-foreground hover:text-foreground hover:bg-accent"}`,
+          children: item.label
+        },
+        item.to
+      )) })
+    ] }),
+    /* @__PURE__ */ (0, import_jsx_runtime25.jsxs)("div", { className: "flex items-center gap-1", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime25.jsx)(ThemeSwitch, {}),
+      /* @__PURE__ */ (0, import_jsx_runtime25.jsx)(
+        Button,
+        {
+          onClick: handleRefresh,
+          variant: "ghost",
+          size: "icon",
+          className: "hidden sm:inline-flex",
+          disabled: loading,
+          children: loading ? /* @__PURE__ */ (0, import_jsx_runtime25.jsx)(import_lucide_react5.LoaderCircle, { className: "h-4 w-4 animate-spin" }) : /* @__PURE__ */ (0, import_jsx_runtime25.jsx)(import_lucide_react5.RotateCw, { className: "h-4 w-4" })
+        }
+      ),
+      user && /* @__PURE__ */ (0, import_jsx_runtime25.jsxs)(DropdownMenu, { open: userMenuOpen, onOpenChange: handleUserMenuToggle, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime25.jsx)(DropdownMenuTrigger, { asChild: true, children: /* @__PURE__ */ (0, import_jsx_runtime25.jsx)(
+          Button,
+          {
+            variant: "ghost",
+            className: "relative h-8 w-8 ml-2 rounded-full",
+            children: /* @__PURE__ */ (0, import_jsx_runtime25.jsxs)(Avatar, { className: "h-8 w-8", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime25.jsx)(AvatarImage, { src: user.avatar, role: "presentation" }),
+              /* @__PURE__ */ (0, import_jsx_runtime25.jsx)(AvatarFallback, { children: user.name?.charAt(0) || "U" })
+            ] })
+          }
+        ) }),
+        /* @__PURE__ */ (0, import_jsx_runtime25.jsxs)(DropdownMenuContent, { className: "w-56", align: "end", forceMount: true, children: [
+          /* @__PURE__ */ (0, import_jsx_runtime25.jsx)(DropdownMenuLabel, { className: "font-normal", children: /* @__PURE__ */ (0, import_jsx_runtime25.jsxs)("div", { className: "flex flex-col space-y-1", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime25.jsx)("p", { className: "text-sm font-medium leading-none", children: user.name || "User" }),
+            user.email && /* @__PURE__ */ (0, import_jsx_runtime25.jsx)("p", { className: "text-xs text-muted-foreground", children: user.email })
+          ] }) }),
+          /* @__PURE__ */ (0, import_jsx_runtime25.jsx)(DropdownMenuSeparator, {}),
+          userMenuItems,
+          userMenuItems && /* @__PURE__ */ (0, import_jsx_runtime25.jsx)(DropdownMenuSeparator, {}),
+          /* @__PURE__ */ (0, import_jsx_runtime25.jsxs)(DropdownMenuItem, { onClick: handleLogout, className: "cursor-pointer", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime25.jsx)(import_lucide_react5.LogOut, { className: "mr-2 h-4 w-4" }),
+            "Log out"
+          ] })
+        ] })
+      ] })
     ] })
-  ] });
+  ] }) }) });
 };
-
-// src/components/Form.tsx
-var import_jsx_runtime29 = require("react/jsx-runtime");
-var Form = ({
-  onSubmit,
-  className = "",
-  children,
-  ...rest
-}) => {
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (onSubmit) {
-      onSubmit(e);
-    }
-  };
-  return /* @__PURE__ */ (0, import_jsx_runtime29.jsx)(
-    "form",
-    {
-      onSubmit: handleSubmit,
-      className: `space-y-6 ${className}`,
-      ...rest,
-      children
-    }
-  );
-};
-
-// src/components/RelativeDate.tsx
-var import_date_fns2 = require("date-fns");
-function RelativeDate({ date }) {
-  return (0, import_date_fns2.formatRelative)(new Date(date), /* @__PURE__ */ new Date());
-}
 
 // src/validation/url-validators.ts
 var LINKEDIN_URL_REGEX = /^http(?:s)?:\/\/(?:www\.)?linkedin.com\//;
@@ -6431,7 +6315,6 @@ var SupabaseService = class {
 
 // src/services/supabase.ts
 var import_supabase_js = require("@supabase/supabase-js");
-var import_meta = {};
 var createSupabaseClient = (config) => {
   const defaultOptions = {
     auth: {
@@ -6450,13 +6333,8 @@ var createSupabaseClient = (config) => {
   });
 };
 var getEnvVar = (key) => {
-  if (typeof import_meta !== "undefined" && import_meta.env) {
-    const value = import_meta.env[key];
-    if (value !== void 0) return value;
-  }
   if (typeof process !== "undefined" && process.env) {
-    const value = process.env[key];
-    if (value !== void 0) return value;
+    return process.env[key];
   }
   if (typeof window !== "undefined" && window.__ENV__) {
     return window.__ENV__[key];
@@ -7075,7 +6953,6 @@ function createPaginatedStore(entityName, defaultPerPage = 10, persistOptions) {
   Button,
   COMMON_STATUSES,
   CONFIRMATION_TYPES,
-  CRMLoginPage,
   Card,
   CardContent,
   CardDescription,
@@ -7106,7 +6983,6 @@ function createPaginatedStore(entityName, defaultPerPage = 10, persistOptions) {
   ExactHeader,
   FIELD_CONFIGS,
   FilterDropdown,
-  Form,
   GenericForm,
   Header,
   Input,
@@ -7114,10 +6990,8 @@ function createPaginatedStore(entityName, defaultPerPage = 10, persistOptions) {
   LoginPage,
   MACHINE_STATUSES,
   NUMBER_CONSTANTS,
-  Notification,
   PRODUCT_TYPES,
   ProtectedRoute,
-  RelativeDate,
   SCHEMAS,
   SEAL_SIDES,
   SERVICES_ERROR_TYPES,
@@ -7136,13 +7010,12 @@ function createPaginatedStore(entityName, defaultPerPage = 10, persistOptions) {
   TableHead,
   TableHeader,
   TableRow,
-  TextInput,
   Textarea,
   ThemeProvider,
   ThemeSwitch,
+  UnifiedHeader,
   VALIDATION_MESSAGES,
   WORK_CENTERS,
-  WorkCenterSelect,
   addDaysToDate,
   applyFullTextSearch,
   applyPagination,
@@ -7195,7 +7068,6 @@ function createPaginatedStore(entityName, defaultPerPage = 10, persistOptions) {
   dismissAll,
   extractEmailDomain,
   extractEmailUsername,
-  fetchWithTimeout,
   filterBy,
   findBy,
   findIndexBy,
@@ -7238,7 +7110,6 @@ function createPaginatedStore(entityName, defaultPerPage = 10, persistOptions) {
   getRandomItems,
   getRecordCount,
   getRelativeTime,
-  getRelativeTimeString,
   getSignedUrl,
   getStandardSupabaseClient,
   getStartOfDay,
@@ -7320,7 +7191,6 @@ function createPaginatedStore(entityName, defaultPerPage = 10, persistOptions) {
   toSnakeCase,
   truncate,
   truncateWords,
-  ucFirst,
   union,
   updateAt,
   uploadMultipleFiles,
@@ -7337,7 +7207,6 @@ function createPaginatedStore(entityName, defaultPerPage = 10, persistOptions) {
   useDependentQueries,
   useErrorBoundary,
   useErrorHandler,
-  useIsMobile,
   useOfflineSync,
   useQuerySync,
   useSavedQueries,

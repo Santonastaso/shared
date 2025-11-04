@@ -3,15 +3,6 @@
  */
 
 /**
- * Capitalize first letter of string (preserves rest of string)
- * From crm_demo - ucFirst function
- */
-export const ucFirst = (str: string | null | undefined): string => {
-  if (!str) return '';
-  return str.charAt(0).toUpperCase() + str.slice(1);
-};
-
-/**
  * Capitalize first letter of string
  */
 export const capitalize = (str: string | null | undefined): string => {
