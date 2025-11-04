@@ -123,7 +123,7 @@ export const CRMLoginPage: React.FC<CRMLoginPageProps> = ({
               />
               <Button
                 type="submit"
-                className="w-full cursor-pointer"
+                className="cursor-pointer"
                 disabled={loading}
               >
                 Sign in

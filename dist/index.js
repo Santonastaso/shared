@@ -4741,7 +4741,7 @@ var CRMLoginPage = ({
             Button,
             {
               type: "submit",
-              className: "w-full cursor-pointer",
+              className: "cursor-pointer",
               disabled: loading,
               children: "Sign in"
             }
