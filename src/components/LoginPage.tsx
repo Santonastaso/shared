@@ -132,7 +132,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({
   return (
     <div className="min-h-screen w-full flex">
       {/* Left Panel - Brand/Logo Section */}
-      <div className="hidden lg:flex lg:w-1/2 relative flex-col bg-muted p-10 text-white">
+      <div className="hidden md:flex w-1/2 relative flex-col bg-muted p-10 text-white">
         <div className="absolute inset-0 bg-zinc-900" />
         <div className="relative z-20 flex items-center text-lg font-medium">
           {logo && <img className="h-6 mr-2" src={logo} alt={title} />}
@@ -146,7 +146,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({
       </div>
 
       {/* Right Panel - Login Form */}
-      <div className="w-full lg:w-1/2 flex items-center justify-center p-8">
+      <div className="w-full md:w-1/2 flex items-center justify-center p-8">
         <div className="w-full max-w-sm space-y-6">
           {/* Mobile Logo/Title */}
           <div className="flex flex-col space-y-2 text-center lg:hidden">
