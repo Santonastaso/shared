@@ -86,14 +86,14 @@ export const UnifiedHeader: React.FC<UnifiedHeaderProps> = ({
   };
 
   return (
-    <header className="bg-secondary border-b border-border">
-      <div className="px-4">
-        <div className="flex justify-between items-center h-12">
-          {/* Left Section: Logo + Title + Navigation */}
-          <div className="flex items-center">
+    <nav className="flex-grow">
+      <header className="bg-secondary">
+        <div className="px-4">
+          <div className="flex justify-between items-center flex-1 h-12">
+            {/* Left Section: Logo + Title */}
             <LinkComponent
               to="/"
-              className="flex items-center gap-2 text-secondary-foreground no-underline mr-6"
+              className="flex items-center gap-2 text-secondary-foreground no-underline"
             >
               {darkModeLogo && (
                 <img
@@ -112,8 +112,8 @@ export const UnifiedHeader: React.FC<UnifiedHeaderProps> = ({
               <h1 className="text-xl font-semibold">{title}</h1>
             </LinkComponent>
 
-            {/* Optional Navigation Items */}
-            {navigationItems.length > 0 && (
+            {/* Center Section: Navigation Items */}
+            <div className="flex-1 flex justify-center">
               <nav className="flex">
                 {navigationItems.map((item) => (
                   <LinkComponent
@@ -129,73 +129,73 @@ export const UnifiedHeader: React.FC<UnifiedHeaderProps> = ({
                   </LinkComponent>
                 ))}
               </nav>
-            )}
-          </div>
+            </div>
 
-          {/* Right Section: ThemeSwitch + RefreshButton + UserMenu */}
-          <div className="flex items-center gap-1">
-            {/* Theme Switch */}
-            <ThemeSwitch />
+            {/* Right Section: ThemeSwitch + RefreshButton + UserMenu */}
+            <div className="flex items-center">
+              {/* Theme Switch */}
+              <ThemeSwitch />
 
-            {/* Refresh Button */}
-            <Button
-              onClick={handleRefresh}
-              variant="ghost"
-              size="icon"
-              className="hidden sm:inline-flex"
-              disabled={loading}
-            >
-              {loading ? (
-                <LoaderCircle className="h-4 w-4 animate-spin" />
-              ) : (
-                <RotateCw className="h-4 w-4" />
-              )}
-            </Button>
+              {/* Refresh Button */}
+              <Button
+                onClick={handleRefresh}
+                variant="ghost"
+                size="icon"
+                className="hidden sm:inline-flex"
+                disabled={loading}
+              >
+                {loading ? (
+                  <LoaderCircle className="h-4 w-4 animate-spin" />
+                ) : (
+                  <RotateCw className="h-4 w-4" />
+                )}
+              </Button>
 
-            {/* User Menu */}
-            {user && (
-              <DropdownMenu open={userMenuOpen} onOpenChange={handleUserMenuToggle}>
-                <DropdownMenuTrigger asChild>
-                  <Button
-                    variant="ghost"
-                    className="relative h-8 w-8 ml-2 rounded-full"
-                  >
-                    <Avatar className="h-8 w-8">
-                      <AvatarImage src={user.avatar} role="presentation" />
-                      <AvatarFallback>{user.name?.charAt(0) || 'U'}</AvatarFallback>
-                    </Avatar>
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent className="w-56" align="end" forceMount>
-                  <DropdownMenuLabel className="font-normal">
-                    <div className="flex flex-col space-y-1">
-                      <p className="text-sm font-medium leading-none">
-                        {user.name || 'User'}
-                      </p>
-                      {user.email && (
-                        <p className="text-xs text-muted-foreground">
-                          {user.email}
+              {/* User Menu */}
+              {user && (
+                <DropdownMenu open={userMenuOpen} onOpenChange={handleUserMenuToggle}>
+                  <DropdownMenuTrigger asChild>
+                    <Button
+                      variant="ghost"
+                      className="relative h-8 w-8 ml-2 rounded-full"
+                    >
+                      <Avatar className="h-8 w-8">
+                        <AvatarImage src={user.avatar} role="presentation" />
+                        <AvatarFallback>{user.name?.charAt(0) || 'U'}</AvatarFallback>
+                      </Avatar>
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent className="w-56" align="end" forceMount>
+                    <DropdownMenuLabel className="font-normal">
+                      <div className="flex flex-col space-y-1">
+                        <p className="text-sm font-medium leading-none">
+                          {user.name || 'User'}
                         </p>
-                      )}
-                    </div>
-                  </DropdownMenuLabel>
-                  <DropdownMenuSeparator />
-                  
-                  {/* Additional Menu Items */}
-                  {userMenuItems}
-                  {userMenuItems && <DropdownMenuSeparator />}
-                  
-                  {/* Logout */}
-                  <DropdownMenuItem onClick={handleLogout} className="cursor-pointer">
-                    <LogOut className="mr-2 h-4 w-4" />
-                    Log out
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
-            )}
+                        {user.email && (
+                          <p className="text-xs text-muted-foreground">
+                            {user.email}
+                          </p>
+                        )}
+                      </div>
+                    </DropdownMenuLabel>
+                    <DropdownMenuSeparator />
+                    
+                    {/* Additional Menu Items */}
+                    {userMenuItems}
+                    {userMenuItems && <DropdownMenuSeparator />}
+                    
+                    {/* Logout */}
+                    <DropdownMenuItem onClick={handleLogout} className="cursor-pointer">
+                      <LogOut className="mr-2 h-4 w-4" />
+                      Log out
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              )}
+            </div>
           </div>
         </div>
-      </div>
-    </header>
+      </header>
+    </nav>
   );
 };

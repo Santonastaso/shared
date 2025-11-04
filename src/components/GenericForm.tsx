@@ -305,6 +305,7 @@ function GenericForm({
         <div className="flex justify-end pt-6 border-t border-border">
           <Button 
             type="submit" 
+            variant="default"
             disabled={isLoading || isSubmitting}
           >
             {isLoading || isSubmitting

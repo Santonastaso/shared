@@ -981,8 +981,8 @@ var buttonVariants = cva(
   {
     variants: {
       variant: {
-        default: "bg-primary text-primary-foreground shadow-xs hover:bg-primary/90",
-        destructive: "bg-destructive text-white shadow-xs hover:bg-destructive/90 focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40 dark:bg-destructive/60",
+        default: "bg-primary text-primary-foreground shadow-xs hover:bg-primary/90 !important",
+        destructive: "bg-destructive text-destructive-foreground shadow-xs hover:bg-destructive/90 focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40",
         outline: "border bg-background shadow-xs hover:bg-accent hover:text-accent-foreground dark:bg-input/30 dark:border-input dark:hover:bg-input/50",
         secondary: "bg-secondary text-secondary-foreground shadow-xs hover:bg-secondary/80",
         ghost: "hover:bg-accent hover:text-accent-foreground dark:hover:bg-accent/50",
@@ -1378,51 +1378,26 @@ var ThemeSwitch = ({ className }) => {
 import { useState as useState2, useMemo as useMemo2 } from "react";
 import { useReactTable, getCoreRowModel, flexRender, getSortedRowModel, getFilteredRowModel } from "@tanstack/react-table";
 import { Fragment, jsx as jsx11, jsxs as jsxs2 } from "react/jsx-runtime";
-var Table2 = ({ children, className, ...props }) => /* @__PURE__ */ jsx11("table", { className: `w-full border-collapse border border-gray-200 table-auto ${className || ""}`, ...props, children });
-var TableHeader2 = ({ children }) => /* @__PURE__ */ jsx11("thead", { className: "bg-gray-50", children });
+var Table2 = ({ children, className, ...props }) => /* @__PURE__ */ jsx11("table", { className: `w-full border-collapse border border-border table-auto ${className || ""}`, ...props, children });
+var TableHeader2 = ({ children }) => /* @__PURE__ */ jsx11("thead", { className: "bg-muted", children });
 var TableBody2 = ({ children }) => /* @__PURE__ */ jsx11("tbody", { className: "divide-y divide-gray-200", children });
 var TableRow2 = ({ children, onClick, className }) => /* @__PURE__ */ jsx11(
   "tr",
   {
     onClick,
-    className: `${onClick ? "cursor-pointer hover:bg-gray-50" : ""} ${className || ""}`,
+    className: `${onClick ? "cursor-pointer hover:bg-muted/50" : ""} ${className || ""}`,
     children
   }
 );
-var TableHead2 = ({ children }) => /* @__PURE__ */ jsx11("th", { className: "px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider border-b border-gray-200 min-w-0", children });
+var TableHead2 = ({ children }) => /* @__PURE__ */ jsx11("th", { className: "px-4 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider border-b border-border min-w-0", children });
 var TableCell2 = ({ children, colSpan, className }) => /* @__PURE__ */ jsx11(
   "td",
   {
     colSpan,
-    className: `px-4 py-3 text-sm text-gray-900 border-b border-gray-200 min-w-0 max-w-xs ${className || ""}`,
+    className: `px-4 py-3 text-sm text-foreground border-b border-border min-w-0 max-w-xs ${className || ""}`,
     children: /* @__PURE__ */ jsx11("div", { className: "truncate", title: typeof children === "string" ? children : "", children })
   }
 );
-var Button2 = ({ children, variant = "default", size = "default", onClick, disabled, className }) => {
-  const baseClasses = "inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none";
-  const variantClasses = {
-    default: "bg-primary text-primary-foreground hover:bg-primary/90",
-    destructive: "bg-destructive text-destructive-foreground hover:bg-destructive/90",
-    outline: "border border-input hover:bg-accent hover:text-accent-foreground",
-    secondary: "bg-secondary text-secondary-foreground hover:bg-secondary/80",
-    ghost: "hover:bg-accent hover:text-accent-foreground",
-    link: "underline-offset-4 hover:underline text-primary"
-  };
-  const sizeClasses = {
-    default: "h-10 py-2 px-4",
-    sm: "h-9 px-3 rounded-md",
-    lg: "h-11 px-8 rounded-md"
-  };
-  return /* @__PURE__ */ jsx11(
-    "button",
-    {
-      onClick,
-      disabled,
-      className: `${baseClasses} ${variantClasses[variant] || variantClasses.default} ${sizeClasses[size] || sizeClasses.default} ${className || ""}`,
-      children
-    }
-  );
-};
 function DataTable({
   data,
   columns: userColumns,
@@ -1472,7 +1447,7 @@ function DataTable({
               }
               setSelectedIds(newSet);
             },
-            className: "h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+            className: "h-4 w-4 rounded border-border text-primary focus:ring-ring"
           }
         ) });
       },
@@ -1491,7 +1466,7 @@ function DataTable({
             }
             setSelectedIds(newSet);
           },
-          className: "h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+          className: "h-4 w-4 rounded border-border text-primary focus:ring-ring"
         }
       ) })
     } : null;
@@ -1500,7 +1475,7 @@ function DataTable({
       header: "Actions",
       cell: ({ row }) => /* @__PURE__ */ jsxs2("div", { className: "flex gap-2", children: [
         onEditRow && /* @__PURE__ */ jsx11(
-          Button2,
+          Button,
           {
             variant: "outline",
             size: "sm",
@@ -1509,7 +1484,7 @@ function DataTable({
           }
         ),
         onDeleteRow && /* @__PURE__ */ jsx11(
-          Button2,
+          Button,
           {
             variant: "destructive",
             size: "sm",
@@ -1589,10 +1564,10 @@ function DataTable({
         }
       ) }),
       /* @__PURE__ */ jsxs2("div", { className: "flex items-center gap-2", children: [
-        globalQuery && /* @__PURE__ */ jsx11(Button2, { variant: "outline", size: "sm", onClick: clearFilters, children: "Clear Search" }),
+        globalQuery && /* @__PURE__ */ jsx11(Button, { variant: "outline", size: "sm", onClick: clearFilters, children: "Clear Search" }),
         enableColumnVisibility && /* @__PURE__ */ jsxs2("div", { className: "relative", children: [
           /* @__PURE__ */ jsx11(
-            Button2,
+            Button,
             {
               variant: "outline",
               size: "sm",
@@ -1608,14 +1583,14 @@ function DataTable({
                 onClick: () => setShowColumnDropdown(false)
               }
             ),
-            /* @__PURE__ */ jsx11("div", { className: "absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-md shadow-lg z-20 p-2", children: table.getAllColumns().filter((column) => column.getCanHide()).map((column) => /* @__PURE__ */ jsxs2("label", { className: "flex items-center gap-2 p-1 hover:bg-gray-50 dark:hover:bg-gray-700 rounded cursor-pointer", children: [
+            /* @__PURE__ */ jsx11("div", { className: "absolute right-0 mt-2 w-48 bg-popover border border-border rounded-md shadow-lg z-20 p-2", children: table.getAllColumns().filter((column) => column.getCanHide()).map((column) => /* @__PURE__ */ jsxs2("label", { className: "flex items-center gap-2 p-1 hover:bg-accent rounded cursor-pointer", children: [
               /* @__PURE__ */ jsx11(
                 "input",
                 {
                   type: "checkbox",
                   checked: column.getIsVisible(),
                   onChange: column.getToggleVisibilityHandler(),
-                  className: "h-4 w-4 rounded border-gray-300"
+                  className: "h-4 w-4 rounded border-border"
                 }
               ),
               /* @__PURE__ */ jsx11("span", { className: "text-sm capitalize", children: column.id.replace(/([A-Z])/g, " $1").replace(/^./, (str) => str.toUpperCase()) })
@@ -1624,7 +1599,7 @@ function DataTable({
         ] })
       ] })
     ] }),
-    /* @__PURE__ */ jsx11("div", { className: "rounded-md border border-gray-200 overflow-hidden shadow-sm", children: /* @__PURE__ */ jsx11("div", { className: "overflow-x-auto", children: /* @__PURE__ */ jsxs2(Table2, { className: "min-w-full", children: [
+    /* @__PURE__ */ jsx11("div", { className: "rounded-md border border-border overflow-hidden shadow-sm", children: /* @__PURE__ */ jsx11("div", { className: "overflow-x-auto", children: /* @__PURE__ */ jsxs2(Table2, { className: "min-w-full", children: [
       /* @__PURE__ */ jsx11(TableHeader2, { children: table.getHeaderGroups().map((headerGroup) => /* @__PURE__ */ jsx11(TableRow2, { children: headerGroup.headers.map((header) => /* @__PURE__ */ jsx11(TableHead2, { children: header.isPlaceholder ? null : /* @__PURE__ */ jsxs2(
         "div",
         {
@@ -1640,7 +1615,7 @@ function DataTable({
         }
       ) }, header.id)) }, headerGroup.id)) }),
       /* @__PURE__ */ jsx11(TableBody2, { children: loading ? /* @__PURE__ */ jsx11(TableRow2, { children: /* @__PURE__ */ jsx11(TableCell2, { colSpan: columns.length, className: "h-24 text-center", children: /* @__PURE__ */ jsxs2("div", { className: "flex items-center justify-center gap-2", children: [
-        /* @__PURE__ */ jsx11("div", { className: "animate-spin rounded-full h-4 w-4 border-b-2 border-gray-900" }),
+        /* @__PURE__ */ jsx11("div", { className: "animate-spin rounded-full h-4 w-4 border-b-2 border-foreground" }),
         "Loading..."
       ] }) }) }) : table.getRowModel().rows.length ? table.getRowModel().rows.map((row) => /* @__PURE__ */ jsx11(
         TableRow2,
@@ -1667,7 +1642,7 @@ function DataTable({
       ] }),
       /* @__PURE__ */ jsxs2("div", { className: "flex items-center space-x-2", children: [
         /* @__PURE__ */ jsx11(
-          Button2,
+          Button,
           {
             variant: "outline",
             size: "sm",
@@ -1683,7 +1658,7 @@ function DataTable({
           totalPages
         ] }),
         /* @__PURE__ */ jsx11(
-          Button2,
+          Button,
           {
             variant: "outline",
             size: "sm",
@@ -1694,10 +1669,10 @@ function DataTable({
         )
       ] })
     ] }),
-    selectedIds.size > 0 && (onBulkDelete || onBulkExport) && /* @__PURE__ */ jsx11("div", { className: "sticky bottom-0 bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 p-4 -mx-4 -mb-4 rounded-b-md", children: /* @__PURE__ */ jsxs2("div", { className: "flex items-center justify-between gap-4", children: [
+    selectedIds.size > 0 && (onBulkDelete || onBulkExport) && /* @__PURE__ */ jsx11("div", { className: "sticky bottom-0 bg-background border-t border-border p-4 -mx-4 -mb-4 rounded-b-md", children: /* @__PURE__ */ jsxs2("div", { className: "flex items-center justify-between gap-4", children: [
       /* @__PURE__ */ jsxs2("div", { className: "flex items-center gap-3", children: [
         /* @__PURE__ */ jsx11(
-          Button2,
+          Button,
           {
             variant: "ghost",
             size: "sm",
@@ -1715,7 +1690,7 @@ function DataTable({
       ] }),
       /* @__PURE__ */ jsxs2("div", { className: "flex gap-2", children: [
         onBulkExport && /* @__PURE__ */ jsx11(
-          Button2,
+          Button,
           {
             variant: "outline",
             size: "sm",
@@ -1724,7 +1699,7 @@ function DataTable({
           }
         ),
         onBulkDelete && /* @__PURE__ */ jsx11(
-          Button2,
+          Button,
           {
             variant: "destructive",
             size: "sm",
@@ -1910,7 +1885,7 @@ var useErrorBoundary = () => {
 
 // src/components/Header.tsx
 import { jsx as jsx13, jsxs as jsxs4 } from "react/jsx-runtime";
-function Header({ user, onSignOut, onToggleSidebar, ThemeSwitch: ThemeSwitch2, Button: Button3, MenuIcon, LogOutIcon }) {
+function Header({ user, onSignOut, onToggleSidebar, ThemeSwitch: ThemeSwitch2, Button: Button2, MenuIcon, LogOutIcon }) {
   return /* @__PURE__ */ jsx13("header", { className: "bg-secondary shadow-sm border-b border-border", children: /* @__PURE__ */ jsxs4("div", { className: "flex items-center justify-between px-4 py-2", children: [
     /* @__PURE__ */ jsx13("div", { className: "flex items-center", children: /* @__PURE__ */ jsx13(
       "button",
@@ -1924,7 +1899,7 @@ function Header({ user, onSignOut, onToggleSidebar, ThemeSwitch: ThemeSwitch2, B
       /* @__PURE__ */ jsx13(ThemeSwitch2, {}),
       /* @__PURE__ */ jsx13("span", { className: "text-sm text-muted-foreground", children: user?.email?.split("@")[0] || "User" }),
       /* @__PURE__ */ jsxs4(
-        Button3,
+        Button2,
         {
           variant: "outline",
           size: "sm",
@@ -3871,6 +3846,7 @@ function GenericForm({
       Button,
       {
         type: "submit",
+        variant: "default",
         disabled: isLoading || isSubmitting,
         children: isLoading || isSubmitting ? isEditMode ? config.editLoadingText : config.addLoadingText : isEditMode ? config.editButtonText : config.addButtonText
       }
@@ -4846,45 +4822,43 @@ var UnifiedHeader = ({
       onRefresh();
     }
   };
-  return /* @__PURE__ */ jsx25("header", { className: "bg-secondary border-b border-border", children: /* @__PURE__ */ jsx25("div", { className: "px-4", children: /* @__PURE__ */ jsxs14("div", { className: "flex justify-between items-center h-12", children: [
+  return /* @__PURE__ */ jsx25("nav", { className: "flex-grow", children: /* @__PURE__ */ jsx25("header", { className: "bg-secondary", children: /* @__PURE__ */ jsx25("div", { className: "px-4", children: /* @__PURE__ */ jsxs14("div", { className: "flex justify-between items-center flex-1 h-12", children: [
+    /* @__PURE__ */ jsxs14(
+      LinkComponent,
+      {
+        to: "/",
+        className: "flex items-center gap-2 text-secondary-foreground no-underline",
+        children: [
+          darkModeLogo && /* @__PURE__ */ jsx25(
+            "img",
+            {
+              className: "[.light_&]:hidden h-6",
+              src: darkModeLogo,
+              alt: title
+            }
+          ),
+          lightModeLogo && /* @__PURE__ */ jsx25(
+            "img",
+            {
+              className: "[.dark_&]:hidden h-6",
+              src: lightModeLogo,
+              alt: title
+            }
+          ),
+          /* @__PURE__ */ jsx25("h1", { className: "text-xl font-semibold", children: title })
+        ]
+      }
+    ),
+    /* @__PURE__ */ jsx25("div", { className: "flex-1 flex justify-center", children: /* @__PURE__ */ jsx25("nav", { className: "flex", children: navigationItems.map((item) => /* @__PURE__ */ jsx25(
+      LinkComponent,
+      {
+        to: item.to,
+        className: `px-3 py-2 text-sm font-medium rounded-md transition-colors ${item.isActive ? "bg-primary text-primary-foreground" : "text-muted-foreground hover:text-foreground hover:bg-accent"}`,
+        children: item.label
+      },
+      item.to
+    )) }) }),
     /* @__PURE__ */ jsxs14("div", { className: "flex items-center", children: [
-      /* @__PURE__ */ jsxs14(
-        LinkComponent,
-        {
-          to: "/",
-          className: "flex items-center gap-2 text-secondary-foreground no-underline mr-6",
-          children: [
-            darkModeLogo && /* @__PURE__ */ jsx25(
-              "img",
-              {
-                className: "[.light_&]:hidden h-6",
-                src: darkModeLogo,
-                alt: title
-              }
-            ),
-            lightModeLogo && /* @__PURE__ */ jsx25(
-              "img",
-              {
-                className: "[.dark_&]:hidden h-6",
-                src: lightModeLogo,
-                alt: title
-              }
-            ),
-            /* @__PURE__ */ jsx25("h1", { className: "text-xl font-semibold", children: title })
-          ]
-        }
-      ),
-      navigationItems.length > 0 && /* @__PURE__ */ jsx25("nav", { className: "flex", children: navigationItems.map((item) => /* @__PURE__ */ jsx25(
-        LinkComponent,
-        {
-          to: item.to,
-          className: `px-3 py-2 text-sm font-medium rounded-md transition-colors ${item.isActive ? "bg-primary text-primary-foreground" : "text-muted-foreground hover:text-foreground hover:bg-accent"}`,
-          children: item.label
-        },
-        item.to
-      )) })
-    ] }),
-    /* @__PURE__ */ jsxs14("div", { className: "flex items-center gap-1", children: [
       /* @__PURE__ */ jsx25(ThemeSwitch, {}),
       /* @__PURE__ */ jsx25(
         Button,
@@ -4924,7 +4898,7 @@ var UnifiedHeader = ({
         ] })
       ] })
     ] })
-  ] }) }) });
+  ] }) }) }) });
 };
 
 // src/validation/url-validators.ts
@@ -5923,8 +5897,13 @@ var createSupabaseClient = (config) => {
   });
 };
 var getEnvVar = (key) => {
+  if (typeof import.meta !== "undefined" && import.meta.env) {
+    const value = import.meta.env[key];
+    if (value !== void 0) return value;
+  }
   if (typeof process !== "undefined" && process.env) {
-    return process.env[key];
+    const value = process.env[key];
+    if (value !== void 0) return value;
   }
   if (typeof window !== "undefined" && window.__ENV__) {
     return window.__ENV__[key];
